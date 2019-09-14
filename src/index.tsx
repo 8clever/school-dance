@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 const App = () => {
   return (
-    <div>Ну все, я готов к бою</div>
+    <div>Ну все, я готов к бою 2323</div>
   )
 }
 

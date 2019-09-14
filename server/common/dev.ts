@@ -6,7 +6,8 @@ import webpackHotMiddleware from "webpack-hot-middleware";
 const compiler = webpack(config);
 
 export const devMiddleware = webpackDevMiddleware(compiler, {
-  publicPath: config.output.publicPath
+  publicPath: config.output.publicPath,
+  writeToDisk: true
 });
 
 export const hotMiddleware = webpackHotMiddleware(compiler);

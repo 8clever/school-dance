@@ -30,8 +30,15 @@ export const config: Configuration = {
     ]
   },
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, '../public/web'),
     publicPath: '/web/'
+  },
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+	    maxInitialRequests: 20,
+      maxAsyncRequests: 20,
+    }
   }
 };
