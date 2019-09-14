@@ -1,4 +1,4 @@
-# school-dance-1
+# school-dance
 
 My cool TypeScript app
 
