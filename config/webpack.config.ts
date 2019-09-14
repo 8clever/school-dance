@@ -12,6 +12,14 @@ export const config: Configuration = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({})
   ],
+  resolve: {
+    extensions: [
+      ".ts",
+      ".tsx",
+      ".js",
+      ".jsx"
+    ]
+  },
   module: {
     rules: [
       {
@@ -22,11 +30,20 @@ export const config: Configuration = {
           options: {
             presets: [
               '@babel/preset-env',
-              '@babel/preset-react'
+              '@babel/preset-react',
+              '@babel/preset-typescript'
             ]
           }
         }
-      }
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader'
+        ],
+      },
     ]
   },
   output: {
