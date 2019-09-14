@@ -2,21 +2,15 @@ import path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin"
 import { Configuration } from "webpack";
-import webpack = require("webpack");
 
 export const config: Configuration = {
-  mode: 'development',
+  mode: 'production',
   entry: [
-    "webpack-hot-middleware/client",
     path.join(__dirname, '../src/index.tsx')
   ],
-  devtool: 'inline-source-map',
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      title: 'Output Management'
-    })
+    new HtmlWebpackPlugin({})
   ],
   module: {
     rules: [
@@ -37,7 +31,7 @@ export const config: Configuration = {
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/'
+    path: path.resolve(__dirname, '../public/web'),
+    publicPath: '/web/'
   }
 };

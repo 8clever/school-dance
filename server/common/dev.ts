@@ -1,9 +1,7 @@
-import { Request, Response, NextFunction} from "express";
 import webpack from "webpack";
-import { config } from "../../config/webpack.config";
+import { config } from "../../config/webpack.config.dev";
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from "webpack-hot-middleware";
-
 
 const compiler = webpack(config);
 

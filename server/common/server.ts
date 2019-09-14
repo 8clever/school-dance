@@ -7,20 +7,28 @@ import os from 'os';
 import cookieParser from 'cookie-parser';
 import installValidator from './openapi';
 import l from './logger';
-import { devMiddleware, hotMiddleware } from "./dev";
 
 const app = express();
 
 export default class ExpressServer {
   constructor() {
     const root = path.normalize(__dirname + '/../..');
+
     app.set('appPath', root + 'client');
     app.use(bodyParser.json({ limit: process.env.REQUEST_LIMIT || '100kb' }));
     app.use(bodyParser.urlencoded({ extended: true, limit: process.env.REQUEST_LIMIT || '100kb' }));
     app.use(cookieParser(process.env.SESSION_SECRET));
-    app.use(devMiddleware);
-    app.use(hotMiddleware);
+
+    if (process.env.DEVELOPMENT) {
+      const { devMiddleware, hotMiddleware } = require("./dev");
+      app.use(devMiddleware);
+      app.use(hotMiddleware);
+    }
+    
     app.use(express.static(`${root}/public`));
+    app.use('*', (req, res) => {
+      res.sendFile(`${root}/public/web/index.html`);
+    })
   }
 
   router(routes: (app: Application) => void): ExpressServer {

@@ -11,6 +11,9 @@
     "noImplicitAny": true,
     "jsx": "react"
   },
-  "include": ["typings.d.ts", "server/**/*.ts"],
+  "include": [
+    "typings.d.ts", 
+    "server/index.ts"
+  ],
   "exclude": ["node_modules"]
 }
