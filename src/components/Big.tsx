@@ -1,22 +1,35 @@
 import React from "react";
 
-import { Col, Row, Button, ButtonProps } from "reactstrap";
+import { Col, Row, Button, ButtonProps, RowProps } from "reactstrap";
+import { FlexCol } from "./Flex";
 
-interface BigButtonCellProps extends ButtonProps {}
+interface BigButtonCellProps extends ButtonProps {
+  md?: number;
+  xs?: number;
+}
+
+export const BigButtonColMin = (p: BigButtonCellProps) => {
+  const props = { ...p };
+  props.size = props.size || "";
+  props.md = props.md || 6;
+
+  return (
+    <BigButtonCol {...props} />
+  )
+}
 
 export const BigButtonCol = (props: BigButtonCellProps) => {
+  const { size="lg", md = 4, xs, } = props;
   return (
-    <BigCol>
-      <Button
-        {...props}
-        style={{
-          padding: 70
-        }}
-        size="lg"
-        block
-        color="link">
-        {props.children}
-      </Button>
+    <BigCol md={md} xs={xs} className={props.className}>
+      <FlexCol justify="center" align="center">
+        <Button
+          href={props.href}
+          size={size}
+          color="link">
+          {props.children}
+        </Button>
+      </FlexCol>
     </BigCol>
   )
 }
@@ -25,6 +38,7 @@ interface BigColProps {
   children?: React.ReactNode;
   className?: string;
   md?: number;
+  xs?: number;
 }
 
 export const BigCol = (props: BigColProps) => {
@@ -32,6 +46,7 @@ export const BigCol = (props: BigColProps) => {
     <Col
       className={props.className}
       md={props.md | 4}  
+      xs={props.xs}
       style={{
         boxShadow: "1px 1px 0px 0px black",
         borderTop: "1px solid black",
@@ -50,10 +65,8 @@ export const BigHr = () => {
   )
 }
 
-export const BigRow = (props: { children?: React.ReactNode }) => {
+export const BigRow = (props: RowProps) => {
   return (
-    <Row noGutters>
-      {props.children}
-    </Row>
+    <Row noGutters {...props as any } />
   )
 }

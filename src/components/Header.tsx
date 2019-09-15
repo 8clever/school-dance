@@ -3,15 +3,18 @@ import { BigRow, BigCol, BigHr } from "./Big";
 import { Logo } from "./Logo";
 import { Input, ButtonGroup, Button, InputGroup, InputGroupText } from "reactstrap";
 import { Icon } from "./Icon";
+import { FlexCol } from "./Flex";
 
 export const Header = () => {
   return (
-    <>
+    <div className="sticky-top bg-white">
       <BigRow>
-        <BigCol>
-          <Logo />
+        <BigCol className="d-none d-md-block">
+          <FlexCol justify="center" align="center">
+            <Logo />
+          </FlexCol>
         </BigCol>
-        <BigCol>
+        <BigCol className="d-none d-md-block">
           <InputGroup>
             <Input />
             <InputGroupText>
@@ -38,7 +41,6 @@ export const Header = () => {
           Направление
         </BigCol>
       </BigRow>
-      <BigHr />
-    </>
+    </div>
   )
 }
