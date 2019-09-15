@@ -44,6 +44,12 @@ export const config: Configuration = {
           'sass-loader'
         ],
       },
+      {
+        test: /\.(png|svg|jpg|gif|woff2|woff|eot|ttf)$/,
+        use: [
+          'file-loader'
+        ]
+      }
     ]
   },
   output: {
