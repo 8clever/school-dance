@@ -5,16 +5,18 @@ import bodyParser from 'body-parser';
 import http from 'http';
 import os from 'os';
 import cookieParser from 'cookie-parser';
-import installValidator from './openapi';
+import { openapi } from './openapi';
 import l from './logger';
 
 const app = express();
 
 export default class ExpressServer {
-  constructor() {
-    const root = path.normalize(__dirname + '/../..');
+  
+  root = path.normalize(__dirname + '/../..');
 
-    app.set('appPath', root + 'client');
+  init(): ExpressServer {
+    // middlewares    
+    app.set('appPath', this.root + 'client');
     app.use(bodyParser.json({ limit: process.env.REQUEST_LIMIT || '100kb' }));
     app.use(bodyParser.urlencoded({ extended: true, limit: process.env.REQUEST_LIMIT || '100kb' }));
     app.use(cookieParser(process.env.SESSION_SECRET));
@@ -25,14 +27,16 @@ export default class ExpressServer {
       app.use(hotMiddleware);
     }
     
-    app.use(express.static(`${root}/public`));
-    app.use('*', (req, res) => {
-      res.sendFile(`${root}/public/web/index.html`);
-    })
-  }
+    app.use(express.static(`${this.root}/public`));
 
-  router(routes: (app: Application) => void): ExpressServer {
-    installValidator(app, routes)
+    // api
+    openapi(app);
+    
+    // react
+    app.use('*', (req, res) => {
+      res.sendFile(`${this.root}/public/web/index.html`);
+    });
+
     return this;
   }
 
