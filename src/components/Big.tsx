@@ -24,6 +24,9 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
     <BigCol md={md} xs={xs} className={props.className}>
       <FlexCol justify="center" align="center">
         <Button
+          style={{
+            padding: "20px 0"
+          }}
           href={props.href}
           size={size}
           color="link">

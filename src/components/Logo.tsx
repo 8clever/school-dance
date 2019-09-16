@@ -1,9 +1,13 @@
 import React from "react";
+import logoPNG from "../images/logo.png";
 
-export const Logo = () => {
+interface LogoProps {
+  width?: number;
+  height?: number;
+}
+
+export const Logo = (props: LogoProps) => {
   return (
-    <i>
-      Супер Крутое Лого
-    </i>
+    <img {...props} src={logoPNG} />
   )
 }
