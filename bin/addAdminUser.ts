@@ -6,7 +6,8 @@ import { userService } from "../server/api/services/user.service";
   await mongo.connect();
   await userService.editUser({
     login: "admin",
-    password: "123456"
+    password: "123456",
+    role: "ADMIN"
   });
   console.log("done")
 })().catch(console.log);

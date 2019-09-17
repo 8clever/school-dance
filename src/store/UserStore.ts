@@ -7,6 +7,10 @@ export class UserStore extends Api {
 
   endpoint = "/api/v1/user/"
 
+  isAdmin = () => {
+    return this.user && this.user.role === "ADMIN";
+  }
+
   isLoggedin = async () => {
     const user: User = await this.fetch("isLoggedin", "GET");
     this.user = user;
