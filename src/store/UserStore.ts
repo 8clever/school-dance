@@ -1,6 +1,5 @@
 import { decorate, observable, action } from "mobx";
 import { User } from "../../server/models/User";
-import { notifStore } from "./NotifStore";
 import { Api } from "./Api";
 
 export class UserStore extends Api {
@@ -8,18 +7,31 @@ export class UserStore extends Api {
 
   endpoint = "/api/v1/user/"
 
-  login = async (login: string, password: string): Promise<string> => {
-    const data = await this.fetch("login", "POST", {
+  isLoggedin = async () => {
+    const user: User = await this.fetch("isLoggedin", "GET");
+    this.user = user;
+  }
+
+  login = async (login: string, password: string) => {
+    const token: string = await this.fetch("login", "POST", {
       login,
       password
     });
-    return data as string;
+
+    sessionStorage.setItem('token', token);
+  }
+
+  logout = async () => {
+    await this.fetch("logout", "GET");
+    this.user = undefined;
+    sessionStorage.setItem("token", "");
   }
 }
 
 decorate(UserStore, {
   user: observable,
-  login: action
+  login: action,
+  logout: action
 });
 
 export const userStore = new UserStore;

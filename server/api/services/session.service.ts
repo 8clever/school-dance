@@ -24,6 +24,11 @@ class SessionService {
     await collection.insertOne(session);
     return session.token;
   }
+
+  rmSession = async (token: string) => {
+    const collection = await mongo.db.collection(COLLECTION);
+    await collection.remove({ token });
+  }
 }
 
 export const sessionService = new SessionService();

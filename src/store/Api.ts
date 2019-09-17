@@ -8,19 +8,20 @@ export class Api {
 
   endpoint = "";
 
-  fetch = async (apiName: string, method: Method, body: any) => {
+  fetch = async (apiName: string, method: Method, body?: any) => {
     let url = this.endpoint + apiName;
 
     const fetchProps: RequestInit = {
       method,
       credentials: 'same-origin',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Token": sessionStorage.getItem("token")
       }
     }
 
     if (method === "GET") {
-      url += `?${qs.stringify(body)}`;
+      url += `?${qs.stringify(body || {})}`;
     } 
 
     if (method === "POST") {

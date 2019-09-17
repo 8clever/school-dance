@@ -16,8 +16,10 @@ import { Icon } from "./Icon";
 import { FlexCol } from "./Flex";
 import { Login } from "./Login";
 import { Notification } from "./Notification";
+import { observer } from "mobx-react-lite";
+import { userStore } from "../store/UserStore";
 
-export const Header = () => {
+export const Header = observer(() => {
 
   const [ isVisibleLogin, setIsVisbileLogin ] = React.useState(false);
 
@@ -52,9 +54,16 @@ export const Header = () => {
                 <Icon type="bars" />
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem onClick={() => { setIsVisbileLogin(true) }}>
-                  Вход <Icon type="sign-in-alt" />
-                </DropdownItem>
+                {
+                  userStore.user ?
+                  <DropdownItem onClick={() => { userStore.logout(); }}>
+                    Выход <Icon type="sign-out-alt" />
+                  </DropdownItem> :
+                  <DropdownItem onClick={() => { setIsVisbileLogin(true) }}>
+                    Вход <Icon type="sign-in-alt" />
+                  </DropdownItem>
+                }
+                
               </DropdownMenu>
             </UncontrolledButtonDropdown>
           </ButtonGroup>
@@ -72,4 +81,4 @@ export const Header = () => {
       />
     </div>
   )
-}
+})

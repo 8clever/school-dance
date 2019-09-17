@@ -58,12 +58,13 @@ export const Login = (props: LoginProps) => {
             Отмена
           </Button>
           {" "}
-          <Button color="primary" onClick={() => {
-            userStore.login(login, password).then(() => {
-              setPassword("");
-              setLogin("");
-              props.toggle();
-            });
+          <Button color="primary" onClick={async () => {
+            setPassword("");
+            setLogin("");
+
+            await userStore.login(login, password);
+            await userStore.isLoggedin();
+            props.toggle();
           }}>
             Вход <Icon type="sign-in-alt" />
           </Button>
