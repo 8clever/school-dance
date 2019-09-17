@@ -1,4 +1,4 @@
-import { decorate, observable, action, isObservable } from "mobx";
+import { decorate, observable, action } from "mobx";
 import _ from "lodash";
 
 interface Notification {

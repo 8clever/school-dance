@@ -63,7 +63,7 @@ export const Login = (props: LoginProps) => {
               setPassword("");
               setLogin("");
               props.toggle();
-            })
+            });
           }}>
             Вход <Icon type="sign-in-alt" />
           </Button>

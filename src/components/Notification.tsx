@@ -5,7 +5,6 @@ import { Alert } from "reactstrap";
 import _ from "lodash";
 
 export const Notification = observer(() => {
-
   if (_.isEmpty(notifStore.items)) {
     return null;
   }

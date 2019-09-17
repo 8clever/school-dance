@@ -15,6 +15,7 @@ import {
 import { Icon } from "./Icon";
 import { FlexCol } from "./Flex";
 import { Login } from "./Login";
+import { Notification } from "./Notification";
 
 export const Header = () => {
 
@@ -59,6 +60,7 @@ export const Header = () => {
           </ButtonGroup>
         </BigCol>
       </BigRow>
+      <Notification />
       <BigRow>
         <BigCol className="text-center" md={12}>
           Направление
