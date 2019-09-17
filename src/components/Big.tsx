@@ -7,6 +7,7 @@ interface BigButtonCellProps extends ButtonProps {
   md?: number;
   xs?: number;
   padding?: string;
+  onClick?: () => void;
 }
 
 export const BigButtonColMin = (p: BigButtonCellProps) => {
@@ -26,6 +27,7 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
     <BigCol md={md} xs={xs} className={props.className}>
       <FlexCol justify="center" align="center">
         <Button
+          onClick={props.onClick}
           style={{
             padding: props.padding || "40px 20px"
           }}

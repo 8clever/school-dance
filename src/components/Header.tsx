@@ -18,6 +18,7 @@ import { Login } from "./Login";
 import { Notification } from "./Notification";
 import { observer } from "mobx-react-lite";
 import { userStore } from "../store/UserStore";
+import { routerStore } from "../store/RouterStore";
 
 export const Header = observer(() => {
 
@@ -28,7 +29,9 @@ export const Header = observer(() => {
       <BigRow>
         <BigCol className="d-none d-md-block">
           <FlexCol justify="center" align="center">
-            <Logo width={100} />
+            <div onClick={() => routerStore.history.push("/")} style={{ cursor: "pointer" }}>
+              <Logo width={100} />
+            </div>
           </FlexCol>
         </BigCol>
         <BigCol className="d-none d-md-block">
@@ -70,11 +73,6 @@ export const Header = observer(() => {
         </BigCol>
       </BigRow>
       <Notification />
-      <BigRow>
-        <BigCol className="text-center" md={12}>
-          Направление
-        </BigCol>
-      </BigRow>
       <Login 
         visible={isVisibleLogin}
         toggle={() => { setIsVisbileLogin(!isVisibleLogin) }} 

@@ -3,12 +3,13 @@ import { BigRow, BigCol, BigButtonColMin, BigHr } from "./Big";
 import { Col, Row } from "reactstrap";
 import { Logo } from "./Logo";
 import { Icon } from "./Icon";
+import { routerStore } from "../store/RouterStore";
 
 export const Footer = () => {
   return (
     <div className="bg-gray">
       <BigRow>
-        <BigButtonColMin md={4}>
+        <BigButtonColMin onClick={() => routerStore.history.push("/")} md={4}>
           <Logo />
         </BigButtonColMin>
         <Col md={4}>
