@@ -16,6 +16,35 @@ export const Home = () => {
   return (
     <Base>
       <UncontrolledCarousel items={carousel} />
+      <BigRow>
+        <BigButtonCol>
+          CONTEXT PROJECT
+        </BigButtonCol>
+        <BigButtonCol>
+          КОНТЕКСТ ПРО ТЕАТР
+        </BigButtonCol>
+        <BigButtonCol>
+          МАСТЕР КЛАССЫ
+        </BigButtonCol>
+        <BigButtonCol>
+          КЛАССИЧЕСКИЙ ТАНЕЦ
+        </BigButtonCol>
+        <BigButtonCol>
+          СОВРЕМЕННЫЙ ТАНЕЦ
+        </BigButtonCol>
+        <BigButtonCol>
+          TANZTHEATER
+        </BigButtonCol>
+        <BigButtonCol>
+          50ПЛЮС
+        </BigButtonCol>
+        <BigButtonCol>
+          ДЕТСКИЕ ГРУППЫ
+        </BigButtonCol>
+        <BigButtonCol>
+          ФУНКЦИОНАЛЬНЫЕ ТРЕНИРОВКИ
+        </BigButtonCol>
+      </BigRow>
     </Base>
   )
 }

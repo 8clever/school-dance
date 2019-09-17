@@ -6,12 +6,14 @@ import { FlexCol } from "./Flex";
 interface BigButtonCellProps extends ButtonProps {
   md?: number;
   xs?: number;
+  padding?: string;
 }
 
 export const BigButtonColMin = (p: BigButtonCellProps) => {
   const props = { ...p };
   props.size = props.size || "";
   props.md = props.md || 6;
+  props.padding = "20px 0";
 
   return (
     <BigButtonCol {...props} />
@@ -25,7 +27,7 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
       <FlexCol justify="center" align="center">
         <Button
           style={{
-            padding: "20px 0"
+            padding: props.padding || "40px 20px"
           }}
           href={props.href}
           size={size}
