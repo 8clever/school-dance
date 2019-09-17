@@ -1,5 +1,5 @@
 import React from "react";
-import { BigRow, BigCol } from "./Big";
+import { BigRow, BigCol, BigHr } from "./Big";
 
 interface PageTitleProps {
   children: string;
@@ -12,10 +12,13 @@ export const PageTitle = (props: PageTitleProps) => {
   }, []);
   
   return (
-    <BigRow>
-      <BigCol className="text-center" md={12}>
-        {props.children}
-      </BigCol>
-    </BigRow>
+    <>
+      <BigRow>
+        <BigCol className="text-center" md={12}>
+          {props.children}
+        </BigCol>
+      </BigRow>
+      <BigHr />
+    </>
   )
 }

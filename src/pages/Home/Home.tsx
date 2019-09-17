@@ -9,6 +9,7 @@ import { observer } from "mobx-react-lite";
 import { userStore } from "../../store/UserStore";
 import { routerStore } from "../../store/RouterStore";
 import { PageTitle } from "../../components/PageTitle";
+import { DirectionEdit } from "../../components/DirectionEdit";
 
 const carousel = [
   { src: home1png },
@@ -17,6 +18,8 @@ const carousel = [
 ];
 
 export const Home = observer(() => {
+  const [ directionEditVisible, setDirectionEditVisible ] = React.useState(false);
+
   return (
     <Base>
       <PageTitle>Направления</PageTitle>
@@ -24,11 +27,15 @@ export const Home = observer(() => {
       <BigRow>
         {
           userStore.isAdmin() ?
-          <BigButtonCol onClick={() => routerStore.history.push("/directions/new")}>
+          <BigButtonCol onClick={() => setDirectionEditVisible(true)}>
             <Icon type="plus" /> ДОБАВИТЬ НАПРАВЛЕНИЕ
           </BigButtonCol> : null
         }      
       </BigRow>
+      <DirectionEdit 
+        visible={directionEditVisible}
+        toggle={() => setDirectionEditVisible(!directionEditVisible)}
+      />
     </Base>
   )
 })

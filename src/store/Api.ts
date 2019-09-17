@@ -2,7 +2,7 @@
 import qs from "querystring";
 import { notifStore } from "./NotifStore";
 
-type Method = "POST" | "GET";
+type Method = "POST" | "GET" | "PUT";
 
 export class Api {
 
@@ -15,20 +15,34 @@ export class Api {
       method,
       credentials: 'same-origin',
       headers: {
-        'Content-Type': 'application/json',
         "Token": sessionStorage.getItem("token")
       }
     }
 
     if (method === "GET") {
       url += `?${qs.stringify(body || {})}`;
-    } 
+    }
 
     if (method === "POST") {
+      fetchProps.headers['Content-Type'] = 'application/json';
       fetchProps.body = JSON.stringify(body);
     }
 
+    if (method === "PUT" && body instanceof FormData) {
+      fetchProps.body = body;
+    }
+
     const response = await fetch(url, fetchProps);
+
+    if (!response.ok) {
+      const error = new Error(response.statusText);
+      notifStore.addNotif({
+        title: String(response.status),
+        message: error.message
+      });
+      throw error;
+    }
+
     const data = await response.json();
     
     if (data.errors && data.errors.length) {
