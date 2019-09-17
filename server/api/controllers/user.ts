@@ -1,10 +1,10 @@
 import express from 'express';
-import { userService } from "../../services/user.service";
-import { sessionService } from '../../services/session.service';
-import { res } from 'pino-std-serializers';
+import { userService } from "../services/user.service";
+import { sessionService } from '../services/session.service';
+import { checkAccess } from '../middlewares/checkAccess';
 
 export const router = express.Router()
-  .post("/getUsers", (req, res, next) => {
+  .post("/getUsers", checkAccess, (req, res, next) => {
     const { query, options } = req.body;
     userService.getUsers(query, options).then(data => {
       res.json(data);
