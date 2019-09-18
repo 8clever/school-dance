@@ -34,8 +34,13 @@ class DirectionEventService {
     }
 
     const dt = query.dt as QuerySelector<DirectionEvent["dt"]>;
-    if (dt && dt.$gte) {
-      dt.$gte = moment(dt.$gte).toDate();
+    if (dt) {
+      if (dt.$gte) {
+        dt.$gte = moment(dt.$gte).toDate();
+      }
+      if (dt.$lte) {
+        dt.$lte = moment(dt.$lte).toDate();;
+      }
       query.dt = dt;
     }
 
@@ -44,7 +49,7 @@ class DirectionEventService {
       list,
       count
     ] = await Promise.all([
-      collection.find<DirectionEvent>(query).toArray(),
+      collection.find<DirectionEvent>(query).sort({ dt: 1 }).toArray(),
       collection.count(query)
     ]);
     return {

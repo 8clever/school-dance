@@ -1,14 +1,15 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { Base, BigRow, BigCol, BigButtonCol, Icon } from "../../components";
+import { Base, BigRow, BigCol, BigButtonCol, Icon, FlexCol } from "../../components";
 import { PageTitle } from "../../components/PageTitle";
 import { directionStore } from "../../store/DirectionStore";
-import { UncontrolledCarousel } from "reactstrap";
+import { UncontrolledCarousel, ButtonGroup, Row, Col } from "reactstrap";
 import { imageStore } from "../../store/ImageStore";
 import { userStore } from "../../store/UserStore";
 import { routerStore } from "../../store/RouterStore";
 import { DirectionEventEdit } from "../../components/DirectionEventEdit";
 import { directionEventStore } from "../../store/DirectionEventStore";
+import moment from "moment";
 
 interface DirectionProps {
   id?: string;
@@ -17,21 +18,68 @@ interface DirectionProps {
 export const Direction = observer((props: DirectionProps) => {
 
   const [ isVisibleEditEvent, setVisibleEditEvent ] = React.useState(false);
+  const [ date, setDate ] = React.useState(new Date());
 
   React.useEffect(() => {
     directionStore.loadDirection(props.id);
+  }, [props.id])
+
+  React.useEffect(() => {
     directionEventStore.loadDirectionEvents({ 
-      dt: { $gte: new Date() },
+      dt: { 
+        $gte: moment(date).startOf("month").toDate(),
+        $lte: moment(date).endOf("month").toDate() 
+      },
       _iddirection: props.id 
     });
-  }, [props.id]);
+  }, [props.id, date]);
 
   if (!directionStore.direction) return null;
-  
+
   return (
     <Base>
       <PageTitle>{directionStore.direction.name}</PageTitle>
 
+      {/** calendar */}
+      <BigRow>
+        <BigButtonCol 
+          className="d-none d-md-block" 
+          padding={"15px 0"} 
+        />
+        <BigCol >
+          <FlexCol align="center" justify="between">
+            <div 
+              style={{ 
+                padding: 10,
+                cursor: "pointer" 
+              }} 
+              onClick={() => {
+              setDate(moment(date).add(-1, "month").toDate())
+            }}>
+              <Icon type="chevron-left" />
+            </div>
+            <div style={{ padding: 10 }}>
+              {moment(date).format("MM.YYYY")}
+            </div>
+            <div 
+              style={{ 
+                padding: 10,
+                cursor: "pointer" 
+              }}
+              onClick={() => {
+              setDate(moment(date).add(1, "month").toDate())
+            }}>
+              <Icon type="chevron-right" />
+            </div>
+          </FlexCol>
+        </BigCol>
+        <BigButtonCol 
+          className="d-none d-md-block" 
+          padding={"15px 0"} 
+        />
+      </BigRow>
+      
+      {/** event view */}
       <BigRow>
         <BigCol md={7} lg={8} xs={12}>
           <UncontrolledCarousel 
@@ -44,6 +92,7 @@ export const Direction = observer((props: DirectionProps) => {
         </BigCol>
       </BigRow>
 
+      {/** additional events */}
       <BigRow>
 
         {
