@@ -8,7 +8,7 @@ class DirectionEventStore extends Api {
   directionEvent?: DirectionEvent;
   directionEvents: DirectionEvent[] = [];
 
-  endpoint: "/api/v1/direction-event/";
+  endpoint = "/api/v1/direction-event/";
 
   createDirectionEvent = async (_iddirection: string) => {
     this.directionEvent = {

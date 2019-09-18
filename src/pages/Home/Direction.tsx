@@ -8,6 +8,7 @@ import { imageStore } from "../../store/ImageStore";
 import { userStore } from "../../store/UserStore";
 import { routerStore } from "../../store/RouterStore";
 import { DirectionEventEdit } from "../../components/DirectionEventEdit";
+import { directionEventStore } from "../../store/DirectionEventStore";
 
 interface DirectionProps {
   id?: string;
@@ -19,6 +20,10 @@ export const Direction = observer((props: DirectionProps) => {
 
   React.useEffect(() => {
     directionStore.loadDirection(props.id);
+    directionEventStore.loadDirectionEvents({ 
+      dt: { $gte: new Date() },
+      _iddirection: props.id 
+    });
   }, [props.id]);
 
   if (!directionStore.direction) return null;
