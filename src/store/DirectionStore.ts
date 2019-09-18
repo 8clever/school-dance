@@ -2,6 +2,7 @@ import { toJS, decorate, observable, action } from "mobx";
 import { Api } from "./Api";
 import { Direction } from "../../server/models/Direction";
 import { FilterQuery } from "mongodb";
+import { imageStore } from "./ImageStore";
 
 class DirectionStore extends Api {
   direction?: Direction;
@@ -10,22 +11,15 @@ class DirectionStore extends Api {
 
   endpoint = "/api/v1/direction/"
 
-  uploadImage = async (blob: Blob) => {
-    if (!this.direction) {
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("image", blob);
-    const _idimage: string = await this.fetch("image", "PUT", formData);
-    this.direction.images.push(_idimage);
-  }
-
   saveDirection = async () => {
     const direction = toJS(this.direction);
+    
     for(const image of this.newImages) {
-      await this.uploadImage(image);
+      const _idimage = await imageStore.upload(image);
+      direction.images.push(_idimage);
     }
+
+    this.newImages = [];
     await this.fetch("editDirection", "POST", direction);
   }
 
@@ -52,7 +46,6 @@ class DirectionStore extends Api {
 decorate(DirectionStore, {
   direction: observable,
   directions: observable,
-  uploadImage: action,
   loadDirection: action,
   loadDirections: action
 });

@@ -10,7 +10,9 @@ export const config: Configuration = {
   ],
   plugins: [
     new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({})
+    new HtmlWebpackPlugin({
+      title: process.env.APP_NAME
+    })
   ],
   resolve: {
     extensions: [

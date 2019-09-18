@@ -33,18 +33,9 @@ export class Api {
     }
 
     const response = await fetch(url, fetchProps);
-
-    if (!response.ok) {
-      const error = new Error(response.statusText);
-      notifStore.addNotif({
-        title: String(response.status),
-        message: error.message
-      });
-      throw error;
-    }
-
     const data = await response.json();
-    
+    if (!data) return null;
+
     if (data.errors && data.errors.length) {
       const errors = data.errors as Error[];
       notifStore.addNotif({
