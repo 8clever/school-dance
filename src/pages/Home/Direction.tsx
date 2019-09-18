@@ -7,12 +7,15 @@ import { UncontrolledCarousel } from "reactstrap";
 import { imageStore } from "../../store/ImageStore";
 import { userStore } from "../../store/UserStore";
 import { routerStore } from "../../store/RouterStore";
+import { DirectionEventEdit } from "../../components/DirectionEventEdit";
 
 interface DirectionProps {
   id?: string;
 }
 
 export const Direction = observer((props: DirectionProps) => {
+
+  const [ isVisibleEditEvent, setVisibleEditEvent ] = React.useState(false);
 
   React.useEffect(() => {
     directionStore.loadDirection(props.id);
@@ -41,7 +44,9 @@ export const Direction = observer((props: DirectionProps) => {
         {
           userStore.isAdmin() ?
           <>
-            <BigButtonCol>
+            <BigButtonCol onClick={() => {
+              setVisibleEditEvent(true);
+            }}>
               <Icon type="plus" /> Добавить событие
             </BigButtonCol>
             <BigButtonCol onClick={async () => {
@@ -53,7 +58,14 @@ export const Direction = observer((props: DirectionProps) => {
           </>
           : null
         }
+
       </BigRow>
+ 
+      <DirectionEventEdit 
+        visible={isVisibleEditEvent}
+        toggle={() => setVisibleEditEvent(!isVisibleEditEvent)}
+        _iddirection={props.id}
+      />
     </Base>
   )
 })

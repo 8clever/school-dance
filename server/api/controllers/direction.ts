@@ -14,7 +14,7 @@ export const router = express.Router()
       res.json(data);
     }).catch(next);
   })
-  .get("/rmDirection", (req, res, next) => {
+  .get("/rmDirection", checkAccess, (req, res, next) => {
     const { _id } = req.query;
     directionService.rmDirection(_id).then(() => {
       res.json({});
