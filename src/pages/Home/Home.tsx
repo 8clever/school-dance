@@ -7,9 +7,10 @@ import home2png from "../../images/home_2.jpg";
 import home3png from "../../images/home_3.jpg";
 import { observer } from "mobx-react-lite";
 import { userStore } from "../../store/UserStore";
-import { routerStore } from "../../store/RouterStore";
 import { PageTitle } from "../../components/PageTitle";
 import { DirectionEdit } from "../../components/DirectionEdit";
+import { directionStore } from "../../store/DirectionStore";
+import { routerStore } from "../../store/RouterStore";
 
 const carousel = [
   { src: home1png },
@@ -20,11 +21,26 @@ const carousel = [
 export const Home = observer(() => {
   const [ directionEditVisible, setDirectionEditVisible ] = React.useState(false);
 
+  React.useEffect(() => {
+    directionStore.loadDirections();
+  }, []);
+
   return (
     <Base>
       <PageTitle>Направления</PageTitle>
       <UncontrolledCarousel items={carousel} />
       <BigRow>
+        {
+          directionStore.directions.map(d => {
+            return (
+              <BigButtonCol 
+                key={d._id as string}                
+                onClick={() => routerStore.history.push("/directions/" + d._id)}>
+                {d.name}
+              </BigButtonCol>
+            )
+          })
+        }
         {
           userStore.isAdmin() ?
           <BigButtonCol onClick={() => setDirectionEditVisible(true)}>
@@ -32,6 +48,7 @@ export const Home = observer(() => {
           </BigButtonCol> : null
         }      
       </BigRow>
+      
       <DirectionEdit 
         visible={directionEditVisible}
         toggle={() => setDirectionEditVisible(!directionEditVisible)}

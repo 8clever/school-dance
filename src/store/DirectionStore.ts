@@ -6,14 +6,14 @@ import { imageStore } from "./ImageStore";
 
 class DirectionStore extends Api {
   direction?: Direction;
-  directions?: Direction[];
+  directions: Direction[] = [];
   newImages: Blob[] = []
 
   endpoint = "/api/v1/direction/"
 
   saveDirection = async () => {
     const direction = toJS(this.direction);
-    
+
     for(const image of this.newImages) {
       const _idimage = await imageStore.upload(image);
       direction.images.push(_idimage);
@@ -38,7 +38,7 @@ class DirectionStore extends Api {
   }
 
   loadDirections = async (query?: FilterQuery<Direction>) => {
-    const data = await this.fetch("getDireactions", "GET", { query });
+    const data = await this.fetch("getDirections", "GET", { query: query || {} });
     this.directions = data.list;
   }
 }

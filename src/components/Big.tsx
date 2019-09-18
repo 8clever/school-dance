@@ -46,6 +46,7 @@ interface BigColProps {
   className?: string;
   md?: number;
   xs?: number;
+  lg?: number;
 }
 
 export const BigCol = (props: BigColProps) => {
@@ -54,6 +55,7 @@ export const BigCol = (props: BigColProps) => {
       className={props.className}
       md={props.md | 4}  
       xs={props.xs}
+      lg={props.lg}
       style={{
         boxShadow: "1px 1px 0px 0px black",
         borderTop: "1px solid black",
