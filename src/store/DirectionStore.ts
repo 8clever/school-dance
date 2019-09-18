@@ -23,7 +23,7 @@ class DirectionStore extends Api {
     await this.fetch("editDirection", "POST", direction);
   }
 
-  loadDirection = async (_id: string) => {
+  loadDirection = async (_id?: string) => {
     this.direction = {
       name: "",
       images: []
@@ -40,6 +40,10 @@ class DirectionStore extends Api {
   loadDirections = async (query?: FilterQuery<Direction>) => {
     const data = await this.fetch("getDirections", "GET", { query: query || {} });
     this.directions = data.list;
+  }
+
+  rmDirection = async (_id: string) => {
+    await this.fetch("rmDirection", "GET", { _id });
   }
 }
 

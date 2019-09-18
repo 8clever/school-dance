@@ -22,6 +22,10 @@ class DirectionService {
   }
 
   getDirections = async (query: FilterQuery<Direction>) => {
+    if (query._id) {
+      query._id = new ObjectID(query._id as string);
+    }
+
     const collection = mongo.db.collection(COLLECTION);
     const [
       list,
@@ -34,6 +38,13 @@ class DirectionService {
       list,
       count
     }
+  }
+
+  rmDirection = async (_id: string | ObjectID) => {
+    if (!_id) return;
+    _id = new ObjectID(_id);
+    const collection = await mongo.db.collection(COLLECTION);
+    await collection.remove({ _id });
   }
 }
 

@@ -1,15 +1,6 @@
 import { userService } from '../services/user.service';
 import { NextFunction, Request, Response } from "express";
-
-export class ServerError extends Error {
-  status: number = 500;
-  message: "Internal Server Error";
-
-  constructor (message: string, status: number) {
-    super(message);
-    this.status = status;
-  }
-}
+import { ServerError } from './error.handler';
 
 export const checkAccess = (req: Request, res: Response, next: NextFunction) => {
   const err = new ServerError("Unauthorized", 403);

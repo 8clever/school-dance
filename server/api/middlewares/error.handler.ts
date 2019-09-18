@@ -1,5 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 
+export class ServerError extends Error {
+  status: number = 500;
+  message: "Internal Server Error";
+
+  constructor (message: string, status: number) {
+    super(message);
+    this.status = status;
+  }
+}
+
 export interface ExpressError extends Error {
   errors?: Error[],
   status?: number

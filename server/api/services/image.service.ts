@@ -2,10 +2,14 @@ import { mongo } from "../../common/db";
 import { GridFSBucket, ObjectID } from "mongodb";
 import { File } from "swagger-express-middleware";
 import fs from "fs";
+import { ServerError } from "../middlewares/error.handler";
 
 const COLLECTION = "fs.files";
 
 class ImageService {
+
+  // 2mb
+  uploadLimit = 2097152;
 
   getImage = async function (_id: ObjectID | string) {
     let images = await mongo.db.collection(COLLECTION);
@@ -21,6 +25,10 @@ class ImageService {
   };
 
   saveImage = async (file: File): Promise<string> => {
+    if (file.size > this.uploadLimit) {
+      throw new ServerError("File size exceed limits: 2mb", 400);
+    }
+
     const readStream = fs.createReadStream(file.path);
     const bucket = new GridFSBucket(mongo.db);
     const stream = bucket.openUploadStream(file.originalname);

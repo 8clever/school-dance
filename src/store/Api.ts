@@ -1,12 +1,28 @@
 
 import qs from "querystring";
 import { notifStore } from "./NotifStore";
+import _ from "lodash";
 
 type Method = "POST" | "GET" | "PUT";
 
 export class Api {
 
   endpoint = "";
+
+  stringifyQuery = (obj: object) => {
+    if (!obj) return;
+
+    const nested = Object.keys(obj).reduce((memo, k) => {
+      if (_.isArray(obj[k]) || _.isPlainObject(obj[k])) {
+        memo[k] = `json_${JSON.stringify(obj[k])}`;
+      } else {
+        memo[k] = obj[k];
+      }
+      return memo;
+    }, {});
+
+    return qs.stringify(nested);
+  }
 
   fetch = async (apiName: string, method: Method, body?: any) => {
     let url = this.endpoint + apiName;
@@ -20,7 +36,7 @@ export class Api {
     }
 
     if (method === "GET") {
-      url += `?${qs.stringify(body || {})}`;
+      url += `?${this.stringifyQuery(body)}`;
     }
 
     if (method === "POST") {

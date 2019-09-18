@@ -12,8 +12,8 @@ interface DirectionEditProps {
 export const DirectionEdit = observer((props: DirectionEditProps) => {
 
   React.useEffect(() => {
-    directionStore.loadDirection(props._id);
-  }, [props._id])
+    directionStore.loadDirection();
+  }, [props.visible]);
 
   if (!directionStore.direction) return null;
 

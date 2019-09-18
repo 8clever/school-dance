@@ -2,7 +2,9 @@ import path from 'path';
 import express, { Application } from 'express';
 import { OpenApiValidator } from 'express-openapi-validator';
 import errorHandler from '../api/middlewares/error.handler';
+import { parsequery } from "../api/middlewares/parsequery";
 import session from "express-session";
+
 
 import { router as userRouter } from "../api/controllers/user";
 import { router as directionRouter } from "../api/controllers/direction";
@@ -18,7 +20,8 @@ export const openapi = (app: Application) => {
         saveUninitialized: true,
         cookie: { secure: true }
     }));
-
+    
+    router.use(parsequery)
     router.use("/user", userRouter);
     router.use("/direction", directionRouter);
     router.use("/image", imageRouter);
