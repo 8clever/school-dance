@@ -11,6 +11,7 @@ import { router as directionRouter } from "../api/controllers/direction";
 import { router as performanceRouter } from "../api/controllers/performance";
 import { router as imageRouter } from "../api/controllers/image";
 import { router as eventRouter } from "../api/controllers/event";
+import { router as teacherRouter } from "../api/controllers/teacher";
 
 export const openapi = (app: Application) => {
     const apiSpecPath = path.join(__dirname, 'api.yml');
@@ -29,6 +30,7 @@ export const openapi = (app: Application) => {
     router.use("/performance", performanceRouter);
     router.use("/image", imageRouter);
     router.use("/event", eventRouter);
+    router.use("/teacher", teacherRouter);
 
     app.use("/api/v1", router, errorHandler);
 
