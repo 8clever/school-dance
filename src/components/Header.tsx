@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { BigRow, BigCol, BigHr, BigButtonColMin } from "./Big";
+import { BigRow, BigCol, BigButtonColMin } from "./Big";
 import { Logo } from "./Logo";
 import { 
   Input, 
@@ -9,7 +9,6 @@ import {
   InputGroupText, 
   DropdownToggle, 
   DropdownMenu, 
-  DropdownItem, 
   UncontrolledButtonDropdown 
 } from "reactstrap";
 import { Icon } from "./Icon";
