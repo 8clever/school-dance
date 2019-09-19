@@ -1,43 +1,18 @@
 import { User } from "../../models/User";
-import { mongo } from "../../common/db";
-import { generateHash } from "./hepers";
-import { ObjectID } from "bson";
+import { generateHash } from "./helpers";
 import { sessionService } from "./session.service";
-import { FilterQuery, FindOneOptions } from "mongodb";
-import _ from "lodash";
+import { MongoService } from "./mongo.service";
 
-export const COLLECTION = "users";
+export class UserService extends MongoService<User> {
 
-export class UserService {
+  collection = "users";
 
   editUser = async (user: User) => {
-    const collection = await mongo.db.collection(COLLECTION);
-
     if (user.password) {
       user.password = generateHash(user.password);
     }
 
-    if (user._id) {
-      const _id = new ObjectID(user._id);
-      const $set = _.omit(user, "_id");
-      await collection.updateOne({ _id }, { $set });
-      return _id;
-    }
-
-    const data = await collection.insertOne(user);
-    return data.ops[0]._id;
-  }
-
-  getUsers = async (query: FilterQuery<User>, options?: FindOneOptions) => {
-    const collection = await mongo.db.collection(COLLECTION);
-    const [ list, count ] = await Promise.all([
-      collection.find<User>(query, options).toArray(),
-      collection.count(query)
-    ]);
-    return {
-      list,
-      count
-    }
+    return this._edit(user);
   }
 
   isLoggedin = async (token: string) => {
@@ -48,17 +23,19 @@ export class UserService {
   }
 
   login = async (login: string, password: string) => {
-    const collection = await mongo.db.collection(COLLECTION);
-    const user = await collection.findOne<User>({
+    const data = await this._find({ 
       login,
       password: generateHash(password)
     });
 
+    const user = data.list[0];
     if (!user) throw new Error("Login or password are incorrect");
 
     const token = await sessionService.addSession(user._id);
     return token;
   }
+
+  getUsers = this._find;
 }
 
 export const userService = new UserService();

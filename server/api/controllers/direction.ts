@@ -16,7 +16,7 @@ export const router = express.Router()
   })
   .get("/rmDirection", checkAccess, (req, res, next) => {
     const { _id } = req.query;
-    directionService.rmDirection(_id).then(() => {
+    directionService.rmDirection({ _id }).then(() => {
       res.json({});
     }).catch(next);
   })

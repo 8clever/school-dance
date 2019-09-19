@@ -1,6 +1,6 @@
 import { MongoClient, Db as MongoDb } from "mongodb";
-import { COLLECTION as userCollection } from "../api/services/user.service"
-import { COLLECTION as sessionCollection } from "../api/services/session.service";
+import { userService } from "../api/services/user.service"
+import { sessionService } from "../api/services/session.service";
 
 class Db {
   url: string;
@@ -15,8 +15,8 @@ class Db {
   insertIndexes = async () => {
     if (!this.db) return;
 
-    const users = await this.db.collection(userCollection);
-    const session = await this.db.collection(sessionCollection);
+    const users = await this.db.collection(userService.collection);
+    const session = await this.db.collection(sessionService.collection);
 
     // uniqu login for each user
     await users.createIndex("login", { unique: true, min: 3 });

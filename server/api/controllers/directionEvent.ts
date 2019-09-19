@@ -16,7 +16,7 @@ export const router = express.Router()
   })
   .get("/rmDirectionEvent", checkAccess, (req, res, next) => {
     const { _id } = req.query;
-    directionEventService.rmDirectionEvent(_id).then(() => {
+    directionEventService.rmDirectionEvent({ _id }).then(() => {
       res.json({});
     }).catch(next);
   })

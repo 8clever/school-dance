@@ -5,8 +5,8 @@ import { checkAccess } from '../middlewares/checkAccess';
 
 export const router = express.Router()
   .post("/getUsers", checkAccess, (req, res, next) => {
-    const { query, options } = req.body;
-    userService.getUsers(query, options).then(data => {
+    const { query } = req.body;
+    userService.getUsers(query).then(data => {
       res.json(data);
     }).catch(next);
   })

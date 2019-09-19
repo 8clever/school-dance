@@ -1,34 +1,20 @@
-import { ObjectID, FilterQuery, QuerySelector } from "mongodb";
-import { mongo } from "../../common/db";
+import { ObjectID, FilterQuery, QuerySelector, RootQuerySelector } from "mongodb";
 import { DirectionEvent } from "../../models/DirectionEvent";
 import _ from "lodash";
 import moment from "moment";
+import { MongoService } from "./mongo.service";
 
-export const COLLECTION = "direction-event";
+class DirectionEventService extends MongoService<DirectionEvent> {
 
-class DirectionEventService {
+  collection = "direction-event";
+
   editDirectionEvent = async (event: DirectionEvent) => {
-    const collection = mongo.db.collection(COLLECTION);
-    const $set = _.omit(event, "_id");
-
-    $set._iddirection = new ObjectID(event._iddirection);
-    $set.dt = moment(event.dt).toDate();
-
-    if (event._id) {
-      const _id = new ObjectID(event._id);
-      await collection.update({ _id }, { $set });
-      return _id;
-    }
-
-    const data = await collection.insert($set);
-    return data.ops[0]._id;
+    event._iddirection = new ObjectID(event._iddirection);
+    event.dt = moment(event.dt).toDate();
+    return this._edit(event);
   }
 
-  getDirectionEvents = async (query: FilterQuery<DirectionEvent>) => {
-    if (query._id) {
-      query._id = new ObjectID(query._id as string);
-    }
-
+  getDirectionEvents = async (query: RootQuerySelector<DirectionEvent>) => {
     if (query._iddirection) {
       query._iddirection = new ObjectID(query._iddirection as string);
     }
@@ -44,26 +30,10 @@ class DirectionEventService {
       query.dt = dt;
     }
 
-    const collection = mongo.db.collection(COLLECTION);
-    const [
-      list,
-      count
-    ] = await Promise.all([
-      collection.find<DirectionEvent>(query).sort({ dt: 1 }).toArray(),
-      collection.count(query)
-    ]);
-    return {
-      list,
-      count
-    }
+    return this._find(query);
   }
 
-  rmDirectionEvent = async (_id: string | ObjectID) => {
-    if (!_id) return;
-    _id = new ObjectID(_id);
-    const collection = await mongo.db.collection(COLLECTION);
-    await collection.remove({ _id });
-  }
+  rmDirectionEvent = this._remove
 }
 
 export const directionEventService = new DirectionEventService();

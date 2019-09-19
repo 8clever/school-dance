@@ -1,16 +1,16 @@
 import { Session } from "../../models/Session";
 import { ObjectID } from "mongodb";
-import { generateHash } from "./hepers";
+import { generateHash } from "./helpers";
 import { mongo } from "../../common/db";
+import { MongoService } from "./mongo.service";
 
-export const COLLECTION = "session";
+class SessionService extends MongoService<Session> {
 
-class SessionService {
+  collection = "session";
 
   getSession = async (token: string) => {
-    const collection = await mongo.db.collection(COLLECTION);
-    const session = await collection.findOne<Session>({ token });
-    return session;
+    const data = await this._find({ token });
+    return data.list[0];
   }
 
   addSession = async (_iduser: ObjectID | string) => {
@@ -20,14 +20,12 @@ class SessionService {
       token: generateHash(Math.random().toString())
     }
 
-    const collection = await mongo.db.collection(COLLECTION);
-    await collection.insertOne(session);
+    await this._edit(session);
     return session.token;
   }
 
   rmSession = async (token: string) => {
-    const collection = await mongo.db.collection(COLLECTION);
-    await collection.remove({ token });
+    await this._remove({ token });
   }
 }
 
