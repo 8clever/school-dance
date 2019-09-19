@@ -1,16 +1,16 @@
 import React from "react";
 import { UncontrolledCarousel } from "reactstrap";
-import { BigRow, Base, BigButtonCol, Icon, BigCol } from "../../components";
+import { BigRow, Base, BigButtonCol, Icon } from "../components";
 
-import home1png from "../../images/home_1.jpg";
-import home2png from "../../images/home_2.jpg";
-import home3png from "../../images/home_3.jpg";
+import home1png from "../images/home_1.jpg";
+import home2png from "../images/home_2.jpg";
+import home3png from "../images/home_3.jpg";
 import { observer } from "mobx-react-lite";
-import { userStore } from "../../store/UserStore";
-import { PageTitle } from "../../components/PageTitle";
-import { DirectionEdit } from "../../components/DirectionEdit";
-import { directionStore } from "../../store/DirectionStore";
-import { routerStore } from "../../store/RouterStore";
+import { userStore } from "../store/UserStore";
+import { PageTitle } from "../components/PageTitle";
+import { DirectionEdit } from "../components/DirectionEdit";
+import { directionStore } from "../store/DirectionStore";
+import { routerStore } from "../store/RouterStore";
 
 const carousel = [
   { src: home1png },

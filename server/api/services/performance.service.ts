@@ -1,7 +1,6 @@
-import { ObjectID, QuerySelector, RootQuerySelector } from "mongodb";
+import { ObjectID, RootQuerySelector } from "mongodb";
 import { Performance } from "../../models/Performance";
 import _ from "lodash";
-import moment from "moment";
 import { MongoService } from "./mongo.service";
 
 class EventService extends MongoService<Performance> {

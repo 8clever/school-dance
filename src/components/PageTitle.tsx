@@ -12,7 +12,7 @@ export const PageTitle = (props: PageTitleProps) => {
   
   React.useEffect(() => {
     document.title = props.children;
-  }, []);
+  }, [props.children]);
   
   return (
     <>
