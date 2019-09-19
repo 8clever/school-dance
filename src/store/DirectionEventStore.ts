@@ -33,11 +33,11 @@ class DirectionEventStore extends Api<DirectionEvent> {
     const ev = toJS(this.directionEvent);
     if (!ev) return;
 
-    return this.fetch("editDirectionEvent", "POST", ev);
+    return this.editItem(ev);;
   }
 
   rmDirectionEvent = async (_id: string) => {
-    await this.fetch("rmDirectionEvent", "GET", { _id });
+    return this.removeItem({ _id });
   }
 }
 
