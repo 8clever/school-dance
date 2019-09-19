@@ -7,8 +7,8 @@ import { UncontrolledCarousel, ButtonGroup, Row, Col } from "reactstrap";
 import { imageStore } from "../../store/ImageStore";
 import { userStore } from "../../store/UserStore";
 import { routerStore } from "../../store/RouterStore";
-import { DirectionEventEdit } from "../../components/DirectionEventEdit";
-import { directionEventStore } from "../../store/DirectionEventStore";
+import { PerformanceEdit } from "../../components/PerformanceEdit";
+import { performanceStore } from "../../store/PerformanceStore";
 import moment from "moment";
 
 interface DirectionProps {
@@ -25,14 +25,10 @@ export const Direction = observer((props: DirectionProps) => {
   }, [props.id])
 
   React.useEffect(() => {
-    directionEventStore.loadDirectionEvents({ 
-      dt: { 
-        $gte: moment(date).startOf("month").toDate(),
-        $lte: moment(date).endOf("month").toDate() 
-      },
+    performanceStore.loadPerformanceList({
       _iddirection: props.id 
     });
-  }, [props.id, date]);
+  }, [props.id]);
 
   if (!directionStore.direction) return null;
 
@@ -115,7 +111,7 @@ export const Direction = observer((props: DirectionProps) => {
 
       </BigRow>
  
-      <DirectionEventEdit 
+      <PerformanceEdit 
         visible={isVisibleEditEvent}
         toggle={() => setVisibleEditEvent(!isVisibleEditEvent)}
         _iddirection={props.id}

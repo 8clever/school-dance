@@ -8,7 +8,7 @@ import session from "express-session";
 
 import { router as userRouter } from "../api/controllers/user";
 import { router as directionRouter } from "../api/controllers/direction";
-import { router as directionEventRouter } from "../api/controllers/directionEvent";
+import { router as performanceRouter } from "../api/controllers/performance";
 import { router as imageRouter } from "../api/controllers/image";
 
 export const openapi = (app: Application) => {
@@ -25,7 +25,7 @@ export const openapi = (app: Application) => {
     router.use(parsequery)
     router.use("/user", userRouter);
     router.use("/direction", directionRouter);
-    router.use("/direction-event", directionEventRouter);
+    router.use("/performance", performanceRouter);
     router.use("/image", imageRouter);
 
     app.use("/api/v1", router, errorHandler);
