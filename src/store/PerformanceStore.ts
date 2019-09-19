@@ -29,7 +29,7 @@ class PerformanceStore extends Api<Performance> {
 
   loadPerformanceList = async (query: RootQuerySelector<Performance>) => {
     const data = await this.getItems(query);
-    this.performance = data.list;
+    this.performanceList = data.list;
   }
 
   savePerformance = async () => {

@@ -17,18 +17,15 @@ interface DirectionProps {
 
 export const Direction = observer((props: DirectionProps) => {
 
-  const [ isVisibleEditEvent, setVisibleEditEvent ] = React.useState(false);
+  const [ visiblePerformance, setVisiblePerformance ] = React.useState(false);
   const [ date, setDate ] = React.useState(new Date());
 
   React.useEffect(() => {
     directionStore.loadDirection(props.id);
-  }, [props.id])
-
-  React.useEffect(() => {
     performanceStore.loadPerformanceList({
       _iddirection: props.id 
     });
-  }, [props.id]);
+  }, [props.id])
 
   if (!directionStore.direction) return null;
 
@@ -38,10 +35,17 @@ export const Direction = observer((props: DirectionProps) => {
 
       {/** calendar */}
       <BigRow>
-        <BigButtonCol 
-          className="d-none d-md-block" 
-          padding={"15px 0"} 
-        />
+        <BigCol>
+          <FlexCol justify="between" align="center">
+            <div style={{ padding: 10 }}>
+              <Icon type="chevron-right" />
+            </div>
+            <div style={{ padding: 10 }}>
+              Спектакль
+            </div>
+            <div></div>
+          </FlexCol>
+        </BigCol>
         <BigCol >
           <FlexCol align="center" justify="between">
             <div 
@@ -72,19 +76,16 @@ export const Direction = observer((props: DirectionProps) => {
         <BigButtonCol 
           className="d-none d-md-block" 
           padding={"15px 0"} 
-        />
+        >ПРОЕКТ</BigButtonCol>
       </BigRow>
       
       {/** event view */}
       <BigRow>
-        <BigCol md={7} lg={8} xs={12}>
+        <BigCol md={12} xs={12}>
           <UncontrolledCarousel 
             items={directionStore.direction.images.map(i => {
             return { src: `${imageStore.endpoint}${i}` };
           })} />
-        </BigCol>
-        <BigCol md={5} lg={4} xs={12}>
-            
         </BigCol>
       </BigRow>
 
@@ -92,12 +93,22 @@ export const Direction = observer((props: DirectionProps) => {
       <BigRow>
 
         {
+          performanceStore.performanceList.map(p => {
+            return (
+              <BigButtonCol key={p._id as string}>
+                {p.name}
+              </BigButtonCol>
+            )
+          })
+        }
+
+        {
           userStore.isAdmin() ?
           <>
             <BigButtonCol onClick={() => {
-              setVisibleEditEvent(true);
+              setVisiblePerformance(true);
             }}>
-              <Icon type="plus" /> Добавить событие
+              <Icon type="plus" /> Добавить Спектакль
             </BigButtonCol>
             <BigButtonCol onClick={async () => {
               await directionStore.rmDirection(props.id);
@@ -112,8 +123,8 @@ export const Direction = observer((props: DirectionProps) => {
       </BigRow>
  
       <PerformanceEdit 
-        visible={isVisibleEditEvent}
-        toggle={() => setVisibleEditEvent(!isVisibleEditEvent)}
+        visible={visiblePerformance}
+        toggle={() => setVisiblePerformance(!visiblePerformance)}
         _iddirection={props.id}
       />
     </Base>
