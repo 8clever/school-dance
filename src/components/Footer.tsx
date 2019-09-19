@@ -14,7 +14,7 @@ export const Footer = () => {
         </BigButtonColMin>
         <Col md={4}>
           <BigRow>
-            <BigButtonColMin>Студия</BigButtonColMin>
+            <BigButtonColMin onClick={() => routerStore.history.push("/studio")}>Студия</BigButtonColMin>
             <BigButtonColMin>Первое посещение</BigButtonColMin>
             <BigButtonColMin>Партнеры</BigButtonColMin>
             <BigButtonColMin>Направления</BigButtonColMin>
