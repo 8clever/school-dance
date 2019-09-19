@@ -1,6 +1,6 @@
 import { Api } from "./Api";
 
-class ImageStore extends Api {
+class ImageStore extends Api<any> {
   endpoint = "/api/v1/image/"
 
   upload = async (blob: Blob): Promise<string> => {

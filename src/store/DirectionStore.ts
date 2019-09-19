@@ -4,7 +4,7 @@ import { Direction } from "../../server/models/Direction";
 import { FilterQuery } from "mongodb";
 import { imageStore } from "./ImageStore";
 
-class DirectionStore extends Api {
+class DirectionStore extends Api<Direction> {
   direction?: Direction;
   directions: Direction[] = [];
   newImages: Blob[] = []
@@ -20,7 +20,7 @@ class DirectionStore extends Api {
     }
 
     this.newImages = [];
-    await this.fetch("editDirection", "POST", direction);
+    return this.editItem(direction);
   }
 
   loadDirection = async (_id?: string) => {
@@ -38,12 +38,12 @@ class DirectionStore extends Api {
   }
 
   loadDirections = async (query?: FilterQuery<Direction>) => {
-    const data = await this.fetch("getDirections", "GET", { query: query || {} });
+    const data = await this.getItems(query);
     this.directions = data.list;
   }
 
   rmDirection = async (_id: string) => {
-    await this.fetch("rmDirection", "GET", { _id });
+    this.removeItem({ _id });
   }
 }
 

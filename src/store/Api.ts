@@ -2,10 +2,11 @@
 import qs from "querystring";
 import { notifStore } from "./NotifStore";
 import _ from "lodash";
+import { RootQuerySelector } from "mongodb";
 
 type Method = "POST" | "GET" | "PUT";
 
-export class Api {
+export class Api<T> {
 
   endpoint = "";
 
@@ -22,6 +23,18 @@ export class Api {
     }, {});
 
     return qs.stringify(nested);
+  }
+
+  editItem = async (item: T) => {
+    return this.fetch("editItem", "POST", item);
+  }
+
+  getItems = async (query: RootQuerySelector<T>) => {
+    return this.fetch("items", "GET", { query });
+  }
+
+  removeItem = async (query: RootQuerySelector<T>) => {
+    return this.fetch("rmItem", "GET", query);
   }
 
   fetch = async (apiName: string, method: Method, body?: any) => {

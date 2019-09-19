@@ -3,7 +3,7 @@ import { Api } from "./Api";
 import { DirectionEvent } from "../../server/models/DirectionEvent";
 import { FilterQuery } from "mongodb";
 
-class DirectionEventStore extends Api {
+class DirectionEventStore extends Api<DirectionEvent> {
 
   directionEvent?: DirectionEvent;
   directionEvents: DirectionEvent[] = [];
@@ -20,12 +20,12 @@ class DirectionEventStore extends Api {
   }
 
   loadDirectionEvent = async (_id: string) => {
-    const data = await this.fetch("getDirectionEvents", "GET", { query: { _id }});
+    const data = await this.getItems({ _id });
     this.directionEvent = data.list[0];
   }
 
   loadDirectionEvents = async (query: FilterQuery<DirectionEvent>) => {
-    const data = await this.fetch("getDirectionEvents", "GET", { query });
+    const data = await this.getItems(query);
     this.directionEvents = data.list;
   }
 

@@ -4,7 +4,7 @@ import { sessionService } from '../services/session.service';
 import { checkAccess } from '../middlewares/checkAccess';
 
 export const router = express.Router()
-  .post("/getUsers", checkAccess, (req, res, next) => {
+  .post("/items", checkAccess, (req, res, next) => {
     const { query } = req.body;
     userService.getUsers(query).then(data => {
       res.json(data);

@@ -2,7 +2,7 @@ import { decorate, observable, action } from "mobx";
 import { User } from "../../server/models/User";
 import { Api } from "./Api";
 
-export class UserStore extends Api {
+export class UserStore extends Api<User> {
   user?: User;
 
   endpoint = "/api/v1/user/"
