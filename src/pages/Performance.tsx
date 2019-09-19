@@ -35,7 +35,7 @@ export const Performance = observer((props: PerformanceProps) => {
 
   if (!performanceStore.performance) return null;
 
-  const event = eventStore.eventList[0];
+  const event = eventStore.eventList.length && eventStore.eventList[0];
   
   return (
     <Base>
