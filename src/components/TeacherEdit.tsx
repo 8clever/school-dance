@@ -1,13 +1,15 @@
 import React from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input } from "reactstrap";
 import { observer } from "mobx-react-lite";
-import { teacherStore } from "../store/TeacherStore";
+import { teacherStore as teacherGlobalStore, TeacherStore } from "../store/TeacherStore";
 
 interface TeacherEditProps {
   _id?: string;
   visible: boolean;
   toggle: () => void;
 }
+
+const teacherStore = new TeacherStore();
 
 export const TeacherEdit = observer((props: TeacherEditProps) => {
 
@@ -76,7 +78,7 @@ export const TeacherEdit = observer((props: TeacherEditProps) => {
         </Button>
         <Button color={"primary"} onClick={async () => {
           await teacherStore.saveTeacher();
-          await teacherStore.loadTeacherList({});
+          await teacherGlobalStore.loadTeacherList({});
           props.toggle();
         }}>
           Сохранить

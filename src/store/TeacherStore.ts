@@ -4,7 +4,7 @@ import { Teacher } from "../../server/models/Teacher";
 import { RootQuerySelector } from "mongodb";
 import { imageStore } from "./ImageStore";
 
-class TeacherStore extends Api<Teacher> {
+export class TeacherStore extends Api<Teacher> {
 
   teacher?: Teacher;
   teacherList: Teacher[] = [];

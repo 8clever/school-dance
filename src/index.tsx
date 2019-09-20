@@ -16,3 +16,7 @@ ReactDOM.render(<Router />, $el);
 if (module["hot"]) {
   module["hot"].accept();
 }
+
+window.addEventListener('contextmenu', function (e) {
+  e.preventDefault();
+}, false);
