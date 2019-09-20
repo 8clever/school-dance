@@ -58,7 +58,7 @@ export const config: Configuration = {
         ],
       },
       {
-        test: /\.(png|svg|jpg|gif|woff2|woff|eot|ttf)$/,
+        test: /\.(png|svg|jpg|gif|woff2|woff|eot|ttf|otf)$/,
         use: [
           'file-loader'
         ]

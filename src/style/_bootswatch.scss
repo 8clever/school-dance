@@ -2,7 +2,14 @@
 // Bootswatch
 
 
-// Variables ===================================================================
+// Font Variables ===================================================================
+
+@font-face {
+  font-family: 'Main Font';
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/main_font.otf");
+}
 
 $web-font-path: "https://fonts.googleapis.com/css?family=Nunito+Sans:400,600" !default;
 @import url($web-font-path);
