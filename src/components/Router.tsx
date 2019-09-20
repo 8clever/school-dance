@@ -7,12 +7,18 @@ import { Performance } from "../pages/Performance";
 import { Studio } from "../pages/Studio";
 import { Teacher } from "../pages/Teacher";
 import { Partners } from "../pages/Partners";
+import { AnimatedSwitch } from 'react-router-transition';
 
 export const Router = () => {
 
   return (
     <DOMRouter history={routerStore.history}>
-      <Switch>
+      <AnimatedSwitch
+        atEnter={{ opacity: 0 }}
+        atLeave={{ opacity: 0 }}
+        atActive={{ opacity: 1 }}
+        className="switch-wrapper"
+      >
         <Route exact path="/" render={() => <Home />} />
         <Route exact path="/directions/:id" render={(match) => <Direction id={match.match.params.id as string} />}/>
         <Route exact path="/events/:id" render={(match) => <Performance id={match.match.params.id as string} />}/>
@@ -20,7 +26,7 @@ export const Router = () => {
         <Route exact path="/teachers" render={(match) => <Teacher />}/>
         <Route exact path="/teacher/:id" render={(match) => <Teacher id={match.match.params.id} />}/>
         <Route exact path="/partners" render={(match) => <Partners />}/>
-      </Switch>
+      </AnimatedSwitch>
     </DOMRouter>
   )
 }

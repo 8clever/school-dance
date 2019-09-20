@@ -14,10 +14,10 @@ export const Base = (props: Props) => {
   }, [])
 
   return (
-    <>
+    <div>
       <Header />
       {props.children}
       <Footer />
-    </>
+    </div>
   )
 }

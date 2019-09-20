@@ -1,6 +1,7 @@
 import React from "react";
 import { Base, BigRow, BigButtonCol, BigCol, FlexCol } from "../components";
 import { PageTitle } from "../components/PageTitle";
+import { CSSTransition } from "react-transition-group";
 
 import imgFondDiana from "../images/partners/fond_diana.png";
 import imgСontextWhite from "../images/partners/context_white.png";
@@ -8,11 +9,14 @@ import imgIlimg from "../images/partners/ilim.png";
 import imgAstoria from "../images/partners/astoria.png";
 import imgGollandia from "../images/partners/new_gollandiya.png";
 import imgCinema from "../images/partners/new_cinema.png";
-import { CSSTransition } from "react-transition-group";
+import imgGost from "../images/partners/gost.png";
+
+
 
 interface PartnerButtonProps {
   img: string;
   title: string;
+  link: string;
 }
 
 const PartnerButton = (props: PartnerButtonProps) => {
@@ -23,6 +27,9 @@ const PartnerButton = (props: PartnerButtonProps) => {
       {
         isHover ? null :
         <BigButtonCol 
+          onClick={() => {
+            window.location.href = props.link;
+          }}
           onMouseEnter={() => setHover(true)}
           padding={"150px 60px"} >
           {props.title}
@@ -39,7 +46,14 @@ const PartnerButton = (props: PartnerButtonProps) => {
           <BigCol 
             onMouseLeave={() => setHover(false)}>
             <FlexCol align="center" justify='center'>
-              <div style={{ padding: 20 }}>
+              <div 
+                onClick={() => {
+                  window.location.href = props.link;
+                }}
+                style={{ 
+                  cursor: "pointer",
+                  padding: 20 
+                }}>
                 <img width="100%" src={props.img} />
               </div>
             </FlexCol>
@@ -57,29 +71,44 @@ export const Partners = () => {
       <PageTitle>ПАРТНЕРЫ</PageTitle>
       <BigRow>
         <PartnerButton 
+          link="http://www.dianavishneva.com/ru/foundation/"
           title="ФОНД ДИАНЫ ВИШНЁВОЙ"
           img={imgFondDiana}
         />
         <PartnerButton 
+          link="http://www.contextfest.com"
           title="ФЕСТИВАЛЬ CONTEXT"
           img={imgСontextWhite}
         />
         <PartnerButton 
+          link="https://www.ilimgroup.ru"
           title="ГРУППА КОМПАНИЙ ИЛИМ"
           img={imgIlimg}
         />
         <PartnerButton 
+          link="https://www.roccofortehotels.com/ru/hotels-and-resorts/hotel-astoria/"
           title="Отель Астория"
           img={imgAstoria}
         />
         <PartnerButton 
+          link="http://www.newhollandsp.ru"
           title="Новая Голландия"
           img={imgGollandia}
         />
         <PartnerButton 
+          link="https://alexandrinsky.ru"
           title="Новая Сцена Александрийского театра"
           img={imgCinema}
         />
+        <BigCol className="d-none d-md-block">
+          <div style={{padding: 150 }}></div>
+        </BigCol>
+        <PartnerButton 
+          link="https://gost-group.ru"
+          title="группа копаний GOST"
+          img={imgGost}
+        />
+        <BigCol className="d-none d-md-block" />
       </BigRow>
     </Base>
   )
