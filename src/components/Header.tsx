@@ -19,12 +19,11 @@ import { observer } from "mobx-react-lite";
 import { userStore } from "../store/UserStore";
 import { routerStore } from "../store/RouterStore";
 
+import scheduleSVG from "../images/icons/schedule.svg";
+
 export const Header = observer(() => {
 
   const [ isVisibleLogin, setIsVisbileLogin ] = React.useState(false);
-  const menuStyle: CSSProperties = {
-    padding: "20px 80px",
-  }
 
   return (
     <div className="sticky-top bg-white">
@@ -52,11 +51,16 @@ export const Header = observer(() => {
               РУ
             </Button>
             <Button color="link">
-              <Icon type="calendar-alt" />
+              <img 
+                style={{
+                  width: 23
+                }}
+                src={scheduleSVG} 
+              />
             </Button>
             <UncontrolledButtonDropdown inNavbar>
               <DropdownToggle>
-                <Icon type="bars" />
+                <Icon type="bars" size={"lg"} />
               </DropdownToggle>
               <DropdownMenu style={{ padding: 0, minWidth: 400 }} right>
                 <BigRow>

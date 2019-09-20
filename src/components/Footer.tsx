@@ -5,6 +5,8 @@ import { Logo } from "./Logo";
 import { Icon } from "./Icon";
 import { routerStore } from "../store/RouterStore";
 
+import scheduleSVG from "../images/icons/schedule.svg";
+
 export const Footer = () => {
   return (
     <div className="bg-gray">
@@ -40,7 +42,7 @@ export const Footer = () => {
           <BigRow className="h-100">
             <Col xs={7}>
               <BigButtonColMin className="h-100" xs={12} md={12} h100>
-                <Icon type="calendar-alt" size={"2x"} />
+                <img src={scheduleSVG} />
               </BigButtonColMin>
             </Col>
             <Col xs={5}>
