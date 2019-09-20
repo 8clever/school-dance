@@ -6,6 +6,7 @@ import { Direction } from "../pages/Direction";
 import { Performance } from "../pages/Performance";
 import { Studio } from "../pages/Studio";
 import { Teacher } from "../pages/Teacher";
+import { Partners } from "../pages/Partners";
 
 export const Router = () => {
 
@@ -18,6 +19,7 @@ export const Router = () => {
         <Route exact path="/studio" render={(match) => <Studio />}/>
         <Route exact path="/teachers" render={(match) => <Teacher />}/>
         <Route exact path="/teacher/:id" render={(match) => <Teacher id={match.match.params.id} />}/>
+        <Route exact path="/partners" render={(match) => <Partners />}/>
       </Switch>
     </DOMRouter>
   )

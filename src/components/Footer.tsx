@@ -14,12 +14,26 @@ export const Footer = () => {
         </BigButtonColMin>
         <Col md={4}>
           <BigRow>
-            <BigButtonColMin onClick={() => routerStore.history.push("/studio")}>Студия</BigButtonColMin>
-            <BigButtonColMin>Первое посещение</BigButtonColMin>
-            <BigButtonColMin>Партнеры</BigButtonColMin>
-            <BigButtonColMin>Направления</BigButtonColMin>
-            <BigButtonColMin>Контакты</BigButtonColMin>
-            <BigButtonColMin>Цены</BigButtonColMin>
+            <BigButtonColMin 
+              onClick={() => routerStore.history.push("/studio")}>
+              Студия
+            </BigButtonColMin>
+            <BigButtonColMin>
+              Первое посещение
+            </BigButtonColMin>
+            <BigButtonColMin 
+              onClick={() => routerStore.history.push("/partners")}>
+              Партнеры
+            </BigButtonColMin>
+            <BigButtonColMin>
+              Направления
+            </BigButtonColMin>
+            <BigButtonColMin>
+              Контакты
+            </BigButtonColMin>
+            <BigButtonColMin>
+              Цены
+            </BigButtonColMin>
           </BigRow>
         </Col>
         <Col md={4}>

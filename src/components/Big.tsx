@@ -7,6 +7,8 @@ interface BigButtonCellProps extends ButtonProps {
   md?: number;
   xs?: number;
   padding?: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
   onClick?: () => void;
 }
 
@@ -24,7 +26,12 @@ export const BigButtonColMin = (p: BigButtonCellProps) => {
 export const BigButtonCol = (props: BigButtonCellProps) => {
   const { size="lg", md = 4, xs, } = props;
   return (
-    <BigCol md={md} xs={xs} className={props.className}>
+    <BigCol 
+      onMouseEnter={props.onMouseEnter}
+      onMouseLeave={props.onMouseLeave}
+      md={md} 
+      xs={xs} 
+      className={props.className}>
       <FlexCol justify="center" align="center">
         <Button
           onClick={props.onClick}
@@ -45,6 +52,8 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
 interface BigColProps {
   children?: React.ReactNode;
   className?: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
   md?: number;
   xs?: number;
   lg?: number;
@@ -53,6 +62,8 @@ interface BigColProps {
 export const BigCol = (props: BigColProps) => {
   return (
     <Col
+      onMouseEnter={() => props.onMouseEnter && props.onMouseEnter()}
+      onMouseLeave={() => props.onMouseLeave && props.onMouseLeave()}
       className={props.className}
       md={props.md | 4}  
       xs={props.xs}
