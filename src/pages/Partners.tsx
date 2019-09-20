@@ -8,6 +8,7 @@ import imgIlimg from "../images/partners/ilim.png";
 import imgAstoria from "../images/partners/astoria.png";
 import imgGollandia from "../images/partners/new_gollandiya.png";
 import imgCinema from "../images/partners/new_cinema.png";
+import { CSSTransition } from "react-transition-group";
 
 interface PartnerButtonProps {
   img: string;
@@ -17,25 +18,36 @@ interface PartnerButtonProps {
 const PartnerButton = (props: PartnerButtonProps) => {
   const [ isHover, setHover ] = React.useState(false);
 
-  if (isHover) {
-    return (
-      <BigCol 
-        onMouseLeave={() => setHover(false)}>
-        <FlexCol align="center" justify='center'>
-          <div style={{ padding: 20 }}>
-            <img width="100%" src={props.img} />
-          </div>
-        </FlexCol>
-      </BigCol>
-    )
-  }
-
   return (
-    <BigButtonCol 
-      onMouseEnter={() => setHover(true)}
-      padding={"150px 60px"} >
-      {props.title}
-    </BigButtonCol>
+    <>
+      {
+        isHover ? null :
+        <BigButtonCol 
+          onMouseEnter={() => setHover(true)}
+          padding={"150px 60px"} >
+          {props.title}
+        </BigButtonCol>
+      }
+      <CSSTransition 
+        key={props.title}
+        timeout={600}
+        classNames="big"
+        unmountOnExit
+        in={isHover}>
+        {
+          isHover ?
+          <BigCol 
+            onMouseLeave={() => setHover(false)}>
+            <FlexCol align="center" justify='center'>
+              <div style={{ padding: 20 }}>
+                <img width="100%" src={props.img} />
+              </div>
+            </FlexCol>
+          </BigCol>
+          : <></>
+        }
+      </CSSTransition>
+    </>
   )
 }
 
