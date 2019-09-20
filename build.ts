@@ -13,5 +13,6 @@ s.cp('server/common/api.yml', `${outDir}/common/api.yml`);
 webpack(config, (err, stats) => {
   if (err) throw err;
 
-  console.log("compilation done!")  
+  console.log("compilation done!")
+  process.exit();  
 });
