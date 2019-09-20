@@ -31,19 +31,39 @@ export const Footer = () => {
             </Col>
             <Col xs={5}>
               <BigRow className="h-50" noGutters>
-                <BigButtonColMin className="h-100" xs={6}>
+                <BigButtonColMin 
+                  onClick={() => {
+                    window.location.href = "https://vk.com/contextpro.studio";
+                  }}
+                  className="h-100" 
+                  xs={6}>
                   <Icon type="vk" sub="b" size="2x" />
                 </BigButtonColMin>
-                <BigButtonColMin className="h-100" xs={6}>
+                <BigButtonColMin 
+                  onClick={() => {
+                    window.location.href = "https://www.facebook.com/contextpro.studio/";
+                  }}
+                  className="h-100" 
+                  xs={6}>
                   <Icon type="facebook" sub="b" size="2x" />
                 </BigButtonColMin>
               </BigRow>
               <BigRow className="h-50">
-                <BigButtonColMin className="h-100" xs={6}>
+                <BigButtonColMin 
+                  onClick={() => {
+                    window.location.href = "https://www.instagram.com/contextpro.studio/";
+                  }}
+                  className="h-100" 
+                  xs={6}>
                   <Icon type="instagram" sub="b" size="2x" />
                 </BigButtonColMin>
-                <BigButtonColMin className="h-100" xs={6}>
-                  <Icon type="youtube" sub="b" size="2x" />
+                <BigButtonColMin 
+                  onClick={() => {
+                    window.location.href = "https://wa.me/79319750080"
+                  }}
+                  className="h-100" 
+                  xs={6}>
+                  <Icon type="whatsapp" sub="b" size="2x" />
                 </BigButtonColMin>
               </BigRow>
             </Col>
