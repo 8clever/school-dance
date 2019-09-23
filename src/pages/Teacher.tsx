@@ -9,7 +9,7 @@ import { TeacherEdit } from "../components/TeacherEdit";
 import { routerStore } from "../store/RouterStore";
 import { toJS } from "mobx";
 import { imageStore } from "../store/ImageStore";
-import { Col } from "reactstrap";
+import { Col, Button } from "reactstrap";
 
 interface TeacherProps {
   id?: string;
@@ -17,7 +17,9 @@ interface TeacherProps {
 
 export const Teacher = observer((props: TeacherProps) => {
 
+  const [ teacherAddVisible, setTeacherAddVisible ] = React.useState(false);
   const [ teacherEditVisible, setTeacherEditVisible ] = React.useState(false);
+  const [ refresh, setRefresh ] = React.useState(0);
 
   React.useEffect(() => {
     teacherStore.loadTeacherList({}).then(() => {
@@ -25,7 +27,7 @@ export const Teacher = observer((props: TeacherProps) => {
       const list = toJS(teacherStore.teacherList);
       teacherStore.teacher = t || list[0];
     });
-  }, [props.id]);
+  }, [props.id, refresh]);
 
   const teacher = teacherStore.teacher;
 
@@ -52,7 +54,7 @@ export const Teacher = observer((props: TeacherProps) => {
             userStore.isAdmin() ?
             <BigButtonColMin 
               md={12} 
-              onClick={() => setTeacherEditVisible(true)}>
+              onClick={() => setTeacherAddVisible(true)}>
               <Icon type="plus" /> Педагог
             </BigButtonColMin> :
             null
@@ -73,17 +75,49 @@ export const Teacher = observer((props: TeacherProps) => {
           {
             teacher && teacher._id ?
             <div style={{ padding: 30 }}>
+
+              {
+                userStore.isAdmin() ?
+                <div className="text-right mb-3">
+                  <Button 
+                    size="sm"
+                    onClick={() => {
+                    setTeacherEditVisible(true)
+                  }}>
+                    <Icon type="pencil-alt" /> Редактировать
+                  </Button>
+                  <Button 
+                    color="primary"
+                    size="sm"
+                    onClick={async () => { 
+                      await teacherStore.rmTeacher(teacher._id as string)
+                      routerStore.history.push("/teachers");
+                      setRefresh(refresh + 1);
+                    }}>
+                    <Icon type="trash" /> Удалить
+                  </Button>
+                </div> : null
+              }
+
               <h2>О Педагоге</h2>
               <p>{teacher.description}</p>
             </div> : null
           }
         </BigCol>
       </BigRow>
+      
+      {
+        teacher && teacher._id ?
+        <TeacherEdit 
+          visible={teacherEditVisible}
+          toggle={() => setTeacherEditVisible(!teacherEditVisible)}
+          _id={teacher._id as string}
+        /> : null
+      }
 
       <TeacherEdit 
-        visible={teacherEditVisible}
-        toggle={() => setTeacherEditVisible(!teacherEditVisible)}
-        _id={props.id}
+        visible={teacherAddVisible}
+        toggle={() => setTeacherAddVisible(!teacherAddVisible)}
       />
 
     </Base>

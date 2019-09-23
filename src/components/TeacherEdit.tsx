@@ -2,6 +2,7 @@ import React from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input } from "reactstrap";
 import { observer } from "mobx-react-lite";
 import { teacherStore as teacherGlobalStore, TeacherStore } from "../store/TeacherStore";
+import { ImagePreview } from "./ImagePreview";
 
 interface TeacherEditProps {
   _id?: string;
@@ -14,13 +15,11 @@ const teacherStore = new TeacherStore();
 export const TeacherEdit = observer((props: TeacherEditProps) => {
 
   React.useEffect(() => {
-    if (!props._id) return;
-    teacherStore.loadTeacher(props._id);
-  }, [props._id]);
-
-  React.useEffect(() => {
     teacherStore.createTeacher();
-  }, [props.visible])
+    if (!(props.visible && props._id)) return;
+
+    teacherStore.loadTeacher(props._id);
+  }, [props.visible, props._id])
 
   const teacher = teacherStore.teacher;
   if (!teacher) return null;
@@ -70,6 +69,20 @@ export const TeacherEdit = observer((props: TeacherEditProps) => {
             }
           }/>
         </FormGroup>
+
+        {
+          teacherStore.teacher.images.map((i, idx) => {
+            return (
+              <ImagePreview 
+                key={idx}
+                _id={i as string}
+                onRemove={() => {
+                  teacherStore.teacher.images.splice(idx, 1);
+                }}
+              />            
+            )
+          })
+        }
 
       </ModalBody>
       <ModalFooter>
