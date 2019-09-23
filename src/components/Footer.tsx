@@ -1,6 +1,6 @@
 import React from "react";
-import { BigRow, BigCol, BigButtonColMin, BigHr } from "./Big";
-import { Col, Row } from "reactstrap";
+import { BigRow, BigButtonColMin, BigHr } from "./Big";
+import { Col } from "reactstrap";
 import { Logo } from "./Logo";
 import { Icon } from "./Icon";
 import { routerStore } from "../store/RouterStore";
@@ -20,7 +20,9 @@ export const Footer = () => {
               onClick={() => routerStore.history.push("/studio")}>
               Студия
             </BigButtonColMin>
-            <BigButtonColMin>
+            <BigButtonColMin onClick={() => {
+              routerStore.history.push("/firstvisit")
+            }}>
               Первое посещение
             </BigButtonColMin>
             <BigButtonColMin 

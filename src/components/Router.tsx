@@ -8,6 +8,7 @@ import { Studio } from "../pages/Studio";
 import { Teacher } from "../pages/Teacher";
 import { Partners } from "../pages/Partners";
 import { AnimatedSwitch } from 'react-router-transition';
+import { FirstVisit } from "../pages/FirstVisit";
 
 export const Router = () => {
 
@@ -26,6 +27,7 @@ export const Router = () => {
         <Route exact path="/teachers" render={(match) => <Teacher />}/>
         <Route exact path="/teacher/:id" render={(match) => <Teacher id={match.match.params.id} />}/>
         <Route exact path="/partners" render={(match) => <Partners />}/>
+        <Route exact path="/firstvisit" render={(match) => <FirstVisit />}/>
       </AnimatedSwitch>
     </DOMRouter>
   )
