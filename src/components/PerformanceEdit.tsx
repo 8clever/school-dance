@@ -91,6 +91,11 @@ export const PerformanceEdit = observer((props: PerformanceEditProps) => {
         </Button>
         <Button color={"primary"} onClick={async () => {
           await performanceStore.savePerformance();
+          
+          if (props._id) {
+            await performanceStoreGlobal.loadPerformance(props._id);
+          }
+
           await performanceStoreGlobal.loadPerformanceList({ 
             _iddirection: props._iddirection
           });

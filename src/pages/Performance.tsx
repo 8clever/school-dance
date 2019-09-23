@@ -11,6 +11,7 @@ import { EventEdit } from "../components/EventEdit";
 import { eventStore } from "../store/EventStore";
 import moment from "moment";
 import { PerformanceEdit } from "../components/PerformanceEdit";
+import ReactMarkdown from "react-markdown";
 
 interface PerformanceProps {
   id: string;
@@ -70,8 +71,7 @@ export const Performance = observer((props: PerformanceProps) => {
               </p> :
               null
             }
-            <h2>{performanceStore.performance.name}</h2>
-            <p>{performanceStore.performance.description}</p>
+            <ReactMarkdown source={performanceStore.performance.description} />
           </div>
         </BigCol>
       </BigRow>

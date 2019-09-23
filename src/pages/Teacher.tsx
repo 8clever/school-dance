@@ -10,6 +10,7 @@ import { routerStore } from "../store/RouterStore";
 import { toJS } from "mobx";
 import { imageStore } from "../store/ImageStore";
 import { Col, Button } from "reactstrap";
+import ReactMarkdown from "react-markdown";
 
 interface TeacherProps {
   id?: string;
@@ -100,7 +101,7 @@ export const Teacher = observer((props: TeacherProps) => {
               }
 
               <h2>О Педагоге</h2>
-              <p>{teacher.description}</p>
+              <ReactMarkdown source={teacher.description} />
             </div> : null
           }
         </BigCol>

@@ -91,6 +91,11 @@ export const TeacherEdit = observer((props: TeacherEditProps) => {
         </Button>
         <Button color={"primary"} onClick={async () => {
           await teacherStore.saveTeacher();
+
+          if (props._id) {
+            await teacherGlobalStore.loadTeacher(props._id);
+          }
+
           await teacherGlobalStore.loadTeacherList({});
           props.toggle();
         }}>
