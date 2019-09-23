@@ -1,9 +1,8 @@
 import React from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, FormText } from "reactstrap";
 import { observer } from "mobx-react-lite";
-import { performanceStore } from "../store/PerformanceStore";
-import DatePicker from "react-datepicker";
-import moment from "moment";
+import { performanceStore as performanceStoreGlobal, PerformanceStore } from "../store/PerformanceStore";
+import { ImagePreview } from "./ImagePreview";
 
 interface PerformanceEditProps {
   _id?: string;
@@ -12,11 +11,16 @@ interface PerformanceEditProps {
   toggle: () => void;
 }
 
+const performanceStore = new PerformanceStore()
+
 export const PerformanceEdit = observer((props: PerformanceEditProps) => {
 
   React.useEffect(() => {
     performanceStore.createPerformance(props._iddirection);
-  }, [props.visible]);
+    if (!(props._id && props.visible)) return;
+
+    performanceStore.loadPerformance(props._id);
+  }, [props.visible, props._id]);
 
   if (!performanceStore.performance) return null;
 
@@ -67,6 +71,19 @@ export const PerformanceEdit = observer((props: PerformanceEditProps) => {
           }/>
         </FormGroup>
 
+        {
+          performanceStore.performance.images.map((i, idx) => {
+            return (
+              <ImagePreview 
+                _id={i as string}
+                onRemove={() => {
+                  performanceStore.performance.images.splice(idx, 1);
+                }}
+              />            
+            )
+          })
+        }
+
       </ModalBody>
       <ModalFooter>
         <Button color={"secondary"} onClick={props.toggle}>
@@ -74,7 +91,7 @@ export const PerformanceEdit = observer((props: PerformanceEditProps) => {
         </Button>
         <Button color={"primary"} onClick={async () => {
           await performanceStore.savePerformance();
-          await performanceStore.loadPerformanceList({ 
+          await performanceStoreGlobal.loadPerformanceList({ 
             _iddirection: props._iddirection
           });
           props.toggle();

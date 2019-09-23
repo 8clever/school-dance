@@ -4,7 +4,7 @@ import { Performance } from "../../server/models/Performance";
 import { RootQuerySelector } from "mongodb";
 import { imageStore } from "./ImageStore";
 
-class PerformanceStore extends Api<Performance> {
+export class PerformanceStore extends Api<Performance> {
 
   performance?: Performance;
   performanceList: Performance[] = [];

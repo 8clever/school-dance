@@ -10,6 +10,7 @@ import { routerStore } from "../store/RouterStore";
 import { EventEdit } from "../components/EventEdit";
 import { eventStore } from "../store/EventStore";
 import moment from "moment";
+import { PerformanceEdit } from "../components/PerformanceEdit";
 
 interface PerformanceProps {
   id: string;
@@ -19,6 +20,7 @@ export const Performance = observer((props: PerformanceProps) => {
  
   const [ date, setDate ] = React.useState(new Date());
   const [ eventEditVisible, setEventEditVisible ] = React.useState(false);
+  const [ visiblePerformance, setPerformanceVisible ] = React.useState(false);
 
   React.useEffect(() => {
     performanceStore.loadPerformance(props.id);
@@ -81,6 +83,11 @@ export const Performance = observer((props: PerformanceProps) => {
             <Icon type="plus" /> Событие
           </BigButtonCol>
           <BigButtonCol onClick={() => {
+            setPerformanceVisible(true);
+          }}>
+            <Icon type="pencil-alt" /> Редактировать Спектакль
+          </BigButtonCol>
+          <BigButtonCol onClick={() => {
             performanceStore.rmPerformance(props.id);
             routerStore.history.push("/");
           }}>
@@ -88,6 +95,15 @@ export const Performance = observer((props: PerformanceProps) => {
           </BigButtonCol>
         </BigRow> : null
       }
+
+      <PerformanceEdit 
+        _id={performanceStore.performance._id as string}
+        _iddirection={performanceStore.performance._iddirection as string}
+        visible={visiblePerformance}
+        toggle={() => {
+          setPerformanceVisible(!visiblePerformance)
+        }}
+      />
 
       <EventEdit 
         _idperformance={props.id}

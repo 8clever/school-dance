@@ -1,7 +1,10 @@
 import React from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, FormText } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, FormText, Row, Col } from "reactstrap";
 import { observer } from "mobx-react-lite";
-import { directionStore } from "../store/DirectionStore";
+import { directionStore as directionStoreGlobal, DirectionStore } from "../store/DirectionStore";
+import { imageStore } from "../store/ImageStore";
+import { Icon } from "./Icon";
+import { ImagePreview } from "./ImagePreview";
 
 interface DirectionEditProps {
   _id?: string;
@@ -9,11 +12,16 @@ interface DirectionEditProps {
   toggle: () => void;
 }
 
+const directionStore = new DirectionStore();
+
 export const DirectionEdit = observer((props: DirectionEditProps) => {
 
   React.useEffect(() => {
-    directionStore.loadDirection();
-  }, [props.visible]);
+    directionStore.createDirection();
+    if (!(props.visible && props._id)) return;
+
+    directionStore.loadDirection(props._id);
+  }, [ props.visible, props._id ]);
 
   if (!directionStore.direction) return null;
 
@@ -52,6 +60,19 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
             }
           }/>
         </FormGroup>
+
+        {
+          directionStore.direction.images.map((i, idx) => {
+            return (
+              <ImagePreview 
+                _id={i as string}
+                onRemove={() => {
+                  directionStore.direction.images.splice(idx, 1);
+                }}
+              />            
+            )
+          })
+        }
         
       </ModalBody>
       <ModalFooter>
@@ -60,7 +81,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
         </Button>
         <Button color={"primary"} onClick={async () => {
           await directionStore.saveDirection();
-          await directionStore.loadDirections({});
+          await directionStoreGlobal.loadDirections({});
           props.toggle();
         }}>
           Сохранить

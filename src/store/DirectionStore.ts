@@ -4,7 +4,7 @@ import { Direction } from "../../server/models/Direction";
 import { FilterQuery } from "mongodb";
 import { imageStore } from "./ImageStore";
 
-class DirectionStore extends Api<Direction> {
+export class DirectionStore extends Api<Direction> {
   direction?: Direction;
   directions: Direction[] = [];
   newImages: Blob[] = []
@@ -23,17 +23,20 @@ class DirectionStore extends Api<Direction> {
     return this.editItem(direction);
   }
 
-  loadDirection = async (_id?: string) => {
+  createDirection = () => {
     this.direction = {
       name: "",
       images: []
     }
     this.newImages = [];
+  }
+
+  loadDirection = async (_id?: string) => {
     if (!_id) return;
 
-    await this.loadDirections({ _id });
-    if (this.directions.length) {
-      this.direction = this.directions[0];
+    const data = await this.getItems({ _id });
+    if (data.count) {
+      this.direction = data.list[0];
     }
   }
 

@@ -10,6 +10,7 @@ import { routerStore } from "../store/RouterStore";
 import { PerformanceEdit } from "../components/PerformanceEdit";
 import { performanceStore } from "../store/PerformanceStore";
 import { HeaderCalendar } from "../components/HeaderCalendar";
+import { DirectionEdit } from "../components/DirectionEdit";
 
 interface DirectionProps {
   id?: string;
@@ -18,6 +19,7 @@ interface DirectionProps {
 export const Direction = observer((props: DirectionProps) => {
 
   const [ visiblePerformance, setVisiblePerformance ] = React.useState(false);
+  const [ visibleDirection, setVisibleDirection ] = React.useState(false);
   const [ date, setDate ] = React.useState(new Date());
 
   React.useEffect(() => {
@@ -77,6 +79,11 @@ export const Direction = observer((props: DirectionProps) => {
               <Icon type="plus" /> Добавить Спектакль
             </BigButtonCol>
             <BigButtonCol onClick={async () => {
+              setVisibleDirection(true);
+            }}>
+              <Icon type="pencil-alt" /> Редактировать направление
+            </BigButtonCol>
+            <BigButtonCol onClick={async () => {
               await directionStore.rmDirection(props.id);
               routerStore.history.push("/");
             }}>
@@ -87,6 +94,12 @@ export const Direction = observer((props: DirectionProps) => {
         }
 
       </BigRow>
+
+      <DirectionEdit 
+        visible={visibleDirection}
+        toggle={() => setVisibleDirection(!visibleDirection)}
+        _id={props.id}
+      />
  
       <PerformanceEdit 
         visible={visiblePerformance}

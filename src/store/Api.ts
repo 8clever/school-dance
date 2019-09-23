@@ -25,11 +25,11 @@ export class Api<T> {
     return qs.stringify(nested);
   }
 
-  editItem = async (item: T) => {
+  editItem = async (item: T): Promise<string> => {
     return this.fetch("editItem", "POST", item);
   }
 
-  getItems = async (query: RootQuerySelector<T>) => {
+  getItems = async (query: RootQuerySelector<T>): Promise<{ list: T[], count: number }> => {
     return this.fetch("items", "GET", { query });
   }
 
