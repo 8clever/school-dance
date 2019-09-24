@@ -2,12 +2,10 @@ import React from "react";
 import { Base } from "../components/Base"
 import { PageTitle } from "../components/PageTitle"
 import { BigRow, BigCol, BigButtonColMin } from "../components/Big";
-import { FlexCol } from "../components/Flex";
 import { Icon } from "../components/Icon";
-import { map } from "bluebird";
 import { routerStore } from "../store/RouterStore";
 
-const messages = [
+export const messages = [
   {
     icon: "tshirt",
     title: "ОДЕЖДА ДЛЯ ЗАНЯТИЯ",

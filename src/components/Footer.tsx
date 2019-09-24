@@ -32,7 +32,8 @@ export const Footer = () => {
             <BigButtonColMin>
               Направления
             </BigButtonColMin>
-            <BigButtonColMin>
+            <BigButtonColMin  
+              onClick={() => routerStore.history.push("/contacts")}>
               Контакты
             </BigButtonColMin>
             <BigButtonColMin>

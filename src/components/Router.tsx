@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, Router as DOMRouter } from "react-router-dom";
+import { Route, Router as DOMRouter } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { routerStore } from "../store/RouterStore";
 import { Direction } from "../pages/Direction";
@@ -9,6 +9,7 @@ import { Teacher } from "../pages/Teacher";
 import { Partners } from "../pages/Partners";
 import { AnimatedSwitch } from 'react-router-transition';
 import { FirstVisit } from "../pages/FirstVisit";
+import { Contacts } from "../pages/Contacts";
 
 export const Router = () => {
 
@@ -28,6 +29,7 @@ export const Router = () => {
         <Route exact path="/teacher/:id" render={(match) => <Teacher id={match.match.params.id} />}/>
         <Route exact path="/partners" render={(match) => <Partners />}/>
         <Route exact path="/firstvisit" render={(match) => <FirstVisit />}/>
+        <Route exact path="/contacts" render={(match) => <Contacts />}/>
       </AnimatedSwitch>
     </DOMRouter>
   )

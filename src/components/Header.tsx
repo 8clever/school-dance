@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import { BigRow, BigCol, BigButtonColMin } from "./Big";
 import { Logo } from "./Logo";
 import { 
