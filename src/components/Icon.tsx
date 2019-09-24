@@ -4,19 +4,26 @@ interface Props {
   type: string;
   size?: "xs" | "sm" | "lg" | "2x" | "3x" | "5x" | "7x" | "10x";
   sub?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  onClick?: () => void;
 }
 
 export const Icon = (props: Props) => {
   const { 
     sub = "s",
     size,
-    type
+    type,
+    className: classNameParent = ""
   } = props;
 
   const clasName = [ 
     `fa${sub}`,
     `fa-${type}`
   ];
+  classNameParent.split(" ").forEach((c) => {
+    clasName.push(c);
+  });
 
   if (size) {
     clasName.push(`fa-${size}`);
@@ -24,6 +31,8 @@ export const Icon = (props: Props) => {
 
   return (
     <i 
+      onClick={props.onClick}
+      style={props.style}
       className={clasName.join(" ")} 
     />
   )

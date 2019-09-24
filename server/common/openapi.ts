@@ -14,6 +14,7 @@ import { router as eventRouter } from "../api/controllers/event";
 import { router as teacherRouter } from "../api/controllers/teacher";
 import { router as leaderRouter } from "../api/controllers/leader";
 import { router as subscribeRouter } from "../api/controllers/subscribe";
+import { router as priceRouter } from "../api/controllers/price";
 
 export const openapi = (app: Application) => {
     const apiSpecPath = path.join(__dirname, 'api.yml');
@@ -35,6 +36,7 @@ export const openapi = (app: Application) => {
     router.use("/teacher", teacherRouter);
     router.use("/leader", leaderRouter);
     router.use("/subscribe", subscribeRouter);
+    router.use("/price", priceRouter);
 
     app.use("/api/v1", router, errorHandler);
 

@@ -2,12 +2,14 @@ import React from "react";
 import { Base, BigRow, BigCol, BigButtonCol, Icon } from "../components";
 import { subscribeStore } from "../store/SubscribeStore";
 import { PageTitle } from "../components/PageTitle";
-import { UncontrolledCarousel } from "reactstrap";
+import { UncontrolledCarousel, Button } from "reactstrap";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
 import { routerStore } from "../store/RouterStore";
 import { observer } from "mobx-react-lite";
 import { SubscribeEdit } from "../components/SubscribeEdit";
+import { PriceEdit } from "../components/PriceEdit";
+import { priceStore } from "../store/PriceStore";
 
 interface PricesProps {
   id: string;
@@ -15,9 +17,13 @@ interface PricesProps {
 
 export const Prices = observer((props: PricesProps) => {
   const [ editSubscribeVisible, setEditSubscribeVisible ] = React.useState(false);
+  const [ addPriceVisible, setAddPriceVisible ] = React.useState(false);
 
   React.useEffect(() => {
     subscribeStore.loadItem(props.id);
+    priceStore.loadItems({
+      _idsubscribe: props.id
+    });
   }, [props.id]);
 
   const subscribe = subscribeStore.item;
@@ -35,7 +41,30 @@ export const Prices = observer((props: PricesProps) => {
         </BigCol>
         <BigCol md={5} lg={4}>
           <div style={{ padding: 50 }}>
-
+            {
+              priceStore.itemList.map(i => {
+                return (
+                  <p key={i._id as string}>
+                    {i.description} - <b>{i.price}р.</b>
+                    {
+                      userStore.isAdmin() ?
+                      <>
+                        {" "} 
+                        <Icon
+                          onClick={async () => {
+                            await priceStore.removeItemByID(i._id as string)
+                            await priceStore.loadItems({ _idsubscribe: props.id });
+                          }}
+                          style={{ cursor: "pointer" }} 
+                          className="text-danger" 
+                          type="trash" 
+                        />
+                      </> : null
+                    }
+                  </p>
+                )
+              })
+            }
           </div>
         </BigCol>
       </BigRow>
@@ -43,7 +72,11 @@ export const Prices = observer((props: PricesProps) => {
       {
         userStore.isAdmin() ?
         <BigRow>
-          <BigButtonCol>
+          <BigButtonCol
+            onClick={() => {
+              setAddPriceVisible(true)
+            }}
+          >
             <Icon type="plus" /> Цена
           </BigButtonCol>
           <BigButtonCol onClick={async () => {
@@ -60,6 +93,12 @@ export const Prices = observer((props: PricesProps) => {
           </BigButtonCol>
         </BigRow> : null
       }
+
+      <PriceEdit 
+        _idsubscribe={props.id}
+        visible={addPriceVisible}
+        toggle={() => setAddPriceVisible(!addPriceVisible)}
+      />
 
       <SubscribeEdit 
         _id={props.id}
