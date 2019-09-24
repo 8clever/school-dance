@@ -10,7 +10,8 @@ export const Contacts = () => {
   const mapRef = React.useRef<HTMLDivElement>();
 
   React.useLayoutEffect(() => {
-    const rect = mapRef.current.getBoundingClientRect();
+    const rect = mapRef.current.getBoundingClientRect() as DOMRect;
+    if (rect.height < 240) rect.height = 240;
     setRect(rect);
   }, []);
 
