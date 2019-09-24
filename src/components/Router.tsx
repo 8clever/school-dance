@@ -10,6 +10,7 @@ import { Partners } from "../pages/Partners";
 import { AnimatedSwitch } from 'react-router-transition';
 import { FirstVisit } from "../pages/FirstVisit";
 import { Contacts } from "../pages/Contacts";
+import { Leaders } from "../pages/Leaders";
 
 export const Router = () => {
 
@@ -30,6 +31,8 @@ export const Router = () => {
         <Route exact path="/partners" render={(match) => <Partners />}/>
         <Route exact path="/firstvisit" render={(match) => <FirstVisit />}/>
         <Route exact path="/contacts" render={(match) => <Contacts />}/>
+        <Route exact path="/leaders" render={(match) => <Leaders />}/>
+        <Route exact path="/leader/:id" render={(match) => <Leaders id={match.match.params.id} />}/>
       </AnimatedSwitch>
     </DOMRouter>
   )

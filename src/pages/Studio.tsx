@@ -8,6 +8,9 @@ export const Studio = () => {
     <Base>
       <PageTitle>СТУДИЯ</PageTitle>
       <BigRow>
+        <BigButtonCol onClick={() => routerStore.history.push("/leaders")}>
+          РУКОВОДСТВО
+        </BigButtonCol>
         <BigButtonCol onClick={() => routerStore.history.push("/teachers")}>
           ПЕДАГОГИ
         </BigButtonCol>

@@ -12,6 +12,7 @@ import { router as performanceRouter } from "../api/controllers/performance";
 import { router as imageRouter } from "../api/controllers/image";
 import { router as eventRouter } from "../api/controllers/event";
 import { router as teacherRouter } from "../api/controllers/teacher";
+import { router as leaderRouter } from "../api/controllers/leader";
 
 export const openapi = (app: Application) => {
     const apiSpecPath = path.join(__dirname, 'api.yml');
@@ -31,6 +32,7 @@ export const openapi = (app: Application) => {
     router.use("/image", imageRouter);
     router.use("/event", eventRouter);
     router.use("/teacher", teacherRouter);
+    router.use("/leader", leaderRouter);
 
     app.use("/api/v1", router, errorHandler);
 

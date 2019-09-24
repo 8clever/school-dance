@@ -2,51 +2,52 @@ import React from "react";
 import { Base, BigRow, BigCol, Icon, BigButtonColMin, FlexCol } from "../components";
 import { PageTitle } from "../components/PageTitle";
 import { observer } from "mobx-react-lite";
-import { teacherStore } from "../store/TeacherStore";
+import { leaderStore } from "../store/LeaderStore";
 import { userStore } from "../store/UserStore";
 import _ from "lodash";
-import { TeacherEdit } from "../components/TeacherEdit";
 import { routerStore } from "../store/RouterStore";
 import { toJS } from "mobx";
 import { imageStore } from "../store/ImageStore";
 import { Col, Button } from "reactstrap";
 import ReactMarkdown from "react-markdown";
+import { LeaderEdit } from "../components/LeaderEdit";
 
-interface TeacherProps {
+interface LeaderProps {
   id?: string;
 }
 
-export const Teacher = observer((props: TeacherProps) => {
+export const Leaders = observer((props: LeaderProps) => {
 
-  const [ teacherAddVisible, setTeacherAddVisible ] = React.useState(false);
-  const [ teacherEditVisible, setTeacherEditVisible ] = React.useState(false);
+  const [ addVisible, setAddVisible ] = React.useState(false);
+  const [ editVisible, setEditVisible ] = React.useState(false);
   const [ refresh, setRefresh ] = React.useState(0);
 
   React.useEffect(() => {
-    teacherStore.loadTeacherList({}).then(() => {
-      const t = _.find(teacherStore.teacherList, _.matches({ _id: props.id }));
-      const list = toJS(teacherStore.teacherList);
-      teacherStore.teacher = t || list[0];
+    leaderStore.loadLeaderList({}).then(() => {
+      const t = _.find(leaderStore.leaderList, _.matches({ _id: props.id }));
+      const list = toJS(leaderStore.leaderList);
+      leaderStore.leader = t || list[0];
     });
   }, [props.id, refresh]);
 
-  const teacher = teacherStore.teacher;
+  const element = leaderStore.leader;
+  const list = leaderStore.leaderList;
 
   return (
     <Base>
-      <PageTitle>ПЕДАГОГИ</PageTitle>
+      <PageTitle>РУКОВОДСТВО</PageTitle>
       <BigRow>
         <Col md={4}>
           {
-            teacherStore.teacherList.map(t => {
+            list.map(el => {
               return (
                 <BigButtonColMin 
                   md={12}
                   onClick={() => {
-                    routerStore.history.push(`/teacher/${t._id}`)
+                    routerStore.history.push(`/leader/${el._id}`)
                   }}
-                  key={t._id as string}>
-                  {t.fullName}
+                  key={el._id as string}>
+                  {el.fullName}
                 </BigButtonColMin>
               )
             })
@@ -55,8 +56,8 @@ export const Teacher = observer((props: TeacherProps) => {
             userStore.isAdmin() ?
             <BigButtonColMin 
               md={12} 
-              onClick={() => setTeacherAddVisible(true)}>
-              <Icon type="plus" /> Педагог
+              onClick={() => setAddVisible(true)}>
+              <Icon type="plus" /> Руководитель
             </BigButtonColMin> :
             null
           }
@@ -64,17 +65,17 @@ export const Teacher = observer((props: TeacherProps) => {
         <BigCol>
           <FlexCol align="center">
             {
-              teacher && teacher._id ?
+              element && element._id ?
               <img 
                 width="100%"
-                src={teacher.images.length && `${imageStore.endpoint}${teacher.images[0] as string}`} 
+                src={element.images.length && `${imageStore.endpoint}${element.images[0] as string}`} 
               /> : null
             }
           </FlexCol>
         </BigCol>
         <BigCol>
           {
-            teacher && teacher._id ?
+            element && element._id ?
             <div style={{ padding: 30 }}>
 
               {
@@ -83,7 +84,7 @@ export const Teacher = observer((props: TeacherProps) => {
                   <Button 
                     size="sm"
                     onClick={() => {
-                    setTeacherEditVisible(true)
+                    setEditVisible(true)
                   }}>
                     <Icon type="pencil-alt" /> Редактировать
                   </Button>
@@ -91,8 +92,8 @@ export const Teacher = observer((props: TeacherProps) => {
                     color="primary"
                     size="sm"
                     onClick={async () => { 
-                      await teacherStore.rmTeacher(teacher._id as string)
-                      routerStore.history.push("/teachers");
+                      await leaderStore.rmLeader(element._id as string)
+                      routerStore.history.push("/leaders");
                       setRefresh(refresh + 1);
                     }}>
                     <Icon type="trash" /> Удалить
@@ -100,25 +101,25 @@ export const Teacher = observer((props: TeacherProps) => {
                 </div> : null
               }
 
-              <h2>О Педагоге</h2>
-              <ReactMarkdown source={teacher.description} />
+              <h2>О Руководителе</h2>
+              <ReactMarkdown source={element.description} />
             </div> : null
           }
         </BigCol>
       </BigRow>
       
       {
-        teacher && teacher._id ?
-        <TeacherEdit 
-          visible={teacherEditVisible}
-          toggle={() => setTeacherEditVisible(!teacherEditVisible)}
-          _id={teacher._id as string}
+        element && element._id ?
+        <LeaderEdit 
+          visible={editVisible}
+          toggle={() => setEditVisible(!editVisible)}
+          _id={element._id as string}
         /> : null
       }
 
-      <TeacherEdit 
-        visible={teacherAddVisible}
-        toggle={() => setTeacherAddVisible(!teacherAddVisible)}
+      <LeaderEdit 
+        visible={addVisible}
+        toggle={() => setAddVisible(!addVisible)}
       />
 
     </Base>
