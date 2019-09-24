@@ -4,10 +4,12 @@ import { PageTitle } from "../components/PageTitle";
 import { userStore } from "../store/UserStore";
 import { subscribeStore } from "../store/SubscribeStore"
 import { SubscribeEdit } from "../components/SubscribeEdit";
+import { routerStore } from "../store/RouterStore";
+import { observer } from "mobx-react-lite";
 
 const padding = "150px 60px"
 
-export const Subscribe = () => {
+export const Subscribe = observer(() => {
   const [ addVisible, setAddVisible ] = React.useState(false);
 
   React.useEffect(() => {
@@ -20,9 +22,12 @@ export const Subscribe = () => {
       <BigRow>
 
         {
-          subscribeStore.itemList.length && subscribeStore.itemList.map(i => {
+          subscribeStore.itemList.map(i => {
             return (
               <BigButtonCol 
+                onClick={() => {
+                  routerStore.history.push(`/subscribe/${i._id}`)
+                }}
                 padding={padding}
                 key={i._id as string}>
                 {i.name}
@@ -51,4 +56,4 @@ export const Subscribe = () => {
       />
     </Base>
   )
-}
+})

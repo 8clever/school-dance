@@ -62,7 +62,8 @@ export const SubscribeEdit = observer((props: SubscribeEditProps) => {
         {
           localStore.item.images.map((i, idx) => {
             return (
-              <ImagePreview 
+              <ImagePreview
+                key={idx} 
                 _id={i as string}
                 onRemove={() => {
                   localStore.item.images.splice(idx, 1);
