@@ -36,7 +36,8 @@ export const Footer = () => {
               onClick={() => routerStore.history.push("/contacts")}>
               Контакты
             </BigButtonColMin>
-            <BigButtonColMin>
+            <BigButtonColMin
+              onClick={() => routerStore.history.push("/subscribe")}>
               Цены
             </BigButtonColMin>
           </BigRow>

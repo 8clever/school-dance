@@ -2,12 +2,15 @@
 import qs from "querystring";
 import { notifStore } from "./NotifStore";
 import _ from "lodash";
-import { RootQuerySelector } from "mongodb";
+import { RootQuerySelector, FilterQuery } from "mongodb";
+import { decorate, observable, action } from "mobx";
 
 type Method = "POST" | "GET" | "PUT";
 
 export class Api<T> {
 
+  item?: T;
+  itemList: T[] = [];
   endpoint = "";
 
   stringifyQuery = (obj: object) => {
@@ -33,8 +36,26 @@ export class Api<T> {
     return this.fetch("items", "GET", { query });
   }
 
+  loadItem = async (_id?: string) => {
+    if (!_id) return;
+
+    const data = await this.getItems({ _id });
+    if (data.count) {
+      this.item = data.list[0];
+    }
+  }
+
+  loadItems = async (query?: FilterQuery<T>) => {
+    const data = await this.getItems(query);
+    this.itemList = data.list;
+  }
+
   removeItem = async (query: RootQuerySelector<T>) => {
     return this.fetch("rmItem", "GET", query);
+  }
+
+  removeItemByID = async (_id: string) => {
+    this.removeItem({ _id });
   }
 
   fetch = async (apiName: string, method: Method, body?: any) => {
@@ -78,3 +99,10 @@ export class Api<T> {
     return data;
   }
 }
+
+decorate(Api, {
+  item: observable,
+  itemList: observable,
+  loadItem: action,
+  loadItems: action
+})
