@@ -1,15 +1,14 @@
 import React from "react";
 
-import { Col, Row, Button, ButtonProps, RowProps } from "reactstrap";
+import { Col, Row, Button, ButtonProps, RowProps, ColProps } from "reactstrap";
 import { FlexCol } from "./Flex";
+import _ from "lodash";
 
-interface BigButtonCellProps extends ButtonProps {
-  md?: number;
-  xs?: number;
+interface BigButtonCellProps extends ButtonProps, BigColSize {
   padding?: string;
+  onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
-  onClick?: () => void;
 }
 
 export const BigButtonColMin = (p: BigButtonCellProps) => {
@@ -30,7 +29,11 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
       onMouseEnter={props.onMouseEnter}
       onMouseLeave={props.onMouseLeave}
       md={md} 
-      xs={xs} 
+      xs={xs}
+      top={props.top} 
+      left={props.left} 
+      right={props.right} 
+      bottom={props.bottom} 
       className={props.className}>
       <FlexCol justify="center" align="center">
         <Button
@@ -49,29 +52,48 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
   )
 }
 
-interface BigColProps {
+interface BigColProps extends ColProps, BigColSize {
   children?: React.ReactNode;
-  className?: string;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
-  md?: number;
-  xs?: number;
-  lg?: number;
+}
+
+interface BigColSize {
+  top?: number;
+  left?: number;
+  right?: number;
+  bottom?: number;
+}
+
+const defSize = 1;
+
+const validateBorder = (number?: number) => {
+  if (_.isUndefined(number)) return defSize;
+  return number;
 }
 
 export const BigCol = (props: BigColProps) => {
+  const defSize = 1;
+
+  const border = {
+    top: validateBorder(props.top),
+    right: validateBorder(props.right),
+    bottom: validateBorder(props.bottom),
+    left: validateBorder(props.left)
+  }
+
   return (
     <Col
       onMouseEnter={() => props.onMouseEnter && props.onMouseEnter()}
       onMouseLeave={() => props.onMouseLeave && props.onMouseLeave()}
       className={props.className}
-      md={props.md | 4}  
+      md={props.md || 4}  
       xs={props.xs}
       lg={props.lg}
       style={{
-        boxShadow: "1px 1px 0px 0px black",
-        borderTop: "1px solid black",
-        borderLeft: "1px solid black"
+        boxShadow: `${border.right}px ${border.bottom}px 0px 0px black`,
+        borderTop: `${border.top}px solid black`,
+        borderLeft: `${border.left}px solid black`
       }}>
       {props.children}
     </Col>
