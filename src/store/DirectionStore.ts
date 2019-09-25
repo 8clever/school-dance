@@ -26,7 +26,9 @@ export class DirectionStore extends Api<Direction> {
   createDirection = () => {
     this.direction = {
       name: "",
-      images: []
+      images: [],
+      desc: "",
+      schedule: []
     }
     this.newImages = [];
   }
@@ -36,7 +38,11 @@ export class DirectionStore extends Api<Direction> {
 
     const data = await this.getItems({ _id });
     if (data.count) {
-      this.direction = data.list[0];
+      this.createDirection();
+      this.direction = { 
+        ...this.direction,
+        ...data.list[0]
+      }
     }
   }
 

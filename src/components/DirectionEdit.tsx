@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, FormText, Row, Col } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, FormText, Row, Col, InputGroup, InputGroupAddon, InputGroupText } from "reactstrap";
 import { observer } from "mobx-react-lite";
 import { directionStore as directionStoreGlobal, DirectionStore } from "../store/DirectionStore";
 import { imageStore } from "../store/ImageStore";
@@ -47,6 +47,70 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
         </FormGroup>
 
         <FormGroup>
+          <Label>Описание</Label>
+          <Input 
+            type="textarea"
+            rows={4}
+            placeholder={"Текст..."}
+            value={directionStore.direction.desc}
+            onChange={e => {
+              directionStore.direction.desc = e.target.value;
+            }}
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label>
+            <a 
+              target="_blank" 
+              href="https://crontab.guru/#00_12-14_*_*_1,3,5">
+              Расписание*
+            </a>
+          </Label>
+          <div>
+            {
+              directionStore.direction.schedule.map((s, idx) => {
+                return (
+                  <InputGroup 
+                    key={idx}
+                    className="mb-2">
+                    <Input 
+                      value={s}
+                      onChange={e => {
+                        directionStore.direction.schedule[idx] = e.target.value;
+                      }}
+                    />
+                    <InputGroupAddon
+                      addonType={"append"}
+                    >
+                      <Button 
+                        onClick={() => {
+                          directionStore.direction.schedule.splice(idx, 1);
+                        }}
+                        size="sm">
+                        <Icon 
+                          className="text-danger"
+                          type="trash" 
+                        />
+                      </Button>
+                    </InputGroupAddon>
+                  </InputGroup>
+                )
+              })
+            }
+          </div>
+          <Button 
+            onClick={() => {
+              directionStore.direction.schedule.push("00 12-14 * * 1,3,5")
+            }}
+            color="primary"
+            size="sm">
+            <Icon type="plus" />
+          </Button>
+        </FormGroup>
+        
+
+        <FormGroup>
           <Label>Фотографии</Label>
           <Input 
             type="file" 
@@ -65,6 +129,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
           directionStore.direction.images.map((i, idx) => {
             return (
               <ImagePreview 
+                key={idx}
                 _id={i as string}
                 onRemove={() => {
                   directionStore.direction.images.splice(idx, 1);
