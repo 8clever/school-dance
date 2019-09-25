@@ -30,7 +30,7 @@ export const Header = observer(() => {
       <BigRow>
         <BigCol className="d-none d-md-block">
           <FlexCol justify="center" align="center">
-            <div onClick={() => routerStore.history.push("/")} style={{ cursor: "pointer" }}>
+            <div onClick={() => routerStore.push("/")} style={{ cursor: "pointer" }}>
               <Logo width={100} />
             </div>
           </FlexCol>
@@ -50,7 +50,11 @@ export const Header = observer(() => {
             <Button color="link">
               РУ
             </Button>
-            <Button color="link">
+            <Button 
+              onClick={() => {
+                routerStore.push("/calendar")
+              }}
+              color="link">
               <img 
                 style={{
                   width: 23
@@ -65,13 +69,13 @@ export const Header = observer(() => {
               <DropdownMenu style={{ padding: 0, minWidth: 400 }} right>
                 <BigRow>
                   <BigButtonColMin 
-                    onClick={() => routerStore.history.push("/")}
+                    onClick={() => routerStore.push("/")}
                     xs={12}
                     md={12}>
                     НАПРАВЛЕНИЯ
                   </BigButtonColMin>
                   <BigButtonColMin 
-                    onClick={() => routerStore.history.push("/studio")}
+                    onClick={() => routerStore.push("/studio")}
                     xs={12} 
                     md={12}>
                     СТУДИЯ

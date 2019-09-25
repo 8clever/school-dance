@@ -8,10 +8,10 @@ export const Studio = () => {
     <Base>
       <PageTitle>СТУДИЯ</PageTitle>
       <BigRow>
-        <BigButtonCol onClick={() => routerStore.history.push("/leaders")}>
+        <BigButtonCol onClick={() => routerStore.push("/leaders")}>
           РУКОВОДСТВО
         </BigButtonCol>
-        <BigButtonCol onClick={() => routerStore.history.push("/teachers")}>
+        <BigButtonCol onClick={() => routerStore.push("/teachers")}>
           ПЕДАГОГИ
         </BigButtonCol>
       </BigRow>

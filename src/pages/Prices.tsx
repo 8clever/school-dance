@@ -87,7 +87,7 @@ export const Prices = observer((props: PricesProps) => {
           <BigButtonCol onClick={async () => {
             await subscribeStore.removeItemByID(props.id);
             await subscribeStore.loadItems({});
-            routerStore.history.push("/subscribe")
+            routerStore.push("/subscribe")
           }}>
             <Icon type="trash" /> Удалить
           </BigButtonCol>

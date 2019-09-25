@@ -100,7 +100,7 @@ export const FirstVisit = () => {
               <BigButtonColMin
                 md={4}
                 onClick={() => {
-                  routerStore.history.push(l.link)
+                  routerStore.push(l.link)
                 }}
                 key={idx}>
                 {l.title}

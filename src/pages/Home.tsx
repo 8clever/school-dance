@@ -35,7 +35,7 @@ export const Home = observer(() => {
             return (
               <BigButtonCol 
                 key={d._id as string}                
-                onClick={() => routerStore.history.push("/directions/" + d._id)}>
+                onClick={() => routerStore.push("/directions/" + d._id)}>
                 {d.name}
               </BigButtonCol>
             )

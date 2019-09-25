@@ -43,7 +43,7 @@ export const Teacher = observer((props: TeacherProps) => {
                 <BigButtonColMin 
                   md={12}
                   onClick={() => {
-                    routerStore.history.push(`/teacher/${t._id}`)
+                    routerStore.push(`/teacher/${t._id}`)
                   }}
                   key={t._id as string}>
                   {t.fullName}
@@ -92,7 +92,7 @@ export const Teacher = observer((props: TeacherProps) => {
                     size="sm"
                     onClick={async () => { 
                       await teacherStore.rmTeacher(teacher._id as string)
-                      routerStore.history.push("/teachers");
+                      routerStore.push("/teachers");
                       setRefresh(refresh + 1);
                     }}>
                     <Icon type="trash" /> Удалить

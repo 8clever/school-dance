@@ -6,6 +6,7 @@ export interface FlexColProps {
   size?: "xs" | "md" | "lg" | "xl";
   align?: "start" | "end" | "center" | "baseline" | "stretch";
   alignSelf?: "start" | "end" | "center" | "baseline" | "stretch";
+  column?: boolean;
 }
 
 export const FlexCol = (props: FlexColProps) => {
@@ -13,6 +14,10 @@ export const FlexCol = (props: FlexColProps) => {
     "d-flex",
     "h-100"
   ]
+
+  if (props.column) {
+    className.push("flex-column")
+  }
 
   if (props.justify) {
     const classNameJustify = [

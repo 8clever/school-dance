@@ -61,7 +61,7 @@ export const Direction = observer((props: DirectionProps) => {
             return (
               <BigButtonCol 
                 onClick={() => {
-                  routerStore.history.push(`/events/${p._id}`)
+                  routerStore.push(`/events/${p._id}`)
                 }}
                 key={p._id as string}>
                 {p.name}
@@ -85,7 +85,7 @@ export const Direction = observer((props: DirectionProps) => {
             </BigButtonCol>
             <BigButtonCol onClick={async () => {
               await directionStore.rmDirection(props.id);
-              routerStore.history.push("/");
+              routerStore.push("/");
             }}>
               <Icon type="trash" /> Удалить направление
             </BigButtonCol>

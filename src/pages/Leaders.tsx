@@ -44,7 +44,7 @@ export const Leaders = observer((props: LeaderProps) => {
                 <BigButtonColMin 
                   md={12}
                   onClick={() => {
-                    routerStore.history.push(`/leader/${el._id}`)
+                    routerStore.push(`/leader/${el._id}`)
                   }}
                   key={el._id as string}>
                   {el.fullName}
@@ -93,7 +93,7 @@ export const Leaders = observer((props: LeaderProps) => {
                     size="sm"
                     onClick={async () => { 
                       await leaderStore.rmLeader(element._id as string)
-                      routerStore.history.push("/leaders");
+                      routerStore.push("/leaders");
                       setRefresh(refresh + 1);
                     }}>
                     <Icon type="trash" /> Удалить

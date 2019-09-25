@@ -89,7 +89,7 @@ export const Performance = observer((props: PerformanceProps) => {
           </BigButtonCol>
           <BigButtonCol onClick={() => {
             performanceStore.rmPerformance(props.id);
-            routerStore.history.push("/");
+            routerStore.push("/");
           }}>
             <Icon type="trash" /> Удалить Спектакль
           </BigButtonCol>

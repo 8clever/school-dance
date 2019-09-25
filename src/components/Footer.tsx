@@ -11,33 +11,35 @@ export const Footer = () => {
   return (
     <div className="bg-gray">
       <BigRow>
-        <BigButtonColMin onClick={() => routerStore.history.push("/")} md={4}>
+        <BigButtonColMin onClick={() => routerStore.push("/")} md={4}>
           <Logo />
         </BigButtonColMin>
         <Col md={4}>
           <BigRow>
             <BigButtonColMin 
-              onClick={() => routerStore.history.push("/studio")}>
+              onClick={() => routerStore.push("/studio")}>
               Студия
             </BigButtonColMin>
             <BigButtonColMin onClick={() => {
-              routerStore.history.push("/firstvisit")
+              routerStore.push("/firstvisit")
             }}>
               Первое посещение
             </BigButtonColMin>
             <BigButtonColMin 
-              onClick={() => routerStore.history.push("/partners")}>
+              onClick={() => routerStore.push("/partners")}>
               Партнеры
             </BigButtonColMin>
-            <BigButtonColMin>
+            <BigButtonColMin onClick={() => {
+              routerStore.push("/")
+            }}>
               Направления
             </BigButtonColMin>
             <BigButtonColMin  
-              onClick={() => routerStore.history.push("/contacts")}>
+              onClick={() => routerStore.push("/contacts")}>
               Контакты
             </BigButtonColMin>
             <BigButtonColMin
-              onClick={() => routerStore.history.push("/subscribe")}>
+              onClick={() => routerStore.push("/subscribe")}>
               Цены
             </BigButtonColMin>
           </BigRow>
@@ -45,7 +47,14 @@ export const Footer = () => {
         <Col md={4}>
           <BigRow className="h-100">
             <Col xs={7}>
-              <BigButtonColMin className="h-100" xs={12} md={12} h100>
+              <BigButtonColMin 
+                onClick={() => {
+                  routerStore.push("/calendar")
+                }}
+                className="h-100" 
+                xs={12} 
+                md={12} 
+                h100>
                 <img src={scheduleSVG} />
               </BigButtonColMin>
             </Col>

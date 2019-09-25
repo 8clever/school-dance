@@ -26,7 +26,7 @@ export const Subscribe = observer(() => {
             return (
               <BigButtonCol 
                 onClick={() => {
-                  routerStore.history.push(`/subscribe/${i._id}`)
+                  routerStore.push(`/subscribe/${i._id}`)
                 }}
                 padding={padding}
                 key={i._id as string}>
