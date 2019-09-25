@@ -59,11 +59,11 @@ const links = [
   },
   {
     title: "ПОСМОТРЕТЬ НА КАРТЕ",
-    link: "/"
+    link: "/contacts"
   },
   {
     title: "АБОНЕМЕНТЫ",
-    link: "/"
+    link: "/subscribe"
   }
 ]
 
