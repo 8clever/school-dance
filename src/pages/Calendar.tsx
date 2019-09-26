@@ -21,7 +21,6 @@ export const Calendar = observer(() => {
 
   const [ menuVisible, setMenuVisible ] = React.useState(false);
   const [ date, setDate ] = React.useState(new Date());
-  const currendDay = date.getDay() + 1;
 
   React.useEffect(() => {
     directionStore.loadDirections({});
