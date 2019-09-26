@@ -1,11 +1,15 @@
 import React from "react";
-import { Base, BigRow, BigButtonColMin, BigCol, Icon } from "../components";
+import { Base, BigRow, BigButtonColMin, BigCol, Icon, FlexCol } from "../components";
 import { PageTitle } from "../components/PageTitle";
 import { observer } from "mobx-react-lite";
 import { directionStore } from "../store/DirectionStore";
 import { Col } from "reactstrap";
 import moment from "moment";
 import { routerStore } from "../store/RouterStore";
+import _ from "lodash";
+import { parseExpression } from "cron-parser";
+import { Direction } from "../../server/models/Direction";
+import { toJS } from "mobx";
 
 const LOCALE = "ru";
 
@@ -17,6 +21,7 @@ export const Calendar = observer(() => {
 
   const [ menuVisible, setMenuVisible ] = React.useState(false);
   const [ date, setDate ] = React.useState(new Date());
+  const currendDay = date.getDay() + 1;
 
   React.useEffect(() => {
     directionStore.loadDirections({});
@@ -28,9 +33,27 @@ export const Calendar = observer(() => {
 
   times = times.map((t, idx) => {
     return {
-      time: moment(date).startOf("day").add(idx, "hour"),
+      time: moment(date).startOf("day").add(idx, "hour")
     }
   });
+
+  const findSchedulesByTime = (time: moment.Moment) => {
+    const items = directionStore.directions;
+    const schedules: {[key: string]: Direction} = {};
+    items.forEach(i => {
+      _.each(i.schedule, s => {
+        const interval = parseExpression(s, {
+          startDate: time.clone().toDate(),
+          currentDate: time.clone().add(1).toDate()
+        });
+
+        if (interval.hasPrev()) {
+          schedules[i._id as string] = toJS(i);
+        }
+      });
+    });
+    return _.values(schedules);
+  }
 
   return (
     <Base>
@@ -101,6 +124,8 @@ export const Calendar = observer(() => {
               times.map((t, idx) => {
                 if (!(idx > 6 && idx < 23)) return null;
 
+                const schedules = findSchedulesByTime(t.time);
+
                 return (
                   <React.Fragment key={idx}>
                     <BigButtonColMin
@@ -109,9 +134,25 @@ export const Calendar = observer(() => {
                       md={1}>
                       {t.time.format("HH:mm")}
                     </BigButtonColMin>
-                    <BigButtonColMin md={10}>
-                      CONTENT
-                    </BigButtonColMin>
+                    <BigCol md={10}>
+                      <FlexCol>
+                        {
+                          schedules.map((s, idx) => {
+                            return (
+                              <div 
+                                className="text-center"
+                                style={{
+                                  padding: 20,
+                                  width: "100%",
+                                  backgroundColor: idx % 2 ? "#f0f3f7" : undefined
+                                }}>
+                                {s.name}
+                              </div>
+                            )
+                          })
+                        }
+                      </FlexCol>
+                    </BigCol>
                     <BigButtonColMin 
                       top={0}
                       bottom={0}
