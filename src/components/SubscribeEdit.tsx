@@ -45,6 +45,17 @@ export const SubscribeEdit = observer((props: SubscribeEditProps) => {
         </FormGroup>
 
         <FormGroup>
+          <Label>Ссылка на оплату</Label>
+          <Input 
+            placeholder={"Текст..."}
+            value={localStore.item.paymentLink}
+            onChange={e => {
+              localStore.item.paymentLink = e.target.value;
+            }}
+          />
+        </FormGroup>
+
+        <FormGroup>
           <Label>Фотографии</Label>
           <Input 
             type="file" 

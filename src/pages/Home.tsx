@@ -43,7 +43,8 @@ export const Home = observer(() => {
         }
         {
           userStore.isAdmin() ?
-          <BigButtonCol onClick={() => setDirectionEditVisible(true)}>
+          <BigButtonCol 
+            onClick={() => setDirectionEditVisible(true)}>
             <Icon type="plus" /> ДОБАВИТЬ НАПРАВЛЕНИЕ
           </BigButtonCol> : null
         }      

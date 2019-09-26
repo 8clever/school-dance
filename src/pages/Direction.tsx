@@ -11,6 +11,7 @@ import { PerformanceEdit } from "../components/PerformanceEdit";
 import { performanceStore } from "../store/PerformanceStore";
 import { HeaderCalendar } from "../components/HeaderCalendar";
 import { DirectionEdit } from "../components/DirectionEdit";
+import MD from "react-markdown";
 
 interface DirectionProps {
   id?: string;
@@ -21,6 +22,7 @@ export const Direction = observer((props: DirectionProps) => {
   const [ visiblePerformance, setVisiblePerformance ] = React.useState(false);
   const [ visibleDirection, setVisibleDirection ] = React.useState(false);
   const [ date, setDate ] = React.useState(new Date());
+  const [ visibleDescription, setVisibleDescription ] = React.useState(false);
 
   React.useEffect(() => {
     directionStore.loadDirection(props.id);
@@ -41,16 +43,28 @@ export const Direction = observer((props: DirectionProps) => {
         rightButtonText="ПРОЕКТ"
         format="MM.YYYY"
         step="month"
+        rightButtonOnClick={() => {
+          setVisibleDescription(!visibleDescription);
+        }}
       />
 
       {/** direction view */}
       <BigRow>
-        <BigCol md={12} xs={12}>
+        <BigCol md={visibleDescription ? 7 : 12} xs={12}>
           <UncontrolledCarousel 
             items={directionStore.direction.images.map(i => {
             return { src: `${imageStore.endpoint}${i}` };
           })} />
         </BigCol>
+        {
+          visibleDescription ? (
+            <BigCol md={5} xs={12}>
+              <div className="p-5">
+                <MD source={directionStore.direction.desc} />
+              </div>
+            </BigCol>
+          ) : null
+        }
       </BigRow>
 
       {/** performance list */}

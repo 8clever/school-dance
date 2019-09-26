@@ -147,6 +147,9 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
         <Button color={"primary"} onClick={async () => {
           await directionStore.saveDirection();
           await directionStoreGlobal.loadDirections({});
+          if (props._id) {
+            await directionStoreGlobal.loadDirection(props._id);
+          }
           props.toggle();
         }}>
           Сохранить

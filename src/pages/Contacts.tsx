@@ -58,7 +58,7 @@ export const Contacts = () => {
           lg={4}>
           <BigRow>
             <BigCol md={12}>
-              <div style={{ padding: 50 }}>
+              <div style={{ padding: "100px 50px" }}>
                 <Icon type="phone" /> +7 (812) 601-07-25
                 <br/>
                 <br/>
@@ -74,7 +74,7 @@ export const Contacts = () => {
               </div>
             </BigCol>
             <BigCol md={12}>
-              <div style={{ padding: 50 }}>
+              <div style={{ padding: "100px 50px" }}>
                 {messages[1].desc.map((d, idx) => {
                   return (
                     <p key={idx}>{d}</p>

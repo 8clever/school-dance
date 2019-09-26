@@ -16,6 +16,9 @@ interface LeaderProps {
   id?: string;
 }
 
+const maxHeight = 900;
+const overflowY = "auto";
+
 export const Leaders = observer((props: LeaderProps) => {
 
   const [ addVisible, setAddVisible ] = React.useState(false);
@@ -37,7 +40,12 @@ export const Leaders = observer((props: LeaderProps) => {
     <Base>
       <PageTitle>РУКОВОДСТВО</PageTitle>
       <BigRow>
-        <Col md={4}>
+        <Col 
+          md={4}
+          style={{ 
+            maxHeight,
+            overflowY 
+          }}>
           {
             list.map(el => {
               return (
@@ -63,15 +71,24 @@ export const Leaders = observer((props: LeaderProps) => {
           }
         </Col>
         <BigCol>
-          <FlexCol align="center">
+          <div 
+            className="h-100" 
+            style={{ 
+              maxHeight,
+              overflowY 
+            }}>
             {
-              element && element._id ?
-              <img 
-                width="100%"
-                src={element.images.length && `${imageStore.endpoint}${element.images[0] as string}`} 
-              /> : null
+              _.map(element && element.images, img => {
+                return (
+                  <img 
+                    key={img as string}
+                    width="100%"
+                    src={`${imageStore.endpoint}${img as string}`} 
+                  />
+                )
+              })
             }
-          </FlexCol>
+          </div>
         </BigCol>
         <BigCol>
           {

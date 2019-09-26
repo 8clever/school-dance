@@ -1,8 +1,8 @@
 import React from "react";
-import { Base, BigRow, BigCol, BigButtonCol, Icon } from "../components";
+import { Base, BigRow, BigCol, BigButtonCol, Icon, FlexCol, BigButtonColMin } from "../components";
 import { subscribeStore } from "../store/SubscribeStore";
 import { PageTitle } from "../components/PageTitle";
-import { UncontrolledCarousel, Button } from "reactstrap";
+import { UncontrolledCarousel, Button, Col } from "reactstrap";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
 import { routerStore } from "../store/RouterStore";
@@ -39,34 +39,45 @@ export const Prices = observer((props: PricesProps) => {
             return { src: `${imageStore.endpoint}${i}` };
           })} />
         </BigCol>
-        <BigCol md={5} lg={4}>
-          <div style={{ padding: 50 }}>
-            {
-              priceStore.itemList.map(i => {
-                return (
-                  <p key={i._id as string}>
-                    {i.description} - <b>{i.price}р.</b>
-                    {
-                      userStore.isAdmin() ?
-                      <>
-                        {" "} 
-                        <Icon
-                          onClick={async () => {
-                            await priceStore.removeItemByID(i._id as string)
-                            await priceStore.loadItems({ _idsubscribe: props.id });
-                          }}
-                          style={{ cursor: "pointer" }} 
-                          className="text-danger" 
-                          type="trash" 
-                        />
-                      </> : null
-                    }
-                  </p>
-                )
-              })
-            }
-          </div>
-        </BigCol>
+        <Col md={5} lg={4}>
+          <FlexCol column justify="between">
+            <div className="p-5">
+              {
+                priceStore.itemList.map(i => {
+                  return (
+                    <p key={i._id as string}>
+                      {i.description} - <b>{i.price}р.</b>
+                      {
+                        userStore.isAdmin() ?
+                        <>
+                          {" "} 
+                          <Icon
+                            onClick={async () => {
+                              await priceStore.removeItemByID(i._id as string)
+                              await priceStore.loadItems({ _idsubscribe: props.id });
+                            }}
+                            style={{ cursor: "pointer" }} 
+                            className="text-danger" 
+                            type="trash" 
+                          />
+                        </> : null
+                      }
+                    </p>
+                  )
+                })
+              }
+            </div>
+            <div>
+              <BigButtonColMin 
+                onClick={() => {
+                  window.open(subscribeStore.item.paymentLink)
+                }}
+                md={12}>
+                ОПЛАТИТЬ
+              </BigButtonColMin>
+            </div>
+          </FlexCol>
+        </Col>
       </BigRow>
 
       {

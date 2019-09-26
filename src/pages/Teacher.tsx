@@ -16,6 +16,9 @@ interface TeacherProps {
   id?: string;
 }
 
+const maxHeight = 900;
+const overflowY = "auto";
+
 export const Teacher = observer((props: TeacherProps) => {
 
   const [ teacherAddVisible, setTeacherAddVisible ] = React.useState(false);
@@ -36,7 +39,12 @@ export const Teacher = observer((props: TeacherProps) => {
     <Base>
       <PageTitle>ПЕДАГОГИ</PageTitle>
       <BigRow>
-        <Col md={4}>
+        <Col 
+          md={4} 
+          style={{ 
+            maxHeight,
+            overflowY 
+          }}>
           {
             teacherStore.teacherList.map(t => {
               return (
@@ -62,15 +70,24 @@ export const Teacher = observer((props: TeacherProps) => {
           }
         </Col>
         <BigCol>
-          <FlexCol align="center">
+          <div 
+            className="h-100" 
+            style={{ 
+              maxHeight,
+              overflowY 
+            }}>
             {
-              teacher && teacher._id ?
-              <img 
-                width="100%"
-                src={teacher.images.length && `${imageStore.endpoint}${teacher.images[0] as string}`} 
-              /> : null
+              _.map(teacher && teacher.images, img => {
+                return (
+                  <img 
+                    key={img as string}
+                    width="100%"
+                    src={`${imageStore.endpoint}${img as string}`} 
+                  />
+                )
+              })
             }
-          </FlexCol>
+          </div>
         </BigCol>
         <BigCol>
           {

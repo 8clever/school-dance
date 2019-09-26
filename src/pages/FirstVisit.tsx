@@ -78,7 +78,7 @@ export const FirstVisit = () => {
               <BigCol 
                 key={idx}
                 className="text-center">
-                <div style={{ padding: "100px 40px" }}>
+                <div style={{ padding: "200px 40px" }}>
                   <Icon type={m.icon} size="3x" />
                   <div className="mt-4"></div>
                   <h4>{m.title}</h4>
