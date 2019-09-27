@@ -139,6 +139,7 @@ export const Calendar = observer(() => {
                           schedules.map((s, idx) => {
                             return (
                               <div 
+                                key={idx}
                                 className="text-center"
                                 style={{
                                   padding: 20,
