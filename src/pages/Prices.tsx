@@ -42,6 +42,9 @@ export const Prices = observer((props: PricesProps) => {
         <Col md={5} lg={4}>
           <FlexCol column justify="between">
             <div className="p-5">
+              <h4 className="mb-5">
+                {subscribe.name}
+              </h4>
               {
                 priceStore.itemList.map(i => {
                   return (
