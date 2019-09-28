@@ -19,7 +19,7 @@ export const Subscribe = observer(() => {
   return (
     <Base>
       <PageTitle>ЦЕНЫ</PageTitle>
-      <BigRow>
+      <BigRow maxRowItems={3}>
 
         {
           subscribeStore.itemList.map(i => {

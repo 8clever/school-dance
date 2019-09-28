@@ -29,7 +29,7 @@ export const Home = observer(() => {
     <Base>
       <PageTitle>Направления</PageTitle>
       <Carousel items={carousel} />
-      <BigRow>
+      <BigRow maxRowItems={3}>
         {
           directionStore.directions.map(d => {
             return (

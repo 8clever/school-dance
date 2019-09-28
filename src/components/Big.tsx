@@ -116,8 +116,41 @@ export const BigHr = () => {
   )
 }
 
-export const BigRow = (props: RowProps) => {
+interface BigRowProps extends RowProps {
+  maxRowItems?: number;
+}
+
+export const BigRow = (props: BigRowProps) => {
+  const { children: rawChildren, maxRowItems, ...restProps } = props;
+  const children = (
+    Array.isArray(rawChildren) ? 
+    _.compact(_.flattenDeep(rawChildren)) : 
+    rawChildren
+  )
+
+  if (maxRowItems && Array.isArray(children) && children.length) {
+    const enoughItems = children.length % maxRowItems;
+    let emptyItems = new Array(maxRowItems - enoughItems);
+
+    if (children[0] && enoughItems) {
+      emptyItems.fill(null);
+      emptyItems = emptyItems.map(i => {
+        return React.cloneElement(children[0], {
+          key: Math.random(),
+          children: "",
+          className: `${children[0].className || ""} d-none d-md-block`,
+          onClick: () => {}
+        });
+      });
+
+      children.push(...emptyItems);
+    }
+  }
+
   return (
-    <Row noGutters {...props as any } />
+    <Row 
+      noGutters 
+      children={children}
+      {...restProps as any } />
   )
 }
