@@ -27,6 +27,7 @@ import { performanceStore } from "../store/PerformanceStore";
 import { subscribeStore } from "../store/SubscribeStore";
 
 import scheduleSVG from "../images/icons/schedule.svg";
+import zalupaSVG from "../images/icons/zalupa.svg";
 
 interface SearchResult {
   link: string;
@@ -122,8 +123,10 @@ export const Header = observer(() => {
               }}
             />
             <InputGroupText>
-              <Icon 
-                type="search" 
+              <img 
+                height={15}
+                width={15}
+                src={zalupaSVG} 
               />
             </InputGroupText>
           </InputGroup>
