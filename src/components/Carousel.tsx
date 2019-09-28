@@ -1,5 +1,6 @@
 import React from "react";
 import { Carousel as CarouselFactory, CarouselItem, CarouselControl } from "reactstrap";
+import { useWindowSize } from "../effects/useWindowSize";
 
 interface Image {
   src: string;
@@ -12,6 +13,7 @@ interface CarouselProps {
 export const Carousel = (props: CarouselProps) => {
   const [ activeIndex, setIndex ] = React.useState(0);
   const ref = React.useRef<HTMLDivElement>(null);
+  useWindowSize();
 
   const slides = props.items.map((item, idx) => {
     if (!ref.current) return <React.Fragment key={idx}></React.Fragment>;
@@ -45,7 +47,8 @@ export const Carousel = (props: CarouselProps) => {
   }
 
   return (
-    <div ref={ref}>
+    <div 
+      ref={ref}>
       <CarouselFactory
         activeIndex={activeIndex}
         next={next}
