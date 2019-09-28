@@ -109,9 +109,9 @@ export const Header = observer(() => {
           <InputGroup 
             tyle={{ marginTop: 1 }}>
             <Input
+              className="bg-white"
               id="input-search"
               value={searchValue}
-              placeholder="Поиск..." 
               onChange={e => {
                 setSearchValue(e.target.value);
               }}
