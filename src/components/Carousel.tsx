@@ -11,12 +11,17 @@ interface CarouselProps {
 
 export const Carousel = (props: CarouselProps) => {
   const [ activeIndex, setIndex ] = React.useState(0);
+  const ref = React.useRef<HTMLDivElement>(null);
 
-  const slides = props.items.map((item) => {
+  const slides = props.items.map((item, idx) => {
+    if (!ref.current) return <React.Fragment key={idx}></React.Fragment>;
+
+    const rect = ref.current.getBoundingClientRect();
     return (
-      <CarouselItem key={item.src} >
+      <CarouselItem key={idx} >
         <img 
-          width={"100%"}
+          height={rect.width * 0.8}
+          width={rect.width}
           src={item.src} 
         />
       </CarouselItem>
@@ -40,7 +45,8 @@ export const Carousel = (props: CarouselProps) => {
   }
 
   return (
-    <CarouselFactory
+    <div ref={ref}>
+      <CarouselFactory
         activeIndex={activeIndex}
         next={next}
         previous={prev}
@@ -57,5 +63,6 @@ export const Carousel = (props: CarouselProps) => {
           onClickHandler={next} 
         />
       </CarouselFactory>
+    </div>
   )
 }
