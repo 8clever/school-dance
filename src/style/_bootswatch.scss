@@ -77,6 +77,19 @@ $web-font-path: "https://fonts.googleapis.com/css?family=Nunito+Sans:400,600" !d
       color: $white;
     }
   }
+
+  &.btn-link {
+    text-decoration-line: none;
+
+    &:hover {
+      text-decoration-line: none;
+      font-weight: bold;
+    }
+
+    &:focus {
+      text-decoration: none;
+    }
+  }
 }
 
 .btn-outline-secondary {
