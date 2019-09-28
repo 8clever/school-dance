@@ -181,10 +181,22 @@ export const Header = observer(() => {
               <DropdownMenu style={{ padding: 0, minWidth: 400 }} right>
                 <BigRow>
                   <BigButtonColMin 
+                    onClick={() => routerStore.push("/calendar")}
+                    xs={12}
+                    md={12}>
+                    РАСПИСАНИЕ
+                  </BigButtonColMin>
+                  <BigButtonColMin 
                     onClick={() => routerStore.push("/")}
                     xs={12}
                     md={12}>
                     НАПРАВЛЕНИЯ
+                  </BigButtonColMin>
+                  <BigButtonColMin 
+                    onClick={() => routerStore.push("/subscribe")}
+                    xs={12}
+                    md={12}>
+                    ЦЕНЫ
                   </BigButtonColMin>
                   <BigButtonColMin 
                     onClick={() => routerStore.push("/studio")}
@@ -192,6 +204,19 @@ export const Header = observer(() => {
                     md={12}>
                     СТУДИЯ
                   </BigButtonColMin>
+                  <BigButtonColMin 
+                    onClick={() => routerStore.push("/partners")}
+                    xs={12} 
+                    md={12}>
+                    ПАРТНЕРЫ
+                  </BigButtonColMin>
+                  <BigButtonColMin 
+                    onClick={() => routerStore.push("/contacts")}
+                    xs={12} 
+                    md={12}>
+                    КОНТАКТЫ
+                  </BigButtonColMin>
+
                   {
                     userStore.user ?
                     <BigButtonColMin 
