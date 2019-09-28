@@ -167,7 +167,11 @@ export const Header = observer(() => {
         </BigCol>
         <BigCol className="text-right">
           <ButtonGroup>
-            <Button color="link">
+            <Button 
+              style={{
+                fontFamily: "Roboto"
+              }}
+              color="link">
               РУ
             </Button>
             <Button 
