@@ -99,8 +99,13 @@ export const Header = observer(() => {
     <div className="sticky-top bg-white">
       <BigRow>
         <BigCol className="d-none d-md-block">
-          <FlexCol justify="center" align="center">
-            <div onClick={() => routerStore.push("/")} style={{ cursor: "pointer" }}>
+          <FlexCol justify="start" align="center">
+            <div 
+              onClick={() => routerStore.push("/")} 
+              style={{ 
+                padding: "0px 10px",
+                cursor: "pointer" 
+              }}>
               <Logo width={100} />
             </div>
           </FlexCol>
