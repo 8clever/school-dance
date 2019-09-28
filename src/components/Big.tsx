@@ -9,6 +9,8 @@ interface BigButtonCellProps extends ButtonProps, BigColSize {
   onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  width?: number;
+  height?: number;
 }
 
 export const BigButtonColMin = (p: BigButtonCellProps) => {
@@ -26,6 +28,8 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
   const { size="lg", md = 4, xs, } = props;
   return (
     <BigCol 
+      height={props.height}
+      width={props.width}
       onMouseEnter={props.onMouseEnter}
       onMouseLeave={props.onMouseLeave}
       md={md} 
@@ -56,6 +60,8 @@ interface BigColProps extends ColProps, BigColSize {
   children?: React.ReactNode;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  width?: number;
+  height?: number;
 }
 
 interface BigColSize {
@@ -93,7 +99,9 @@ export const BigCol = (props: BigColProps) => {
       style={{
         boxShadow: `${border.right}px ${border.bottom}px 0px 0px black`,
         borderTop: `${border.top}px solid black`,
-        borderLeft: `${border.left}px solid black`
+        borderLeft: `${border.left}px solid black`,
+        width: props.width,
+        height: props.height
       }}>
       {props.children}
     </Col>

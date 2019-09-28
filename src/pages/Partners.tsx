@@ -19,6 +19,8 @@ interface PartnerButtonProps {
   link: string;
 }
 
+const height = 300;
+
 const PartnerButton = (props: PartnerButtonProps) => {
   const [ isHover, setHover ] = React.useState(false);
 
@@ -31,7 +33,7 @@ const PartnerButton = (props: PartnerButtonProps) => {
             window.location.href = props.link;
           }}
           onMouseEnter={() => setHover(true)}
-          padding={"150px 60px"} >
+          height={height}>
           {props.title}
         </BigButtonCol>
       }
@@ -44,6 +46,7 @@ const PartnerButton = (props: PartnerButtonProps) => {
         {
           isHover ?
           <BigCol 
+            height={height}
             onMouseLeave={() => setHover(false)}>
             <FlexCol align="center" justify='center'>
               <div 
@@ -52,9 +55,13 @@ const PartnerButton = (props: PartnerButtonProps) => {
                 }}
                 style={{ 
                   cursor: "pointer",
-                  padding: 20 
+                  padding: 20
                 }}>
-                <img width="100%" src={props.img} />
+                <img
+                  height={`${height - 20}px`}
+                  width="100%" 
+                  src={props.img} 
+                />
               </div>
             </FlexCol>
           </BigCol>
@@ -100,9 +107,7 @@ export const Partners = () => {
           title="Новая Сцена Александрийского театра"
           img={imgCinema}
         />
-        <BigCol className="d-none d-md-block">
-          <div style={{padding: 150 }}></div>
-        </BigCol>
+        <BigCol className="d-none d-md-block" />
         <PartnerButton 
           link="https://gost-group.ru"
           title="группа копаний GOST"
