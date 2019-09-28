@@ -2,7 +2,7 @@ import React from "react";
 import { Base, BigRow, BigCol, BigButtonCol, Icon, FlexCol, BigButtonColMin } from "../components";
 import { subscribeStore } from "../store/SubscribeStore";
 import { PageTitle } from "../components/PageTitle";
-import { UncontrolledCarousel, Button, Col } from "reactstrap";
+import { Col } from "reactstrap";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
 import { routerStore } from "../store/RouterStore";
@@ -10,6 +10,7 @@ import { observer } from "mobx-react-lite";
 import { SubscribeEdit } from "../components/SubscribeEdit";
 import { PriceEdit } from "../components/PriceEdit";
 import { priceStore } from "../store/PriceStore";
+import { Carousel } from "../components/Carousel";
 
 interface PricesProps {
   id: string;
@@ -34,7 +35,7 @@ export const Prices = observer((props: PricesProps) => {
       <PageTitle>{subscribe.name}</PageTitle>
       <BigRow>
         <BigCol md={7} lg={8}>
-          <UncontrolledCarousel 
+          <Carousel 
             items={subscribe.images.map(i => {
             return { src: `${imageStore.endpoint}${i}` };
           })} />

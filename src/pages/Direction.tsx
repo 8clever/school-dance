@@ -3,7 +3,6 @@ import { observer } from "mobx-react-lite";
 import { Base, BigRow, BigCol, BigButtonCol, Icon } from "../components";
 import { PageTitle } from "../components/PageTitle";
 import { directionStore } from "../store/DirectionStore";
-import { UncontrolledCarousel } from "reactstrap";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
 import { routerStore } from "../store/RouterStore";
@@ -12,6 +11,7 @@ import { performanceStore } from "../store/PerformanceStore";
 import { HeaderCalendar } from "../components/HeaderCalendar";
 import { DirectionEdit } from "../components/DirectionEdit";
 import MD from "react-markdown";
+import { Carousel } from "../components/Carousel";
 
 interface DirectionProps {
   id?: string;
@@ -51,7 +51,7 @@ export const Direction = observer((props: DirectionProps) => {
       {/** direction view */}
       <BigRow>
         <BigCol md={visibleDescription ? 7 : 12} xs={12}>
-          <UncontrolledCarousel 
+          <Carousel 
             items={directionStore.direction.images.map(i => {
             return { src: `${imageStore.endpoint}${i}` };
           })} />

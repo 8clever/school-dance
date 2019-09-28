@@ -189,3 +189,11 @@ th {
     color: inherit;
   }
 }
+
+// Carousel ==========================================================
+
+.carousel-control-prev,
+.carousel-control-next {
+  top: auto !important;
+  margin-bottom: 20px;
+}

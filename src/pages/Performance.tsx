@@ -3,7 +3,6 @@ import { Base, BigRow, BigCol, BigButtonCol, Icon } from "../components";
 import { PageTitle } from "../components/PageTitle";
 import { HeaderCalendar } from "../components/HeaderCalendar";
 import { observer } from "mobx-react-lite";
-import { UncontrolledCarousel } from "reactstrap";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
 import { routerStore } from "../store/RouterStore";
@@ -12,6 +11,7 @@ import { eventStore } from "../store/EventStore";
 import moment from "moment";
 import { PerformanceEdit } from "../components/PerformanceEdit";
 import ReactMarkdown from "react-markdown";
+import { Carousel } from "../components/Carousel";
 
 interface PerformanceProps {
   id: string;
@@ -57,7 +57,7 @@ export const Performance = observer((props: PerformanceProps) => {
       {/** performance view */}
       <BigRow>
         <BigCol xs={12} md={7} lg={8} >
-          <UncontrolledCarousel 
+          <Carousel 
             items={performanceStore.performance.images.map(i => {
             return { src: `${imageStore.endpoint}${i}` };
           })} />

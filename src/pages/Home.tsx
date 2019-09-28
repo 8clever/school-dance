@@ -1,5 +1,4 @@
 import React from "react";
-import { UncontrolledCarousel } from "reactstrap";
 import { BigRow, Base, BigButtonCol, Icon } from "../components";
 import { observer } from "mobx-react-lite";
 import { userStore } from "../store/UserStore";
@@ -11,6 +10,7 @@ import { routerStore } from "../store/RouterStore";
 import home1png from "../images/home/main0.png";
 import home2png from "../images/home/main1.png";
 import home3png from "../images/home/main2.png";
+import { Carousel } from "../components/Carousel";
 
 const carousel = [
   { src: home1png },
@@ -28,7 +28,7 @@ export const Home = observer(() => {
   return (
     <Base>
       <PageTitle>Направления</PageTitle>
-      <UncontrolledCarousel items={carousel} />
+      <Carousel items={carousel} />
       <BigRow>
         {
           directionStore.directions.map(d => {
