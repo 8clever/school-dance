@@ -27,7 +27,7 @@ export const Home = observer(() => {
 
   return (
     <Base>
-      <PageTitle>Направления</PageTitle>
+      <PageTitle marquee>Студия Дианы Вишнёвой Context Pro</PageTitle>
       <Carousel items={carousel} />
       <BigRow maxRowItems={3}>
         {

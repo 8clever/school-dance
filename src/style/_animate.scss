@@ -27,3 +27,30 @@
   top: 0;
   bottom: 0;
 }
+
+.marquee {
+  text-align: left;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee span { 
+  display: inline-block;
+  width: 100%;
+  text-indent: 0;
+  animation: marquee 30s linear infinite
+}
+
+.marquee span:hover{
+  animation-play-state: paused
+}
+
+@keyframes marquee {
+ 0%   { transform: translate(100%, 0); }
+ 100% { transform: translate(-100%, 0); }
+}
+
+@media only screen and (max-width: 440px) {
+.marquee span{animation:none;padding-left:0}
+}

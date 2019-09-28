@@ -6,6 +6,7 @@ import { routerStore } from "../store/RouterStore";
 
 interface PageTitleProps {
   children: string;
+  marquee?: boolean;
 }
 
 export const PageTitle = (props: PageTitleProps) => {
@@ -27,8 +28,14 @@ export const PageTitle = (props: PageTitleProps) => {
               }}>
               <Icon type="chevron-left" />
             </div>
-            <div style={{ padding: 5 }}>
-              {props.children}
+            <div 
+              className={props.marquee ? "marquee" : ""}
+              style={{ 
+                padding: 5 
+              }}>
+                <span>
+                  {props.children}
+                </span>
             </div>
             <div style={{ padding: 5 }}></div>
           </FlexCol>
