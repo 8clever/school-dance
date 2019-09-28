@@ -98,6 +98,13 @@ export const Footer = () => {
             </Col>
           </BigRow>
         </Col>
+        <BigButtonColMin 
+          onClick={() => {
+            window.open("/rules_policies.pdf", "_blank")
+          }}
+          md={12}>
+          Правила студии и политика конфиденциальности
+        </BigButtonColMin>
       </BigRow>
       <BigHr />
     </div>
