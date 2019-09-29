@@ -14,9 +14,3 @@ decorate(MenuStore, {
 });
 
 export const menuStore = new MenuStore();
-
-observe(menuStore, "isCollapsed", () => {
-  console.log("CHanged")
-  const evt = new Event("resize");
-  window.dispatchEvent(evt);
-})

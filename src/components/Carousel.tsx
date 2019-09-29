@@ -1,6 +1,6 @@
 import React from "react";
 import { Carousel as CarouselFactory, CarouselItem, CarouselControl } from "reactstrap";
-import { useWindowSize } from "../effects/useWindowSize";
+import { useResizeObserver } from "../effects/useResizeObserver";
 
 interface Image {
   src: string;
@@ -13,17 +13,16 @@ interface CarouselProps {
 export const Carousel = (props: CarouselProps) => {
   const [ activeIndex, setIndex ] = React.useState(0);
   const ref = React.useRef<HTMLDivElement>(null);
-  useWindowSize();
+  const [ width ] = useResizeObserver(ref.current);
 
   const slides = props.items.map((item, idx) => {
-    if (!ref.current) return <React.Fragment key={idx}></React.Fragment>;
+    if (!width) return <React.Fragment key={idx}></React.Fragment>;
 
-    const rect = ref.current.getBoundingClientRect();
     return (
       <CarouselItem key={idx} >
         <img 
-          height={rect.width * 0.8}
-          width={rect.width}
+          height={width * 0.8}
+          width={width}
           src={item.src} 
         />
       </CarouselItem>

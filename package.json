@@ -36,6 +36,7 @@
     "react-transition-group": "^4.3.0",
     "react-yandex-maps": "^4.0.1",
     "reactstrap": "^8.0.1",
+    "resize-observer": "^1.0.0",
     "swagger-express-middleware": "^2.0.3"
   },
   "devDependencies": {
