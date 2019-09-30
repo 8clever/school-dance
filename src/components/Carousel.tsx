@@ -12,8 +12,7 @@ interface CarouselProps {
 
 export const Carousel = (props: CarouselProps) => {
   const [ activeIndex, setIndex ] = React.useState(0);
-  const ref = React.useRef<HTMLDivElement>(null);
-  const [ width ] = useResizeObserver(ref.current);
+  const [ width, height, refCallback ] = useResizeObserver();
 
   const slides = props.items.map((item, idx) => {
     if (!width) return <React.Fragment key={idx}></React.Fragment>;
@@ -47,7 +46,7 @@ export const Carousel = (props: CarouselProps) => {
 
   return (
     <div 
-      ref={ref}>
+      ref={refCallback}>
       <CarouselFactory
         activeIndex={activeIndex}
         next={next}

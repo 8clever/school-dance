@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="17px" viewBox="0 0 18 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>закрыть меню</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="Home-page-desktop-open-menu" transform="translate(-1383.000000, -39.000000)" stroke="#000000">
+            <g id="шапка">
+                <g id="Group-3" transform="translate(960.000000, 0.000000)">
+                    <g id="закрыть-меню" transform="translate(424.000000, 39.000000)">
+                        <path d="M0,0.5 L16,16.5" id="Line-6"></path>
+                        <path d="M0,16.5 L16,0.5" id="Line-6-Copy-2"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

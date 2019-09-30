@@ -1,8 +1,9 @@
 import React from "react";
 import { BigRow, BigCol, BigHr } from "./Big";
 import { FlexCol } from "./Flex";
-import { Icon } from "./Icon";
 import { routerStore } from "../store/RouterStore";
+
+import leftSVG from "../images/icons/arrow-left.svg";
 
 interface PageTitleProps {
   children: string;
@@ -26,7 +27,7 @@ export const PageTitle = (props: PageTitleProps) => {
                 padding: 5,
                 cursor: "pointer"
               }}>
-              <Icon type="chevron-left" />
+              <img src={leftSVG} width={10} height={10} />
             </div>
             <div 
               className={props.marquee ? "marquee" : ""}

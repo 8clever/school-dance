@@ -1,7 +1,6 @@
 import React from "react";
 import { BigRow, BigButtonColMin, BigCol } from "./Big";
 import moment from "moment";
-import { Icon } from "./Icon";
 import { LOCALE, findSchedulesByTime, getTimes, CalendarInnerProps, findEventsByTime } from "./CalendarHelpers";
 import { FlexCol } from "./Flex";
 import { directionStore } from "../store/DirectionStore";
@@ -9,6 +8,9 @@ import { Schedules } from "./Schedules";
 import { eventStore } from "../store/EventStore";
 import { observer } from "mobx-react-lite";
 import { performanceStore } from "../store/PerformanceStore";
+
+import leftSVG from "../images/icons/arrow-left.svg";
+import rightSVG from "../images/icons/arrow-right.svg";
 
 export const CalendarDay = observer((props: CalendarInnerProps) => {
   const { date, setDate } = props;
@@ -34,7 +36,7 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
         }}
         bottom={0}
         md={1}>
-        <Icon type="chevron-left" />
+        <img src={leftSVG} width={15} height={15} />
       </BigButtonColMin>
       <BigButtonColMin md={10}>
         {moment(date).locale(LOCALE).format("ddd")}
@@ -48,7 +50,7 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
         }}
         bottom={0}
         md={1}>
-        <Icon type="chevron-right" />
+        <img src={rightSVG} width={15} height={15} />
       </BigButtonColMin>
       {
         times.map((t, idx) => {

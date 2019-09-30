@@ -1,8 +1,10 @@
 import React from "react";
 import { BigRow, BigCol, BigButtonCol } from "./Big";
 import { FlexCol } from "./Flex";
-import { Icon } from "./Icon";
 import moment from "moment";
+
+import leftSVG from "../images/icons/arrow-left.svg";
+import rightSVG from "../images/icons/arrow-right.svg";
 
 interface HeaderCalendarProps {
   date: Date;
@@ -20,7 +22,7 @@ export const HeaderCalendar = (props: HeaderCalendarProps) => {
         <BigCol>
           <FlexCol justify="between" align="center">
             <div style={{ padding: 10 }}>
-              <Icon type="chevron-right" />
+              <img src={rightSVG} width={15} height={15} />
             </div>
             <div style={{ padding: 10 }}>
               Спектакль
@@ -39,7 +41,7 @@ export const HeaderCalendar = (props: HeaderCalendarProps) => {
                 props.onChange(moment(props.date).add(-1, props.step).toDate())
               }
             }>
-              <Icon type="chevron-left" />
+              <img src={leftSVG} width={15} height={15} />
             </div>
             <div style={{ padding: 10 }}>
               {moment(props.date).format(props.format)}
@@ -52,7 +54,7 @@ export const HeaderCalendar = (props: HeaderCalendarProps) => {
               onClick={() => {
               props.onChange(moment(props.date).add(1, props.step).toDate())
             }}>
-              <Icon type="chevron-right" />
+              <img src={rightSVG} width={15} height={15} />
             </div>
           </FlexCol>
         </BigCol>

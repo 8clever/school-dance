@@ -2,7 +2,6 @@ import React from "react";
 import { BigRow, BigButtonColMin, BigCol } from "./Big";
 import { routerStore } from "../store/RouterStore";
 import { userStore } from "../store/UserStore";
-import { Icon } from "./Icon";
 import { Login } from "./Login";
 
 export const HeaderMenu = () => {
@@ -53,13 +52,13 @@ export const HeaderMenu = () => {
           xs={12} 
           md={12}
           onClick={() => { userStore.logout(); }}>
-          Выход <Icon type="sign-out-alt" />
+          Выход
         </BigButtonColMin> :
         <BigButtonColMin 
           xs={12} 
           md={12}
           onClick={() => { setIsVisbileLogin(true) }}>
-          Вход <Icon type="sign-in-alt" />
+          Вход
         </BigButtonColMin>
       }
 

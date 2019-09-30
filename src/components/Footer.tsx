@@ -2,10 +2,18 @@ import React from "react";
 import { BigRow, BigButtonColMin, BigHr } from "./Big";
 import { Col } from "reactstrap";
 import { Logo } from "./Logo";
-import { Icon } from "./Icon";
 import { routerStore } from "../store/RouterStore";
 
 import scheduleSVG from "../images/icons/schedule.svg";
+import whatsappSVG from "../images/icons/whatsapp-logo.svg";
+import vkSVG from "../images/icons/vk.svg";
+import instagrammSVG from "../images/icons/instagramm.svg";
+import facebookSVG from "../images/icons/facebook.svg";
+
+const iconStyle = {
+  width: 30,
+  height: 30
+}
 
 export const Footer = () => {
   return (
@@ -64,7 +72,7 @@ export const Footer = () => {
                   }}
                   className="h-100" 
                   xs={6}>
-                  <Icon type="vk" sub="b" size="2x" />
+                  <img {...iconStyle} src={vkSVG} />
                 </BigButtonColMin>
                 <BigButtonColMin 
                   onClick={() => {
@@ -72,7 +80,7 @@ export const Footer = () => {
                   }}
                   className="h-100" 
                   xs={6}>
-                  <Icon type="facebook" sub="b" size="2x" />
+                  <img {...iconStyle} src={facebookSVG} />
                 </BigButtonColMin>
               </BigRow>
               <BigRow className="h-50">
@@ -82,7 +90,7 @@ export const Footer = () => {
                   }}
                   className="h-100" 
                   xs={6}>
-                  <Icon type="instagram" sub="b" size="2x" />
+                  <img {...iconStyle} src={instagrammSVG} />
                 </BigButtonColMin>
                 <BigButtonColMin 
                   onClick={() => {
@@ -90,7 +98,7 @@ export const Footer = () => {
                   }}
                   className="h-100" 
                   xs={6}>
-                  <Icon type="whatsapp" sub="b" size="2x" />
+                  <img {...iconStyle} src={whatsappSVG} />
                 </BigButtonColMin>
               </BigRow>
             </Col>

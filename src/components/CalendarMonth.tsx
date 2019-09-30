@@ -2,7 +2,6 @@ import React from "react";
 import { CalendarInnerProps, getWeekDays, LOCALE, WeekDayItem, getTimes, findSchedulesByTime, CALENDAR_DAY, findEventsByTime } from "./CalendarHelpers";
 import moment from "moment";
 import { BigRow, BigButtonColMin } from "./Big";
-import { Icon } from "./Icon";
 import { Col } from "reactstrap";
 import { FlexCol } from "./Flex";
 import { WeekDay } from "./CalendarWeek";
@@ -13,6 +12,9 @@ import { routerStore } from "../store/RouterStore";
 import { eventStore } from "../store/EventStore";
 import { performanceStore } from "../store/PerformanceStore";
 import { observer } from "mobx-react-lite";
+
+import leftSVG from "../images/icons/arrow-left.svg";
+import rightSVG from "../images/icons/arrow-right.svg";
 
 export const CalendarMonth = observer((props: CalendarInnerProps) => {
   const { date, setDate } = props;
@@ -45,7 +47,7 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
         }}
         bottom={0}
         md={1}>
-        <Icon type="chevron-left" />
+        <img src={leftSVG} width={15} height={15} />
       </BigButtonColMin>
       <Col md={10}>
         <FlexCol>
@@ -67,7 +69,7 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
         }}
         bottom={0}
         md={1}>
-        <Icon type="chevron-right" />
+        <img src={rightSVG} width={15} height={15} />
       </BigButtonColMin>
       {
         month.map((m, idx) => {
