@@ -3,56 +3,35 @@ import { Base, BigRow, BigButtonColMin, BigCol, Icon, FlexCol } from "../compone
 import { PageTitle } from "../components/PageTitle";
 import { observer } from "mobx-react-lite";
 import { directionStore } from "../store/DirectionStore";
-import { Col } from "reactstrap";
-import moment from "moment";
+import { Col, Dropdown, DropdownMenu, DropdownItem, DropdownToggle } from "reactstrap";
 import { routerStore } from "../store/RouterStore";
-import _ from "lodash";
-import { parseExpression } from "cron-parser";
-import { Direction } from "../../server/models/Direction";
-import { toJS } from "mobx";
+import { CALENDAR_DAY, CalendarInner, CALENDAR_WEEK } from "../components/CalendarHelpers";
+import { CalendarDay } from "../components/CalendarDay";
+import { CalendarWeek } from "../components/CalendarWeek";
 
-const LOCALE = "ru";
-
-interface Time {
-  time: moment.Moment
+const calendarTypes = {
+  [CALENDAR_DAY]: {
+    $el: CalendarDay,
+    label: "День"
+  },
+  [CALENDAR_WEEK]: {
+    $el: CalendarWeek,
+    label: "Неделя"
+  }
 }
 
 export const Calendar = observer(() => {
 
   const [ menuVisible, setMenuVisible ] = React.useState(false);
   const [ date, setDate ] = React.useState(new Date());
+  const [ type, setType ] = React.useState(CALENDAR_WEEK);
+  const [ isVisible, setIsVisible ] = React.useState(false);
 
   React.useEffect(() => {
     directionStore.loadDirections({});
   }, []);
 
-  // looks like as fukn shit
-  let times: Time[] = new Array(24);
-  times.fill(undefined);
-
-  times = times.map((t, idx) => {
-    return {
-      time: moment(date).startOf("day").add(idx, "hour")
-    }
-  });
-
-  const findSchedulesByTime = (time: moment.Moment) => {
-    const items = directionStore.directions;
-    const schedules: {[key: string]: Direction} = {};
-    items.forEach(i => {
-      _.each(i.schedule, s => {
-        const interval = parseExpression(s, {
-          startDate: time.clone().toDate(),
-          currentDate: time.clone().add(1).toDate()
-        });
-
-        if (interval.hasPrev()) {
-          schedules[i._id as string] = toJS(i);
-        }
-      });
-    });
-    return _.values(schedules);
-  }
+  const CalendarInner = calendarTypes[type].$el as CalendarInner;
 
   return (
     <Base>
@@ -65,8 +44,41 @@ export const Calendar = observer(() => {
             md={4}>
             НАПРАВЛЕНИЯ (ВСЕ)  
           </BigButtonColMin>      
-          <BigButtonColMin md={4}>
-            ДЕНЬ 
+          <BigButtonColMin 
+            onClick={() => {
+              setIsVisible(!isVisible);
+            }}
+            md={4}>
+            {calendarTypes[type].label}
+            <Dropdown 
+              style={{  width: 0, height: 0 }}
+              isOpen={isVisible} 
+              toggle={() => {
+                setIsVisible(false);
+              }}>
+              <DropdownToggle 
+                style={{ 
+                  padding: 0
+                }} 
+              />
+              <DropdownMenu>
+                {
+                  Object.keys(calendarTypes).map(key => {
+                    if (key === type) return null;
+
+                    return (
+                      <DropdownItem 
+                        onClick={() => {
+                          setType(key);
+                        }}
+                        key={key}>
+                        {calendarTypes[key].label}
+                      </DropdownItem>
+                    )
+                  })
+                }
+              </DropdownMenu>
+            </Dropdown>
           </BigButtonColMin>      
           <BigButtonColMin 
             onClick={() => {
@@ -87,7 +99,7 @@ export const Calendar = observer(() => {
                   <BigButtonColMin 
                     md={12}
                     key={d._id as string}>
-                    {d.name}
+                    {d.name} ({d.shortName})
                   </BigButtonColMin>
                 )
               })
@@ -95,75 +107,10 @@ export const Calendar = observer(() => {
           </BigRow>
         </Col>
         <Col md={menuVisible ? 8 : 12 }>
-          <BigRow>
-            <BigButtonColMin 
-              onClick={() => {
-                const prev = moment(date).add(-1, "day").toDate();
-                setDate(prev);
-              }}
-              bottom={0}
-              md={1}>
-              <Icon type="chevron-left" />
-            </BigButtonColMin>
-            <BigButtonColMin md={10}>
-              {moment(date).locale(LOCALE).format("ddd")}
-              {" "}
-              {moment(date).locale(LOCALE).format("DD")}
-            </BigButtonColMin>
-            <BigButtonColMin 
-              onClick={() => {
-                const next = moment(date).add(1, "day").toDate();
-                setDate(next);
-              }}
-              bottom={0}
-              md={1}>
-              <Icon type="chevron-right" />
-            </BigButtonColMin>
-            {
-              times.map((t, idx) => {
-                if (!(idx > 6 && idx < 23)) return null;
-
-                const schedules = findSchedulesByTime(t.time);
-
-                return (
-                  <React.Fragment key={idx}>
-                    <BigButtonColMin
-                      top={0}
-                      bottom={0}
-                      md={1}>
-                      {t.time.format("HH:mm")}
-                    </BigButtonColMin>
-                    <BigCol md={10}>
-                      <FlexCol>
-                        {
-                          schedules.map((s, idx) => {
-                            return (
-                              <div 
-                                key={idx}
-                                className="text-center"
-                                style={{
-                                  padding: 20,
-                                  width: "100%",
-                                  backgroundColor: idx % 2 ? "#f0f3f7" : undefined
-                                }}>
-                                {s.name}
-                              </div>
-                            )
-                          })
-                        }
-                      </FlexCol>
-                    </BigCol>
-                    <BigButtonColMin 
-                      top={0}
-                      bottom={0}
-                      md={1}>
-                      &nbsp;
-                    </BigButtonColMin>
-                  </React.Fragment>
-                )
-              })
-            }
-          </BigRow>
+          <CalendarInner 
+            date={date} 
+            setDate={setDate}
+          />
         </Col>
       </BigRow>
     </Base>

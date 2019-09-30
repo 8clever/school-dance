@@ -47,6 +47,17 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
         </FormGroup>
 
         <FormGroup>
+          <Label>Лейбл</Label>
+          <Input 
+            placeholder={"Текст..."}
+            value={directionStore.direction.shortName}
+            onChange={e => {
+              directionStore.direction.shortName = e.target.value;
+            }}
+          />
+        </FormGroup>
+
+        <FormGroup>
           <Label>Описание</Label>
           <Input 
             type="textarea"

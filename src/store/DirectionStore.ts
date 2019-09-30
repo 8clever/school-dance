@@ -26,6 +26,7 @@ export class DirectionStore extends Api<Direction> {
   createDirection = () => {
     this.direction = {
       name: "",
+      shortName: "",
       images: [],
       desc: "",
       schedule: []

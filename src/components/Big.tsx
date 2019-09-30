@@ -4,20 +4,21 @@ import { Col, Row, Button, ButtonProps, RowProps, ColProps } from "reactstrap";
 import { FlexCol } from "./Flex";
 import _ from "lodash";
 
-interface BigButtonCellProps extends ButtonProps, BigColSize {
+export interface BigButtonCellProps extends ButtonProps, BigColSize, BigFlexSize {
   padding?: string;
   onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   width?: number;
   height?: number;
+  colPadding?: string;
 }
 
 export const BigButtonColMin = (p: BigButtonCellProps) => {
   const props = { ...p };
   props.size = props.size || "";
   props.md = props.md || 6;
-  props.padding = "20px 0";
+  props.padding = props.padding || "20px 0";
 
   return (
     <BigButtonCol {...props} />
@@ -38,9 +39,14 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
       left={props.left} 
       right={props.right} 
       bottom={props.bottom} 
-      className={props.className}>
+      className={props.className}
+      flex={props.flex}
+      maxWidth={props.maxWidth}
+      padding={props.colPadding}
+    >
       <FlexCol justify="center" align="center">
         <Button
+          block={props.block}
           onClick={props.onClick}
           style={{
             fontFamily: "Main Font",
@@ -56,12 +62,13 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
   )
 }
 
-interface BigColProps extends ColProps, BigColSize {
+interface BigColProps extends ColProps, BigColSize, BigFlexSize {
   children?: React.ReactNode;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   width?: number;
   height?: number;
+  padding?: string;
 }
 
 interface BigColSize {
@@ -69,6 +76,11 @@ interface BigColSize {
   left?: number;
   right?: number;
   bottom?: number;
+}
+
+interface BigFlexSize {
+  flex?: string;
+  maxWidth?: string;
 }
 
 const defSize = 1;
@@ -79,8 +91,6 @@ const validateBorder = (number?: number) => {
 }
 
 export const BigCol = (props: BigColProps) => {
-  const defSize = 1;
-
   const border = {
     top: validateBorder(props.top),
     right: validateBorder(props.right),
@@ -101,7 +111,10 @@ export const BigCol = (props: BigColProps) => {
         borderTop: `${border.top}px solid black`,
         borderLeft: `${border.left}px solid black`,
         width: props.width,
-        height: props.height
+        height: props.height,
+        maxWidth: props.maxWidth,
+        flex: props.flex,
+        padding: props.padding
       }}>
       {props.children}
     </Col>

@@ -46,18 +46,16 @@ export const Footer = () => {
         </Col>
         <Col md={4}>
           <BigRow className="h-100">
-            <Col xs={7}>
-              <BigButtonColMin 
-                onClick={() => {
-                  routerStore.push("/calendar")
-                }}
-                className="h-100" 
-                xs={12} 
-                md={12} 
-                h100>
-                <img src={scheduleSVG} />
-              </BigButtonColMin>
-            </Col>
+            <BigButtonColMin 
+              onClick={() => {
+                routerStore.push("/calendar")
+              }}
+              className="h-100" 
+              xs={7} 
+              md={7} 
+              h100>
+              <img src={scheduleSVG} />
+            </BigButtonColMin>
             <Col xs={5}>
               <BigRow className="h-50" noGutters>
                 <BigButtonColMin 
