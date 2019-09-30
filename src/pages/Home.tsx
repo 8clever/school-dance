@@ -29,7 +29,11 @@ export const Home = observer(() => {
     <Base>
       <PageTitle marquee>Студия Дианы Вишнёвой Context Pro</PageTitle>
       <Carousel items={carousel} />
-      <BigRow maxRowItems={3}>
+      <BigRow 
+        style={{
+          fontFamily: "Styled Font"
+        }}
+        maxRowItems={3}>
         {
           directionStore.directions.map(d => {
             return (

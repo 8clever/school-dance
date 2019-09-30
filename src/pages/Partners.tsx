@@ -76,7 +76,7 @@ export const Partners = () => {
   return (
     <Base>
       <PageTitle>ПАРТНЕРЫ</PageTitle>
-      <BigRow>
+      <BigRow style={{ fontFamily: "Styled Font" }}>
         <PartnerButton 
           link="http://www.dianavishneva.com/ru/foundation/"
           title="ФОНД ДИАНЫ ВИШНЁВОЙ"

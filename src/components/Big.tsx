@@ -49,7 +49,6 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
           block={props.block}
           onClick={props.onClick}
           style={{
-            fontFamily: "Main Font",
             padding: props.padding || "100px 20px"
           }}
           href={props.href}

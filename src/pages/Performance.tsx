@@ -78,7 +78,7 @@ export const Performance = observer((props: PerformanceProps) => {
       
       {
         userStore.isAdmin() ?
-        <BigRow>
+        <BigRow style={{ fontFamily: "Styled Font" }}>
           <BigButtonCol onClick={() => setEventEditVisible(true)}>
             <Icon type="plus" /> Событие
           </BigButtonCol>

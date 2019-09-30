@@ -68,8 +68,9 @@ export const Direction = observer((props: DirectionProps) => {
       </BigRow>
 
       {/** performance list */}
-      <BigRow maxRowItems={3}>
-
+      <BigRow 
+        style={{ fontFamily: "Styled Font" }}
+        maxRowItems={3}>
         {
           performanceStore.performanceList.map(p => {
             return (

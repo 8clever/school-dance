@@ -10,12 +10,7 @@ export const Studio = () => {
   return (
     <Base>
       <PageTitle>СТУДИЯ</PageTitle>
-      <Carousel 
-        items={[
-          { src: studi1PNG }
-        ]}
-      />
-      <BigRow>
+      <BigRow style={{ fontFamily: "Styled Font" }}>
         <BigButtonCol onClick={() => routerStore.push("/leaders")}>
           РУКОВОДСТВО
         </BigButtonCol>
