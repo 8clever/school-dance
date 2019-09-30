@@ -18,12 +18,11 @@ export const Wrapper = (props: {
 }) => {
   return (
     <div 
-      className="text-center"
+      className={`text-center ${props.idx % 2 ? "bg-gray" : ""}`}
       style={{
         opacity: props.disabled ? 0.4 : 1,
         padding: "20px",
-        width: "100%",
-        backgroundColor: props.idx % 2 ? "#f0f3f7" : undefined
+        width: "100%"
       }}>
       {props.children}
     </div>
