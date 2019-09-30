@@ -1,19 +1,26 @@
 import React from "react";
-import { Direction } from "../../server/models/Direction";
+
+interface ScheduleItem {
+  name: string;
+  disabled?: boolean;
+  shortName?: string;
+}
 
 interface ScheduleProps {
-  items: Direction[];
+  items: ScheduleItem[];
   isDay?: boolean;
 }
 
-const Wrapper = (props: { 
+export const Wrapper = (props: { 
   idx: number;
+  disabled?: boolean;
   children: React.ReactNode ;
 }) => {
   return (
     <div 
       className="text-center"
       style={{
+        opacity: props.disabled ? 0.4 : 1,
         padding: "20px",
         width: "100%",
         backgroundColor: props.idx % 2 ? "#f0f3f7" : undefined
@@ -34,6 +41,7 @@ export const Schedules = (props: ScheduleProps) => {
             <Wrapper 
               key={idx}
               idx={idx}
+              disabled={s.disabled}
               children={props.isDay ? s.name : s.shortName || s.name}
             />
           )

@@ -14,6 +14,13 @@ import { Leaders } from "../pages/Leaders";
 import { Subscribe } from "../pages/Subscribe";
 import { Prices } from "../pages/Prices";
 import { Calendar } from "../pages/Calendar";
+import qs from "querystring";
+
+const parse = (path: string) => {
+  if (!path) return {};
+  path = path.replace("?", "");
+  return qs.parse(path);
+}
 
 export const Router = () => {
 
@@ -38,7 +45,7 @@ export const Router = () => {
         <Route exact path="/leader/:id" render={(match) => <Leaders id={match.match.params.id} />}/>
         <Route exact path="/subscribe" render={(match) => <Subscribe />}/>
         <Route exact path="/subscribe/:id" render={(match) => <Prices id={match.match.params.id} />}/>
-        <Route exact path="/calendar" render={(match) => <Calendar />}/>
+        <Route exact path="/calendar" render={(match) => <Calendar {...parse(match.location.search) as { date: string, type: string }} />}/>
       </AnimatedSwitch>
     </DOMRouter>
   )

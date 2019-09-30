@@ -53,12 +53,12 @@ export const getTimes = (date: Date) => {
   return times;
 }
 
-interface WeekDay {
+export interface WeekDayItem {
   day: moment.Moment;
 }
 
 export const getWeekDays = (start: Date) => {
-  const days: WeekDay[] = new Array(7);
+  const days: WeekDayItem[] = new Array(7);
   days.fill(null);
 
   days.forEach((v, k) => {

@@ -1,14 +1,15 @@
 import React from "react";
-import { CalendarInnerProps, getTimes, LOCALE, getWeekDays, findSchedulesByTime } from "./CalendarHelpers";
+import { CalendarInnerProps, getTimes, LOCALE, getWeekDays, findSchedulesByTime, CALENDAR_DAY } from "./CalendarHelpers";
 import { BigRow, BigButtonColMin, BigButtonCellProps } from "./Big";
 import moment from "moment";
 import { Icon } from "./Icon";
-import { Col, Row } from "reactstrap";
+import { Col } from "reactstrap";
 import { FlexCol } from "./Flex";
 import { directionStore } from "../store/DirectionStore";
 import { Schedules } from "./Schedules";
+import { routerStore } from "../store/RouterStore";
 
-const WeekDay = (props: BigButtonCellProps) => {
+export const WeekDay = (props: BigButtonCellProps) => {
   const size = 100 / 7;
   return (
     <BigButtonColMin
@@ -85,7 +86,11 @@ export const CalendarWeek = (props: CalendarInnerProps) => {
                       const time = week.day.clone().startOf("day").add(hour, "hour");
                       const schedules = findSchedulesByTime(time, directionStore.directions);
                       return (
-                        <WeekDay key={idx}>
+                        <WeekDay 
+                          onClick={() => {
+                            routerStore.push(`/calendar?type=${CALENDAR_DAY}&date=${moment(date).format("DD-MM-YYYY")}`)
+                          }}
+                          key={idx}>
                           <FlexCol align="center" justify="center">
                             <Schedules items={schedules} />
                           </FlexCol>
