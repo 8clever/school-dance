@@ -1,5 +1,5 @@
 import React from "react";
-import { CalendarInnerProps, getWeekDays, LOCALE, WeekDayItem, getTimes, findSchedulesByTime, CALENDAR_DAY } from "./CalendarHelpers";
+import { CalendarInnerProps, getWeekDays, LOCALE, WeekDayItem, getTimes, findSchedulesByTime, CALENDAR_DAY, findEventsByTime } from "./CalendarHelpers";
 import moment from "moment";
 import { BigRow, BigButtonColMin } from "./Big";
 import { Icon } from "./Icon";
@@ -10,13 +10,25 @@ import { Wrapper as DayWrapper } from "./Schedules";
 import { directionStore } from "../store/DirectionStore";
 import _ from "lodash";
 import { routerStore } from "../store/RouterStore";
+import { eventStore } from "../store/EventStore";
+import { performanceStore } from "../store/PerformanceStore";
+import { observer } from "mobx-react-lite";
 
-export const CalendarMonth = (props: CalendarInnerProps) => {
+export const CalendarMonth = observer((props: CalendarInnerProps) => {
   const { date, setDate } = props;
   const startDate = moment(date).startOf("month").startOf("isoWeek");
   const endDate = moment(date).endOf("month").endOf("isoWeek");
   let n = startDate.clone();
   const month: WeekDayItem[][] = [];
+
+  React.useEffect(() => {
+    eventStore.loadEventList({
+      dt: {
+        $gte: startDate,
+        $lte: endDate
+      }
+    });
+  }, [ date ]);
 
   while (n.isSameOrBefore(endDate)) {
     const week = getWeekDays(n.toDate());
@@ -68,7 +80,10 @@ export const CalendarMonth = (props: CalendarInnerProps) => {
                     m.map((week, idx) => {
                       const times = getTimes(week.day.toDate());
                       const schedulesByTime = _.compact(times.map((t) => {
-                        const schedules = findSchedulesByTime(t.time, directionStore.directions);
+                        const schedules = [
+                          ...findSchedulesByTime(t.time, directionStore.directions),
+                          ...findEventsByTime(t.time, eventStore.eventList, performanceStore.itemList)
+                        ]
                         if (!schedules.length) return null;
                         return schedules;
                       }));
@@ -100,4 +115,4 @@ export const CalendarMonth = (props: CalendarInnerProps) => {
       }
     </BigRow>
   )
-}
+})

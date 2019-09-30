@@ -1,6 +1,6 @@
 import React from "react";
 
-interface ScheduleItem {
+export interface ScheduleItem {
   name: string;
   disabled?: boolean;
   shortName?: string;

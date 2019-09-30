@@ -10,6 +10,8 @@ import { CalendarDay } from "../components/CalendarDay";
 import { CalendarWeek } from "../components/CalendarWeek";
 import { CalendarMonth } from "../components/CalendarMonth";
 import moment from "moment";
+import { eventStore } from "../store/EventStore";
+import { performanceStore } from "../store/PerformanceStore";
 
 const calendarTypes = {
   [CALENDAR_DAY]: {
@@ -39,6 +41,7 @@ export const Calendar = observer((props: CalendarProps) => {
 
   React.useEffect(() => {
     directionStore.loadDirections({});
+    performanceStore.loadItems({});
   }, []);
 
   React.useEffect(() => {

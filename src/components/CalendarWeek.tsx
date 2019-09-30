@@ -1,5 +1,5 @@
 import React from "react";
-import { CalendarInnerProps, getTimes, LOCALE, getWeekDays, findSchedulesByTime, CALENDAR_DAY } from "./CalendarHelpers";
+import { CalendarInnerProps, getTimes, LOCALE, getWeekDays, findSchedulesByTime, CALENDAR_DAY, findEventsByTime } from "./CalendarHelpers";
 import { BigRow, BigButtonColMin, BigButtonCellProps } from "./Big";
 import moment from "moment";
 import { Icon } from "./Icon";
@@ -8,6 +8,9 @@ import { FlexCol } from "./Flex";
 import { directionStore } from "../store/DirectionStore";
 import { Schedules } from "./Schedules";
 import { routerStore } from "../store/RouterStore";
+import { observer } from "mobx-react-lite";
+import { eventStore } from "../store/EventStore";
+import { performanceStore } from "../store/PerformanceStore";
 
 export const WeekDay = (props: BigButtonCellProps) => {
   const size = 100 / 7;
@@ -23,7 +26,7 @@ export const WeekDay = (props: BigButtonCellProps) => {
   )
 }
 
-export const CalendarWeek = (props: CalendarInnerProps) => {
+export const CalendarWeek = observer((props: CalendarInnerProps) => {
   const { date, setDate } = props;
   const startDate = moment(date).startOf("isoWeek");
   const endDate = moment(date).endOf("isoWeek");
@@ -31,6 +34,15 @@ export const CalendarWeek = (props: CalendarInnerProps) => {
   const weekDays = getWeekDays(startDate.toDate());
   const times = getTimes(startDate.toDate());
 
+  React.useEffect(() => {
+    eventStore.loadEventList({
+      dt: {
+        $gte: startDate,
+        $lte: endDate
+      }
+    });
+  }, [ date ]);
+  
   return (
     <BigRow>
       <BigButtonColMin 
@@ -84,7 +96,10 @@ export const CalendarWeek = (props: CalendarInnerProps) => {
                     weekDays.map((week, idx) => {
                       const hour = t.time.toDate().getHours();
                       const time = week.day.clone().startOf("day").add(hour, "hour");
-                      const schedules = findSchedulesByTime(time, directionStore.directions);
+                      const schedules = [
+                        ...findSchedulesByTime(time, directionStore.directions),
+                        ...findEventsByTime(time, eventStore.eventList, performanceStore.itemList)
+                      ]
                       return (
                         <WeekDay 
                           onClick={() => {
@@ -112,4 +127,4 @@ export const CalendarWeek = (props: CalendarInnerProps) => {
       }
     </BigRow>
   )
-}
+})
