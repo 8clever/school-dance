@@ -10,4 +10,5 @@ import { userService } from "../server/api/services/user.service";
     role: "ADMIN"
   });
   console.log("done")
+  process.exit(0);
 })().catch(console.log);
