@@ -44,6 +44,7 @@ export const Teacher = observer((props: TeacherProps) => {
         <Col 
           md={4} 
           style={{ 
+            minHeight: maxHeight,
             maxHeight,
             overflowY 
           }}>

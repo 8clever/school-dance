@@ -11,6 +11,7 @@ import { imageStore } from "../store/ImageStore";
 import { Col, Button } from "reactstrap";
 import ReactMarkdown from "react-markdown";
 import { LeaderEdit } from "../components/LeaderEdit";
+import { useResizeObserver } from "../effects/useResizeObserver";
 
 interface LeaderProps {
   id?: string;
@@ -24,6 +25,7 @@ export const Leaders = observer((props: LeaderProps) => {
   const [ addVisible, setAddVisible ] = React.useState(false);
   const [ editVisible, setEditVisible ] = React.useState(false);
   const [ refresh, setRefresh ] = React.useState(0);
+  const [ width, height, refCallback ] = useResizeObserver();
 
   React.useEffect(() => {
     leaderStore.loadLeaderList({}).then(() => {
@@ -43,6 +45,7 @@ export const Leaders = observer((props: LeaderProps) => {
         <Col 
           md={4}
           style={{ 
+            minHeight: maxHeight,
             maxHeight,
             overflowY 
           }}>
@@ -72,22 +75,17 @@ export const Leaders = observer((props: LeaderProps) => {
         </Col>
         <BigCol>
           <div 
+            ref={refCallback}
             className="h-100" 
             style={{ 
               maxHeight,
               overflowY 
             }}>
-            {
-              _.map(element && element.images, img => {
-                return (
-                  <img 
-                    key={img as string}
-                    width="100%"
-                    src={`${imageStore.endpoint}${img as string}`} 
-                  />
-                )
-              })
-            }
+
+            <img 
+              width="100%"
+              src={`${imageStore.endpoint}${element && element.images[0] as string}?w=${width}&h=${height}`} 
+            />
           </div>
         </BigCol>
         <BigCol>
