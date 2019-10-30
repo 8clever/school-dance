@@ -30,6 +30,7 @@ export const router = express.Router()
       const buffer = await new Response(image.stream).buffer()
       const jimpImg = await Jimp.read(buffer);
       const mImg = await jimpImg
+        .quality(60)
         .cover(Number(w), Number(h));
       const mBuff = await mImg.getBufferAsync(jimpImg.getMIME());
 

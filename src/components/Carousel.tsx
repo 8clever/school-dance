@@ -1,13 +1,14 @@
 import React from "react";
 import { Carousel as CarouselFactory, CarouselItem, CarouselControl } from "reactstrap";
 import { useResizeObserver } from "../effects/useResizeObserver";
+import Jimp from "jimp";
 
 interface Image {
   src: string;
 }
 
 interface CarouselProps {
-  items: Image[]
+  items: Image[];
 }
 
 export const Carousel = (props: CarouselProps) => {
@@ -18,6 +19,7 @@ export const Carousel = (props: CarouselProps) => {
     if (!width) return <React.Fragment key={idx}></React.Fragment>;
 
     const height = width * 0.5625;
+    
     return (
       <CarouselItem key={idx} >
         <img 
