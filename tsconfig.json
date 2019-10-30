@@ -7,15 +7,11 @@
     "sourceMap": true,
     "moduleResolution": "node",
     "outDir": "dist",
-    "typeRoots": [
-      "node_modules/@types",
-      "src/@types"
-    ],
     "noImplicitAny": true,
     "jsx": "react"
   },
   "include": [
-    "typings.d.ts", 
+    "src/@types/*.d.ts",
     "server/index.ts"
   ],
   "exclude": [

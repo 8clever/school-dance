@@ -14,7 +14,9 @@ import { Leaders } from "../pages/Leaders";
 import { Subscribe } from "../pages/Subscribe";
 import { Prices } from "../pages/Prices";
 import { Calendar } from "../pages/Calendar";
+import { Auth } from "../pages/Auth";
 import qs from "querystring";
+import { userStore } from "../store/UserStore";
 
 const parse = (path: string) => {
   if (!path) return {};
@@ -46,6 +48,15 @@ export const Router = () => {
         <Route exact path="/subscribe" render={(match) => <Subscribe />}/>
         <Route exact path="/subscribe/:id" render={(match) => <Prices id={match.match.params.id} />}/>
         <Route exact path="/calendar" render={(match) => <Calendar {...parse(match.location.search) as { date: string, type: string }} />}/>
+        <Route exact path="/auth" render={match => <Auth />} />
+        
+        <Route exact path="/logout" render={() => {
+          userStore.logout().then(() => {
+            routerStore.push("/");
+          });
+
+          return null;
+        }} />
       </AnimatedSwitch>
     </DOMRouter>
   )

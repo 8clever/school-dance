@@ -24,19 +24,7 @@ export const Base = observer((props: Props) => {
       <FlexCol column justify="between">
         <div>
           <Header />
-          <Row noGutters>
-            <Col 
-              className="order-12 order-md-1"
-              md={menuStore.isCollapsed ? 12 : 8 }>
-              {props.children}
-            </Col>
-            {
-              menuStore.isCollapsed ? null :
-              <Col className="order-1 order-md-12" md={4}>
-                <HeaderMenu />
-              </Col>
-            }
-          </Row>
+          {props.children}
         </div>
         <div>
           <Footer />

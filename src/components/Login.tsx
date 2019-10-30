@@ -11,11 +11,9 @@ import {
 } from "reactstrap";
 import { Icon } from "./Icon";
 import { userStore } from "../store/UserStore";
+import { routerStore } from "../store/RouterStore";
 
-interface LoginProps {
-  visible: boolean;
-  toggle: () => void;
-}
+interface LoginProps {}
 
 export const Login = (props: LoginProps) => {
 
@@ -23,38 +21,45 @@ export const Login = (props: LoginProps) => {
   const [ password, setPassword ] = React.useState("");
 
   return (
-    <>
-      <Modal 
-        isOpen={props.visible} 
-        toggle={props.toggle} >
-        <ModalHeader toggle={props.toggle}>
-          Авторизация
-        </ModalHeader>
-        <ModalBody>
-          <FormGroup>
-            <Label>Логин</Label>
-            <Input 
-              placeholder="Текст..."
-              value={login}
-              onChange={e => {
-                setLogin(e.target.value);
-              }}
-            />
-          </FormGroup>
-          
-          <FormGroup>
-            <Label>Пароль</Label>
-            <Input 
-              onChange={e => {
-                setPassword(e.target.value);
-              }}
-              value={password}
-              type="password"
-            />
-          </FormGroup>
-        </ModalBody>
-        <ModalFooter>
-          <Button color="secondary" onClick={props.toggle}>
+    <div style={{
+      width: "100vw",
+      height: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    }}>
+      <div style={{
+        padding: 50,
+        border: "1px solid gray",
+        width: 500,
+      }}>
+        <FormGroup>
+          <Label>Логин</Label>
+          <Input 
+            placeholder="Текст..."
+            value={login}
+            onChange={e => {
+              setLogin(e.target.value);
+            }}
+          />
+        </FormGroup>
+        
+        <FormGroup>
+          <Label>Пароль</Label>
+          <Input 
+            onChange={e => {
+              setPassword(e.target.value);
+            }}
+            value={password}
+            type="password"
+          />
+        </FormGroup>
+        <div style={{
+          textAlign: "right"
+        }}>
+          <Button color="secondary" onClick={() => {
+            routerStore.push("/")
+          }}>
             Отмена
           </Button>
           {" "}
@@ -64,12 +69,12 @@ export const Login = (props: LoginProps) => {
 
             await userStore.login(login, password);
             await userStore.isLoggedin();
-            props.toggle();
+            routerStore.push("/")
           }}>
             Вход <Icon type="sign-in-alt" />
           </Button>
-        </ModalFooter>
-      </Modal>
-    </>
+        </div>
+      </div>
+    </div>
   )
 }

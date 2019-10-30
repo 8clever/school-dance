@@ -9,7 +9,10 @@ import {
   InputGroupText, 
   Popover,
   PopoverHeader,
-  PopoverBody
+  PopoverBody,
+  Dropdown,
+  DropdownMenu,
+  DropdownToggle
 } from "reactstrap";
 import { FlexCol } from "./Flex";
 import { Notification } from "./Notification";
@@ -24,6 +27,7 @@ import scheduleSVG from "../images/icons/schedule.svg";
 import zalupaSVG from "../images/icons/zalupa.svg";
 import menuSVG from "../images/icons/menu.svg";
 import closeSVG from "../images/icons/close.svg";
+import { HeaderMenu } from "./HeaderMenu";
 
 
 interface SearchResult {
@@ -182,15 +186,31 @@ export const Header = observer(() => {
                 src={scheduleSVG} 
               />
             </Button>
-            <Button 
-              color="link"
-              onClick={menuStore.toggle}>
-                {
-                  menuStore.isCollapsed ?
-                  <img src={menuSVG} /> :
-                  <img src={closeSVG} />
-                }
-            </Button>
+            <div style={{ position: "relative" }}>
+              <Button 
+                color="link"
+                onClick={menuStore.toggle}>
+                  {
+                    menuStore.isCollapsed ?
+                    <img src={menuSVG} /> :
+                    <img src={closeSVG} />
+                  }
+              </Button>
+
+              {
+                menuStore.isCollapsed ? null :
+                <div style={{
+                  marginTop: 1,
+                  background: "white",
+                  minWidth: 400,
+                  position: "absolute",
+                  right: 0
+                }}>
+                  <HeaderMenu />
+                </div>
+              }
+            </div>
+            
           </ButtonGroup>
         </BigCol>
       </BigRow>

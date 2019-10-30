@@ -3,6 +3,7 @@ import { BigRow, BigButtonColMin, BigHr } from "./Big";
 import { Col } from "reactstrap";
 import { Logo } from "./Logo";
 import { routerStore } from "../store/RouterStore";
+import { url as brandURL } from "../static/brands";
 
 import scheduleSVG from "../images/icons/schedule.svg";
 import whatsappSVG from "../images/icons/whatsapp-logo.svg";
@@ -10,9 +11,26 @@ import vkSVG from "../images/icons/vk.svg";
 import instagrammSVG from "../images/icons/instagramm.svg";
 import facebookSVG from "../images/icons/facebook.svg";
 
-const iconStyle = {
-  width: 30,
-  height: 30
+interface FooterBrandLogoProps {
+  src: string;
+  url: string;
+}
+
+const FooterBrandLogo = (props: FooterBrandLogoProps) => {
+  return (
+    <BigButtonColMin 
+      onClick={() => {
+        window.location.href = props.url;
+      }}
+      className="h-100" 
+      xs={6}>
+      <img 
+        width={30} 
+        height={30} 
+        src={props.src} 
+      />
+    </BigButtonColMin>
+  )
 }
 
 export const Footer = () => {
@@ -66,40 +84,24 @@ export const Footer = () => {
             </BigButtonColMin>
             <Col xs={5}>
               <BigRow className="h-50" noGutters>
-                <BigButtonColMin 
-                  onClick={() => {
-                    window.location.href = "https://vk.com/contextpro.studio";
-                  }}
-                  className="h-100" 
-                  xs={6}>
-                  <img {...iconStyle} src={vkSVG} />
-                </BigButtonColMin>
-                <BigButtonColMin 
-                  onClick={() => {
-                    window.location.href = "https://www.facebook.com/contextpro.studio/";
-                  }}
-                  className="h-100" 
-                  xs={6}>
-                  <img {...iconStyle} src={facebookSVG} />
-                </BigButtonColMin>
+                <FooterBrandLogo 
+                  src={vkSVG}
+                  url={brandURL.vk}
+                />
+                <FooterBrandLogo 
+                  src={facebookSVG}
+                  url={brandURL.facebook}
+                />
               </BigRow>
               <BigRow className="h-50">
-                <BigButtonColMin 
-                  onClick={() => {
-                    window.location.href = "https://www.instagram.com/contextpro.studio/";
-                  }}
-                  className="h-100" 
-                  xs={6}>
-                  <img {...iconStyle} src={instagrammSVG} />
-                </BigButtonColMin>
-                <BigButtonColMin 
-                  onClick={() => {
-                    window.location.href = "https://wa.me/79319750080"
-                  }}
-                  className="h-100" 
-                  xs={6}>
-                  <img {...iconStyle} src={whatsappSVG} />
-                </BigButtonColMin>
+                <FooterBrandLogo 
+                  src={instagrammSVG}
+                  url={brandURL.instagramm}
+                />
+                <FooterBrandLogo 
+                  src={whatsappSVG}
+                  url={brandURL.whatsapp}
+                />
               </BigRow>
             </Col>
           </BigRow>
