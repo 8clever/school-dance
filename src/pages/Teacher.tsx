@@ -11,6 +11,7 @@ import { toJS } from "mobx";
 import { imageStore } from "../store/ImageStore";
 import { Col, Button } from "reactstrap";
 import ReactMarkdown from "react-markdown";
+import { useResizeObserver } from "../effects/useResizeObserver";
 
 interface TeacherProps {
   id?: string;
@@ -24,6 +25,7 @@ export const Teacher = observer((props: TeacherProps) => {
   const [ teacherAddVisible, setTeacherAddVisible ] = React.useState(false);
   const [ teacherEditVisible, setTeacherEditVisible ] = React.useState(false);
   const [ refresh, setRefresh ] = React.useState(0);
+  const [ width, height, refCallback ] = useResizeObserver();
 
   React.useEffect(() => {
     teacherStore.loadTeacherList({}).then(() => {
@@ -71,22 +73,17 @@ export const Teacher = observer((props: TeacherProps) => {
         </Col>
         <BigCol>
           <div 
+            ref={refCallback}
             className="h-100" 
             style={{ 
               maxHeight,
               overflowY 
             }}>
-            {
-              _.map(teacher && teacher.images, img => {
-                return (
-                  <img 
-                    key={img as string}
-                    width="100%"
-                    src={`${imageStore.endpoint}${img as string}`} 
-                  />
-                )
-              })
-            }
+            
+            <img 
+              width="100%"
+              src={`${imageStore.endpoint}${teacher && teacher.images[0] as string}?w=${width}&h=${height}`} 
+            />
           </div>
         </BigCol>
         <BigCol>

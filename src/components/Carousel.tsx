@@ -17,12 +17,13 @@ export const Carousel = (props: CarouselProps) => {
   const slides = props.items.map((item, idx) => {
     if (!width) return <React.Fragment key={idx}></React.Fragment>;
 
+    const height = width * 0.5625;
     return (
       <CarouselItem key={idx} >
         <img 
-          height={width * 0.8}
           width={width}
-          src={item.src} 
+          height={height}
+          src={item.src + `?w=${width}&h=${height}`} 
         />
       </CarouselItem>
     );
