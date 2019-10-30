@@ -27,10 +27,10 @@ const BrandLogo = (props: BrandLogoProps) => {
       }}
       style={{
         cursor: "pointer",
-        marginRight: 5
+        marginRight: 10
       }}
-      width={15} 
-      height={15} 
+      width={18} 
+      height={18} 
       src={props.src} 
     />
   )
