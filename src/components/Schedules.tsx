@@ -1,4 +1,5 @@
 import React from "react";
+import { getShadowBoxStyle } from "./Big";
 
 export interface ScheduleItem {
   name: string;
@@ -14,32 +15,42 @@ interface ScheduleProps {
 export const Wrapper = (props: { 
   idx: number;
   disabled?: boolean;
-  children: React.ReactNode ;
+  children: React.ReactNode;
+  length: number;
+  className?: string;
 }) => {
+  const border = props.idx < props.length - 1;
+
   return (
     <div 
-      className={`text-center ${props.idx % 2 ? "bg-gray" : ""}`}
+      className={`h-100 w-100 ${props.className}`}
       style={{
+        display: "flex",
+        alignItems: "center",
+        alignContent: "center",
         opacity: props.disabled ? 0.4 : 1,
-        padding: "20px",
-        width: "100%"
+        width: "100%",
+        borderRight: border ? "1px solid black" : undefined
       }}>
-      {props.children}
+      <div className="text-center w-100">
+        {props.children}
+      </div>
     </div>
   )
 }
 
 export const Schedules = (props: ScheduleProps) => {
-  if (!props.items.length) return <Wrapper idx={0} children="" />;
+  if (!props.items.length) return <Wrapper idx={0} length={0} children="" />;
 
   return (
     <>
       {
         props.items.map((s, idx) => {
           return (
-            <Wrapper 
+            <Wrapper
               key={idx}
               idx={idx}
+              length={props.items.length}
               disabled={s.disabled}
               children={props.isDay ? s.name : s.shortName || s.name}
             />

@@ -1,11 +1,11 @@
 import React from "react";
 import { CalendarInnerProps, getTimes, LOCALE, getWeekDays, findSchedulesByTime, CALENDAR_DAY, findEventsByTime } from "./CalendarHelpers";
-import { BigRow, BigButtonColMin, BigButtonCellProps } from "./Big";
+import { BigRow, BigButtonColMin, BigButtonCellProps, BigCol, getShadowBoxStyle } from "./Big";
 import moment from "moment";
 import { Col } from "reactstrap";
 import { FlexCol } from "./Flex";
 import { directionStore } from "../store/DirectionStore";
-import { Schedules } from "./Schedules";
+import { Schedules, Wrapper } from "./Schedules";
 import { routerStore } from "../store/RouterStore";
 import { observer } from "mobx-react-lite";
 import { eventStore } from "../store/EventStore";
@@ -14,17 +14,27 @@ import { performanceStore } from "../store/PerformanceStore";
 import leftSVG from "../images/icons/arrow-left.svg";
 import rightSVG from "../images/icons/arrow-right.svg";
 
-export const WeekDay = (props: BigButtonCellProps) => {
-  const size = 100 / 7;
+interface WeekDayProps {
+  onClick?: () => void;
+  children?: React.ReactNode;
+}
+
+export const WeekDay = (props: WeekDayProps) => {
   return (
-    <BigButtonColMin
-      block
-      colPadding="0px"
-      padding={"0px"}
-      flex={`0 0 ${size}%`} 
-      maxWidth={`${size}%`}
-      {...props}
-    />
+    <div 
+      onClick={props.onClick}
+      style={{
+        ...getShadowBoxStyle({}),
+        cursor: "pointer",
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyItems: "center",
+        minHeight: 65
+      }}>
+      {props.children}
+    </div>
   )
 }
 
@@ -62,9 +72,11 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
             weekDays.map((week, idx) => {
               return (
                 <WeekDay key={idx}>
-                  {week.day.locale(LOCALE).format("ddd")}
-                  {" "}
-                  {week.day.locale(LOCALE).format("DD")}
+                  <Wrapper idx={0} length={0}>
+                    {week.day.locale(LOCALE).format("ddd")}
+                    {" "}
+                    {week.day.locale(LOCALE).format("DD")}
+                  </Wrapper>
                 </WeekDay>
               )
             })
@@ -93,7 +105,11 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
                 {t.time.format("HH:mm")}
               </BigButtonColMin>
               <Col md={10}>
-                <FlexCol>
+                <div style={{
+                  display: "flex",
+                  height: "100%",
+                  justifyContent: "space-between"
+                }}>
                   {
                     weekDays.map((week, idx) => {
                       const hour = t.time.toDate().getHours();
@@ -103,19 +119,18 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
                         ...findEventsByTime(time, eventStore.eventList, performanceStore.itemList)
                       ]
                       return (
-                        <WeekDay 
+                        <WeekDay
+                          key={idx}
                           onClick={() => {
                             routerStore.push(`/calendar?type=${CALENDAR_DAY}&date=${moment(date).format("DD-MM-YYYY")}`)
                           }}
-                          key={idx}>
-                          <FlexCol align="center" justify="center">
-                            <Schedules items={schedules} />
-                          </FlexCol>
+                        >
+                          <Schedules items={schedules} />
                         </WeekDay>
                       )
                     })
                   }
-                </FlexCol>
+                </div>
               </Col>
               <BigButtonColMin 
                 top={0}

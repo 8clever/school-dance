@@ -89,7 +89,14 @@ const validateBorder = (number?: number) => {
   return number;
 }
 
-export const BigCol = (props: BigColProps) => {
+interface shadowBoxProps {
+  top?: number;
+  right?: number;
+  bottom?: number;
+  left?: number;
+}
+
+export const getShadowBoxStyle = (props: shadowBoxProps) => {
   const border = {
     top: validateBorder(props.top),
     right: validateBorder(props.right),
@@ -97,6 +104,14 @@ export const BigCol = (props: BigColProps) => {
     left: validateBorder(props.left)
   }
 
+  return {
+    boxShadow: `${border.right}px ${border.bottom}px 0px 0px black`,
+    borderTop: `${border.top}px solid black`,
+    borderLeft: `${border.left}px solid black`
+  }
+}
+
+export const BigCol = (props: BigColProps) => {
   return (
     <Col
       onMouseEnter={() => props.onMouseEnter && props.onMouseEnter()}
@@ -106,9 +121,7 @@ export const BigCol = (props: BigColProps) => {
       xs={props.xs}
       lg={props.lg}
       style={{
-        boxShadow: `${border.right}px ${border.bottom}px 0px 0px black`,
-        borderTop: `${border.top}px solid black`,
-        borderLeft: `${border.left}px solid black`,
+        ...getShadowBoxStyle(props),
         width: props.width,
         height: props.height,
         maxWidth: props.maxWidth,

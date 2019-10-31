@@ -5,7 +5,7 @@ import { BigRow, BigButtonColMin } from "./Big";
 import { Col } from "reactstrap";
 import { FlexCol } from "./Flex";
 import { WeekDay } from "./CalendarWeek";
-import { Wrapper as DayWrapper } from "./Schedules";
+import { Wrapper as DayWrapper, Schedules } from "./Schedules";
 import { directionStore } from "../store/DirectionStore";
 import _ from "lodash";
 import { routerStore } from "../store/RouterStore";
@@ -55,7 +55,9 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
             month[0].map((week, idx) => {
               return (
                 <WeekDay key={idx}>
-                  {week.day.locale(LOCALE).format("ddd")}
+                  <DayWrapper idx={0} length={0}>
+                    {week.day.locale(LOCALE).format("ddd")}
+                  </DayWrapper>
                 </WeekDay>
               )
             })
@@ -96,14 +98,14 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
                             routerStore.push(`/calendar?type=${CALENDAR_DAY}&date=${week.day.format("DD-MM-YYYY")}`)
                           }}
                           key={idx}>
-                          <FlexCol align="center" justify="center">
-                            <DayWrapper 
-                              idx={schedulesByTime.length ? 1 : null}
-                              disabled={!week.day.isSame(props.date, "month")}
-                            >
-                              {week.day.format("DD")}
-                            </DayWrapper>
-                          </FlexCol>
+                          <DayWrapper 
+                            className={schedulesByTime.length ? "bg-gray" : ""}
+                            length={0}
+                            idx={0}
+                            disabled={!week.day.isSame(props.date, "month")}
+                          >
+                            {week.day.format("DD")}
+                          </DayWrapper>
                         </WeekDay>
                       )
                     })

@@ -3,10 +3,7 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { userStore } from "../store/UserStore";
 import { FlexCol } from "./Flex";
-import { Col, Row } from "reactstrap";
 import { observer } from "mobx-react-lite";
-import { menuStore } from "../store/MenuStore";
-import { HeaderMenu } from "./HeaderMenu";
 
 interface Props {
   children?: React.ReactNode
