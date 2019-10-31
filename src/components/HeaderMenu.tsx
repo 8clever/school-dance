@@ -7,7 +7,7 @@ import { menuStore } from "../store/MenuStore";
 import { url as brandURL } from "../static/brands";
 
 import vk from "../images/icons/vk.svg"
-import whatsapp from "../images/icons/instagramm.svg"
+import whatsapp from "../images/icons/whatsapp-logo.svg"
 import youtube from "../images/icons/youtube.svg"
 import instagramm from "../images/icons/instagramm.svg"
 import facebook from "../images/icons/facebook.svg"
