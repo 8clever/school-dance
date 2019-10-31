@@ -11,6 +11,9 @@ export const config: Configuration = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
+      meta: {
+        viewport: "width=device-width, initial-scale=1, shrink-to-fit=no"
+      },
       title: process.env.APP_NAME
     })
   ],
