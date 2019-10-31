@@ -42,10 +42,6 @@ export const Performance = observer((props: PerformanceProps) => {
   
   return (
     <Base>
-      <PageTitle>
-        {performanceStore.performance.name}
-      </PageTitle>
-
       <HeaderCalendar 
         date={date}
         onChange={setDate}

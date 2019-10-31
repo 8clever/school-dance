@@ -18,7 +18,6 @@ export const Subscribe = observer(() => {
 
   return (
     <Base>
-      <PageTitle>ЦЕНЫ</PageTitle>
       <BigRow 
         style={{ fontFamily: "Styled Font" }}
         maxRowItems={3}>

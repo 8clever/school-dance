@@ -39,7 +39,6 @@ export const Teacher = observer((props: TeacherProps) => {
 
   return (
     <Base>
-      <PageTitle>ПЕДАГОГИ</PageTitle>
       <BigRow>
         <Col 
           md={4} 

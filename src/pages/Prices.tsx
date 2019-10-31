@@ -32,7 +32,6 @@ export const Prices = observer((props: PricesProps) => {
 
   return (
     <Base>
-      <PageTitle>{subscribe.name}</PageTitle>
       <BigRow>
         <BigCol md={7} lg={8}>
           <Carousel 

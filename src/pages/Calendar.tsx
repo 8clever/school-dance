@@ -55,7 +55,6 @@ export const Calendar = observer((props: CalendarProps) => {
 
   return (
     <Base>
-      <PageTitle>РАСПИСАНИЕ</PageTitle>
       <BigRow>
           <BigButtonColMin 
             onClick={() => {

@@ -9,7 +9,6 @@ import studio1PNG from "../images/studio/studio.png"
 export const Studio = () => {
   return (
     <Base>
-      <PageTitle>СТУДИЯ</PageTitle>
       <BigRow>
         <BigCol md={12}>
           <Carousel 

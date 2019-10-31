@@ -26,7 +26,6 @@ export const Contacts = () => {
   
   return (
     <Base>
-      <PageTitle>КОНТАКТЫ</PageTitle>
       <BigRow>
         <BigCol 
           md={7} 

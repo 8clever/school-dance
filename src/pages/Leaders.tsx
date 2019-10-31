@@ -40,7 +40,6 @@ export const Leaders = observer((props: LeaderProps) => {
 
   return (
     <Base>
-      <PageTitle>РУКОВОДСТВО</PageTitle>
       <BigRow>
         <Col 
           md={4}

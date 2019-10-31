@@ -35,8 +35,6 @@ export const Direction = observer((props: DirectionProps) => {
 
   return (
     <Base>
-      <PageTitle>{directionStore.direction.name}</PageTitle>
-
       <HeaderCalendar 
         date={date}
         onChange={setDate}

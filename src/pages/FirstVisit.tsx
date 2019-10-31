@@ -70,7 +70,6 @@ const links = [
 export const FirstVisit = () => {
   return (
     <Base>
-      <PageTitle>ПЕРВОЕ ПОСЕЩЕНИЕ</PageTitle>
       <BigRow>
         {
           messages.map((m,idx) => {

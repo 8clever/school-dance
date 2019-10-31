@@ -75,7 +75,6 @@ const PartnerButton = (props: PartnerButtonProps) => {
 export const Partners = () => {
   return (
     <Base>
-      <PageTitle>ПАРТНЕРЫ</PageTitle>
       <BigRow style={{ fontFamily: "Styled Font" }}>
         <PartnerButton 
           link="http://www.dianavishneva.com/ru/foundation/"
