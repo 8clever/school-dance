@@ -8,11 +8,16 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "noImplicitAny": true,
-    "jsx": "react"
+    "jsx": "react",
+    "typeRoots": [
+      "./@types",
+      "./node_modules/@types"
+    ]
   },
   "include": [
-    "src/@types/*.d.ts",
-    "server/index.ts"
+    "@types",
+    "src/**/*",
+    "server/**/*"
   ],
   "exclude": [
     "dist",

@@ -70,12 +70,17 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
         <FlexCol>
           {
             weekDays.map((week, idx) => {
+              const isSameDay = moment().isSame(week.day, "day");
               return (
                 <WeekDay key={idx}>
                   <Wrapper idx={0} length={0}>
-                    {week.day.locale(LOCALE).format("ddd")}
-                    {" "}
-                    {week.day.locale(LOCALE).format("DD")}
+                    <div style={{
+                      fontWeight: isSameDay ? 600 : 300
+                    }}>
+                      {week.day.locale(LOCALE).format("ddd")}
+                      {" "}
+                      {week.day.locale(LOCALE).format("DD")}
+                    </div>
                   </Wrapper>
                 </WeekDay>
               )
@@ -96,13 +101,19 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
         times.map((t, idx) => {
           if (!(idx > 6 && idx < 23)) return null;
 
+          const isSameHour = t.time.format("HH") === moment().format("HH");
+
           return (
             <React.Fragment key={idx}>
               <BigButtonColMin
                 top={0}
                 bottom={0}
                 md={1}>
-                {t.time.format("HH:mm")}
+                <div style={{
+                  fontWeight: isSameHour ? 600 : 300
+                }}>
+                  {t.time.format("HH:mm")}
+                </div>
               </BigButtonColMin>
               <Col md={10}>
                 <div style={{

@@ -92,6 +92,8 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
                         return schedules;
                       }));
 
+                      const isCurrentMonth = moment().isSame(week.day, "day");
+
                       return (
                         <WeekDay 
                           onClick={() => {
@@ -99,6 +101,9 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
                           }}
                           key={idx}>
                           <DayWrapper 
+                            style={{
+                              fontWeight: isCurrentMonth ? 600 : 300
+                            }}
                             className={schedulesByTime.length ? "bg-gray" : ""}
                             length={0}
                             idx={0}

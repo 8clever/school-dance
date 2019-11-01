@@ -18,6 +18,7 @@ export const Wrapper = (props: {
   children: React.ReactNode;
   length: number;
   className?: string;
+  style?: React.ReactCSS;
 }) => {
   const border = props.idx < props.length - 1;
 
@@ -25,6 +26,7 @@ export const Wrapper = (props: {
     <div 
       className={`h-100 w-100 ${props.className}`}
       style={{
+        ...props.style,
         display: "flex",
         alignItems: "center",
         alignContent: "center",
