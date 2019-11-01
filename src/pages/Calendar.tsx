@@ -1,9 +1,8 @@
 import React from "react";
-import { Base, BigRow, BigButtonColMin } from "../components";
-import { PageTitle } from "../components/PageTitle";
+import { Base, BigRow, BigButtonColMin, getShadowBoxStyle } from "../components";
 import { observer } from "mobx-react-lite";
 import { directionStore } from "../store/DirectionStore";
-import { Col, Dropdown, DropdownMenu, DropdownItem, DropdownToggle } from "reactstrap";
+import { Col } from "reactstrap";
 import { routerStore } from "../store/RouterStore";
 import { CALENDAR_DAY, CalendarInner, CALENDAR_WEEK, CALENDAR_MONTH, LOCALE } from "../components/CalendarHelpers";
 import { CalendarDay } from "../components/CalendarDay";
@@ -11,6 +10,7 @@ import { CalendarWeek } from "../components/CalendarWeek";
 import { CalendarMonth } from "../components/CalendarMonth";
 import moment from "moment";
 import { performanceStore } from "../store/PerformanceStore";
+import OutsideClickHandler from "react-outside-click-handler";
 
 const calendarTypes = {
   [CALENDAR_DAY]: {
@@ -64,46 +64,56 @@ export const Calendar = observer((props: CalendarProps) => {
             НАПРАВЛЕНИЯ (ВСЕ)  
           </BigButtonColMin>      
           <BigButtonColMin 
+            style={{
+              position: "relative"
+            }}
             onClick={() => {
               setIsVisible(!isVisible);
             }}
             md={4}>
             {calendarTypes[type].label}
             {type === CALENDAR_MONTH ? (
-                <>
-                  {" "}
-                  ({moment(date).locale(LOCALE).format("MMMM")})
-                </>
-              ) : null}
-            <Dropdown 
-              style={{  width: 0, height: 0 }}
-              isOpen={isVisible} 
-              toggle={() => {
-                setIsVisible(false);
-              }}>
-              <DropdownToggle 
-                style={{ 
-                  padding: 0
-                }} 
-              />
-              <DropdownMenu>
+              <>
+                {" "}
+                ({moment(date).locale(LOCALE).format("MMMM")})
+              </>
+            ) : null}
+            
+            <OutsideClickHandler onOutsideClick={() => {
+              setIsVisible(false);
+            }}>
+              <div 
+                className={"big-dropdown"} 
+                style={{
+                  display: isVisible ? "block" : "none",
+                  position: "absolute",
+                  left: -1,
+                  right: 0,
+                  top: "100%",
+                  zIndex: 1000,
+                  background: "#fff"
+                }}>
                 {
-                  Object.keys(calendarTypes).map(key => {
-                    if (key === type) return null;
+                    Object.keys(calendarTypes).map(key => {
+                      if (key === type) return null;
 
-                    return (
-                      <DropdownItem 
-                        onClick={() => {
-                          routerStore.push(`/calendar?type=${key}&date=${moment(date).format("DD-MM-YYYY")}`)
-                        }}
-                        key={key}>
-                        {calendarTypes[key].label}
-                      </DropdownItem>
-                    )
-                  })
-                }
-              </DropdownMenu>
-            </Dropdown>
+                      return (
+                        <div 
+                          style={{
+                            ...getShadowBoxStyle({}),
+                            padding: "20px 0"
+                          }}
+                          onClick={() => {
+                            routerStore.push(`/calendar?type=${key}&date=${moment(date).format("DD-MM-YYYY")}`)
+                          }}
+                          key={key}>
+                          {calendarTypes[key].label}
+                        </div>
+                      )
+                    })
+                  }
+              </div>
+            </OutsideClickHandler>
           </BigButtonColMin>      
           <BigButtonColMin 
             onClick={() => {

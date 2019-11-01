@@ -4,6 +4,9 @@
 
 // Font Variables ===================================================================
 
+$fontWeightNormal: 300;
+$fontWeightBold: 600;
+
 @font-face {
   font-family: 'Styled Font';
   font-style: normal;
@@ -20,7 +23,7 @@
 .navbar {
   font-size: $font-size-sm;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: $fontWeightBold;
 
   &-nav {
     .nav-link {
@@ -81,15 +84,23 @@
 
   &.btn-link {
     text-decoration-line: none;
-    font-weight: 300;
+    font-weight: $fontWeightNormal;
 
     &:hover {
       text-decoration-line: none;
-      font-weight: 600;
+      font-weight: $fontWeightBold;
     }
 
     &:focus {
       text-decoration: none;
+    }
+
+    .big-dropdown {
+      font-weight: $fontWeightNormal;
+
+      > div:hover {
+        font-weight: $fontWeightBold;
+      }
     }
   }
 }
