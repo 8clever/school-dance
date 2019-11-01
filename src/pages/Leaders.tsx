@@ -86,7 +86,7 @@ export const Leaders = observer((props: LeaderProps) => {
               <Image 
                 width={width}
                 height={height}
-                src={imageStore.endpoint + element && element.images[0] as string}
+                src={imageStore.endpoint + element.images[0] as string}
               /> : null
             } 
             
