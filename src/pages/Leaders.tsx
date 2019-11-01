@@ -11,6 +11,7 @@ import { Col, Button } from "reactstrap";
 import ReactMarkdown from "react-markdown";
 import { LeaderEdit } from "../components/LeaderEdit";
 import { useResizeObserver } from "../effects/useResizeObserver";
+import { Image } from "../components/Carousel";
 
 interface LeaderProps {
   id?: string;
@@ -80,9 +81,10 @@ export const Leaders = observer((props: LeaderProps) => {
               overflowY 
             }}>
 
-            <img 
-              width="100%"
-              src={`${imageStore.endpoint}${element && element.images[0] as string}?w=${width}&h=${height}`} 
+            <Image 
+              width={width}
+              height={height}
+              src={imageStore.endpoint + element && element.images[0] as string}
             />
           </div>
         </BigCol>

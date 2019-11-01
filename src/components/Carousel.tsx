@@ -2,12 +2,28 @@ import React from "react";
 import { Carousel as CarouselFactory, CarouselItem, CarouselControl } from "reactstrap";
 import { useResizeObserver } from "../effects/useResizeObserver";
 
-interface Image {
+interface ImageItem {
   src: string;
 }
 
 interface CarouselProps {
-  items: Image[];
+  items: ImageItem[];
+}
+
+interface ImageProps {
+  src: string;
+  width?: number;
+  height?: number;
+}
+
+export const Image = (props: ImageProps) => {
+  return (
+    <div style={{ 
+      width: props.width, 
+      height: props.height,
+      background: `black url("${props.src}") no-repeat content-box center / 100%`
+    }} />
+  )
 }
 
 export const Carousel = (props: CarouselProps) => {
@@ -21,10 +37,10 @@ export const Carousel = (props: CarouselProps) => {
     
     return (
       <CarouselItem key={idx} >
-        <img 
+        <Image 
           width={width}
           height={height}
-          src={item.src + `?w=${width}&h=${height}`} 
+          src={item.src}
         />
       </CarouselItem>
     );

@@ -11,6 +11,7 @@ import { imageStore } from "../store/ImageStore";
 import { Col, Button } from "reactstrap";
 import ReactMarkdown from "react-markdown";
 import { useResizeObserver } from "../effects/useResizeObserver";
+import { Image } from "../components/Carousel";
 
 interface TeacherProps {
   id?: string;
@@ -79,10 +80,15 @@ export const Teacher = observer((props: TeacherProps) => {
               overflowY 
             }}>
             
-            <img 
-              width="100%"
-              src={`${imageStore.endpoint}${teacher && teacher.images[0] as string}?w=${width}&h=${height}`} 
-            />
+            {
+              teacher ?
+              <Image 
+                width={width}
+                height={height}
+                src={imageStore.endpoint + teacher.images[0] as string}
+              /> : null
+            }
+            
           </div>
         </BigCol>
         <BigCol>
