@@ -24,8 +24,8 @@ export const useResizeObserver = () => {
   }, []);
 
   return [ 
-    Math.ceil(rect.width), 
-    Math.ceil(rect.height), 
+    rect.width, 
+    rect.height, 
     refCallback 
   ] as [ 
     number, 
