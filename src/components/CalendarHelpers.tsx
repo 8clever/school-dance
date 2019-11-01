@@ -15,6 +15,7 @@ export const CALENDAR_MONTH = "calendar_month";
 export interface CalendarInnerProps {
   date: Date;
   setDate: (date: Date) => void;
+  selectedDirectionId?: string;
 }
 
 export type CalendarInner = (props: CalendarInnerProps) => JSX.Element;

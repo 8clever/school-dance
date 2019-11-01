@@ -5,7 +5,7 @@ import { BigRow, BigButtonColMin } from "./Big";
 import { Col } from "reactstrap";
 import { FlexCol } from "./Flex";
 import { WeekDay } from "./CalendarWeek";
-import { Wrapper as DayWrapper } from "./Schedules";
+import { Wrapper as DayWrapper, Schedules } from "./Schedules";
 import { directionStore } from "../store/DirectionStore";
 import _ from "lodash";
 import { routerStore } from "../store/RouterStore";
@@ -83,16 +83,19 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
                   {
                     m.map((week, idx) => {
                       const times = getTimes(week.day.toDate());
-                      const schedulesByTime = _.compact(times.map((t) => {
-                        const schedules = [
+                      let schedules = [];
+                      times.forEach((t) => {
+                        const _schedules = [
                           ...findSchedulesByTime(t.time, directionStore.directions),
                           ...findEventsByTime(t.time, eventStore.eventList, performanceStore.itemList)
                         ]
-                        if (!schedules.length) return null;
-                        return schedules;
-                      }));
+                        if (!_schedules.length) return null;
+                        schedules = _.unionBy(schedules, _schedules, "_id");
+                      });
+
 
                       const isCurrentMonth = moment().isSame(week.day, "day");
+                      const existSelectedSchedule = _.find(schedules, _.matches({ _id: props.selectedDirectionId }));
 
                       return (
                         <WeekDay 
@@ -102,9 +105,8 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
                           key={idx}>
                           <DayWrapper 
                             style={{
-                              fontWeight: isCurrentMonth ? 600 : 300
+                              fontWeight: isCurrentMonth || existSelectedSchedule ? 600 : 300
                             }}
-                            className={schedulesByTime.length ? "bg-gray" : ""}
                             length={0}
                             idx={0}
                             disabled={!week.day.isSame(props.date, "month")}

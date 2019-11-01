@@ -37,6 +37,7 @@ export const Calendar = observer((props: CalendarProps) => {
   const [ date, setDate ] = React.useState(new Date());
   const [ type, setType ] = React.useState(CALENDAR_WEEK);
   const [ isVisible, setIsVisible ] = React.useState(false);
+  const [ selectedDirectionId, setSelectedDirectionId ] = React.useState("");
 
   React.useEffect(() => {
     directionStore.loadDirections({});
@@ -132,9 +133,16 @@ export const Calendar = observer((props: CalendarProps) => {
               directionStore.directions.map(d => {
                 return (
                   <BigButtonColMin 
+                    onClick={() => {
+                      setSelectedDirectionId(d._id as string);
+                    }}
                     md={12}
                     key={d._id as string}>
-                    {d.name} ({d.shortName})
+                    <div style={{
+                      fontWeight: selectedDirectionId === d._id ? 600 : undefined
+                    }}>
+                      {d.name} ({d.shortName})
+                    </div>
                   </BigButtonColMin>
                 )
               })
@@ -142,7 +150,8 @@ export const Calendar = observer((props: CalendarProps) => {
           </BigRow>
         </Col>
         <Col md={menuVisible ? 8 : 12 }>
-          <CalendarInner 
+          <CalendarInner
+            selectedDirectionId={selectedDirectionId}
             date={date} 
             setDate={setDate}
           />
