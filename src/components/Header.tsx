@@ -10,9 +10,6 @@ import {
   Popover,
   PopoverHeader,
   PopoverBody,
-  Dropdown,
-  DropdownMenu,
-  DropdownToggle
 } from "reactstrap";
 import { FlexCol } from "./Flex";
 import { Notification } from "./Notification";

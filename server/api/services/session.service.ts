@@ -1,7 +1,6 @@
 import { Session } from "../../models/Session";
 import { ObjectID } from "mongodb";
 import { generateHash } from "./helpers";
-import { mongo } from "../../common/db";
 import { MongoService } from "./mongo.service";
 
 class SessionService extends MongoService<Session> {

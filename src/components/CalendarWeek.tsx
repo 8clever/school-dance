@@ -1,6 +1,6 @@
 import React from "react";
 import { CalendarInnerProps, getTimes, LOCALE, getWeekDays, findSchedulesByTime, CALENDAR_DAY, findEventsByTime } from "./CalendarHelpers";
-import { BigRow, BigButtonColMin, BigButtonCellProps, BigCol, getShadowBoxStyle } from "./Big";
+import { BigRow, BigButtonColMin, getShadowBoxStyle } from "./Big";
 import moment from "moment";
 import { Col } from "reactstrap";
 import { FlexCol } from "./Flex";

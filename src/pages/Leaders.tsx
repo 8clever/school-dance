@@ -1,6 +1,5 @@
 import React from "react";
-import { Base, BigRow, BigCol, Icon, BigButtonColMin, FlexCol } from "../components";
-import { PageTitle } from "../components/PageTitle";
+import { Base, BigRow, BigCol, Icon, BigButtonColMin } from "../components";
 import { observer } from "mobx-react-lite";
 import { leaderStore } from "../store/LeaderStore";
 import { userStore } from "../store/UserStore";

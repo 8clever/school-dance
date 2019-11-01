@@ -1,6 +1,5 @@
 import React from "react";
 import { Base, BigCol, BigRow } from "../components";
-import { PageTitle } from "../components/PageTitle";
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
 import { Col } from "reactstrap";
 import { messages } from "./FirstVisit";

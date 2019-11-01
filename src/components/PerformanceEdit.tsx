@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, FormText } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input } from "reactstrap";
 import { observer } from "mobx-react-lite";
 import { performanceStore as performanceStoreGlobal, PerformanceStore } from "../store/PerformanceStore";
 import { ImagePreview } from "./ImagePreview";

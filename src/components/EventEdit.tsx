@@ -1,9 +1,8 @@
 import React from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, FormText } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label } from "reactstrap";
 import { observer } from "mobx-react-lite";
 import { eventStore } from "../store/EventStore";
 import DatePicker from "react-datepicker";
-import moment from "moment";
 
 interface EventEditProps {
   _id?: string;

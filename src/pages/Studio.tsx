@@ -1,6 +1,5 @@
 import React from "react";
 import { Base, BigRow, BigButtonCol, BigCol } from "../components";
-import { PageTitle } from "../components/PageTitle";
 import { routerStore } from "../store/RouterStore";
 import { Carousel } from "../components/Carousel";
 

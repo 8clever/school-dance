@@ -1,4 +1,4 @@
-import { decorate, observable, action, observe } from "mobx";
+import { decorate, observable, action } from "mobx";
 
 export class MenuStore {
   isCollapsed: boolean = true

@@ -1,6 +1,5 @@
 import React from "react";
 import { Base, BigRow, BigButtonCol, BigCol, FlexCol } from "../components";
-import { PageTitle } from "../components/PageTitle";
 import { CSSTransition } from "react-transition-group";
 
 import imgFondDiana from "../images/partners/fond_diana.png";

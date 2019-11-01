@@ -1,7 +1,6 @@
 import React from "react";
 import { Base, BigRow, BigCol, BigButtonCol, Icon, FlexCol, BigButtonColMin } from "../components";
 import { subscribeStore } from "../store/SubscribeStore";
-import { PageTitle } from "../components/PageTitle";
 import { Col } from "reactstrap";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";

@@ -1,7 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 import { Base, BigRow, BigCol, BigButtonCol, Icon } from "../components";
-import { PageTitle } from "../components/PageTitle";
 import { directionStore } from "../store/DirectionStore";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";

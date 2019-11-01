@@ -1,4 +1,4 @@
-import { ObjectID, RootQuerySelector } from "mongodb";
+import { ObjectID } from "mongodb";
 import { Teacher } from "../../models/Teacher";
 import _ from "lodash";
 import { MongoService } from "./mongo.service";

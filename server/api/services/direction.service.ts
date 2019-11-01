@@ -1,4 +1,4 @@
-import { ObjectID, FilterQuery, RootQuerySelector } from "mongodb";
+import { ObjectID } from "mongodb";
 import { Direction } from "../../models/Direction";
 import { MongoService } from "./mongo.service";
 import _ from "lodash";

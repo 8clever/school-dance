@@ -1,7 +1,6 @@
 import React from "react";
 import { Carousel as CarouselFactory, CarouselItem, CarouselControl } from "reactstrap";
 import { useResizeObserver } from "../effects/useResizeObserver";
-import Jimp from "jimp";
 
 interface Image {
   src: string;
@@ -13,7 +12,7 @@ interface CarouselProps {
 
 export const Carousel = (props: CarouselProps) => {
   const [ activeIndex, setIndex ] = React.useState(0);
-  const [ width, height, refCallback ] = useResizeObserver();
+  const [ width,, refCallback ] = useResizeObserver();
 
   const slides = props.items.map((item, idx) => {
     if (!width) return <React.Fragment key={idx}></React.Fragment>;

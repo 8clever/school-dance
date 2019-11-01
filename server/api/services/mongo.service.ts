@@ -1,4 +1,4 @@
-import { ObjectID, FilterQuery, QuerySelector, RootQuerySelector } from "mongodb";
+import { ObjectID, RootQuerySelector } from "mongodb";
 import { mongo } from "../../common/db";
 import _ from "lodash";
 

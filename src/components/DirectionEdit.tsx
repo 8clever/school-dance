@@ -1,8 +1,7 @@
 import React from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, FormText, Row, Col, InputGroup, InputGroupAddon, InputGroupText } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon } from "reactstrap";
 import { observer } from "mobx-react-lite";
 import { directionStore as directionStoreGlobal, DirectionStore } from "../store/DirectionStore";
-import { imageStore } from "../store/ImageStore";
 import { Icon } from "./Icon";
 import { ImagePreview } from "./ImagePreview";
 

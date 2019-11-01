@@ -1,6 +1,5 @@
 import React from "react";import { performanceStore } from "../store/PerformanceStore";
 import { Base, BigRow, BigCol, BigButtonCol, Icon } from "../components";
-import { PageTitle } from "../components/PageTitle";
 import { HeaderCalendar } from "../components/HeaderCalendar";
 import { observer } from "mobx-react-lite";
 import { imageStore } from "../store/ImageStore";
