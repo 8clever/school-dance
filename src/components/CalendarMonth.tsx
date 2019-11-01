@@ -5,7 +5,7 @@ import { BigRow, BigButtonColMin } from "./Big";
 import { Col } from "reactstrap";
 import { FlexCol } from "./Flex";
 import { WeekDay } from "./CalendarWeek";
-import { Wrapper as DayWrapper, Schedules } from "./Schedules";
+import { Wrapper as DayWrapper } from "./Schedules";
 import { directionStore } from "../store/DirectionStore";
 import _ from "lodash";
 import { routerStore } from "../store/RouterStore";
