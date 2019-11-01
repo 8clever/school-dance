@@ -21,7 +21,8 @@ export const Image = (props: ImageProps) => {
     <div style={{ 
       width: props.width, 
       height: props.height,
-      background: `black url("${props.src}") no-repeat content-box center / 100%`
+      background: `black url("${props.src}") center`,
+      backgroundSize: "cover"
     }} />
   )
 }

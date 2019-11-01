@@ -80,12 +80,16 @@ export const Leaders = observer((props: LeaderProps) => {
               maxHeight,
               overflowY 
             }}>
-
-            <Image 
-              width={width}
-              height={height}
-              src={imageStore.endpoint + element && element.images[0] as string}
-            />
+            
+            {
+              element ?
+              <Image 
+                width={width}
+                height={height}
+                src={imageStore.endpoint + element && element.images[0] as string}
+              /> : null
+            } 
+            
           </div>
         </BigCol>
         <BigCol>
