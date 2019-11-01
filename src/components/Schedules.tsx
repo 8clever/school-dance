@@ -1,5 +1,4 @@
 import React from "react";
-import { getShadowBoxStyle } from "./Big";
 
 export interface ScheduleItem {
   name: string;
@@ -18,7 +17,7 @@ export const Wrapper = (props: {
   children: React.ReactNode;
   length: number;
   className?: string;
-  style?: React.ReactCSS;
+  style?: React.CSSProperties;
 }) => {
   const border = props.idx < props.length - 1;
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/index.ts | pino-pretty",
-    "start:prod": "node dist/index.js",
+    "start:prod": "node dist/server/index.js",
     "build": "ts-node build.ts && tsc",
     "dev:debug": "nodemon --exec 'node -r ts-node/register --inspect-brk' server/index.ts | pino-pretty",
     "test": "mocha test/**/*.ts --exit",

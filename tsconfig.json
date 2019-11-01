@@ -7,12 +7,7 @@
     "sourceMap": true,
     "moduleResolution": "node",
     "outDir": "dist",
-    "noImplicitAny": true,
-    "jsx": "react",
-    "typeRoots": [
-      "./@types",
-      "./node_modules/@types"
-    ]
+    "jsx": "react"
   },
   "include": [
     "@types",
