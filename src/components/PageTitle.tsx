@@ -1,5 +1,5 @@
 import React from "react";
-import { BigRow, BigCol, BigHr } from "./Big";
+import { BigRow, BigCol } from "./Big";
 import { FlexCol } from "./Flex";
 import { routerStore } from "../store/RouterStore";
 
