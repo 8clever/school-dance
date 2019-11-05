@@ -1,5 +1,5 @@
 import React from "react";
-import { Base, BigRow, BigButtonCol, BigCol, FlexCol } from "../components";
+import { Base, BigRow, BigCol } from "../components";
 import { CSSTransition } from "react-transition-group";
 
 import imgFondDiana from "../images/partners/fond_diana.png";
@@ -10,15 +10,13 @@ import imgGollandia from "../images/partners/new_gollandiya.png";
 import imgCinema from "../images/partners/new_cinema.png";
 import imgGost from "../images/partners/gost.png";
 
-
-
 interface PartnerButtonProps {
   img: string;
   title: string;
   link: string;
 }
 
-const height = 300;
+const height = 350;
 
 const PartnerButton = (props: PartnerButtonProps) => {
   const [ isHover, setHover ] = React.useState(false);
@@ -27,14 +25,27 @@ const PartnerButton = (props: PartnerButtonProps) => {
     <>
       {
         isHover ? null :
-        <BigButtonCol 
+        <BigCol 
           onClick={() => {
             window.location.href = props.link;
           }}
-          onMouseEnter={() => setHover(true)}
-          height={height}>
-          {props.title}
-        </BigButtonCol>
+          height={height}
+          onMouseEnter={() => setHover(true)}>
+          <div className="absolute-container" style={{
+            fontFamily: "Styled Font",
+            fontSize: 17.5,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textTransform: "uppercase"
+          }}>
+            <div style={{
+              textAlign: "center"
+            }}>
+              {props.title}
+            </div>
+          </div>
+        </BigCol>
       }
       <CSSTransition 
         key={props.title}
@@ -45,24 +56,13 @@ const PartnerButton = (props: PartnerButtonProps) => {
         {
           isHover ?
           <BigCol 
-            height={height}
             onMouseLeave={() => setHover(false)}>
-            <FlexCol align="center" justify='center'>
-              <div 
-                onClick={() => {
-                  window.location.href = props.link;
-                }}
-                style={{ 
-                  cursor: "pointer",
-                  padding: 20
-                }}>
-                <img
-                  height={`${height - 20}px`}
-                  width="100%" 
-                  src={props.img} 
-                />
-              </div>
-            </FlexCol>
+            <div 
+              style={{
+                background: `url("${props.img}") no-repeat center / contain`
+              }}
+              className="absolute-container m-5" 
+            />
           </BigCol>
           : <></>
         }
@@ -105,13 +105,13 @@ export const Partners = () => {
           title="Новая Сцена Александрийского театра"
           img={imgCinema}
         />
-        <BigCol className="d-none d-md-block" />
+        <BigCol height={height} className="d-none d-md-block" />
         <PartnerButton 
           link="https://gost-group.ru"
           title="группа копаний GOST"
           img={imgGost}
         />
-        <BigCol className="d-none d-md-block" />
+        <BigCol height={height} className="d-none d-md-block" />
       </BigRow>
     </Base>
   )

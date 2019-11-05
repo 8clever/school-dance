@@ -6,7 +6,7 @@ import { routerStore } from "../store/RouterStore";
 import { url as brandURL } from "../static/brands";
 
 import scheduleSVG from "../images/icons/schedule.svg";
-import whatsappSVG from "../images/icons/whatsapp-logo.svg";
+import youtubeSVG from "../images/icons/youtube.svg";
 import vkSVG from "../images/icons/vk.svg";
 import instagrammSVG from "../images/icons/instagramm.svg";
 import facebookSVG from "../images/icons/facebook.svg";
@@ -38,7 +38,7 @@ export const Footer = () => {
     <div className="bg-gray">
       <BigRow>
         <BigButtonColMin onClick={() => routerStore.push("/")} md={4}>
-          <Logo />
+          <Logo width={250} />
         </BigButtonColMin>
         <Col md={4}>
           <BigRow>
@@ -99,8 +99,8 @@ export const Footer = () => {
                   url={brandURL.instagramm}
                 />
                 <FooterBrandLogo 
-                  src={whatsappSVG}
-                  url={brandURL.whatsapp}
+                  src={youtubeSVG}
+                  url={brandURL.youtube}
                 />
               </BigRow>
             </Col>

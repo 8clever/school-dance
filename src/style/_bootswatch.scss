@@ -20,6 +20,14 @@ $fontWeightBold: 600;
 
 // Navbar ======================================================================
 
+.absolute-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
 #input-search {
   &:focus {
     box-shadow: none;
