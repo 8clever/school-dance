@@ -6,18 +6,12 @@ import {
   ButtonGroup, 
   Button, 
   InputGroup, 
-  InputGroupText, 
-  Popover,
-  PopoverHeader,
-  PopoverBody,
+  InputGroupText
 } from "reactstrap";
 import { FlexCol } from "./Flex";
 import { Notification } from "./Notification";
 import { observer } from "mobx-react-lite";
 import { routerStore } from "../store/RouterStore";
-import { directionStore } from "../store/DirectionStore";
-import { performanceStore } from "../store/PerformanceStore";
-import { subscribeStore } from "../store/SubscribeStore";
 import { menuStore } from "../store/MenuStore";
 
 import scheduleSVG from "../images/icons/schedule.svg";
@@ -25,73 +19,27 @@ import zalupaSVG from "../images/icons/zalupa.svg";
 import menuSVG from "../images/icons/menu.svg";
 import closeSVG from "../images/icons/close.svg";
 import { HeaderMenu } from "./HeaderMenu";
+import { notifStore } from "../store/NotifStore";
 
 
-interface SearchResult {
-  link: string;
-  name: string;
-}
+
 
 export const Header = observer(() => {
 
-  const [ resultVisible, setResultVisible ] = React.useState(false);
-  const [ result, setResult ] = React.useState<SearchResult[]>([]);
   const [ searchValue, setSearchValue ] = React.useState("");
 
-  React.useEffect(() => {
+  const onSearch = () => {
     if (searchValue.length < 3) {
-      setResult([])
-      setResultVisible(false);
+      notifStore.addNotif({
+        duration: 5,
+        message: "Минимум 3 символа",
+        title: "Ошибка"
+      });
       return;
     }
 
-    Promise.all([
-      directionStore.getItems({
-        $or: [
-          { name: { $regex: searchValue, $options: "gmi" }},
-          { desc: { $regex: searchValue, $options: "gmi" }}
-        ]
-      }),
-      performanceStore.getItems({
-        $or: [
-          { name: { $regex: searchValue, $options: "gmi" }},
-          { description: { $regex: searchValue, $options: "gmi" }}
-        ]
-      }),
-      subscribeStore.getItems({
-        $or: [
-          { name: { $regex: searchValue, $options: "gmi" }}
-        ]
-      })
-    ]).then(data => {
-      const [ direction, performance, subscribe ] = data;
-      const searchResult: SearchResult[] = [];
-
-      direction.list.forEach(d => {
-        searchResult.push({
-          name: d.name,
-          link: `/directions/${d._id}`
-        });
-      });
-
-      performance.list.forEach(p => {
-        searchResult.push({
-          name: p.name,
-          link: `/events/${p._id}`
-        })
-      });
-
-      subscribe.list.forEach(s => {
-        searchResult.push({
-          name: s.name,
-          link: `/subscribe/${s._id}`
-        })
-      });
-
-      setResult(searchResult);
-      setResultVisible(true);
-    });
-  }, [searchValue])
+    routerStore.push(`/search?text=${searchValue}`)
+  }
 
   return (
     <div className="sticky-top bg-white">
@@ -108,10 +56,15 @@ export const Header = observer(() => {
             </div>
           </FlexCol>
         </BigCol>
-        <BigCol className="d-none d-md-block">
+        <BigCol className="order-1 order-md-0 d-md-block">
           <InputGroup 
             tyle={{ marginTop: 1 }}>
             <Input
+              onKeyPress={e => {
+                if (e.key === "Enter") {
+                  onSearch();
+                }
+              }}
               className="bg-white"
               id="input-search"
               value={searchValue}
@@ -119,7 +72,11 @@ export const Header = observer(() => {
                 setSearchValue(e.target.value);
               }}
             />
-            <InputGroupText>
+            <InputGroupText 
+              onClick={onSearch}
+              style={{
+                cursor: "pointer"
+              }}>
               <img 
                 height={15}
                 width={15}
@@ -127,40 +84,6 @@ export const Header = observer(() => {
               />
             </InputGroupText>
           </InputGroup>
-          <Popover 
-            hideArrow
-            placement="bottom-start" 
-            isOpen={resultVisible} 
-            target="input-search" 
-            trigger="legacy"
-            toggle={() => setResultVisible(!resultVisible)}>
-            <PopoverHeader style={{ padding: 20 }}>
-              Результат поиска
-            </PopoverHeader>
-            <PopoverBody style={{ padding: 20 }}>
-              {
-                result.length ? 
-                <>
-                  {
-                    result.map((r, idx) => {
-                      return (
-                        <React.Fragment key={idx}>
-                          <a 
-                            href="" 
-                            onClick={(e) => {
-                              e.preventDefault();
-                              routerStore.push(r.link)
-                            }}>
-                            {r.name}
-                          </a><br/>
-                        </React.Fragment>
-                      )
-                    })
-                  }
-                </> : "Ничего не найдено"
-              }
-            </PopoverBody>
-          </Popover>
         </BigCol>
         <BigCol className="text-right">
           <ButtonGroup>

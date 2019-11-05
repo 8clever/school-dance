@@ -20,6 +20,13 @@ $fontWeightBold: 600;
 
 // Navbar ======================================================================
 
+#input-search {
+  &:focus {
+    box-shadow: none;
+    outline: none;
+  }
+}
+
 .navbar {
   font-size: $font-size-sm;
   text-transform: uppercase;

@@ -42,7 +42,6 @@ export const PageTitle = (props: PageTitleProps) => {
           </FlexCol>
         </BigCol>
       </BigRow>
-      <BigHr />
     </>
   )
 }

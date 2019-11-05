@@ -1,5 +1,5 @@
 import React from "react";
-import { BigRow, Base, BigButtonCol, Icon } from "../components";
+import { BigRow, Base, BigButtonCol, Icon, BigHr } from "../components";
 import { observer } from "mobx-react-lite";
 import { userStore } from "../store/UserStore";
 import { PageTitle } from "../components/PageTitle";
@@ -28,6 +28,7 @@ export const Home = observer(() => {
   return (
     <Base>
       <PageTitle marquee>Студия Дианы Вишнёвой Context Pro</PageTitle>
+      <BigHr />
       <Carousel items={carousel} />
       <BigRow 
         style={{

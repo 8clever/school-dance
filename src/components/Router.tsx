@@ -17,6 +17,7 @@ import { Calendar } from "../pages/Calendar";
 import { Auth } from "../pages/Auth";
 import qs from "querystring";
 import { userStore } from "../store/UserStore";
+import { Search } from "../pages/Search";
 
 const parse = (path: string) => {
   if (!path) return {};
@@ -49,6 +50,7 @@ export const Router = () => {
         <Route exact path="/subscribe/:id" render={(match) => <Prices id={match.match.params.id} />}/>
         <Route exact path="/calendar" render={(match) => <Calendar {...parse(match.location.search) as { date: string, type: string }} />}/>
         <Route exact path="/auth" render={match => <Auth />} />
+        <Route exact path="/search" render={match => <Search {...parse(match.location.search) as { text?: string }} />} />
         
         <Route exact path="/logout" render={() => {
           userStore.logout().then(() => {
