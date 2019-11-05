@@ -106,35 +106,29 @@ export const Header = observer(() => {
                 src={scheduleSVG} 
               />
             </Button>
-            <div style={{ position: "relative" }}>
-              <Button 
-                color="link"
-                onClick={menuStore.toggle}>
-                  {
-                    menuStore.isCollapsed ?
-                    <img src={menuSVG} /> :
-                    <img src={closeSVG} />
-                  }
-              </Button>
-
-              {
-                menuStore.isCollapsed ? null :
-                <div style={{
-                  marginTop: 1,
-                  background: "white",
-                  minWidth: 400,
-                  position: "absolute",
-                  right: 0
-                }}>
-                  <HeaderMenu />
-                </div>
-              }
-            </div>
-            
+            <Button 
+              color="link"
+              onClick={menuStore.toggle}>
+                {
+                  menuStore.isCollapsed ?
+                  <img src={menuSVG} /> :
+                  <img src={closeSVG} />
+                }
+            </Button>
           </ButtonGroup>
         </BigCol>
       </BigRow>
       <Notification />
+      {
+        menuStore.isCollapsed ? null :
+        <div className="menu-container">
+          <div className="row no-gutters">
+            <div className="col-12 col-md-4 bg-white ml-auto">
+              <HeaderMenu />
+            </div>
+          </div>
+        </div>
+      }
     </div>
   )
 })

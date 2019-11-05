@@ -27,6 +27,11 @@ $fontWeightBold: 600;
   }
 }
 
+.menu-container {
+  position: absolute;
+  width: 100%;
+}
+
 .navbar {
   font-size: $font-size-sm;
   text-transform: uppercase;
