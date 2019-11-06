@@ -12,23 +12,22 @@ interface DirectionEditProps {
 }
 
 const directionStore = new DirectionStore();
-
 export const DirectionEdit = observer((props: DirectionEditProps) => {
 
   React.useEffect(() => {
-    directionStore.createDirection();
+    directionStore.create();
     if (!(props.visible && props._id)) return;
 
-    directionStore.loadDirection(props._id);
+    directionStore.loadItem(props._id);
   }, [ props.visible, props._id ]);
 
-  if (!directionStore.direction) return null;
+  if (!directionStore.item) return null;
 
   return (
     <Modal toggle={props.toggle} isOpen={props.visible}>
       <ModalHeader>
         {
-          directionStore.direction._id ? 
+          directionStore.item._id ? 
           "Редактирование направления" : 
           "Создание направления"
         }
@@ -38,9 +37,9 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
           <Label>Наименование</Label>
           <Input 
             placeholder={"Текст..."}
-            value={directionStore.direction.name}
+            value={directionStore.item.name}
             onChange={e => {
-              directionStore.direction.name = e.target.value;
+              directionStore.item.name = e.target.value;
             }}
           />
         </FormGroup>
@@ -49,9 +48,9 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
           <Label>Лейбл</Label>
           <Input 
             placeholder={"Текст..."}
-            value={directionStore.direction.shortName}
+            value={directionStore.item.shortName}
             onChange={e => {
-              directionStore.direction.shortName = e.target.value;
+              directionStore.item.shortName = e.target.value;
             }}
           />
         </FormGroup>
@@ -62,9 +61,9 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
             type="textarea"
             rows={4}
             placeholder={"Текст..."}
-            value={directionStore.direction.desc}
+            value={directionStore.item.desc}
             onChange={e => {
-              directionStore.direction.desc = e.target.value;
+              directionStore.item.desc = e.target.value;
             }}
           />
         </FormGroup>
@@ -79,7 +78,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
           </Label>
           <div>
             {
-              directionStore.direction.schedule.map((s, idx) => {
+              directionStore.item.schedule.map((s, idx) => {
                 return (
                   <InputGroup 
                     key={idx}
@@ -87,7 +86,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
                     <Input 
                       value={s}
                       onChange={e => {
-                        directionStore.direction.schedule[idx] = e.target.value;
+                        directionStore.item.schedule[idx] = e.target.value;
                       }}
                     />
                     <InputGroupAddon
@@ -95,7 +94,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
                     >
                       <Button 
                         onClick={() => {
-                          directionStore.direction.schedule.splice(idx, 1);
+                          directionStore.item.schedule.splice(idx, 1);
                         }}
                         size="sm">
                         <Icon 
@@ -111,7 +110,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
           </div>
           <Button 
             onClick={() => {
-              directionStore.direction.schedule.push("00 12-14 * * 1,3,5")
+              directionStore.item.schedule.push("00 12-14 * * 1,3,5")
             }}
             color="primary"
             size="sm">
@@ -136,13 +135,13 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
         </FormGroup>
 
         {
-          directionStore.direction.images.map((i, idx) => {
+          directionStore.item.images.map((i, idx) => {
             return (
               <ImagePreview 
                 key={idx}
                 _id={i as string}
                 onRemove={() => {
-                  directionStore.direction.images.splice(idx, 1);
+                  directionStore.item.images.splice(idx, 1);
                 }}
               />            
             )
@@ -155,10 +154,10 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
           Отмена
         </Button>
         <Button color={"primary"} onClick={async () => {
-          await directionStore.saveDirection();
-          await directionStoreGlobal.loadDirections({});
+          await directionStore.save();
+          await directionStoreGlobal.loadItems({});
           if (props._id) {
-            await directionStoreGlobal.loadDirection(props._id);
+            await directionStoreGlobal.loadItem(props._id);
           }
           props.toggle();
         }}>

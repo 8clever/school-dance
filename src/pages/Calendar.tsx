@@ -40,7 +40,7 @@ export const Calendar = observer((props: CalendarProps) => {
   const [ selectedDirectionId, setSelectedDirectionId ] = React.useState("");
 
   React.useEffect(() => {
-    directionStore.loadDirections({});
+    directionStore.loadItems({});
     performanceStore.loadItems({});
   }, []);
 
@@ -130,7 +130,7 @@ export const Calendar = observer((props: CalendarProps) => {
           className={`d-${menuVisible ? "block" : "none"}`}>
           <BigRow>
             {
-              directionStore.directions.map(d => {
+              directionStore.itemList.map(d => {
                 return (
                   <BigButtonColMin 
                     onClick={() => {

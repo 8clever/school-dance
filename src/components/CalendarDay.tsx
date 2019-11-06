@@ -66,7 +66,7 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
           if (!(idx > 6 && idx < 23)) return null;
 
           const schedules = [
-            ...findSchedulesByTime(t.time, directionStore.directions),
+            ...findSchedulesByTime(t.time, directionStore.itemList),
             ...findEventsByTime(t.time, eventStore.eventList, performanceStore.itemList)
           ]
 

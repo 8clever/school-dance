@@ -5,7 +5,6 @@ import { directionStore } from "../store/DirectionStore";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
 import { routerStore } from "../store/RouterStore";
-import { PerformanceEdit } from "../components/PerformanceEdit";
 import { performanceStore } from "../store/PerformanceStore";
 import { HeaderCalendar } from "../components/HeaderCalendar";
 import { DirectionEdit } from "../components/DirectionEdit";
@@ -18,19 +17,18 @@ interface DirectionProps {
 
 export const Direction = observer((props: DirectionProps) => {
 
-  const [ visiblePerformance, setVisiblePerformance ] = React.useState(false);
   const [ visibleDirection, setVisibleDirection ] = React.useState(false);
   const [ date, setDate ] = React.useState(new Date());
   const [ visibleDescription, setVisibleDescription ] = React.useState(false);
 
   React.useEffect(() => {
-    directionStore.loadDirection(props.id);
-    performanceStore.loadPerformanceList({
+    directionStore.loadItem(props.id);
+    performanceStore.loadItems({
       _iddirection: props.id 
     });
   }, [props.id])
 
-  if (!directionStore.direction) return null;
+  if (!directionStore.item) return null;
 
   return (
     <Base>
@@ -49,7 +47,7 @@ export const Direction = observer((props: DirectionProps) => {
       <BigRow>
         <BigCol md={visibleDescription ? 7 : 12} xs={12}>
           <Carousel 
-            items={directionStore.direction.images.map(i => {
+            items={directionStore.item.images.map(i => {
             return { src: `${imageStore.endpoint}${i}` };
           })} />
         </BigCol>
@@ -57,7 +55,7 @@ export const Direction = observer((props: DirectionProps) => {
           visibleDescription ? (
             <BigCol md={5} xs={12}>
               <div className="p-5">
-                <MD source={directionStore.direction.desc} />
+                <MD source={directionStore.item.desc} />
               </div>
             </BigCol>
           ) : null
@@ -69,7 +67,7 @@ export const Direction = observer((props: DirectionProps) => {
         style={{ fontFamily: "Styled Font" }}
         maxRowItems={3}>
         {
-          performanceStore.performanceList.map(p => {
+          performanceStore.itemList.map(p => {
             return (
               <BigButtonCol 
                 onClick={() => {
@@ -85,18 +83,13 @@ export const Direction = observer((props: DirectionProps) => {
         {
           userStore.isAdmin() ?
           <>
-            <BigButtonCol onClick={() => {
-              setVisiblePerformance(true);
-            }}>
-              <Icon type="plus" /> Добавить Спектакль
-            </BigButtonCol>
             <BigButtonCol onClick={async () => {
               setVisibleDirection(true);
             }}>
               <Icon type="pencil-alt" /> Редактировать направление
             </BigButtonCol>
             <BigButtonCol onClick={async () => {
-              await directionStore.rmDirection(props.id);
+              await directionStore.remove(props.id);
               routerStore.push("/");
             }}>
               <Icon type="trash" /> Удалить направление
@@ -113,11 +106,6 @@ export const Direction = observer((props: DirectionProps) => {
         _id={props.id}
       />
  
-      <PerformanceEdit 
-        visible={visiblePerformance}
-        toggle={() => setVisiblePerformance(!visiblePerformance)}
-        _iddirection={props.id}
-      />
     </Base>
   )
 })

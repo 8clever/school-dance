@@ -86,7 +86,7 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
                       let schedules = [];
                       times.forEach((t) => {
                         const _schedules = [
-                          ...findSchedulesByTime(t.time, directionStore.directions),
+                          ...findSchedulesByTime(t.time, directionStore.itemList),
                           ...findEventsByTime(t.time, eventStore.eventList, performanceStore.itemList)
                         ]
                         if (!_schedules.length) return null;

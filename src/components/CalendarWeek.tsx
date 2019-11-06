@@ -126,7 +126,7 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
                       const hour = t.time.toDate().getHours();
                       const time = week.day.clone().startOf("day").add(hour, "hour");
                       const schedules = [
-                        ...findSchedulesByTime(time, directionStore.directions),
+                        ...findSchedulesByTime(time, directionStore.itemList),
                         ...findEventsByTime(time, eventStore.eventList, performanceStore.itemList)
                       ]
                       return (

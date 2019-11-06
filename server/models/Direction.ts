@@ -7,4 +7,8 @@ export interface Direction {
   images: Array<string | ObjectID>;
   schedule: string[];
   desc: string;
+  submenu: {
+    type: "teachers" | "artists" | "performance",
+    items: Array<string | ObjectID>
+  }
 }

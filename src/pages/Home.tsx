@@ -22,7 +22,7 @@ export const Home = observer(() => {
   const [ directionEditVisible, setDirectionEditVisible ] = React.useState(false);
 
   React.useEffect(() => {
-    directionStore.loadDirections();
+    directionStore.loadItems();
   }, []);
 
   return (
@@ -36,7 +36,7 @@ export const Home = observer(() => {
         }}
         maxRowItems={3}>
         {
-          directionStore.directions.map(d => {
+          directionStore.itemList.map(d => {
             return (
               <BigButtonCol 
                 key={d._id as string}                
