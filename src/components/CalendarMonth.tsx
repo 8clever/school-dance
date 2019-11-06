@@ -13,8 +13,8 @@ import { eventStore } from "../store/EventStore";
 import { performanceStore } from "../store/PerformanceStore";
 import { observer } from "mobx-react-lite";
 
-import leftSVG from "../images/icons/arrow-left.svg";
-import rightSVG from "../images/icons/arrow-right.svg";
+import leftSVG from "../images/icons/arrow-left.png";
+import rightSVG from "../images/icons/arrow-right.png";
 
 export const CalendarMonth = observer((props: CalendarInnerProps) => {
   const { date, setDate } = props;

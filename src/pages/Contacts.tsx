@@ -3,11 +3,12 @@ import { Base, BigCol, BigRow } from "../components";
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
 import { Col } from "reactstrap";
 import { messages } from "./FirstVisit";
+import { useResizeObserver } from "../effects/useResizeObserver";
 
 import phoneSVG from "../images/icons/phone-call.svg";
 import mailSVG from "../images/icons/mail.svg";
-import pointSVG from "../images/icons/point.svg";
-import { useResizeObserver } from "../effects/useResizeObserver";
+import pointPNG from "../images/icons/point.png";
+import pointBlackPNG from "../images/icons/point-black.png";
 
 const iconStyle = {
   width: 15,
@@ -43,8 +44,10 @@ export const Contacts = () => {
               >
                 <Placemark 
                   options={{
-                    iconColor: "black",
-                    iconContent: ""
+                    iconLayout: 'default#image',
+                    iconImageHref:  pointBlackPNG,
+                    iconImageSize: [60, 45],
+                    iconImageOffset: [-30, -45]
                   }}
                   geometry={center} 
                 />
@@ -64,7 +67,7 @@ export const Contacts = () => {
                 <img {...iconStyle} src={mailSVG} /> contextprostudio@gmail.com
                 <br/>
                 <br/>
-                <img {...iconStyle} src={pointSVG} /> Наб. Адмиралтейского канала д.2, здание Бутылка, 3 этаж
+                <img height={15} src={pointPNG} /> Наб. Адмиралтейского канала д.2, здание Бутылка, 3 этаж
                 <br/>
                 <br/>
                 <small>

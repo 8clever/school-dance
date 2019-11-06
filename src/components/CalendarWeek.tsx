@@ -11,8 +11,8 @@ import { observer } from "mobx-react-lite";
 import { eventStore } from "../store/EventStore";
 import { performanceStore } from "../store/PerformanceStore";
 
-import leftSVG from "../images/icons/arrow-left.svg";
-import rightSVG from "../images/icons/arrow-right.svg";
+import leftSVG from "../images/icons/arrow-left.png";
+import rightSVG from "../images/icons/arrow-right.png";
 
 interface WeekDayProps {
   onClick?: () => void;

@@ -3,7 +3,7 @@ import { BigRow, BigCol } from "./Big";
 import { FlexCol } from "./Flex";
 import { routerStore } from "../store/RouterStore";
 
-import leftSVG from "../images/icons/arrow-left.svg";
+import leftSVG from "../images/icons/arrow-left.png";
 
 interface PageTitleProps {
   children: string;

@@ -14,7 +14,7 @@ import { observer } from "mobx-react-lite";
 import { routerStore } from "../store/RouterStore";
 import { menuStore } from "../store/MenuStore";
 
-import scheduleSVG from "../images/icons/schedule.svg";
+import schedulePNG from "../images/icons/schedule.png";
 import zalupaSVG from "../images/icons/zalupa.svg";
 import menuSVG from "../images/icons/menu.svg";
 import closeSVG from "../images/icons/close.svg";
@@ -100,10 +100,9 @@ export const Header = observer(() => {
               }}
               color="link">
               <img 
-                style={{
-                  width: 23
-                }}
-                src={scheduleSVG} 
+                height={25}
+                width={35}
+                src={schedulePNG} 
               />
             </Button>
             <Button 

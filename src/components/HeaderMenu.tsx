@@ -2,13 +2,7 @@ import React from "react";
 import { BigRow, BigButtonColMin, BigCol } from "./Big";
 import { routerStore } from "../store/RouterStore";
 import { menuStore } from "../store/MenuStore";
-import { url as brandURL } from "../static/brands";
-
-import vk from "../images/icons/vk.svg"
-import whatsapp from "../images/icons/whatsapp-logo.svg"
-import youtube from "../images/icons/youtube.svg"
-import instagramm from "../images/icons/instagramm.svg"
-import facebook from "../images/icons/facebook.svg"
+import { vk, facebook, instagramm, youtube, whatsapp } from "../static/brands";
 
 interface BrandLogoProps {
   src: string;
@@ -27,7 +21,7 @@ const BrandLogo = (props: BrandLogoProps) => {
         cursor: "pointer",
         marginRight: 10
       }}
-      width={18} 
+      width={25} 
       height={18} 
       src={props.src} 
     />
@@ -104,11 +98,11 @@ export const HeaderMenu = () => {
             marginTop: 70,
             display: "flex" 
           }}>
-            <BrandLogo src={vk} url={brandURL.vk} />
-            <BrandLogo src={facebook} url={brandURL.facebook} />
-            <BrandLogo src={instagramm} url={brandURL.instagramm} />
-            <BrandLogo src={youtube} url={brandURL.youtube} />
-            <BrandLogo src={whatsapp} url={brandURL.whatsapp} />
+            <BrandLogo src={vk.img} url={vk.url} />
+            <BrandLogo src={facebook.img} url={facebook.url} />
+            <BrandLogo src={instagramm.img} url={instagramm.url} />
+            <BrandLogo src={youtube.img} url={youtube.url} />
+            <BrandLogo src={whatsapp.img} url={whatsapp.url} />
           </div>
         </div>
       </BigCol>

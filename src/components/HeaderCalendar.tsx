@@ -3,8 +3,8 @@ import { BigRow, BigCol, BigButtonCol } from "./Big";
 import { FlexCol } from "./Flex";
 import moment from "moment";
 
-import leftSVG from "../images/icons/arrow-left.svg";
-import rightSVG from "../images/icons/arrow-right.svg";
+import leftSVG from "../images/icons/arrow-left.png";
+import rightSVG from "../images/icons/arrow-right.png";
 
 interface HeaderCalendarProps {
   date: Date;

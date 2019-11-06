@@ -3,13 +3,9 @@ import { BigRow, BigButtonColMin, BigHr } from "./Big";
 import { Col } from "reactstrap";
 import { Logo } from "./Logo";
 import { routerStore } from "../store/RouterStore";
-import { url as brandURL } from "../static/brands";
 
-import scheduleSVG from "../images/icons/schedule.svg";
-import youtubeSVG from "../images/icons/youtube.svg";
-import vkSVG from "../images/icons/vk.svg";
-import instagrammSVG from "../images/icons/instagramm.svg";
-import facebookSVG from "../images/icons/facebook.svg";
+import schedulePNG from "../images/icons/schedule.png";
+import { vk, facebook, instagramm, youtube } from "../static/brands";
 
 interface FooterBrandLogoProps {
   src: string;
@@ -25,8 +21,8 @@ const FooterBrandLogo = (props: FooterBrandLogoProps) => {
       className="h-100" 
       xs={6}>
       <img 
-        width={30} 
-        height={30} 
+        width={35} 
+        height={27} 
         src={props.src} 
       />
     </BigButtonColMin>
@@ -80,27 +76,31 @@ export const Footer = () => {
               xs={7} 
               md={7} 
               h100>
-              <img src={scheduleSVG} />
+              <img 
+                height={35}
+                width={45}
+                src={schedulePNG} /
+              >
             </BigButtonColMin>
             <Col xs={5}>
               <BigRow className="h-50" noGutters>
                 <FooterBrandLogo 
-                  src={vkSVG}
-                  url={brandURL.vk}
+                  src={vk.img}
+                  url={vk.url}
                 />
                 <FooterBrandLogo 
-                  src={facebookSVG}
-                  url={brandURL.facebook}
+                  src={facebook.img}
+                  url={facebook.url}
                 />
               </BigRow>
               <BigRow className="h-50">
                 <FooterBrandLogo 
-                  src={instagrammSVG}
-                  url={brandURL.instagramm}
+                  src={instagramm.img}
+                  url={instagramm.url}
                 />
                 <FooterBrandLogo 
-                  src={youtubeSVG}
-                  url={brandURL.youtube}
+                  src={youtube.img}
+                  url={youtube.url}
                 />
               </BigRow>
             </Col>

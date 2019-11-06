@@ -1,8 +1,30 @@
+import vkPNG from "../images/icons/vk.png";
+import facebookPNG from "../images/icons/facebook.png";
+import instagrammPNG from "../images/icons/instagramm.png";
+import whatsappPNG from "../images/icons/whatsapp-logo.png";
+import youtubePNG from "../images/icons/youtube.png";
 
-export const url = {
-  vk: "https://vk.com/contextpro.studio",
-  facebook: "https://www.facebook.com/contextpro.studio/",
-  instagramm: "https://www.instagram.com/contextpro.studio/",
-  whatsapp: "https://wa.me/79319750080",
-  youtube: ""
+export const vk = {
+  url: "https://vk.com/contextpro.studio",
+  img: vkPNG
+}
+
+export const facebook = {
+  url: "https://www.facebook.com/contextpro.studio/",
+  img: facebookPNG
+}
+
+export const instagramm = {
+  url: "https://www.instagram.com/contextpro.studio/",
+  img: instagrammPNG
+}
+
+export const whatsapp = {
+  url: "https://wa.me/79319750080",
+  img: whatsappPNG
+}
+
+export const youtube = {
+  url: "",
+  img: youtubePNG
 }
