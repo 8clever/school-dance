@@ -5,13 +5,10 @@ import { directionStore as directionStoreGlobal, DirectionStore } from "../store
 import { Icon } from "./Icon";
 import { ImagePreview } from "./ImagePreview";
 import { SubmenuType } from "../../server/models/Direction";
-import { artistStore, ArtistStore } from "../store/ArtistStore";
+import { artistStore } from "../store/ArtistStore";
 import { performanceStore } from "../store/PerformanceStore";
 import { teacherStore } from "../store/TeacherStore";
 import _ from "lodash";
-import { Teacher } from "../../server/models/Teacher";
-import { Artist } from "../../server/models/Artist";
-import { toJS } from "mobx";
 
 interface DirectionEditProps {
   _id?: string;
