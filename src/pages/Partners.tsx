@@ -30,6 +30,7 @@ const PartnerButton = (props: PartnerButtonProps) => {
             window.location.href = props.link;
           }}
           height={height}
+          onMouseLeave={() => setHover(false)}
           onMouseEnter={() => setHover(true)}>
           <div className="absolute-container" style={{
             fontFamily: "Styled Font",
