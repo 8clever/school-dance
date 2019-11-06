@@ -1,6 +1,6 @@
 import { ObjectID } from "bson";
 
-export interface Performance {
+export interface Artist {
   _id?: string | ObjectID;
   name: string;
   description: string;

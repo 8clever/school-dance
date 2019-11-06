@@ -12,11 +12,10 @@ export class PerformanceStore extends Api<Performance> {
 
   endpoint = "/api/v1/performance/";
 
-  createPerformance = async (_iddirection: string) => {
+  createPerformance = async () => {
     this.performance = {
       name: "",
       description: "",
-      _iddirection,
       images: []
     }
     this.newImages = [];

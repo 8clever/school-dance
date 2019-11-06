@@ -93,7 +93,6 @@ export const Performance = observer((props: PerformanceProps) => {
 
       <PerformanceEdit 
         _id={performanceStore.performance._id as string}
-        _iddirection={performanceStore.performance._iddirection as string}
         visible={visiblePerformance}
         toggle={() => {
           setPerformanceVisible(!visiblePerformance)

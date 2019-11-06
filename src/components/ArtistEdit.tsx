@@ -1,45 +1,50 @@
 import React from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input } from "reactstrap";
 import { observer } from "mobx-react-lite";
-import { performanceStore as performanceStoreGlobal, PerformanceStore } from "../store/PerformanceStore";
+import { ArtistStore } from "../store/ArtistStore";
+import { Modal, ModalHeader, ModalBody, FormGroup, Label, Input, ModalFooter, Button } from "reactstrap";
 import { ImagePreview } from "./ImagePreview";
 
-interface PerformanceEditProps {
-  _id?: string;
+interface ArtistEditProps {
   visible: boolean;
+  _id?: string;
   toggle: () => void;
+  onSave: () => void;
+  onCancel: () => void;
 }
 
-const performanceStore = new PerformanceStore()
-
-export const PerformanceEdit = observer((props: PerformanceEditProps) => {
+const artistStore = new ArtistStore();
+export const ArtistEdit = observer((props: ArtistEditProps) => {
 
   React.useEffect(() => {
-    performanceStore.createPerformance();
-    if (!(props._id && props.visible)) return;
+    if (!props.visible) return;
 
-    performanceStore.loadPerformance(props._id);
-  }, [props.visible, props._id]);
+    artistStore.create();
 
-  if (!performanceStore.performance) return null;
+    if (props._id) {
+      artistStore.loadItem(props._id);
+    }
+
+  }, [props._id, props.visible]);
+
+  if (!artistStore.item) return null;
 
   return (
     <Modal toggle={props.toggle} isOpen={props.visible}>
       <ModalHeader>
         {
-          performanceStore.performance._id ? 
-          "Редактирование спектакля" : 
-          "Создание спектакля"
+          artistStore.item._id ? 
+          "Редактирование aртиста" : 
+          "Создание артиста"
         }
       </ModalHeader>
       <ModalBody>
         <FormGroup>
-          <Label>Наименование</Label>
+          <Label>Полное имя</Label>
           <Input 
             placeholder={"Текст..."}
-            value={performanceStore.performance.name}
+            value={artistStore.item.name}
             onChange={e => {
-              performanceStore.performance.name = e.target.value;
+              artistStore.item.name = e.target.value;
             }}
           />
         </FormGroup>
@@ -48,9 +53,9 @@ export const PerformanceEdit = observer((props: PerformanceEditProps) => {
           <Label>Описание</Label>
           <Input 
             type="textarea" 
-            value={performanceStore.performance.description}
+            value={artistStore.item.description}
             onChange={e => {
-              performanceStore.performance.description = e.target.value;
+              artistStore.item.description = e.target.value;
             }}
           />
         </FormGroup>
@@ -64,19 +69,20 @@ export const PerformanceEdit = observer((props: PerformanceEditProps) => {
             onChange={(e) => {
               Object.keys(e.target.files).forEach(key => {
                 const file = e.target.files[key];
-                if (file) performanceStore.newImages.push(file);
+                if (file) artistStore.newImages.push(file);
               });
             }
           }/>
         </FormGroup>
 
         {
-          performanceStore.performance.images.map((i, idx) => {
+          artistStore.item.images.map((i, idx) => {
             return (
               <ImagePreview 
+                key={i as string}
                 _id={i as string}
                 onRemove={() => {
-                  performanceStore.performance.images.splice(idx, 1);
+                  artistStore.item.images.splice(idx, 1);
                 }}
               />            
             )
@@ -85,17 +91,16 @@ export const PerformanceEdit = observer((props: PerformanceEditProps) => {
 
       </ModalBody>
       <ModalFooter>
-        <Button color={"secondary"} onClick={props.toggle}>
+        <Button color={"secondary"} onClick={() => {
+          props.toggle();
+          props.onCancel();
+        }}>
           Отмена
         </Button>
         <Button color={"primary"} onClick={async () => {
-          await performanceStore.savePerformance();
-          
-          if (props._id) {
-            await performanceStoreGlobal.loadPerformance(props._id);
-          }
-
+          await artistStore.save();
           props.toggle();
+          props.onSave();
         }}>
           Сохранить
         </Button>
