@@ -20,46 +20,48 @@ export const SubscribeMenu = observer((props: SubscribeMenuProps) => {
   }, []);
 
   return (
-    <BigRow 
-      style={{ fontFamily: "Styled Font" }}
-      maxRowItems={3}>
-      {
-        subscribeStore.itemList.map(i => {
-          return (
+    <>
+      <BigRow 
+        style={{ fontFamily: "Styled Font" }}
+        maxRowItems={3}>
+        {
+          subscribeStore.itemList.map(i => {
+            return (
+              <BigButtonCol 
+                onClick={() => {
+                  routerStore.push(`/subscribe/${i._id}`)
+                }}
+                padding={padding}
+                key={i._id as string}>
+                <div style={{
+                  fontWeight: props.active === i._id ? 600 : undefined
+                }}>
+                  {i.name}
+                </div>
+              </BigButtonCol>
+            )
+          })
+        }
+
+        {
+          userStore.isAdmin() ?
             <BigButtonCol 
               onClick={() => {
-                routerStore.push(`/subscribe/${i._id}`)
+                setAddVisible(true);
               }}
-              padding={padding}
-              key={i._id as string}>
-              <div style={{
-                fontWeight: props.active === i._id ? 600 : undefined
-              }}>
-                {i.name}
-              </div>
+              padding={padding}>
+              <Icon type="plus" /> АБОНЕМЕНТ
             </BigButtonCol>
-          )
-        })
-      }
+          : null
+        }
 
-      {
-        userStore.isAdmin() ?
-          <BigButtonCol 
-            onClick={() => {
-              setAddVisible(true);
-            }}
-            padding={padding}>
-            <Icon type="plus" /> АБОНЕМЕНТ
-          </BigButtonCol>
-        : null
-      }
+      </BigRow>
 
       <SubscribeEdit 
         visible={addVisible}
         toggle={() => setAddVisible(!addVisible)}
       />
-
-    </BigRow>
+    </>
   )
 })
 
