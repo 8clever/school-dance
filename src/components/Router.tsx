@@ -38,7 +38,6 @@ export const Router = () => {
       >
         <Route exact path="/" render={() => <Home />} />
         <Route exact path="/directions/:id" render={(match) => <Direction id={match.match.params.id as string} />}/>
-        <Route exact path="/events/:id" render={(match) => <Performance id={match.match.params.id as string} />}/>
         <Route exact path="/studio" render={(match) => <Studio />}/>
         <Route exact path="/teachers" render={(match) => <Teacher />}/>
         <Route exact path="/teacher/:id" render={(match) => <Teacher id={match.match.params.id} />}/>
@@ -54,6 +53,8 @@ export const Router = () => {
         <Route exact path="/search" render={match => <Search {...parse(match.location.search) as { text?: string }} />} />
         <Route exact path="/artists" render={match => <Artists />} />
         <Route exact path="/artist/:id" render={match => <Artists id={match.match.params.id as string} />} />
+        <Route exact path="/performance" render={match => <Performance />} />
+        <Route exact path="/performance/:id" render={match => <Performance id={match.match.params.id as string} />} />
         
         <Route exact path="/logout" render={() => {
           userStore.logout().then(() => {

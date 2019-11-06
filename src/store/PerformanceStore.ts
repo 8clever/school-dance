@@ -1,19 +1,16 @@
 import { toJS, decorate, observable, action } from "mobx";
 import { Api } from "./Api";
 import { Performance } from "../../server/models/Performance";
-import { RootQuerySelector } from "mongodb";
 import { imageStore } from "./ImageStore";
 
 export class PerformanceStore extends Api<Performance> {
 
-  performance?: Performance;
-  performanceList: Performance[] = [];
   newImages: Blob[] = [];
 
   endpoint = "/api/v1/performance/";
 
-  createPerformance = async () => {
-    this.performance = {
+  create = async () => {
+    this.item = {
       name: "",
       description: "",
       images: []
@@ -21,40 +18,28 @@ export class PerformanceStore extends Api<Performance> {
     this.newImages = [];
   }
 
-  loadPerformance = async (_id: string) => {
-    const data = await this.getItems({ _id });
-    this.performance = data.list[0];
-  }
-
-  loadPerformanceList = async (query: RootQuerySelector<Performance>) => {
-    const data = await this.getItems(query);
-    this.performanceList = data.list;
-  }
-
-  savePerformance = async () => {
-    const ev = toJS(this.performance);
-    if (!ev) return;
+  save = async () => {
+    const data = toJS(this.item);
+    if (!data) return;
 
     for(const image of this.newImages) {
       const _idimage = await imageStore.upload(image);
-      ev.images.push(_idimage);
+      data.images.push(_idimage);
     }
 
     this.newImages = [];
-    return this.editItem(ev);;
+    return this.editItem(data);;
   }
 
-  rmPerformance = async (_id: string) => {
+  remove = async (_id: string) => {
     return this.removeItem({ _id });
   }
 }
 
 decorate(PerformanceStore, {
-  performance: observable,
-  performanceList: observable,
-  createPerformance: action,
-  loadPerformance: action,
-  loadPerformanceList: action
+  create: action,
+  newImages: observable,
+  remove: action
 });
 
 export const performanceStore = new PerformanceStore();

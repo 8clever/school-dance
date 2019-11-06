@@ -1,33 +1,34 @@
 import React from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input } from "reactstrap";
 import { observer } from "mobx-react-lite";
-import { performanceStore as performanceStoreGlobal, PerformanceStore } from "../store/PerformanceStore";
+import { PerformanceStore } from "../store/PerformanceStore";
 import { ImagePreview } from "./ImagePreview";
 
 interface PerformanceEditProps {
   _id?: string;
   visible: boolean;
   toggle: () => void;
+  onSave: () => void;
+  onCancel: () => void;
 }
 
 const performanceStore = new PerformanceStore()
-
 export const PerformanceEdit = observer((props: PerformanceEditProps) => {
 
   React.useEffect(() => {
-    performanceStore.createPerformance();
+    performanceStore.create();
     if (!(props._id && props.visible)) return;
 
-    performanceStore.loadPerformance(props._id);
+    performanceStore.loadItem(props._id);
   }, [props.visible, props._id]);
 
-  if (!performanceStore.performance) return null;
+  if (!performanceStore.item) return null;
 
   return (
     <Modal toggle={props.toggle} isOpen={props.visible}>
       <ModalHeader>
         {
-          performanceStore.performance._id ? 
+          performanceStore.item._id ? 
           "Редактирование спектакля" : 
           "Создание спектакля"
         }
@@ -37,9 +38,9 @@ export const PerformanceEdit = observer((props: PerformanceEditProps) => {
           <Label>Наименование</Label>
           <Input 
             placeholder={"Текст..."}
-            value={performanceStore.performance.name}
+            value={performanceStore.item.name}
             onChange={e => {
-              performanceStore.performance.name = e.target.value;
+              performanceStore.item.name = e.target.value;
             }}
           />
         </FormGroup>
@@ -48,9 +49,9 @@ export const PerformanceEdit = observer((props: PerformanceEditProps) => {
           <Label>Описание</Label>
           <Input 
             type="textarea" 
-            value={performanceStore.performance.description}
+            value={performanceStore.item.description}
             onChange={e => {
-              performanceStore.performance.description = e.target.value;
+              performanceStore.item.description = e.target.value;
             }}
           />
         </FormGroup>
@@ -71,12 +72,12 @@ export const PerformanceEdit = observer((props: PerformanceEditProps) => {
         </FormGroup>
 
         {
-          performanceStore.performance.images.map((i, idx) => {
+          performanceStore.item.images.map((i, idx) => {
             return (
               <ImagePreview 
                 _id={i as string}
                 onRemove={() => {
-                  performanceStore.performance.images.splice(idx, 1);
+                  performanceStore.item.images.splice(idx, 1);
                 }}
               />            
             )
@@ -85,17 +86,16 @@ export const PerformanceEdit = observer((props: PerformanceEditProps) => {
 
       </ModalBody>
       <ModalFooter>
-        <Button color={"secondary"} onClick={props.toggle}>
+        <Button color={"secondary"} onClick={() => {
+          props.toggle();
+          props.onCancel();
+        }}>
           Отмена
         </Button>
         <Button color={"primary"} onClick={async () => {
-          await performanceStore.savePerformance();
-          
-          if (props._id) {
-            await performanceStoreGlobal.loadPerformance(props._id);
-          }
-
+          await performanceStore.save();
           props.toggle();
+          props.onSave();
         }}>
           Сохранить
         </Button>
