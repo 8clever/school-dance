@@ -8,7 +8,11 @@ import { observer } from "mobx-react-lite";
 
 const padding = "150px 60px"
 
-export const Subscribe = observer(() => {
+interface SubscribeMenuProps {
+  active?: string;
+}
+
+export const SubscribeMenu = observer((props: SubscribeMenuProps) => {
   const [ addVisible, setAddVisible ] = React.useState(false);
 
   React.useEffect(() => {
@@ -16,44 +20,53 @@ export const Subscribe = observer(() => {
   }, []);
 
   return (
-    <Base>
-      <BigRow 
-        style={{ fontFamily: "Styled Font" }}
-        maxRowItems={3}>
-
-        {
-          subscribeStore.itemList.map(i => {
-            return (
-              <BigButtonCol 
-                onClick={() => {
-                  routerStore.push(`/subscribe/${i._id}`)
-                }}
-                padding={padding}
-                key={i._id as string}>
-                {i.name}
-              </BigButtonCol>
-            )
-          })
-        }
-
-        {
-          userStore.isAdmin() ?
-          <>
+    <BigRow 
+      style={{ fontFamily: "Styled Font" }}
+      maxRowItems={3}>
+      {
+        subscribeStore.itemList.map(i => {
+          return (
             <BigButtonCol 
               onClick={() => {
-                setAddVisible(true);
+                routerStore.push(`/subscribe/${i._id}`)
               }}
-              padding={padding}>
-              <Icon type="plus" /> АБОНЕМЕНТ
+              padding={padding}
+              key={i._id as string}>
+              <div style={{
+                fontWeight: props.active === i._id ? 600 : undefined
+              }}>
+                {i.name}
+              </div>
             </BigButtonCol>
-          </> : null
-        }
-      </BigRow>
+          )
+        })
+      }
+
+      {
+        userStore.isAdmin() ?
+          <BigButtonCol 
+            onClick={() => {
+              setAddVisible(true);
+            }}
+            padding={padding}>
+            <Icon type="plus" /> АБОНЕМЕНТ
+          </BigButtonCol>
+        : null
+      }
 
       <SubscribeEdit 
         visible={addVisible}
         toggle={() => setAddVisible(!addVisible)}
       />
-    </Base>
+
+    </BigRow>
   )
 })
+
+export const Subscribe = () => {
+  return (
+    <Base>
+      <SubscribeMenu />
+    </Base>
+  )
+}

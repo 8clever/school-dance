@@ -10,6 +10,7 @@ import { SubscribeEdit } from "../components/SubscribeEdit";
 import { PriceEdit } from "../components/PriceEdit";
 import { priceStore } from "../store/PriceStore";
 import { Carousel } from "../components/Carousel";
+import { SubscribeMenu } from "./Subscribe";
 
 interface PricesProps {
   id: string;
@@ -81,6 +82,8 @@ export const Prices = observer((props: PricesProps) => {
           </FlexCol>
         </Col>
       </BigRow>
+
+      <SubscribeMenu active={props.id} />
 
       {
         userStore.isAdmin() ?

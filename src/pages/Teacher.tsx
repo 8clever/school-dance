@@ -12,6 +12,7 @@ import { Col, Button } from "reactstrap";
 import ReactMarkdown from "react-markdown";
 import { useResizeObserver } from "../effects/useResizeObserver";
 import { Image } from "../components/Carousel";
+import { StudioMenu } from "./Studio";
 
 interface TeacherProps {
   id?: string;
@@ -125,6 +126,8 @@ export const Teacher = observer((props: TeacherProps) => {
           }
         </BigCol>
       </BigRow>
+
+      <StudioMenu active="teachers" />
       
       {
         teacher && teacher._id ?

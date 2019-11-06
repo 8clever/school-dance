@@ -5,6 +5,39 @@ import { Carousel } from "../components/Carousel";
 
 import studio1PNG from "../images/studio/studio.png"
 
+interface StudioMenuProps {
+  active?: "leaders" | "teachers" | "history"
+}
+
+export const StudioMenu = (props: StudioMenuProps) => {
+
+  return (
+    <BigRow style={{ fontFamily: "Styled Font" }}>
+      <BigButtonCol onClick={() => routerStore.push("/leaders")}>
+        <div style={{
+          fontWeight: props.active === "leaders" ? 600 : undefined
+        }}>
+          РУКОВОДСТВО
+        </div>
+      </BigButtonCol>
+      <BigButtonCol onClick={() => routerStore.push("/teachers")}>
+        <div style={{
+          fontWeight: props.active === "teachers" ? 600 : undefined
+        }}>
+          ПЕДАГОГИ
+        </div>
+      </BigButtonCol>
+      <BigButtonCol>
+        <div style={{
+          fontWeight: props.active === "history" ? 600 : undefined
+        }}>
+          ИСТОРИЯ
+        </div>
+      </BigButtonCol>
+    </BigRow>
+  )
+}
+
 export const Studio = () => {
   return (
     <Base>
@@ -19,17 +52,7 @@ export const Studio = () => {
           />
         </BigCol>
       </BigRow>
-      <BigRow style={{ fontFamily: "Styled Font" }}>
-        <BigButtonCol onClick={() => routerStore.push("/leaders")}>
-          РУКОВОДСТВО
-        </BigButtonCol>
-        <BigButtonCol onClick={() => routerStore.push("/teachers")}>
-          ПЕДАГОГИ
-        </BigButtonCol>
-        <BigButtonCol>
-          ИСТОРИЯ
-        </BigButtonCol>
-      </BigRow>
+      <StudioMenu />
     </Base>
   )
 }

@@ -12,6 +12,7 @@ import ReactMarkdown from "react-markdown";
 import { LeaderEdit } from "../components/LeaderEdit";
 import { useResizeObserver } from "../effects/useResizeObserver";
 import { Image } from "../components/Carousel";
+import { StudioMenu } from "./Studio";
 
 interface LeaderProps {
   id?: string;
@@ -127,6 +128,8 @@ export const Leaders = observer((props: LeaderProps) => {
         </BigCol>
       </BigRow>
       
+      <StudioMenu active="leaders" />
+
       {
         element && element._id ?
         <LeaderEdit 
