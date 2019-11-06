@@ -5,7 +5,6 @@ import { directionStore } from "../store/DirectionStore";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
 import { routerStore } from "../store/RouterStore";
-import { performanceStore } from "../store/PerformanceStore";
 import { HeaderCalendar } from "../components/HeaderCalendar";
 import { DirectionEdit } from "../components/DirectionEdit";
 import MD from "react-markdown";
@@ -23,9 +22,6 @@ export const Direction = observer((props: DirectionProps) => {
 
   React.useEffect(() => {
     directionStore.loadItem(props.id);
-    performanceStore.loadItems({
-      _iddirection: props.id 
-    });
   }, [props.id])
 
   if (!directionStore.item) return null;
@@ -66,19 +62,6 @@ export const Direction = observer((props: DirectionProps) => {
       <BigRow 
         style={{ fontFamily: "Styled Font" }}
         maxRowItems={3}>
-        {
-          performanceStore.itemList.map(p => {
-            return (
-              <BigButtonCol 
-                onClick={() => {
-                  routerStore.push(`/events/${p._id}`)
-                }}
-                key={p._id as string}>
-                {p.name}
-              </BigButtonCol>
-            )
-          })
-        }
 
         {
           userStore.isAdmin() ?

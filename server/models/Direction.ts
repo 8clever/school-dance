@@ -1,5 +1,7 @@
 import { ObjectID } from "bson";
 
+export type SubmenuType = "teachers" | "artists" | "performance";
+
 export interface Direction {
   _id?: string | ObjectID;
   name: string;
@@ -8,7 +10,7 @@ export interface Direction {
   schedule: string[];
   desc: string;
   submenu: {
-    type: "teachers" | "artists" | "performance",
+    type: SubmenuType,
     items: Array<string | ObjectID>
   }
 }
