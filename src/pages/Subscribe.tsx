@@ -6,14 +6,13 @@ import { SubscribeEdit } from "../components/SubscribeEdit";
 import { routerStore } from "../store/RouterStore";
 import { observer } from "mobx-react-lite";
 
-const padding = "150px 60px"
-
 interface SubscribeMenuProps {
   active?: string;
 }
 
 export const SubscribeMenu = observer((props: SubscribeMenuProps) => {
-  const [ addVisible, setAddVisible ] = React.useState(false);
+  const [ editVisible, setEditVisible ] = React.useState(false);
+  const [ id, setId ] = React.useState("");
 
   React.useEffect(() => {
     subscribeStore.loadItems({});
@@ -31,10 +30,33 @@ export const SubscribeMenu = observer((props: SubscribeMenuProps) => {
                 onClick={() => {
                   routerStore.push(`/subscribe/${i._id}`)
                 }}
-                padding={padding}
                 selected={props.active === i._id}
                 key={i._id as string}>
                 {i.name}
+
+                {
+                  userStore.isAdmin() ?
+                  <span className="hovered">
+                    <Icon
+                      className="ml-3"
+                      type="pencil-alt"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setId(i._id as string);
+                        setEditVisible(true);
+                      }}
+                    />
+                    <Icon 
+                      onClick={async e => {
+                        e.stopPropagation();
+                        await subscribeStore.removeItemByID(i._id as string);
+                        await subscribeStore.loadItems();
+                      }}
+                      type="trash"
+                      className="ml-3" 
+                    />
+                  </span> : null
+                }
               </BigButtonCol>
             )
           })
@@ -44,10 +66,11 @@ export const SubscribeMenu = observer((props: SubscribeMenuProps) => {
           userStore.isAdmin() ?
             <BigButtonCol 
               onClick={() => {
-                setAddVisible(true);
-              }}
-              padding={padding}>
-              <Icon type="plus" /> АБОНЕМЕНТ
+                setId("")
+                setEditVisible(true);
+              }}>
+              <Icon type="plus" className="mr-3" /> 
+              АБОНЕМЕНТ
             </BigButtonCol>
           : null
         }
@@ -55,8 +78,9 @@ export const SubscribeMenu = observer((props: SubscribeMenuProps) => {
       </BigRow>
 
       <SubscribeEdit 
-        visible={addVisible}
-        toggle={() => setAddVisible(!addVisible)}
+        _id={id}
+        visible={editVisible}
+        toggle={() => setEditVisible(!editVisible)}
       />
     </>
   )
