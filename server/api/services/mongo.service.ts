@@ -27,8 +27,16 @@ export class MongoService<T extends MongoLike> {
   }
 
   _find = async (query: RootQuerySelector<T>) => {
-    if (query._id) {
+    if (
+      query._id && 
+      query._id.$in &&
+      Array.isArray(query._id.$in)
+    ) {
+      query._id.$in = query._id.$in.map(_id => new ObjectID(_id))
+    } else if (_.isString(query._id)) {
       query._id = new ObjectID(query._id);
+    } else {
+      delete query._id;
     }
 
     const collection = mongo.db.collection(this.collection);

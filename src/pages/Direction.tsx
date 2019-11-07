@@ -136,11 +136,22 @@ export const Direction = observer((props: DirectionProps) => {
 
   const type = typeMap[directionStore.item && directionStore.item.submenu.type];
   React.useEffect(() => {
-    if (!type) return;
-    type.loadItems().then(() => {
+    if (!(
+      directionStore.item.submenu.items.length &&
+      type  
+    )) {
+      setSubmenuOptions([]);
+      return;
+    }
+
+    type.loadItems({
+      _id: {
+        $in: directionStore.item.submenu.items
+      }
+    }).then(() => {
       setSubmenuOptions(type.getItems());
     });
-  }, [type])
+  }, [type, directionStore.item.submenu.items])
 
   const submenu = submenuOptions.map(o => {
     return (
