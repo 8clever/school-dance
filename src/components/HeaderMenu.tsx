@@ -36,7 +36,8 @@ export const HeaderMenu = () => {
   }
 
   return (
-    <OutsideClickHandler onOutsideClick={() => {
+    <OutsideClickHandler onOutsideClick={(e) => {
+      if ((e.target as HTMLElement).className === "close") return;
       menuStore.isCollapsed = true;
     }}>
       <BigRow>

@@ -111,7 +111,7 @@ export const Header = observer(() => {
                 {
                   menuStore.isCollapsed ?
                   <img width={20} height={20} src={menuSVG} /> :
-                  <img width={20} height={20} src={closeSVG} />
+                  <img width={20} height={20} className="close" src={closeSVG} />
                 }
             </Button>
           </ButtonGroup>
