@@ -39,18 +39,11 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
         <img src={leftSVG} width={15} height={15} />
       </BigButtonColMin>
       <BigButtonColMin 
+        selected={moment().isSame(date, "day")}
         md={10}>
-        <div style={{ 
-          fontWeight: (
-            moment().isSame(date, "day") ?
-            600 :
-            300
-          ) 
-        }}>
-          {moment(date).locale(LOCALE).format("ddd")}
-          {" "}
-          {moment(date).locale(LOCALE).format("DD")}
-        </div>
+        {moment(date).locale(LOCALE).format("ddd")}
+        {" "}
+        {moment(date).locale(LOCALE).format("DD")}
       </BigButtonColMin>
       <BigButtonColMin 
         onClick={() => {
@@ -75,14 +68,11 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
           return (
             <React.Fragment key={idx}>
               <BigButtonColMin
+                selected={isCurrentHour}
                 top={0}
                 bottom={0}
                 md={1}>
-                <div style={{
-                  fontWeight: isCurrentHour ? 600 : 300
-                }}>
-                  {t.time.format("HH:mm")}
-                </div>
+                {t.time.format("HH:mm")}
               </BigButtonColMin>
               <BigCol md={10}>
                 <FlexCol align="center" justify="center">

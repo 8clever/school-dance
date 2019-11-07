@@ -12,6 +12,8 @@ export interface BigButtonCellProps extends ButtonProps, BigColSize, BigFlexSize
   width?: number;
   height?: number;
   colPadding?: string;
+  style?: React.CSSProperties;
+  selected?: boolean;
 }
 
 export const BigButtonColMin = (p: BigButtonCellProps) => {
@@ -43,6 +45,7 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
       flex={props.flex}
       maxWidth={props.maxWidth}
       padding={props.colPadding}
+      style={props.style}
     >
       <FlexCol justify="center" align="center">
         <Button
@@ -54,7 +57,11 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
           href={props.href}
           size={size}
           color="link">
-          {props.children}
+          <div style={{
+            fontWeight: props.selected ? 600 : undefined
+          }}>
+            {props.children}
+          </div>
         </Button>
       </FlexCol>
     </BigCol>
@@ -65,9 +72,11 @@ interface BigColProps extends ColProps, BigColSize, BigFlexSize {
   children?: React.ReactNode;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  onClick?: () => void;
   width?: number;
   height?: number;
   padding?: string;
+  style?: React.CSSProperties
 }
 
 interface BigColSize {
@@ -114,6 +123,7 @@ export const getShadowBoxStyle = (props: shadowBoxProps) => {
 export const BigCol = (props: BigColProps) => {
   return (
     <Col
+      onClick={props.onClick}
       onMouseEnter={() => props.onMouseEnter && props.onMouseEnter()}
       onMouseLeave={() => props.onMouseLeave && props.onMouseLeave()}
       className={props.className}
@@ -122,6 +132,7 @@ export const BigCol = (props: BigColProps) => {
       lg={props.lg}
       style={{
         ...getShadowBoxStyle(props),
+        ...props.style,
         width: props.width,
         height: props.height,
         maxWidth: props.maxWidth,

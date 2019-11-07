@@ -18,6 +18,7 @@ export const Wrapper = (props: {
   length: number;
   className?: string;
   style?: React.CSSProperties;
+  selected?: boolean;
 }) => {
   const border = props.idx < props.length - 1;
 
@@ -33,7 +34,9 @@ export const Wrapper = (props: {
         width: "100%",
         borderRight: border ? "1px solid black" : undefined
       }}>
-      <div className="text-center w-100">
+      <div 
+        style={{ fontWeight: props.selected ? 600 : undefined }} 
+        className="text-center w-100">
         {props.children}
       </div>
     </div>

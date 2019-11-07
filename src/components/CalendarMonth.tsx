@@ -103,10 +103,8 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
                             routerStore.push(`/calendar?type=${CALENDAR_DAY}&date=${week.day.format("DD-MM-YYYY")}`)
                           }}
                           key={idx}>
-                          <DayWrapper 
-                            style={{
-                              fontWeight: isCurrentMonth || existSelectedSchedule ? 600 : 300
-                            }}
+                          <DayWrapper
+                            selected={isCurrentMonth || existSelectedSchedule} 
                             length={0}
                             idx={0}
                             disabled={!week.day.isSame(props.date, "month")}

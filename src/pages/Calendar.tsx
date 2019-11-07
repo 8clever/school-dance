@@ -137,12 +137,9 @@ export const Calendar = observer((props: CalendarProps) => {
                       setSelectedDirectionId(d._id as string);
                     }}
                     md={12}
+                    selected={selectedDirectionId === d._id}
                     key={d._id as string}>
-                    <div style={{
-                      fontWeight: selectedDirectionId === d._id ? 600 : undefined
-                    }}>
-                      {d.name} ({d.shortName})
-                    </div>
+                    {d.name} ({d.shortName})
                   </BigButtonColMin>
                 )
               })

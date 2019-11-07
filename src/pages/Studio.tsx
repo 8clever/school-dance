@@ -13,26 +13,18 @@ export const StudioMenu = (props: StudioMenuProps) => {
 
   return (
     <BigRow style={{ fontFamily: "Styled Font" }}>
-      <BigButtonCol onClick={() => routerStore.push("/leaders")}>
-        <div style={{
-          fontWeight: props.active === "leaders" ? 600 : undefined
-        }}>
-          РУКОВОДСТВО
-        </div>
+      <BigButtonCol 
+        selected={props.active === "leaders"}
+        onClick={() => routerStore.push("/leaders")}>
+        РУКОВОДСТВО
       </BigButtonCol>
-      <BigButtonCol onClick={() => routerStore.push("/teachers")}>
-        <div style={{
-          fontWeight: props.active === "teachers" ? 600 : undefined
-        }}>
-          ПЕДАГОГИ
-        </div>
+      <BigButtonCol
+        selected={props.active === "teachers"}
+        onClick={() => routerStore.push("/teachers")}>
+        ПЕДАГОГИ
       </BigButtonCol>
       <BigButtonCol>
-        <div style={{
-          fontWeight: props.active === "history" ? 600 : undefined
-        }}>
-          ИСТОРИЯ
-        </div>
+        ИСТОРИЯ
       </BigButtonCol>
     </BigRow>
   )

@@ -9,6 +9,8 @@ import rightSVG from "../images/icons/arrow-right.png";
 interface HeaderCalendarProps {
   date: Date;
   onChange: (date: Date) => void;
+  leftButtonText: string;
+  leftButtonOnClick?: () => void;
   rightButtonText: string;
   rightButtonOnClick?: () => void;
   format: "MM.YYYY" | "DD.MM.YYYY";
@@ -19,18 +21,23 @@ export const HeaderCalendar = (props: HeaderCalendarProps) => {
 
   return (
     <BigRow>
-        <BigCol>
+        <BigCol
+          xs={6} 
+          style={{
+            cursor: "pointer"
+          }}
+          onClick={props.leftButtonOnClick}>
           <FlexCol justify="between" align="center">
             <div style={{ padding: 10 }}>
               <img src={rightSVG} width={15} height={15} />
             </div>
             <div style={{ padding: 10 }}>
-              Спектакль
+              {props.leftButtonText}
             </div>
             <div></div>
           </FlexCol>
         </BigCol>
-        <BigCol >
+        <BigCol xs={6}>
           <FlexCol align="center" justify="between">
             <div 
               style={{ 

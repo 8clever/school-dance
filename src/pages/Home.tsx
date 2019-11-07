@@ -11,6 +11,7 @@ import home1png from "../images/home/main0.png";
 import home2png from "../images/home/main1.png";
 import home3png from "../images/home/main2.png";
 import { Carousel } from "../components/Carousel";
+import { DirectionMenu } from "./Direction";
 
 const carousel = [
   { src: home1png },
@@ -19,46 +20,13 @@ const carousel = [
 ];
 
 export const Home = observer(() => {
-  const [ directionEditVisible, setDirectionEditVisible ] = React.useState(false);
-
-  React.useEffect(() => {
-    directionStore.loadItems();
-  }, []);
 
   return (
     <Base>
       <PageTitle marquee>Студия Дианы Вишнёвой Context Pro</PageTitle>
       <BigHr />
       <Carousel items={carousel} />
-      <BigRow 
-        style={{
-          fontFamily: "Styled Font"
-        }}
-        maxRowItems={3}>
-        {
-          directionStore.itemList.map(d => {
-            return (
-              <BigButtonCol 
-                key={d._id as string}                
-                onClick={() => routerStore.push("/directions/" + d._id)}>
-                {d.name}
-              </BigButtonCol>
-            )
-          })
-        }
-        {
-          userStore.isAdmin() ?
-          <BigButtonCol 
-            onClick={() => setDirectionEditVisible(true)}>
-            <Icon type="plus" /> ДОБАВИТЬ НАПРАВЛЕНИЕ
-          </BigButtonCol> : null
-        }      
-      </BigRow>
-      
-      <DirectionEdit 
-        visible={directionEditVisible}
-        toggle={() => setDirectionEditVisible(!directionEditVisible)}
-      />
+      <DirectionMenu />
     </Base>
   )
 })

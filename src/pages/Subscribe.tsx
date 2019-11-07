@@ -32,12 +32,9 @@ export const SubscribeMenu = observer((props: SubscribeMenuProps) => {
                   routerStore.push(`/subscribe/${i._id}`)
                 }}
                 padding={padding}
+                selected={props.active === i._id}
                 key={i._id as string}>
-                <div style={{
-                  fontWeight: props.active === i._id ? 600 : undefined
-                }}>
-                  {i.name}
-                </div>
+                {i.name}
               </BigButtonCol>
             )
           })

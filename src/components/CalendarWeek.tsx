@@ -73,14 +73,13 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
               const isSameDay = moment().isSame(week.day, "day");
               return (
                 <WeekDay key={idx}>
-                  <Wrapper idx={0} length={0}>
-                    <div style={{
-                      fontWeight: isSameDay ? 600 : 300
-                    }}>
-                      {week.day.locale(LOCALE).format("ddd")}
-                      {" "}
-                      {week.day.locale(LOCALE).format("DD")}
-                    </div>
+                  <Wrapper 
+                    selected={isSameDay}
+                    idx={0} 
+                    length={0}>
+                    {week.day.locale(LOCALE).format("ddd")}
+                    {" "}
+                    {week.day.locale(LOCALE).format("DD")}
                   </Wrapper>
                 </WeekDay>
               )
@@ -106,14 +105,11 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
           return (
             <React.Fragment key={idx}>
               <BigButtonColMin
+                selected={isSameHour}
                 top={0}
                 bottom={0}
                 md={1}>
-                <div style={{
-                  fontWeight: isSameHour ? 600 : 300
-                }}>
-                  {t.time.format("HH:mm")}
-                </div>
+                {t.time.format("HH:mm")}
               </BigButtonColMin>
               <Col md={10}>
                 <div style={{
