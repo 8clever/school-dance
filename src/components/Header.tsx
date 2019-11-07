@@ -100,8 +100,8 @@ export const Header = observer(() => {
               }}
               color="link">
               <img 
-                height={25}
-                width={35}
+                height={30}
+                width={30}
                 src={schedulePNG} 
               />
             </Button>
@@ -110,8 +110,8 @@ export const Header = observer(() => {
               onClick={menuStore.toggle}>
                 {
                   menuStore.isCollapsed ?
-                  <img src={menuSVG} /> :
-                  <img src={closeSVG} />
+                  <img width={20} height={20} src={menuSVG} /> :
+                  <img width={20} height={20} src={closeSVG} />
                 }
             </Button>
           </ButtonGroup>

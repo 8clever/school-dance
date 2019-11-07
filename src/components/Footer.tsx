@@ -22,7 +22,7 @@ const FooterBrandLogo = (props: FooterBrandLogoProps) => {
       xs={6}>
       <img 
         width={35} 
-        height={27} 
+        height={35} 
         src={props.src} 
       />
     </BigButtonColMin>
@@ -77,7 +77,7 @@ export const Footer = () => {
               md={7} 
               h100>
               <img 
-                height={35}
+                height={45}
                 width={45}
                 src={schedulePNG} /
               >

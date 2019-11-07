@@ -5,15 +5,10 @@ import { Col } from "reactstrap";
 import { messages } from "./FirstVisit";
 import { useResizeObserver } from "../effects/useResizeObserver";
 
-import phoneSVG from "../images/icons/phone-call.svg";
-import mailSVG from "../images/icons/mail.svg";
+import phonePNG from "../images/icons/phone-call.png";
+import mailPNG from "../images/icons/mail.png";
 import pointPNG from "../images/icons/point.png";
 import pointBlackPNG from "../images/icons/point-black.png";
-
-const iconStyle = {
-  width: 15,
-  height: 15
-}
 
 export const Contacts = () => {
   let [ width, height, refCallback ] = useResizeObserver();
@@ -46,8 +41,8 @@ export const Contacts = () => {
                   options={{
                     iconLayout: 'default#image',
                     iconImageHref:  pointBlackPNG,
-                    iconImageSize: [60, 45],
-                    iconImageOffset: [-30, -45]
+                    iconImageSize: [60, 60],
+                    iconImageOffset: [-30, -50]
                   }}
                   geometry={center} 
                 />
@@ -61,10 +56,10 @@ export const Contacts = () => {
           <BigRow>
             <BigCol md={12}>
               <div style={{ padding: "100px 50px" }}>
-                <img {...iconStyle} src={phoneSVG} /> +7 (812) 601-07-25
+                <img height={15} src={phonePNG} /> +7 (812) 601-07-25
                 <br/>
                 <br/>
-                <img {...iconStyle} src={mailSVG} /> contextprostudio@gmail.com
+                <img height={15} src={mailPNG} /> contextprostudio@gmail.com
                 <br/>
                 <br/>
                 <img height={15} src={pointPNG} /> Наб. Адмиралтейского канала д.2, здание Бутылка, 3 этаж

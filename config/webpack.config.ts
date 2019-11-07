@@ -14,6 +14,7 @@ export const config: Configuration = {
       meta: {
         viewport: "width=device-width, initial-scale=1, shrink-to-fit=no"
       },
+      favicon: "public/favicon.png",
       title: process.env.APP_NAME
     })
   ],

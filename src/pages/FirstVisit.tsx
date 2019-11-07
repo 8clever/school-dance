@@ -1,12 +1,15 @@
 import React from "react";
 import { Base } from "../components/Base"
 import { BigRow, BigCol, BigButtonColMin } from "../components/Big";
-import { Icon } from "../components/Icon";
 import { routerStore } from "../store/RouterStore";
+
+import shirtPNG from "../images/icons/tsh.png";
+import pointPNG from "../images/icons/point.png";
+import bagPNG from "../images/icons/bag.png";
 
 export const messages = [
   {
-    icon: "tshirt",
+    icon: shirtPNG,
     title: "ОДЕЖДА ДЛЯ ЗАНЯТИЯ",
     desc: [
       `
@@ -18,7 +21,7 @@ export const messages = [
     ]
   },
   {
-    icon: "map-marker-alt",
+    icon: pointPNG,
     title: "КАК НАС НАЙТИ",
     desc: [
       `
@@ -33,7 +36,7 @@ export const messages = [
     ]
   },
   {
-    icon: "shopping-bag",
+    icon: bagPNG,
     title: "ЧТО ДОПОЛНИТЕЛЬНО НЕОБХОДИМО ВЗЯТЬ С СОБОЙ",
     desc: [
       `
@@ -77,7 +80,7 @@ export const FirstVisit = () => {
                 key={idx}
                 className="text-center">
                 <div style={{ padding: "200px 40px" }}>
-                  <Icon type={m.icon} size="3x" />
+                  <img height={60} src={m.icon} />
                   <div className="mt-4"></div>
                   <h4>{m.title}</h4>
                   <div className="mt-4"></div>
