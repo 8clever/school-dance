@@ -1,13 +1,9 @@
 import React from "react";
-import { Base, BigRow, BigButtonColMin, Icon, BigButtonCol, BigCol } from "../components";
-import { Carousel } from "../components/Carousel";
+import { Base, BigRow, Icon, BigButtonCol } from "../components";
 import { observer } from "mobx-react-lite";
 import { artistStore } from "../store/ArtistStore";
 import { userStore } from "../store/UserStore";
-import { Row, Col } from "reactstrap";
 import { ArtistEdit } from "../components/ArtistEdit";
-import { imageStore } from "../store/ImageStore";
-import { routerStore } from "../store/RouterStore";
 
 interface ArtistsProps {
   id?: string;
@@ -33,7 +29,7 @@ export const Artists = observer((props: ArtistsProps) => {
                   {i.name}
                   {
                     userStore.isAdmin() ?
-                    <>
+                    <span className="hovered">
                       <Icon 
                         type="pencil-alt" 
                         className="ml-3"
@@ -45,12 +41,12 @@ export const Artists = observer((props: ArtistsProps) => {
                       <Icon 
                         className="ml-3"
                         type="trash" 
-                        onClick={e => {
+                        onClick={async e => {
                           e.stopPropagation();
-                          artistStore.remove(i._id as string);
-                          artistStore.loadItems();
+                          await artistStore.remove(i._id as string);
+                          await artistStore.loadItems();
                       }} />
-                    </> : null
+                    </span> : null
                   }
                 </BigButtonCol>
               )

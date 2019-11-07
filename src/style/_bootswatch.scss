@@ -106,9 +106,19 @@ $fontWeightBold: 600;
     text-decoration-line: none;
     font-weight: $fontWeightNormal;
 
+    @media (min-width: 768px) {
+      .hovered {
+        display: none;
+      }
+    }
+
     &:hover {
       text-decoration-line: none;
       font-weight: $fontWeightBold;
+    
+      .hovered {
+        display: inline;
+      }
     }
 
     &:focus {
