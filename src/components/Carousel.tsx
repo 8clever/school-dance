@@ -34,7 +34,13 @@ export const Carousel = (props: CarouselProps) => {
   const [ activeIndex, setIndex ] = React.useState(0);
   const [ width,, refCallback ] = useResizeObserver();
 
-  const slides = props.items.map((item, idx) => {
+  const items = props.items.length ? props.items : [
+    {
+      src: emptyPNG
+    }
+  ]
+
+  const slides = items.map((item, idx) => {
     if (!width) return <React.Fragment key={idx}></React.Fragment>;
 
     const height = width * 0.5625;
