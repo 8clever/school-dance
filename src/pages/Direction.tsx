@@ -14,7 +14,6 @@ import { teacherStore } from "../store/TeacherStore";
 import { performanceStore } from "../store/PerformanceStore";
 import { artistStore } from "../store/ArtistStore";
 import _ from "lodash";
-import { toJS } from "mobx";
 
 interface DirectionProps {
   id?: string;

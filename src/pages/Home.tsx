@@ -1,12 +1,7 @@
 import React from "react";
-import { BigRow, Base, BigButtonCol, Icon, BigHr } from "../components";
+import { Base, BigHr } from "../components";
 import { observer } from "mobx-react-lite";
-import { userStore } from "../store/UserStore";
 import { PageTitle } from "../components/PageTitle";
-import { DirectionEdit } from "../components/DirectionEdit";
-import { directionStore } from "../store/DirectionStore";
-import { routerStore } from "../store/RouterStore";
-
 import home1png from "../images/home/main0.png";
 import home2png from "../images/home/main1.png";
 import home3png from "../images/home/main2.png";
