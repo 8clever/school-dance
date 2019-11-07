@@ -15,106 +15,66 @@ interface ArtistsProps {
 
 export const Artists = observer((props: ArtistsProps) => {
 
-  const [ addVisible, setAddVisible ] = React.useState(false);
   const [ editVisible, setEditVisible ] = React.useState(false);
+  const [ id, setId ] = React.useState("");
 
   React.useEffect(() => {
     artistStore.loadItems();
   }, []);
 
-  React.useEffect(() => {
-    if (!props.id) return;
-    artistStore.loadItem(props.id);
-  }, [props.id]);
-
-  const item = artistStore.item || artistStore.itemList[0];
-  const images = item ? item.images : [];
-
   return (
     <Base>
-      <Row noGutters>
-        <Col md={3}>
+      <BigRow noGutters>
           {
             artistStore.itemList.map(i => {
               return (
-                <BigButtonColMin 
-                  onClick={() => {
-                    routerStore.push(`/artist/${i._id}`)
-                  }}
-                  key={i._id as string} 
-                  md={12}>
+                <BigButtonCol 
+                  key={i._id as string}>
                   {i.name}
-                </BigButtonColMin>
+                  {
+                    userStore.isAdmin() ?
+                    <>
+                      <Icon 
+                        type="pencil-alt" 
+                        className="ml-3"
+                        onClick={e => {
+                          e.stopPropagation();
+                          setId(i._id as string);
+                          setEditVisible(true);
+                      }} />
+                      <Icon 
+                        className="ml-3"
+                        type="trash" 
+                        onClick={e => {
+                          e.stopPropagation();
+                          artistStore.remove(i._id as string);
+                          artistStore.loadItems();
+                      }} />
+                    </> : null
+                  }
+                </BigButtonCol>
               )
             })
           }
 
           {
             userStore.isAdmin() ?
-            <BigButtonColMin 
+            <BigButtonCol 
               onClick={() => {
-                setAddVisible(true);
-              }}
-              md={12}>
-              <Icon type="plus" />
-              {" "}
+                setId("")
+                setEditVisible(true);
+              }}>
+              <Icon type="plus" className="mr-3" />
               Добавить артиста
-            </BigButtonColMin> : null
+            </BigButtonCol> : null
           }
-        </Col>
-        <BigCol md={9}>
-          <Carousel items={images.map(i => {
-            return {
-              src: `${imageStore.endpoint}${i}`
-            }
-          })} />
-        </BigCol>
-      </Row>
-
-      {
-        userStore.isAdmin() && item && item._id ?
-        <>
-          <BigRow>
-            <BigButtonCol onClick={() => {
-              setEditVisible(true);
-            }}>
-              <Icon type="pencil-alt" />
-              {" "} Редактировать
-            </BigButtonCol>
-            <BigButtonCol onClick={async () => {
-              await artistStore.remove(item._id as string);
-              await artistStore.loadItems();
-
-              if (artistStore.itemList[0]) {
-                routerStore.push("/artist/" + artistStore.itemList[0]._id);
-                return;
-              }
-
-              routerStore.push("/artists");
-            }}>
-              <Icon type="trash" />
-              {" "} Удалить
-            </BigButtonCol>
-          </BigRow> 
-
-          <ArtistEdit 
-            toggle={() => {
-              setEditVisible(!editVisible)
-            }}
-            onSave={() => {
-              artistStore.loadItems();
-            }}
-            onCancel={() => {}}
-            _id={item._id as string}
-            visible={editVisible}
-          />
-        </>: null
-      }
+        </BigRow>
 
       <ArtistEdit 
-        visible={addVisible}
+        _id={id}
+        visible={editVisible}
         toggle={() => {
-          setAddVisible(!addVisible);
+          setEditVisible(!editVisible)
         }}
         onSave={() => {
           artistStore.loadItems();

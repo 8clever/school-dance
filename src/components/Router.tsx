@@ -52,7 +52,6 @@ export const Router = () => {
         <Route exact path="/auth" render={match => <Auth />} />
         <Route exact path="/search" render={match => <Search {...parse(match.location.search) as { text?: string }} />} />
         <Route exact path="/artists" render={match => <Artists />} />
-        <Route exact path="/artist/:id" render={match => <Artists id={match.match.params.id as string} />} />
         <Route exact path="/performance" render={match => <Performance />} />
         <Route exact path="/performance/:id" render={match => <Performance id={match.match.params.id as string} />} />
         

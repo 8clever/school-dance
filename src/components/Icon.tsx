@@ -6,7 +6,7 @@ interface Props {
   sub?: string;
   className?: string;
   style?: React.CSSProperties;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const Icon = (props: Props) => {
