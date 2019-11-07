@@ -1,6 +1,7 @@
 import React from "react";
 import { Carousel as CarouselFactory, CarouselItem, CarouselControl } from "reactstrap";
 import { useResizeObserver } from "../effects/useResizeObserver";
+import emptyPNG from "../images/empty.png";
 
 interface ImageItem {
   src: string;
@@ -21,7 +22,10 @@ export const Image = (props: ImageProps) => {
     <div style={{ 
       width: props.width, 
       height: props.height,
-      background: `url("${props.src}") no-repeat content-box center / cover`
+      background: `
+        url("${props.src}") no-repeat content-box center / cover,
+        url("${emptyPNG}") no-repeat content-box center / cover
+      `
     }} />
   )
 }
