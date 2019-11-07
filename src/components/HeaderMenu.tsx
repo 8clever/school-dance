@@ -4,7 +4,6 @@ import { routerStore } from "../store/RouterStore";
 import { menuStore } from "../store/MenuStore";
 import { vk, facebook, instagramm, youtube, whatsapp } from "../static/brands";
 import OutsideClickHandler from "react-outside-click-handler";
-import { observer } from "mobx-react-lite";
 
 interface BrandLogoProps {
   src: string;
