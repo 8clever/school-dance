@@ -1,12 +1,10 @@
 import React from "react";
-import { Base, BigRow, BigCol, BigButtonCol, Icon, FlexCol, BigButtonColMin } from "../components";
+import { Base, BigRow, BigCol, Icon, FlexCol, BigButtonColMin } from "../components";
 import { subscribeStore } from "../store/SubscribeStore";
-import { Col } from "reactstrap";
+import { Col, Button } from "reactstrap";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
-import { routerStore } from "../store/RouterStore";
 import { observer } from "mobx-react-lite";
-import { SubscribeEdit } from "../components/SubscribeEdit";
 import { PriceEdit } from "../components/PriceEdit";
 import { priceStore } from "../store/PriceStore";
 import { Carousel } from "../components/Carousel";
@@ -17,7 +15,6 @@ interface PricesProps {
 }
 
 export const Prices = observer((props: PricesProps) => {
-  const [ editSubscribeVisible, setEditSubscribeVisible ] = React.useState(false);
   const [ addPriceVisible, setAddPriceVisible ] = React.useState(false);
 
   React.useEffect(() => {
@@ -69,6 +66,25 @@ export const Prices = observer((props: PricesProps) => {
                   )
                 })
               }
+
+              {
+                userStore.isAdmin() ?
+                  <Button
+                    size="sm"
+                    color="primary"
+                    onClick={() => {
+                      setAddPriceVisible(true)
+                    }}
+                  >
+                    <Icon type="plus" /> Цена
+                  </Button> : null
+              }
+
+              <PriceEdit 
+                _idsubscribe={props.id}
+                visible={addPriceVisible}
+                toggle={() => setAddPriceVisible(!addPriceVisible)}
+              />
             </div>
             <div>
               <BigButtonColMin 
@@ -84,43 +100,6 @@ export const Prices = observer((props: PricesProps) => {
       </BigRow>
 
       <SubscribeMenu active={props.id} />
-
-      {
-        userStore.isAdmin() ?
-        <BigRow>
-          <BigButtonCol
-            onClick={() => {
-              setAddPriceVisible(true)
-            }}
-          >
-            <Icon type="plus" /> Цена
-          </BigButtonCol>
-          <BigButtonCol onClick={async () => {
-            setEditSubscribeVisible(true);
-          }}>
-            <Icon type="pencil-alt" /> Редактировать
-          </BigButtonCol>
-          <BigButtonCol onClick={async () => {
-            await subscribeStore.removeItemByID(props.id);
-            await subscribeStore.loadItems({});
-            routerStore.push("/subscribe")
-          }}>
-            <Icon type="trash" /> Удалить
-          </BigButtonCol>
-        </BigRow> : null
-      }
-
-      <PriceEdit 
-        _idsubscribe={props.id}
-        visible={addPriceVisible}
-        toggle={() => setAddPriceVisible(!addPriceVisible)}
-      />
-
-      <SubscribeEdit 
-        _id={props.id}
-        visible={editSubscribeVisible}
-        toggle={() => setEditSubscribeVisible(!editSubscribeVisible)}
-      />
     </Base>
   )
 })

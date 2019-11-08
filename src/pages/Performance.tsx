@@ -65,7 +65,7 @@ export const Performance = observer((props: PerformanceProps) => {
               setEditVisible(true);
             }}>
             <Icon type="plus" className="mr-3" />
-            Добавить артиста
+            Добавить спектакль
           </BigButtonCol> : null
         }
       </BigRow>
