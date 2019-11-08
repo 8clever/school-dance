@@ -241,7 +241,8 @@ export const Direction = observer((props: DirectionProps) => {
               {
                 visibleDescription ?
                 <Col className="col-md-4 ml-auto h-100 bg-white" style={{
-                  borderLeft: "1px solid black"
+                  borderLeft: "1px solid black",
+                  overflow: "auto"
                 }}>
                   <div className="p-5">
                     <MD source={element.description} />
