@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, Row, Col } from "reactstrap";
 import { observer } from "mobx-react-lite";
 import { PerformanceStore } from "../store/PerformanceStore";
 import { ImagePreview } from "./ImagePreview";
@@ -48,6 +48,7 @@ export const PerformanceEdit = observer((props: PerformanceEditProps) => {
         <FormGroup>
           <Label>Описание</Label>
           <Input 
+            rows={4}
             type="textarea" 
             value={performanceStore.item.description}
             onChange={e => {
@@ -70,19 +71,23 @@ export const PerformanceEdit = observer((props: PerformanceEditProps) => {
             }
           }/>
         </FormGroup>
-
-        {
-          performanceStore.item.images.map((i, idx) => {
-            return (
-              <ImagePreview 
-                _id={i as string}
-                onRemove={() => {
-                  performanceStore.item.images.splice(idx, 1);
-                }}
-              />            
-            )
-          })
-        }
+        
+        <Row>
+          {
+            performanceStore.item.images.map((i, idx) => {
+              return (
+                <Col key={idx} md={6}>
+                  <ImagePreview 
+                    _id={i as string}
+                    onRemove={() => {
+                      performanceStore.item.images.splice(idx, 1);
+                    }}
+                  />  
+                </Col>
+              )
+            })
+          }
+        </Row>
 
       </ModalBody>
       <ModalFooter>

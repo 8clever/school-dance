@@ -9,23 +9,24 @@ interface ImagePreviewProps {
 }
 
 export const ImagePreview = (props: ImagePreviewProps) => {
+  
   return (
-    <Row>
-      <Col md={4}>
-        <img
-          width={200} 
-          src={`${imageStore.endpoint}/${props._id}`} />
-      </Col>
-      <Col md={8} className="text-right">
+    <div className="image-preview mb-2">
+      <img 
+        width={"100%"}
+        src={`${imageStore.endpoint}/${props._id}`} 
+      />
+      <div className="absolute-container hovered text-right">
         {
           props.onRemove ?
           <Button 
+            size="sm"
             onClick={props.onRemove}
-            color="danger">
-            <Icon type="trash" /> Удалить
+            color="primary">
+            <Icon type="times" />
           </Button> : null
         }
-      </Col>
-    </Row>
+      </div>
+    </div>
   )
 }

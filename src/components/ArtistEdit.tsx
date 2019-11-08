@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 import { ArtistStore } from "../store/ArtistStore";
-import { Modal, ModalHeader, ModalBody, FormGroup, Label, Input, ModalFooter, Button } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, FormGroup, Label, Input, ModalFooter, Button, Row, Col } from "reactstrap";
 import { ImagePreview } from "./ImagePreview";
 
 interface ArtistEditProps {
@@ -52,6 +52,7 @@ export const ArtistEdit = observer((props: ArtistEditProps) => {
         <FormGroup>
           <Label>Описание</Label>
           <Input 
+            rows={4}
             type="textarea" 
             value={artistStore.item.description}
             onChange={e => {
@@ -75,19 +76,22 @@ export const ArtistEdit = observer((props: ArtistEditProps) => {
           }/>
         </FormGroup>
 
-        {
-          artistStore.item.images.map((i, idx) => {
-            return (
-              <ImagePreview 
-                key={i as string}
-                _id={i as string}
-                onRemove={() => {
-                  artistStore.item.images.splice(idx, 1);
-                }}
-              />            
-            )
-          })
-        }
+        <Row>
+          {
+            artistStore.item.images.map((i, idx) => {
+              return (
+                <Col md={6} key={idx}>
+                  <ImagePreview 
+                    _id={i as string}
+                    onRemove={() => {
+                      artistStore.item.images.splice(idx, 1);
+                    }}
+                  />
+                </Col>
+              )
+            })
+          }
+        </Row>
 
       </ModalBody>
       <ModalFooter>

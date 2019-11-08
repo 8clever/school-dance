@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, Row, Col } from "reactstrap";
 import { observer } from "mobx-react-lite";
 import { teacherStore as teacherGlobalStore, TeacherStore } from "../store/TeacherStore";
 import { ImagePreview } from "./ImagePreview";
@@ -48,6 +48,7 @@ export const TeacherEdit = observer((props: TeacherEditProps) => {
         <FormGroup>
           <Label>Описание</Label>
           <Input 
+            rows={4}
             type="textarea" 
             value={teacher.description}
             onChange={e => {
@@ -70,19 +71,22 @@ export const TeacherEdit = observer((props: TeacherEditProps) => {
           }/>
         </FormGroup>
 
-        {
-          teacherStore.teacher.images.map((i, idx) => {
-            return (
-              <ImagePreview 
-                key={idx}
-                _id={i as string}
-                onRemove={() => {
-                  teacherStore.teacher.images.splice(idx, 1);
-                }}
-              />            
-            )
-          })
-        }
+        <Row>
+          {
+            teacherStore.teacher.images.map((i, idx) => {
+              return (
+                <Col key={idx}>
+                  <ImagePreview 
+                    _id={i as string}
+                    onRemove={() => {
+                      teacherStore.teacher.images.splice(idx, 1);
+                    }}
+                  />
+                </Col>
+              )
+            })
+          }
+        </Row>
 
       </ModalBody>
       <ModalFooter>

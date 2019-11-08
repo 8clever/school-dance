@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, Row, Col } from "reactstrap";
 import { observer } from "mobx-react-lite";
 import { directionStore as directionStoreGlobal, DirectionStore } from "../store/DirectionStore";
 import { Icon } from "./Icon";
@@ -211,19 +211,22 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
           }/>
         </FormGroup>
 
-        {
-          directionStore.item.images.map((i, idx) => {
-            return (
-              <ImagePreview 
-                key={idx}
-                _id={i as string}
-                onRemove={() => {
-                  directionStore.item.images.splice(idx, 1);
-                }}
-              />            
-            )
-          })
-        }
+        <Row>
+          {
+            directionStore.item.images.map((i, idx) => {
+              return (
+                <Col>
+                  <ImagePreview 
+                    _id={i as string}
+                    onRemove={() => {
+                      directionStore.item.images.splice(idx, 1);
+                    }}
+                  />  
+                </Col>
+              )
+            })
+          }
+        </Row>
         
       </ModalBody>
       <ModalFooter>

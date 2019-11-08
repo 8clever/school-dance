@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, Row, Col } from "reactstrap";
 import { observer } from "mobx-react-lite";
 import { subscribeStore as globalStore, SubscribeStore } from "../store/SubscribeStore";
 import { ImagePreview } from "./ImagePreview";
@@ -70,19 +70,22 @@ export const SubscribeEdit = observer((props: SubscribeEditProps) => {
           }/>
         </FormGroup>
 
-        {
-          localStore.item.images.map((i, idx) => {
-            return (
-              <ImagePreview
-                key={idx} 
-                _id={i as string}
-                onRemove={() => {
-                  localStore.item.images.splice(idx, 1);
-                }}
-              />            
-            )
-          })
-        }
+        <Row>
+          {
+            localStore.item.images.map((i, idx) => {
+              return (
+                <Col key={idx} md={6}>
+                  <ImagePreview
+                    _id={i as string}
+                    onRemove={() => {
+                      localStore.item.images.splice(idx, 1);
+                    }}
+                  />
+                </Col>
+              )
+            })
+          }
+        </Row>
         
       </ModalBody>
       <ModalFooter>
