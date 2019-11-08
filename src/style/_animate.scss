@@ -42,7 +42,7 @@
   animation: marquee 30s linear infinite
 }
 
-.marquee span:hover{
+.marquee span.stop{
   animation-play-state: paused
 }
 

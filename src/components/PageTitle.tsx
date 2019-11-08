@@ -1,9 +1,6 @@
 import React from "react";
 import { BigRow, BigCol } from "./Big";
 import { FlexCol } from "./Flex";
-import { routerStore } from "../store/RouterStore";
-
-import leftSVG from "../images/icons/arrow-left.png";
 
 interface PageTitleProps {
   children: string;
@@ -15,26 +12,22 @@ export const PageTitle = (props: PageTitleProps) => {
   React.useEffect(() => {
     document.title = props.children;
   }, [props.children]);
+
+  const [ play, setPlay ] = React.useState(true);
   
   return (
     <>
       <BigRow>
-        <BigCol md={12}>
+        <BigCol md={12} onClick={() => {
+          setPlay(!play)
+        }}>
           <FlexCol justify="between" align="center">
-            <div 
-              onClick={routerStore.history.goBack}
-              style={{ 
-                padding: 5,
-                cursor: "pointer"
-              }}>
-              <img src={leftSVG} width={10} height={10} />
-            </div>
             <div 
               className={props.marquee ? "marquee" : ""}
               style={{ 
                 padding: 5 
               }}>
-                <span>
+                <span className={play ? "" : "stop"}>
                   {props.children}
                 </span>
             </div>
