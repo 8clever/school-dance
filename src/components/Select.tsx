@@ -27,7 +27,7 @@ export const Select = (props: Props) => {
         control: (styles, state) => {
           return {
             ...styles,
-            height: 45, 
+            minHeight: 45, 
             backgroundColor: 'white',
             borderRadius: 0,
             borderColor: $gray400,
