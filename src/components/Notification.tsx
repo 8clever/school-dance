@@ -23,10 +23,11 @@ export const Notification = observer(() => {
         _.map(notifStore.items, i => {
           return (
             <Alert 
+              className="bg-white"
               toggle={() => {
                 notifStore.rmNotif(i.id);
               }}
-              color="danger" 
+              color="primary" 
               key={i.id}>
               <b>{i.title}</b>
               <br/>
