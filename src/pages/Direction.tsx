@@ -153,6 +153,8 @@ export const Direction = observer((props: DirectionProps) => {
   }
 
   React.useEffect(() => {
+    setVisibleDescription(false);
+    setVisibleSubmenu(false);
     directionStore.loadItem(props.id).then(() => {
       if (!directionStore.item) return;
       setElement({
@@ -208,12 +210,14 @@ export const Direction = observer((props: DirectionProps) => {
       <HeaderCalendar 
         date={date}
         onChange={setDate}
+        leftButtonActive={visibleSubmenu}
         leftButtonText={typeMap[directionStore.item.submenu.type].name}
         leftButtonOnClick={() => setVisibleSubmenu(!visibleSubmenu)}
+        rightButtonActive={visibleDescription}
         rightButtonText={element.title}
+        rightButtonOnClick={() => setVisibleDescription(!visibleDescription)}
         format="MM.YYYY"
         step="month"
-        rightButtonOnClick={() => setVisibleDescription(!visibleDescription)}
       />
 
       {

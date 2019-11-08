@@ -1,5 +1,5 @@
 import React from "react";
-import { BigRow, BigCol, BigButtonCol } from "./Big";
+import { BigRow, BigCol, BigButtonColMin } from "./Big";
 import { FlexCol } from "./Flex";
 import moment from "moment";
 
@@ -9,8 +9,10 @@ import rightSVG from "../images/icons/arrow-right.png";
 interface HeaderCalendarProps {
   date: Date;
   onChange: (date: Date) => void;
+  leftButtonActive?: boolean;
   leftButtonText: string;
   leftButtonOnClick?: () => void;
+  rightButtonActive?: boolean;
   rightButtonText: string;
   rightButtonOnClick?: () => void;
   format: "MM.YYYY" | "DD.MM.YYYY";
@@ -21,22 +23,14 @@ export const HeaderCalendar = (props: HeaderCalendarProps) => {
 
   return (
     <BigRow>
-        <BigCol
-          xs={6} 
-          style={{
-            cursor: "pointer"
-          }}
+        <BigButtonColMin
+          selected={props.leftButtonActive}
+          xs={6}
+          md={4}
+          padding={"15px 0"} 
           onClick={props.leftButtonOnClick}>
-          <FlexCol justify="between" align="center">
-            <div style={{ padding: 10 }}>
-              <img src={rightSVG} width={15} height={15} />
-            </div>
-            <div style={{ padding: 10 }}>
-              {props.leftButtonText}
-            </div>
-            <div></div>
-          </FlexCol>
-        </BigCol>
+          {props.leftButtonText}
+        </BigButtonColMin>
         <BigCol xs={6}>
           <FlexCol align="center" justify="between">
             <div 
@@ -65,13 +59,16 @@ export const HeaderCalendar = (props: HeaderCalendarProps) => {
             </div>
           </FlexCol>
         </BigCol>
-        <BigButtonCol 
+        <BigButtonColMin 
+          selected={props.rightButtonActive}
+          xs={6}
+          md={4}
           onClick={props.rightButtonOnClick}
           className="d-none d-md-block" 
           padding={"15px 0"} 
         >
           {props.rightButtonText}
-        </BigButtonCol>
+        </BigButtonColMin>
       </BigRow>
   )
 }
