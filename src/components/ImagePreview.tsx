@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Button } from "reactstrap";
+import { Button } from "reactstrap";
 import { imageStore } from "../store/ImageStore";
 import { Icon } from "./Icon";
 

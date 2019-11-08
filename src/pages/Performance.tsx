@@ -1,12 +1,8 @@
 import React from "react";import { performanceStore } from "../store/PerformanceStore";
-import { Base, BigRow, BigCol, BigButtonCol, Icon, BigButtonColMin } from "../components";
+import { Base, BigRow, BigButtonCol, Icon } from "../components";
 import { observer } from "mobx-react-lite";
-import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
-import { routerStore } from "../store/RouterStore";
 import { PerformanceEdit } from "../components/PerformanceEdit";
-import { Carousel } from "../components/Carousel";
-import { Row, Col } from "reactstrap";
 
 interface PerformanceProps {
   id?: string;
