@@ -18,6 +18,7 @@ class NotifStore {
       id: this.id,
       ...notif
     }
+    this.items = {};
     this.items[this.id] = i;
 
     if (notif.duration) {
