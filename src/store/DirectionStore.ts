@@ -34,16 +34,11 @@ export class DirectionStore extends Api<Direction> {
     }
     this.newImages = [];
   }
-
-  remove = async (_id: string) => {
-    this.removeItem({ _id });
-  }
 }
 
 decorate(DirectionStore, {
   save: action,
   create: action,
-  remove: action,
   newImages: observable
 });
 

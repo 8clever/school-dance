@@ -9,6 +9,7 @@ import { artistStore } from "../store/ArtistStore";
 import { performanceStore } from "../store/PerformanceStore";
 import { teacherStore } from "../store/TeacherStore";
 import _ from "lodash";
+import { toJS } from "mobx";
 
 interface DirectionEditProps {
   _id?: string;
@@ -68,8 +69,13 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
       break;
   }
 
+  const checkedAll = directionStore.item.submenu.items.length === subtypeOptions.length;
+
   return (
-    <Modal toggle={props.toggle} isOpen={props.visible}>
+    <Modal 
+      size="xl"
+      toggle={props.toggle} 
+      isOpen={props.visible}>
       <ModalHeader>
         {
           directionStore.item._id ? 
@@ -78,156 +84,189 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
         }
       </ModalHeader>
       <ModalBody>
-        <FormGroup>
-          <Label>Наименование</Label>
-          <Input 
-            placeholder={"Текст..."}
-            value={directionStore.item.name}
-            onChange={e => {
-              directionStore.item.name = e.target.value;
-            }}
-          />
-        </FormGroup>
+        <Row>
+          <Col md={6}>
+            <FormGroup>
+              <Label>Наименование</Label>
+              <Input 
+                placeholder={"Текст..."}
+                value={directionStore.item.name}
+                onChange={e => {
+                  directionStore.item.name = e.target.value;
+                }}
+              />
+            </FormGroup>
 
-        <FormGroup>
-          <Label>Лейбл</Label>
-          <Input 
-            placeholder={"Текст..."}
-            value={directionStore.item.shortName}
-            onChange={e => {
-              directionStore.item.shortName = e.target.value;
-            }}
-          />
-        </FormGroup>
+            <FormGroup>
+              <Label>Краткое наименование</Label>
+              <Input 
+                placeholder={"Текст..."}
+                value={directionStore.item.shortName}
+                onChange={e => {
+                  const v = e.target.value;
+                  if (v.length > 5) return;
+                  directionStore.item.shortName = v;
+                }}
+              />
+            </FormGroup>
 
-        <FormGroup>
-          <Label>Описание</Label>
-          <Input 
-            type="textarea"
-            rows={4}
-            placeholder={"Текст..."}
-            value={directionStore.item.desc}
-            onChange={e => {
-              directionStore.item.desc = e.target.value;
-            }}
-          />
-        </FormGroup>
+            <FormGroup>
+              <Label>Описание</Label>
+              <Input 
+                type="textarea"
+                rows={4}
+                placeholder={"Текст..."}
+                value={directionStore.item.desc}
+                onChange={e => {
+                  directionStore.item.desc = e.target.value;
+                }}
+              />
+            </FormGroup>
 
-        <FormGroup>
-          <Label>
-            <a 
-              target="_blank" 
-              href="https://crontab.guru/#00_12-14_*_*_1,3,5">
-              Расписание*
-            </a>
-          </Label>
-          <div>
-            {
-              directionStore.item.schedule.map((s, idx) => {
-                return (
-                  <InputGroup 
-                    key={idx}
-                    className="mb-2">
-                    <Input 
-                      value={s}
-                      onChange={e => {
-                        directionStore.item.schedule[idx] = e.target.value;
-                      }}
-                    />
-                    <InputGroupAddon
-                      addonType={"append"}
-                    >
-                      <Button 
-                        onClick={() => {
-                          directionStore.item.schedule.splice(idx, 1);
-                        }}
-                        size="sm">
-                        <Icon 
-                          className="text-danger"
-                          type="trash" 
-                        />
-                      </Button>
-                    </InputGroupAddon>
-                  </InputGroup>
-                )
-              })
-            }
-          </div>
-          <Button 
-            onClick={() => {
-              directionStore.item.schedule.push("00 12-14 * * 1,3,5")
-            }}
-            color="primary"
-            size="sm">
-            <Icon type="plus" />
-          </Button>
-        </FormGroup>
+            <FormGroup>
+              <Label>Фотографии</Label>
+              <Input 
+                type="file" 
+                accept={".jpg, .png, .jpeg"} 
+                multiple
+                onChange={(e) => {
+                  Object.keys(e.target.files).forEach(key => {
+                    const file = e.target.files[key];
+                    if (file) directionStore.newImages.push(file);
+                  });
+                }
+              }/>
+            </FormGroup>
 
-        <FormGroup>
-          <Label>Тип</Label>
-          <Input 
-            onChange={(e) => {
-              directionStore.item.submenu.type = e.target.value as SubmenuType;
-              directionStore.item.submenu.items = [];
-            }}
-            value={directionStore.item.submenu.type} 
-            type="select">
-            <option value="teachers">Педагоги</option>
-            <option value="artists">Артисты</option>
-            <option value="performance">Спектакли</option>
-          </Input>
-        </FormGroup>
-
-        <FormGroup>
-          <select 
-            className="form-control"
-            multiple={true}
-            onChange={(e) => {
-              directionStore.item.submenu.items = _.map(e.target.selectedOptions, (o => o.value));
-            }}
-            value={directionStore.item.submenu.items as string[]}>
+            <Row>
               {
-                subtypeOptions.map((o, idx) => {
+                directionStore.item.images.map((i, idx) => {
                   return (
-                    <option key={idx} value={o.value}>{o.label}</option>
+                    <Col md={6}>
+                      <ImagePreview 
+                        _id={i as string}
+                        onRemove={() => {
+                          directionStore.item.images.splice(idx, 1);
+                        }}
+                      />  
+                    </Col>
                   )
                 })
               }
-          </select>
-        </FormGroup>
+            </Row>
+          </Col>
+          <Col md={6}>
+            <FormGroup>
+              <Label>
+                <a 
+                  target="_blank" 
+                  href="https://crontab.guru/#00_12-14_*_*_1,3,5">
+                  Расписание*
+                </a>
+              </Label>
+              <div>
+                {
+                  directionStore.item.schedule.map((s, idx) => {
+                    return (
+                      <InputGroup 
+                        key={idx}
+                        className="mb-2">
+                        <Input 
+                          value={s}
+                          onChange={e => {
+                            directionStore.item.schedule[idx] = e.target.value;
+                          }}
+                        />
+                        <InputGroupAddon
+                          addonType={"append"}
+                        >
+                          <Button 
+                            onClick={() => {
+                              directionStore.item.schedule.splice(idx, 1);
+                            }}
+                            size="sm">
+                            <Icon 
+                              className="text-danger"
+                              type="trash" 
+                            />
+                          </Button>
+                        </InputGroupAddon>
+                      </InputGroup>
+                    )
+                  })
+                }
+              </div>
+              <Button 
+                onClick={() => {
+                  directionStore.item.schedule.push("00 12-14 * * 1,3,5")
+                }}
+                color="primary"
+                size="sm">
+                <Icon type="plus" />
+              </Button>
+            </FormGroup>
 
-        <FormGroup>
-          <Label>Фотографии</Label>
-          <Input 
-            type="file" 
-            accept={".jpg, .png, .jpeg"} 
-            multiple
-            onChange={(e) => {
-              Object.keys(e.target.files).forEach(key => {
-                const file = e.target.files[key];
-                if (file) directionStore.newImages.push(file);
-              });
-            }
-          }/>
-        </FormGroup>
+            <FormGroup>
+              <Label>Выбор списка</Label>
+              <Input 
+                onChange={(e) => {
+                  directionStore.item.submenu.type = e.target.value as SubmenuType;
+                  directionStore.item.submenu.items = [];
+                }}
+                value={directionStore.item.submenu.type} 
+                type="select">
+                <option value="teachers">Педагоги</option>
+                <option value="artists">Артисты</option>
+                <option value="performance">Спектакли</option>
+              </Input>
+            </FormGroup>
 
-        <Row>
-          {
-            directionStore.item.images.map((i, idx) => {
-              return (
-                <Col>
-                  <ImagePreview 
-                    _id={i as string}
-                    onRemove={() => {
-                      directionStore.item.images.splice(idx, 1);
+            <FormGroup>
+              <Label>Показать/скрыть в списке</Label>
+
+              <FormGroup check>
+                <Label check>
+                  <Input 
+                    onChange={e => {
+                      if (checkedAll) directionStore.item.submenu.items = [];
+                      else directionStore.item.submenu.items = subtypeOptions.map(o => o.value);
                     }}
-                  />  
-                </Col>
-              )
-            })
-          }
+                    checked={checkedAll}
+                    type="checkbox" 
+                  />
+                  {' '}
+                  ВСЕ
+                </Label>
+              </FormGroup>
+
+              {
+                subtypeOptions.map((o) => {
+                  const idx = _.findIndex(directionStore.item.submenu.items, i => i === o.value);
+                  const checked = idx > -1;
+
+                  return (
+                    <FormGroup 
+                      key={o.value}
+                      check>
+                      <Label check>
+                        <Input 
+                          onChange={e => {
+                            if (checked) directionStore.item.submenu.items.splice(idx, 1);
+                            else directionStore.item.submenu.items.push(o.value);
+                          }}
+                          checked={checked}
+                          type="checkbox" 
+                        />
+                        {' '}
+                        {o.label}
+                      </Label>
+                    </FormGroup>
+                  )
+                })
+              }
+            </FormGroup>
+          </Col>
         </Row>
-        
       </ModalBody>
       <ModalFooter>
         <Button color={"secondary"} onClick={props.toggle}>

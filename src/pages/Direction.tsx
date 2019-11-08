@@ -67,6 +67,7 @@ const typeMap = {
 
 export const DirectionMenu = observer(() => {
   const [ directionEditVisible, setDirectionEditVisible ] = React.useState(false);
+  const [ id, setId ] = React.useState("");
 
   React.useEffect(() => {
     directionStore.loadItems();
@@ -87,6 +88,30 @@ export const DirectionMenu = observer(() => {
                 selected={d._id === (directionStore.item && directionStore.item._id)}           
                 onClick={() => routerStore.push("/directions/" + d._id)}>
                 {d.name}
+
+                {
+                  userStore.isAdmin() ?
+                  <span className="hovered">
+                    <Icon 
+                      onClick={e => {
+                        e.stopPropagation();
+                        setId(d._id as string);
+                        setDirectionEditVisible(true);
+                      }}
+                      type={"pencil-alt"} 
+                      className="ml-3" 
+                    />
+                    <Icon 
+                      onClick={async e => {
+                        e.stopPropagation();
+                        await directionStore.removeItemByID(d._id as string);
+                        await directionStore.loadItems();
+                      }}
+                      type={"trash"} 
+                      className="ml-3" 
+                    />
+                  </span> : null
+                }
               </BigButtonCol>
             )
           })
@@ -94,13 +119,18 @@ export const DirectionMenu = observer(() => {
         {
           userStore.isAdmin() ?
           <BigButtonCol 
-            onClick={() => setDirectionEditVisible(true)}>
-            <Icon type="plus" /> ДОБАВИТЬ НАПРАВЛЕНИЕ
+            onClick={() => {
+              setId("")
+              setDirectionEditVisible(true)
+            }}>
+            <Icon type="plus" className="mr-3" /> 
+            ДОБАВИТЬ НАПРАВЛЕНИЕ
           </BigButtonCol> : null
         }      
       </BigRow>
 
       <DirectionEdit 
+        _id={id}
         visible={directionEditVisible}
         toggle={() => setDirectionEditVisible(!directionEditVisible)}
       />
@@ -110,7 +140,6 @@ export const DirectionMenu = observer(() => {
 
 export const Direction = observer((props: DirectionProps) => {
 
-  const [ visibleDirection, setVisibleDirection ] = React.useState(false);
   const [ date, setDate ] = React.useState(new Date());
   const [ visibleDescription, setVisibleDescription ] = React.useState(false);
   const [ visibleSubmenu, setVisibleSubmenu ] = React.useState(false);
@@ -231,37 +260,6 @@ export const Direction = observer((props: DirectionProps) => {
       </BigRow>
 
       <DirectionMenu />
-
-      <BigRow 
-        style={{ fontFamily: "Styled Font" }}
-        maxRowItems={3}>
-
-        {
-          userStore.isAdmin() ?
-          <>
-            <BigButtonCol onClick={async () => {
-              setVisibleDirection(true);
-            }}>
-              <Icon type="pencil-alt" /> Редактировать направление
-            </BigButtonCol>
-            <BigButtonCol onClick={async () => {
-              await directionStore.remove(props.id);
-              routerStore.push("/");
-            }}>
-              <Icon type="trash" /> Удалить направление
-            </BigButtonCol>
-          </>
-          : null
-        }
-
-      </BigRow>
-
-      <DirectionEdit 
-        visible={visibleDirection}
-        toggle={() => setVisibleDirection(!visibleDirection)}
-        _id={props.id}
-      />
- 
     </Base>
   )
 })
