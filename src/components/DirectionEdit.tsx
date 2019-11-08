@@ -8,8 +8,8 @@ import { SubmenuType } from "../../server/models/Direction";
 import { artistStore } from "../store/ArtistStore";
 import { performanceStore } from "../store/PerformanceStore";
 import { teacherStore } from "../store/TeacherStore";
-import Select from "react-select";
 import _ from "lodash";
+import { Select } from "./Select";
 
 interface DirectionEditProps {
   _id?: string;
@@ -34,7 +34,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
 
   React.useEffect(() => {
     if (!props.visible) return;
-    
+
     artistStore.loadItems();
     performanceStore.loadItems();
     teacherStore.loadItems();
@@ -230,6 +230,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
               <Label>Отображать в списке</Label>
               
               <Select
+                placeholder="Выбор..."
                 isMulti
                 onChange={(options: SubtypeOption[]) => {
                   options = options || [];
