@@ -8,12 +8,18 @@ import { SubmenuType } from "../../server/models/Direction";
 import { artistStore } from "../store/ArtistStore";
 import { performanceStore } from "../store/PerformanceStore";
 import { teacherStore } from "../store/TeacherStore";
+import Select from "react-select";
 import _ from "lodash";
 
 interface DirectionEditProps {
   _id?: string;
   visible: boolean;
   toggle: () => void;
+}
+
+interface SubtypeOption {
+  label: string;
+  value: string;
 }
 
 const directionStore = new DirectionStore();
@@ -27,10 +33,12 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
   }, [ props.visible, props._id ]);
 
   React.useEffect(() => {
+    if (!props.visible) return;
+    
     artistStore.loadItems();
     performanceStore.loadItems();
     teacherStore.loadItems();
-  }, [])
+  }, [props.visible])
 
   if (!directionStore.item) return null;
 
@@ -39,7 +47,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
     items: []
   }
 
-  const subtypeOptions: Array<{ value: string, label: string }> = [];
+  const subtypeOptions: SubtypeOption[] = [];
 
   switch(directionStore.item.submenu.type) {
     case "teachers" :
@@ -67,8 +75,6 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
       });
       break;
   }
-
-  const checkedAll = directionStore.item.submenu.items.length === subtypeOptions.length;
 
   return (
     <Modal 
@@ -141,7 +147,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
               {
                 directionStore.item.images.map((i, idx) => {
                   return (
-                    <Col md={6}>
+                    <Col md={6} key={idx}>
                       <ImagePreview 
                         _id={i as string}
                         onRemove={() => {
@@ -222,47 +228,20 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
 
             <FormGroup>
               <Label>Отображать в списке</Label>
-
-              <FormGroup check>
-                <Label check>
-                  <Input 
-                    onChange={e => {
-                      if (checkedAll) directionStore.item.submenu.items = [];
-                      else directionStore.item.submenu.items = subtypeOptions.map(o => o.value);
-                    }}
-                    checked={checkedAll}
-                    type="checkbox" 
-                  />
-                  {' '}
-                  ВСЕ
-                </Label>
-              </FormGroup>
-
-              {
-                subtypeOptions.map((o) => {
-                  const idx = _.findIndex(directionStore.item.submenu.items, i => i === o.value);
-                  const checked = idx > -1;
-
-                  return (
-                    <FormGroup 
-                      key={o.value}
-                      check>
-                      <Label check>
-                        <Input 
-                          onChange={e => {
-                            if (checked) directionStore.item.submenu.items.splice(idx, 1);
-                            else directionStore.item.submenu.items.push(o.value);
-                          }}
-                          checked={checked}
-                          type="checkbox" 
-                        />
-                        {' '}
-                        {o.label}
-                      </Label>
-                    </FormGroup>
-                  )
-                })
-              }
+              
+              <Select
+                isMulti
+                onChange={(options: SubtypeOption[]) => {
+                  options = options || [];
+                  directionStore.item.submenu.items = options.map(o => o.value);
+                }}
+                value={directionStore.item.submenu.items.map((_id) => {
+                  const item = _.find(subtypeOptions, _.matches({ value: _id }));
+                  return item;
+                })}
+                key={directionStore.item.submenu.type}
+                options={subtypeOptions}
+              />
             </FormGroup>
           </Col>
         </Row>
