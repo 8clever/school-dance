@@ -9,7 +9,6 @@ import { artistStore } from "../store/ArtistStore";
 import { performanceStore } from "../store/PerformanceStore";
 import { teacherStore } from "../store/TeacherStore";
 import _ from "lodash";
-import { toJS } from "mobx";
 
 interface DirectionEditProps {
   _id?: string;
@@ -222,7 +221,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
             </FormGroup>
 
             <FormGroup>
-              <Label>Показать/скрыть в списке</Label>
+              <Label>Отображать в списке</Label>
 
               <FormGroup check>
                 <Label check>
