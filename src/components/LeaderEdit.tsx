@@ -15,13 +15,13 @@ const leaderStore = new LeaderStore();
 export const LeaderEdit = observer((props: TeacherEditProps) => {
 
   React.useEffect(() => {
-    leaderStore.createLeader();
+    leaderStore.create();
     if (!(props.visible && props._id)) return;
 
-    leaderStore.loadLeader(props._id);
+    leaderStore.loadItem(props._id);
   }, [props.visible, props._id])
 
-  const element = leaderStore.leader;
+  const element = leaderStore.item;
   if (!element) return null;
 
   return (
@@ -71,13 +71,13 @@ export const LeaderEdit = observer((props: TeacherEditProps) => {
         </FormGroup>
 
         {
-          leaderStore.leader.images.map((i, idx) => {
+          element.images.map((i, idx) => {
             return (
               <ImagePreview 
                 key={idx}
                 _id={i as string}
                 onRemove={() => {
-                  leaderStore.leader.images.splice(idx, 1);
+                  element.images.splice(idx, 1);
                 }}
               />            
             )
@@ -90,13 +90,13 @@ export const LeaderEdit = observer((props: TeacherEditProps) => {
           Отмена
         </Button>
         <Button color={"primary"} onClick={async () => {
-          await leaderStore.saveLeader();
+          await leaderStore.save();
 
           if (props._id) {
-            await leaderGlobalStore.loadLeader(props._id);
+            await leaderGlobalStore.loadItem(props._id);
           }
 
-          await leaderGlobalStore.loadLeaderList({});
+          await leaderGlobalStore.loadItems({});
           props.toggle();
         }}>
           Сохранить

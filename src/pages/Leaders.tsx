@@ -7,7 +7,7 @@ import _ from "lodash";
 import { routerStore } from "../store/RouterStore";
 import { toJS } from "mobx";
 import { imageStore } from "../store/ImageStore";
-import { Col, Button } from "reactstrap";
+import { Col } from "reactstrap";
 import ReactMarkdown from "react-markdown";
 import { LeaderEdit } from "../components/LeaderEdit";
 import { useResizeObserver } from "../effects/useResizeObserver";
@@ -23,21 +23,20 @@ const overflowY = "auto";
 
 export const Leaders = observer((props: LeaderProps) => {
 
-  const [ addVisible, setAddVisible ] = React.useState(false);
   const [ editVisible, setEditVisible ] = React.useState(false);
-  const [ refresh, setRefresh ] = React.useState(0);
+  const [ id, setId ] = React.useState("");
   const [ width, height, refCallback ] = useResizeObserver();
 
   React.useEffect(() => {
-    leaderStore.loadLeaderList({}).then(() => {
-      const t = _.find(leaderStore.leaderList, _.matches({ _id: props.id }));
-      const list = toJS(leaderStore.leaderList);
-      leaderStore.leader = t || list[0];
+    leaderStore.loadItems({}).then(() => {
+      const t = _.find(leaderStore.itemList, _.matches({ _id: props.id }));
+      const list = toJS(leaderStore.itemList);
+      leaderStore.item = t || list[0];
     });
-  }, [props.id, refresh]);
+  }, [props.id]);
 
-  const element = leaderStore.leader;
-  const list = leaderStore.leaderList;
+  const element = leaderStore.item;
+  const list = leaderStore.itemList;
 
   return (
     <Base>
@@ -59,6 +58,30 @@ export const Leaders = observer((props: LeaderProps) => {
                   }}
                   key={el._id as string}>
                   {el.fullName}
+                  {
+                    userStore.isAdmin() ?
+                    <span className="hovered">
+                      <Icon
+                        onClick={e => {
+                          e.stopPropagation();
+                          setId(el._id as string);
+                          setEditVisible(true)
+                        }}
+                        type="pencil-alt" 
+                        className="ml-3"
+                      />
+                      <Icon
+                        onClick={async e => {
+                          e.stopPropagation();
+                          await leaderStore.removeItemByID(el._id as string)
+                          await leaderStore.loadItems();
+                          routerStore.push("/leaders");
+                        }}
+                        type="trash" 
+                        className="ml-3"
+                      />
+                    </span> : null
+                  }
                 </BigButtonColMin>
               )
             })
@@ -67,8 +90,15 @@ export const Leaders = observer((props: LeaderProps) => {
             userStore.isAdmin() ?
             <BigButtonColMin 
               md={12} 
-              onClick={() => setAddVisible(true)}>
-              <Icon type="plus" /> Руководитель
+              onClick={() => {
+                setId("");
+                setEditVisible(true);
+              }}>
+              <Icon 
+                className="mr-3"
+                type="plus" 
+              /> 
+              Руководитель
             </BigButtonColMin> :
             null
           }
@@ -97,30 +127,6 @@ export const Leaders = observer((props: LeaderProps) => {
           {
             element && element._id ?
             <div style={{ padding: 30 }}>
-
-              {
-                userStore.isAdmin() ?
-                <div className="text-right mb-3">
-                  <Button 
-                    size="sm"
-                    onClick={() => {
-                    setEditVisible(true)
-                  }}>
-                    <Icon type="pencil-alt" /> Редактировать
-                  </Button>
-                  <Button 
-                    color="primary"
-                    size="sm"
-                    onClick={async () => { 
-                      await leaderStore.rmLeader(element._id as string)
-                      routerStore.push("/leaders");
-                      setRefresh(refresh + 1);
-                    }}>
-                    <Icon type="trash" /> Удалить
-                  </Button>
-                </div> : null
-              }
-
               <h2>О Руководителе</h2>
               <ReactMarkdown source={element.description} />
             </div> : null
@@ -130,18 +136,10 @@ export const Leaders = observer((props: LeaderProps) => {
       
       <StudioMenu active="leaders" />
 
-      {
-        element && element._id ?
-        <LeaderEdit 
-          visible={editVisible}
-          toggle={() => setEditVisible(!editVisible)}
-          _id={element._id as string}
-        /> : null
-      }
-
       <LeaderEdit 
-        visible={addVisible}
-        toggle={() => setAddVisible(!addVisible)}
+        _id={id}
+        visible={editVisible}
+        toggle={() => setEditVisible(!editVisible)}
       />
 
     </Base>
