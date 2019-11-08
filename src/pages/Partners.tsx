@@ -57,6 +57,9 @@ const PartnerButton = (props: PartnerButtonProps) => {
         {
           isHover ?
           <BigCol 
+            onClick={() => {
+              window.location.href = props.link;
+            }}
             onMouseLeave={() => setHover(false)}>
             <div 
               style={{
