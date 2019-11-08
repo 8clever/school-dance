@@ -8,7 +8,7 @@ import { TeacherEdit } from "../components/TeacherEdit";
 import { routerStore } from "../store/RouterStore";
 import { toJS } from "mobx";
 import { imageStore } from "../store/ImageStore";
-import { Col, Button } from "reactstrap";
+import { Col } from "reactstrap";
 import ReactMarkdown from "react-markdown";
 import { useResizeObserver } from "../effects/useResizeObserver";
 import { Image } from "../components/Carousel";
@@ -23,20 +23,19 @@ const overflowY = "auto";
 
 export const Teacher = observer((props: TeacherProps) => {
 
-  const [ teacherAddVisible, setTeacherAddVisible ] = React.useState(false);
   const [ teacherEditVisible, setTeacherEditVisible ] = React.useState(false);
-  const [ refresh, setRefresh ] = React.useState(0);
+  const [ id, setId ] = React.useState("");
   const [ width, height, refCallback ] = useResizeObserver();
 
   React.useEffect(() => {
-    teacherStore.loadTeacherList({}).then(() => {
-      const t = _.find(teacherStore.teacherList, _.matches({ _id: props.id }));
-      const list = toJS(teacherStore.teacherList);
-      teacherStore.teacher = t || list[0];
+    teacherStore.loadItems({}).then(() => {
+      const t = _.find(teacherStore.itemList, _.matches({ _id: props.id }));
+      const list = toJS(teacherStore.itemList);
+      teacherStore.item = t || list[0];
     });
-  }, [props.id, refresh]);
+  }, [props.id]);
 
-  const teacher = teacherStore.teacher;
+  const teacher = teacherStore.item;
 
   return (
     <Base>
@@ -49,7 +48,7 @@ export const Teacher = observer((props: TeacherProps) => {
             overflowY 
           }}>
           {
-            teacherStore.teacherList.map(t => {
+            teacherStore.itemList.map(t => {
               return (
                 <BigButtonColMin 
                   md={12}
@@ -58,6 +57,31 @@ export const Teacher = observer((props: TeacherProps) => {
                   }}
                   key={t._id as string}>
                   {t.fullName}
+
+                  {
+                    userStore.isAdmin() ?
+                    <span className="hovered">
+                      <Icon 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setId(t._id as string);
+                          setTeacherEditVisible(true)
+                        }}
+                        className="ml-3"
+                        type="pencil-alt"
+                      />
+                      <Icon 
+                        onClick={async (e) => {
+                          e.stopPropagation();
+                          await teacherStore.removeItemByID(teacher._id as string)
+                          await teacherStore.loadItems();
+                          routerStore.push("/teachers");
+                        }}
+                        className="ml-3"
+                        type="trash"
+                      />
+                    </span> : null
+                  }
                 </BigButtonColMin>
               )
             })
@@ -66,8 +90,15 @@ export const Teacher = observer((props: TeacherProps) => {
             userStore.isAdmin() ?
             <BigButtonColMin 
               md={12} 
-              onClick={() => setTeacherAddVisible(true)}>
-              <Icon type="plus" /> Педагог
+              onClick={() => {
+                setId("");
+                setTeacherEditVisible(true);
+              }}>
+              <Icon 
+                className="mr-3"
+                type="plus" 
+              /> 
+              Педагог
             </BigButtonColMin> :
             null
           }
@@ -96,30 +127,6 @@ export const Teacher = observer((props: TeacherProps) => {
           {
             teacher && teacher._id ?
             <div style={{ padding: 30 }}>
-
-              {
-                userStore.isAdmin() ?
-                <div className="text-right mb-3">
-                  <Button 
-                    size="sm"
-                    onClick={() => {
-                    setTeacherEditVisible(true)
-                  }}>
-                    <Icon type="pencil-alt" /> Редактировать
-                  </Button>
-                  <Button 
-                    color="primary"
-                    size="sm"
-                    onClick={async () => { 
-                      await teacherStore.rmTeacher(teacher._id as string)
-                      routerStore.push("/teachers");
-                      setRefresh(refresh + 1);
-                    }}>
-                    <Icon type="trash" /> Удалить
-                  </Button>
-                </div> : null
-              }
-
               <h2>О Педагоге</h2>
               <ReactMarkdown source={teacher.description} />
             </div> : null
@@ -129,18 +136,10 @@ export const Teacher = observer((props: TeacherProps) => {
 
       <StudioMenu active="teachers" />
       
-      {
-        teacher && teacher._id ?
-        <TeacherEdit 
-          visible={teacherEditVisible}
-          toggle={() => setTeacherEditVisible(!teacherEditVisible)}
-          _id={teacher._id as string}
-        /> : null
-      }
-
       <TeacherEdit 
-        visible={teacherAddVisible}
-        toggle={() => setTeacherAddVisible(!teacherAddVisible)}
+        _id={id}
+        visible={teacherEditVisible}
+        toggle={() => setTeacherEditVisible(!teacherEditVisible)}
       />
 
     </Base>

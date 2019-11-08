@@ -1,19 +1,16 @@
 import { toJS, decorate, observable, action } from "mobx";
 import { Api } from "./Api";
 import { Teacher } from "../../server/models/Teacher";
-import { RootQuerySelector } from "mongodb";
 import { imageStore } from "./ImageStore";
 
 export class TeacherStore extends Api<Teacher> {
 
-  teacher?: Teacher;
-  teacherList: Teacher[] = [];
   newImages: Blob[] = [];
 
   endpoint = "/api/v1/teacher/";
 
-  createTeacher = async () => {
-    this.teacher = {
+  create = async () => {
+    this.item = {
       fullName: "",
       description: "",
       images: []
@@ -21,18 +18,8 @@ export class TeacherStore extends Api<Teacher> {
     this.newImages = [];
   }
 
-  loadTeacher = async (_id: string) => {
-    const data = await this.getItems({ _id });
-    this.teacher = data.list[0];
-  }
-
-  loadTeacherList = async (query: RootQuerySelector<Performance>) => {
-    const data = await this.getItems(query);
-    this.teacherList = data.list;
-  }
-
-  saveTeacher = async () => {
-    const teacher = toJS(this.teacher);
+  save = async () => {
+    const teacher = toJS(this.item);
     if (!teacher) return;
 
     for(const image of this.newImages) {
@@ -43,18 +30,12 @@ export class TeacherStore extends Api<Teacher> {
     this.newImages = [];
     return this.editItem(teacher);;
   }
-
-  rmTeacher = async (_id: string) => {
-    return this.removeItem({ _id });
-  }
 }
 
 decorate(TeacherStore, {
-  teacher: observable,
-  teacherList: observable,
-  createTeacher: action,
-  loadTeacher: action,
-  loadTeacherList: action
+  newImages: observable,
+  create: action,
+  save: action
 });
 
 export const teacherStore = new TeacherStore();

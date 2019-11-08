@@ -15,13 +15,13 @@ const teacherStore = new TeacherStore();
 export const TeacherEdit = observer((props: TeacherEditProps) => {
 
   React.useEffect(() => {
-    teacherStore.createTeacher();
+    teacherStore.create();
     if (!(props.visible && props._id)) return;
 
-    teacherStore.loadTeacher(props._id);
+    teacherStore.loadItem(props._id);
   }, [props.visible, props._id])
 
-  const teacher = teacherStore.teacher;
+  const teacher = teacherStore.item;
   if (!teacher) return null;
 
   return (
@@ -73,13 +73,13 @@ export const TeacherEdit = observer((props: TeacherEditProps) => {
 
         <Row>
           {
-            teacherStore.teacher.images.map((i, idx) => {
+            teacherStore.item.images.map((i, idx) => {
               return (
                 <Col key={idx}>
                   <ImagePreview 
                     _id={i as string}
                     onRemove={() => {
-                      teacherStore.teacher.images.splice(idx, 1);
+                      teacherStore.item.images.splice(idx, 1);
                     }}
                   />
                 </Col>
@@ -94,13 +94,13 @@ export const TeacherEdit = observer((props: TeacherEditProps) => {
           Отмена
         </Button>
         <Button color={"primary"} onClick={async () => {
-          await teacherStore.saveTeacher();
+          await teacherStore.save();
 
           if (props._id) {
-            await teacherGlobalStore.loadTeacher(props._id);
+            await teacherGlobalStore.loadItem(props._id);
           }
 
-          await teacherGlobalStore.loadTeacherList({});
+          await teacherGlobalStore.loadItems({});
           props.toggle();
         }}>
           Сохранить
