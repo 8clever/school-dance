@@ -55,7 +55,7 @@ export class Api<T> {
   }
 
   removeItemByID = async (_id: string) => {
-    this.removeItem({ _id });
+    return this.removeItem({ _id });
   }
 
   fetch = async (apiName: string, method: Method, body?: any) => {

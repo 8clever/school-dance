@@ -29,13 +29,13 @@ export const Teacher = observer((props: TeacherProps) => {
 
   React.useEffect(() => {
     teacherStore.loadItems({}).then(() => {
-      const t = _.find(teacherStore.itemList, _.matches({ _id: props.id }));
       const list = toJS(teacherStore.itemList);
+      const t = _.find(list, _.matches({ _id: props.id }));
       teacherStore.item = t || list[0];
     });
   }, [props.id]);
 
-  const teacher = teacherStore.item;
+  const { item: teacher, itemList } = teacherStore;
 
   return (
     <Base>
@@ -48,7 +48,7 @@ export const Teacher = observer((props: TeacherProps) => {
             overflowY 
           }}>
           {
-            teacherStore.itemList.map(t => {
+            itemList.map(t => {
               return (
                 <BigButtonColMin 
                   md={12}
@@ -73,7 +73,7 @@ export const Teacher = observer((props: TeacherProps) => {
                       <Icon 
                         onClick={async (e) => {
                           e.stopPropagation();
-                          await teacherStore.removeItemByID(teacher._id as string)
+                          await teacherStore.removeItemByID(t._id as string)
                           await teacherStore.loadItems();
                           routerStore.push("/teachers");
                         }}
