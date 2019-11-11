@@ -1,6 +1,6 @@
 import React from "react";
 import { CalendarInnerProps, getWeekDays, LOCALE, WeekDayItem, getTimes, findSchedulesByTime, CALENDAR_DAY } from "./CalendarHelpers";
-import moment from "moment";
+import moment, { Moment } from "moment";
 import { BigRow, BigButtonColMin } from "./Big";
 import { Col } from "reactstrap";
 import { FlexCol } from "./Flex";
@@ -9,33 +9,27 @@ import { Wrapper as DayWrapper } from "./Schedules";
 import { directionStore } from "../store/DirectionStore";
 import _ from "lodash";
 import { routerStore } from "../store/RouterStore";
-import { eventStore } from "../store/EventStore";
 import { observer } from "mobx-react-lite";
 
 import leftSVG from "../images/icons/arrow-left.png";
 import rightSVG from "../images/icons/arrow-right.png";
 
-export const CalendarMonth = observer((props: CalendarInnerProps) => {
-  const { date, setDate } = props;
-  const startDate = moment(date).startOf("month").startOf("isoWeek");
-  const endDate = moment(date).endOf("month").endOf("isoWeek");
-  let n = startDate.clone();
+export const getMonth = (date: Moment) => {
+  const start = date.clone().startOf("month").startOf("isoWeek");
+  const end = date.clone().endOf("month").endOf("isoWeek");
   const month: WeekDayItem[][] = [];
-
-  React.useEffect(() => {
-    eventStore.loadEventList({
-      dt: {
-        $gte: startDate,
-        $lte: endDate
-      }
-    });
-  }, [ date ]);
-
-  while (n.isSameOrBefore(endDate)) {
+  let n = start.clone();
+  while (n.isSameOrBefore(end)) {
     const week = getWeekDays(n.toDate());
     month.push(week);
     n.add(7, "day");
   }
+  return month;
+}
+
+export const CalendarMonth = observer((props: CalendarInnerProps) => {
+  const { date, setDate } = props;
+  const month = getMonth(moment(date));
 
   return (
     <BigRow>
@@ -88,7 +82,6 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
                         if (!_schedules.length) return null;
                         schedules = _.unionBy(schedules, _schedules, "_id");
                       });
-
 
                       const isCurrentMonth = moment().isSame(week.day, "day");
                       const existSelectedSchedule = _.find(schedules, _.matches({ _id: props.selectedDirectionId }));

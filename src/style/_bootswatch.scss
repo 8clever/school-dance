@@ -45,8 +45,12 @@ $fontWeightBold: 600;
 
 // Navbar ======================================================================
 
+.relative {
+  position: relative;
+}
+
 .absolute-container {
-  position: absolute;
+  position: absolute !important;
   top: 0;
   left: 0;
   right: 0;
@@ -278,4 +282,35 @@ th {
 .carousel-control-next {
   top: auto !important;
   margin-bottom: 20px;
+}
+
+// calendar =======
+
+.calendar-mini {
+  width: 100%;
+  background-color: white;
+
+  tr {
+    height: 64px;
+  }
+
+  td {
+    text-align: center;
+    box-shadow: 1px 1px 0px 0px black;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+
+    &.disabled {
+      opacity: 0.4;
+    }
+
+    &.active {
+      cursor: pointer;
+      font-weight: 600;
+    }
+  }
+
+  .control {
+    cursor: pointer;
+  }
 }

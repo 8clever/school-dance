@@ -10,7 +10,6 @@ import { router as userRouter } from "../api/controllers/user";
 import { router as directionRouter } from "../api/controllers/direction";
 import { router as performanceRouter } from "../api/controllers/performance";
 import { router as imageRouter } from "../api/controllers/image";
-import { router as eventRouter } from "../api/controllers/event";
 import { router as teacherRouter } from "../api/controllers/teacher";
 import { router as leaderRouter } from "../api/controllers/leader";
 import { router as subscribeRouter } from "../api/controllers/subscribe";
@@ -33,7 +32,6 @@ export const openapi = (app: Application) => {
     router.use("/direction", directionRouter);
     router.use("/performance", performanceRouter);
     router.use("/image", imageRouter);
-    router.use("/event", eventRouter);
     router.use("/teacher", teacherRouter);
     router.use("/leader", leaderRouter);
     router.use("/subscribe", subscribeRouter);

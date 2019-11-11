@@ -5,7 +5,6 @@ import { LOCALE, findSchedulesByTime, getTimes, CalendarInnerProps } from "./Cal
 import { FlexCol } from "./Flex";
 import { directionStore } from "../store/DirectionStore";
 import { Schedules } from "./Schedules";
-import { eventStore } from "../store/EventStore";
 import { observer } from "mobx-react-lite";
 
 import leftSVG from "../images/icons/arrow-left.png";
@@ -14,17 +13,6 @@ import rightSVG from "../images/icons/arrow-right.png";
 export const CalendarDay = observer((props: CalendarInnerProps) => {
   const { date, setDate } = props;
   const times = getTimes(date);
-
-  React.useEffect(() => {
-    const start = moment(date).startOf("date");
-    const end = moment(date).endOf("date");
-    eventStore.loadEventList({
-      dt: {
-        $gte: start,
-        $lte: end
-      }
-    });
-  }, [ date ]);
 
   return (
     <BigRow>

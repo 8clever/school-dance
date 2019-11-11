@@ -212,8 +212,7 @@ export const Direction = observer((props: DirectionProps) => {
         rightButtonActive={visibleDescription}
         rightButtonText={element.title}
         rightButtonOnClick={() => setVisibleDescription(!visibleDescription)}
-        format="MM.YYYY"
-        step="month"
+        direction={directionStore.item}
       />
 
       {

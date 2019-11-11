@@ -1,10 +1,14 @@
 import React from "react";
-import { BigRow, BigCol, BigButtonColMin } from "./Big";
-import { FlexCol } from "./Flex";
+import { BigRow, BigButtonColMin } from "./Big";
+import { Row, Col } from "reactstrap";
+import { getMonth } from "./CalendarMonth";
 import moment from "moment";
 
-import leftSVG from "../images/icons/arrow-left.png";
-import rightSVG from "../images/icons/arrow-right.png";
+import leftPNG from "../images/icons/arrow-left.png";
+import rightPNG from "../images/icons/arrow-right.png";
+import { getTimes, findSchedulesByTime } from "./CalendarHelpers";
+import { Direction } from "../../server/models/Direction";
+import _ from "lodash";
 
 interface HeaderCalendarProps {
   date: Date;
@@ -15,14 +19,16 @@ interface HeaderCalendarProps {
   rightButtonActive?: boolean;
   rightButtonText: string;
   rightButtonOnClick?: () => void;
-  format: "MM.YYYY" | "DD.MM.YYYY";
-  step: "month" | "day";
+  direction: Direction
 }
 
 export const HeaderCalendar = (props: HeaderCalendarProps) => {
+  const [ calendarIsVisible, setCalendarIsVisible ] = React.useState(false);
+  const month = getMonth(moment(props.date));
 
   return (
-    <BigRow>
+    <>
+      <BigRow>
         <BigButtonColMin
           selected={props.leftButtonActive}
           xs={6}
@@ -31,34 +37,15 @@ export const HeaderCalendar = (props: HeaderCalendarProps) => {
           onClick={props.leftButtonOnClick}>
           {props.leftButtonText}
         </BigButtonColMin>
-        <BigCol xs={6}>
-          <FlexCol align="center" justify="between">
-            <div 
-              style={{ 
-                padding: 10,
-                cursor: "pointer" 
-              }} 
-              onClick={() => {
-                props.onChange(moment(props.date).add(-1, props.step).toDate())
-              }
-            }>
-              <img src={leftSVG} width={15} height={15} />
-            </div>
-            <div style={{ padding: 10 }}>
-              {moment(props.date).format(props.format)}
-            </div>
-            <div 
-              style={{ 
-                padding: 10,
-                cursor: "pointer" 
-              }}
-              onClick={() => {
-              props.onChange(moment(props.date).add(1, props.step).toDate())
-            }}>
-              <img src={rightSVG} width={15} height={15} />
-            </div>
-          </FlexCol>
-        </BigCol>
+        <BigButtonColMin 
+          onClick={() => {
+            setCalendarIsVisible(!calendarIsVisible)
+          }}
+          selected={calendarIsVisible}
+          md={4} 
+          xs={6}>
+          РАСПИСАНИЕ
+        </BigButtonColMin>
         <BigButtonColMin 
           selected={props.rightButtonActive}
           xs={6}
@@ -70,5 +57,100 @@ export const HeaderCalendar = (props: HeaderCalendarProps) => {
           {props.rightButtonText}
         </BigButtonColMin>
       </BigRow>
+
+      {
+        calendarIsVisible ?
+        <Row className="relative" noGutters>
+          <Col 
+            style={{
+              zIndex: 1000
+            }}
+            className="absolute-container offset-md-4" 
+            md={4}>
+
+            <table className="calendar-mini">
+              <tr>
+                <td colSpan={7}>
+                  <Row>
+                    <Col xs={2}>
+                      <img 
+                        onClick={() => {
+                          const date = moment(props.date).add(-1, "month");
+                          props.onChange(date.toDate());
+                        }}
+                        className="control"
+                        height={15} 
+                        src={leftPNG} 
+                      />
+                    </Col>
+                    <Col xs={8}>
+                      <span className={"text-uppercase"}>
+                        {moment(props.date).locale("ru").format("MMMM, YYYY")}
+                      </span>
+                    </Col>
+                    <Col xs={2}>
+                      <img 
+                        onClick={() => {
+                          const date = moment(props.date).add(1, "month");
+                          props.onChange(date.toDate());
+                        }}
+                        className="control"
+                        height={15} 
+                        src={rightPNG} 
+                      />
+                    </Col>
+                  </Row>
+                </td>
+              </tr>
+              <tr>
+                <td>пн</td>
+                <td>вт</td>
+                <td>ср</td>
+                <td>чт</td>
+                <td>пт</td>
+                <td>сб</td>
+                <td>вс</td>
+              </tr>
+              {
+                month.map((week, idx) => {
+                  
+
+                  return (
+                    <tr className="week" key={idx}>
+                      {
+                        week.map((day, idx) => {
+                          const times = getTimes(day.day.toDate());
+                          let schedules = [];
+
+                          times.forEach((t) => {
+                            const _schedules = findSchedulesByTime(t.time, [props.direction]);
+                            if (!_schedules.length) return null;
+                            schedules = _.unionBy(schedules, _schedules, "_id");
+                          });
+
+                          const isSameMonth = day.day.isSame(props.date, "month");
+                          const className = [];
+
+                          if (!isSameMonth) className.push("disabled");
+                          if (schedules.length) className.push("active");
+
+                          return (
+                            <td 
+                              className={className.join(" ")}
+                              key={idx}>
+                              {day.day.format("D")}
+                            </td>
+                          )
+                        })
+                      }
+                    </tr>
+                  )
+                })
+              }
+            </table>
+          </Col>  
+        </Row> : null
+      }
+    </>
   )
 }

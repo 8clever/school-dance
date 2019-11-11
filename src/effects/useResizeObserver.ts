@@ -7,20 +7,16 @@ export const useResizeObserver = () => {
     height: 0
   })
 
-  const refCallback = React.useCallback(($el: HTMLElement) => {
-    if (!$el) return;
+  const ro = new ResizeObserver((entries) => {
+    const entry = entries[0];
+    setRect(entry.contentRect);
+  });
 
-    const ro = new ResizeObserver((entries) => {
-      const entry = entries[0];
-      setRect(entry.contentRect);
-    });
+  const refCallback = React.useCallback(($el: HTMLElement) => {
+    if (!$el) return ro.disconnect();
 
     ro.observe($el);
     setRect($el.getBoundingClientRect())
-    
-    return () => {
-      ro.disconnect();
-    }
   }, []);
 
   return [ 

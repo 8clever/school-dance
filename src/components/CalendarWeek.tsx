@@ -8,7 +8,6 @@ import { directionStore } from "../store/DirectionStore";
 import { Schedules, Wrapper } from "./Schedules";
 import { routerStore } from "../store/RouterStore";
 import { observer } from "mobx-react-lite";
-import { eventStore } from "../store/EventStore";
 
 import leftSVG from "../images/icons/arrow-left.png";
 import rightSVG from "../images/icons/arrow-right.png";
@@ -44,15 +43,6 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
 
   const weekDays = getWeekDays(startDate.toDate());
   const times = getTimes(startDate.toDate());
-
-  React.useEffect(() => {
-    eventStore.loadEventList({
-      dt: {
-        $gte: startDate,
-        $lte: endDate
-      }
-    });
-  }, [ date ]);
   
   return (
     <BigRow>
