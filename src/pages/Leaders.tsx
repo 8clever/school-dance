@@ -126,7 +126,11 @@ export const Leaders = observer((props: LeaderProps) => {
         <BigCol>
           {
             element && element._id ?
-            <div style={{ padding: 30 }}>
+            <div style={{ 
+              padding: 30,
+              maxHeight,
+              overflowY
+            }}>
               <h2>О Руководителе</h2>
               <ReactMarkdown source={element.description} />
             </div> : null
