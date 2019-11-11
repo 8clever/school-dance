@@ -32,8 +32,8 @@ export class Api<T> {
     return this.fetch("editItem", "POST", item);
   }
 
-  getItems = async (query: RootQuerySelector<T>): Promise<{ list: T[], count: number }> => {
-    return this.fetch("items", "GET", { query });
+  getItems = async (query: RootQuerySelector<T>, sort?: object): Promise<{ list: T[], count: number }> => {
+    return this.fetch("items", "GET", { query, sort });
   }
 
   loadItem = async (_id?: string) => {
@@ -45,8 +45,8 @@ export class Api<T> {
     }
   }
 
-  loadItems = async (query?: FilterQuery<T>) => {
-    const data = await this.getItems(query);
+  loadItems = async (query?: FilterQuery<T>, sort?: object) => {
+    const data = await this.getItems(query, sort);
     this.itemList = data.list;
   }
 

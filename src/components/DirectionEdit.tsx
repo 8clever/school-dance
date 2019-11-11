@@ -40,7 +40,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
   React.useEffect(() => {
     if (!props.visible) return;
     
-    type.loadItems().then(() => {
+    type.loadItems({}, { name: 1, fullName: 1, title: 1 }).then(() => {
       const options = type.getItems().map(i => {
         return {
           value: i._id,

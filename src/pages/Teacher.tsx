@@ -28,7 +28,7 @@ export const Teacher = observer((props: TeacherProps) => {
   const [ width, height, refCallback ] = useResizeObserver();
 
   React.useEffect(() => {
-    teacherStore.loadItems({}).then(() => {
+    teacherStore.loadItems({}, { fullName: 1 }).then(() => {
       const list = toJS(teacherStore.itemList);
       const t = _.find(list, _.matches({ _id: props.id }));
       teacherStore.item = t || list[0];

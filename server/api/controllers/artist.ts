@@ -9,8 +9,8 @@ export const router = express.Router()
     }).catch(next);
   })
   .get("/items", (req, res, next) => {
-    const { query } = req.query;
-    artistService.getArtist(query).then(data => {
+    const { query, sort } = req.query;
+    artistService.getArtist(query, sort).then(data => {
       res.json(data);
     }).catch(next);
   })

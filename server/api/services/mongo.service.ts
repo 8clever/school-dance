@@ -26,7 +26,7 @@ export class MongoService<T extends MongoLike> {
     return data.ops[0]._id;
   }
 
-  _find = async (query: RootQuerySelector<T>) => {
+  _find = async (query: RootQuerySelector<T>, sort?: object) => {
     if (
       query._id && 
       query._id.$in &&
@@ -40,11 +40,17 @@ export class MongoService<T extends MongoLike> {
     }
 
     const collection = mongo.db.collection(this.collection);
+    const cursor = collection.find<T>(query);
+
+    if (sort) {
+      cursor.sort(sort);
+    }
+    
     const [
       list,
       count
     ] = await Promise.all([
-      collection.find<T>(query).toArray(),
+      cursor.toArray(),
       collection.count(query)
     ]);
 

@@ -15,7 +15,7 @@ export const Artists = observer((props: ArtistsProps) => {
   const [ id, setId ] = React.useState("");
 
   React.useEffect(() => {
-    artistStore.loadItems();
+    artistStore.loadItems({}, { name: 1 });
   }, []);
 
   return (
