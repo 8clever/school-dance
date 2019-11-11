@@ -236,7 +236,8 @@ export const Direction = observer((props: DirectionProps) => {
               {
                 visibleSubmenu ?
                 <Col className="col-md-4 bg-white h-100" style={{
-                  borderRight: "1px solid black"
+                  borderRight: "1px solid black",
+                  overflow: "auto"
                 }}>
                   {submenu}
                 </Col> : null
