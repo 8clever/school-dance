@@ -48,6 +48,7 @@ export const LeaderEdit = observer((props: TeacherEditProps) => {
         <FormGroup>
           <Label>Описание</Label>
           <Input 
+            rows={4}
             type="textarea" 
             value={element.description}
             onChange={e => {

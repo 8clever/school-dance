@@ -126,7 +126,11 @@ export const Teacher = observer((props: TeacherProps) => {
         <BigCol>
           {
             teacher && teacher._id ?
-            <div style={{ padding: 30 }}>
+            <div style={{ 
+              padding: 30,
+              maxHeight,
+              overflowY 
+            }}>
               <h2>О Педагоге</h2>
               <ReactMarkdown source={teacher.description} />
             </div> : null
