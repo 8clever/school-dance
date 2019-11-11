@@ -1,13 +1,12 @@
 import React from "react";
 import { BigRow, BigButtonColMin, BigCol } from "./Big";
 import moment from "moment";
-import { LOCALE, findSchedulesByTime, getTimes, CalendarInnerProps, findEventsByTime } from "./CalendarHelpers";
+import { LOCALE, findSchedulesByTime, getTimes, CalendarInnerProps } from "./CalendarHelpers";
 import { FlexCol } from "./Flex";
 import { directionStore } from "../store/DirectionStore";
 import { Schedules } from "./Schedules";
 import { eventStore } from "../store/EventStore";
 import { observer } from "mobx-react-lite";
-import { performanceStore } from "../store/PerformanceStore";
 
 import leftSVG from "../images/icons/arrow-left.png";
 import rightSVG from "../images/icons/arrow-right.png";
@@ -58,11 +57,7 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
         times.map((t, idx) => {
           if (!(idx > 6 && idx < 23)) return null;
 
-          const schedules = [
-            ...findSchedulesByTime(t.time, directionStore.itemList),
-            ...findEventsByTime(t.time, eventStore.eventList, performanceStore.itemList)
-          ]
-
+          const schedules = findSchedulesByTime(t.time, directionStore.itemList);
           const isCurrentHour = t.time.format("HH") === moment().format("HH");
 
           return (

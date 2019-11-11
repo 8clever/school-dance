@@ -26,7 +26,7 @@ interface Element {
   description: string;
 }
 
-const typeMap = {
+export const typeMap = {
   teachers: {
     name: "ПЕДАГОГИ",
     getItems: () => teacherStore.itemList.map(t => {
@@ -146,11 +146,7 @@ export const Direction = observer((props: DirectionProps) => {
   const [ element, setElement ] = React.useState<Element>({ images: [], title: "", description: "" });
   const [ submenuOptions, setSubmenuOptions ] = React.useState<Element[]>([]);
 
-  directionStore.item = directionStore.item || {} as any;
-  directionStore.item.submenu = directionStore.item.submenu || {
-    type: "performance",
-    items: []
-  }
+  directionStore.defaults();
 
   React.useEffect(() => {
     setVisibleDescription(false);

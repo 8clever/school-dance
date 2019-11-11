@@ -1,5 +1,5 @@
 import React from "react";
-import { CalendarInnerProps, getWeekDays, LOCALE, WeekDayItem, getTimes, findSchedulesByTime, CALENDAR_DAY, findEventsByTime } from "./CalendarHelpers";
+import { CalendarInnerProps, getWeekDays, LOCALE, WeekDayItem, getTimes, findSchedulesByTime, CALENDAR_DAY } from "./CalendarHelpers";
 import moment from "moment";
 import { BigRow, BigButtonColMin } from "./Big";
 import { Col } from "reactstrap";
@@ -10,7 +10,6 @@ import { directionStore } from "../store/DirectionStore";
 import _ from "lodash";
 import { routerStore } from "../store/RouterStore";
 import { eventStore } from "../store/EventStore";
-import { performanceStore } from "../store/PerformanceStore";
 import { observer } from "mobx-react-lite";
 
 import leftSVG from "../images/icons/arrow-left.png";
@@ -85,10 +84,7 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
                       const times = getTimes(week.day.toDate());
                       let schedules = [];
                       times.forEach((t) => {
-                        const _schedules = [
-                          ...findSchedulesByTime(t.time, directionStore.itemList),
-                          ...findEventsByTime(t.time, eventStore.eventList, performanceStore.itemList)
-                        ]
+                        const _schedules = findSchedulesByTime(t.time, directionStore.itemList);
                         if (!_schedules.length) return null;
                         schedules = _.unionBy(schedules, _schedules, "_id");
                       });

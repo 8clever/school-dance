@@ -20,6 +20,15 @@ export class DirectionStore extends Api<Direction> {
     return this.editItem(direction);
   }
 
+  defaults = () => {
+    this.item = this.item || {} as any;
+    this.item.images = this.item.images || [];
+    this.item.submenu  = this.item.submenu || {
+      type: "performance",
+      items: []
+    }
+  }
+
   create = () => {
     this.item = {
       name: "",

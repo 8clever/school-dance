@@ -1,15 +1,14 @@
 import React from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, InputGroup, InputGroupAddon, Row, Col } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 import { observer } from "mobx-react-lite";
 import { directionStore as directionStoreGlobal, DirectionStore } from "../store/DirectionStore";
-import { Icon } from "./Icon";
 import { ImagePreview } from "./ImagePreview";
 import { SubmenuType } from "../../server/models/Direction";
-import { artistStore } from "../store/ArtistStore";
-import { performanceStore } from "../store/PerformanceStore";
-import { teacherStore } from "../store/TeacherStore";
 import _ from "lodash";
 import { Select } from "./Select";
+import { typeMap } from "../pages/Direction";
+import { Icon } from "./Icon";
+
 
 interface DirectionEditProps {
   _id?: string;
@@ -25,6 +24,12 @@ interface SubtypeOption {
 const directionStore = new DirectionStore();
 export const DirectionEdit = observer((props: DirectionEditProps) => {
 
+  directionStore.defaults();
+
+  const [ subtypeOptions, setSubtypeOptions ] = React.useState<SubtypeOption[]>([]);
+  const [ tabId, setTabId ] = React.useState("");
+  const type = typeMap[directionStore.item.submenu.type];
+
   React.useEffect(() => {
     directionStore.create();
     if (!(props.visible && props._id)) return;
@@ -34,47 +39,17 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
 
   React.useEffect(() => {
     if (!props.visible) return;
-
-    artistStore.loadItems();
-    performanceStore.loadItems();
-    teacherStore.loadItems();
-  }, [props.visible])
-
-  if (!directionStore.item) return null;
-
-  directionStore.item.submenu = directionStore.item.submenu || {
-    type: "performance",
-    items: []
-  }
-
-  const subtypeOptions: SubtypeOption[] = [];
-
-  switch(directionStore.item.submenu.type) {
-    case "teachers" :
-      teacherStore.itemList.forEach(t => {
-        subtypeOptions.push({
-          value: t._id as string,
-          label: t.fullName
-        });
+    
+    type.loadItems().then(() => {
+      const options = type.getItems().map(i => {
+        return {
+          value: i._id,
+          label: i.title
+        }
       });
-      break;
-    case "artists" :
-      artistStore.itemList.forEach(a => {
-        subtypeOptions.push({
-          value: a._id as string,
-          label: a.name
-        })
-      });
-      break;
-    case "performance" :
-      performanceStore.itemList.forEach(a => {
-        subtypeOptions.push({
-          value: a._id as string,
-          label: a.name
-        })
-      });
-      break;
-  }
+      setSubtypeOptions(options);
+    });
+  }, [type, props.visible]);
 
   return (
     <Modal 
@@ -162,61 +137,12 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
           </Col>
           <Col md={6}>
             <FormGroup>
-              <Label>
-                <a 
-                  target="_blank" 
-                  href="https://crontab.guru/#00_12-14_*_*_1,3,5">
-                  Расписание*
-                </a>
-              </Label>
-              <div>
-                {
-                  directionStore.item.schedule.map((s, idx) => {
-                    return (
-                      <InputGroup 
-                        key={idx}
-                        className="mb-2">
-                        <Input 
-                          value={s}
-                          onChange={e => {
-                            directionStore.item.schedule[idx] = e.target.value;
-                          }}
-                        />
-                        <InputGroupAddon
-                          addonType={"append"}
-                        >
-                          <Button 
-                            onClick={() => {
-                              directionStore.item.schedule.splice(idx, 1);
-                            }}
-                            size="sm">
-                            <Icon 
-                              className="text-danger"
-                              type="trash" 
-                            />
-                          </Button>
-                        </InputGroupAddon>
-                      </InputGroup>
-                    )
-                  })
-                }
-              </div>
-              <Button 
-                onClick={() => {
-                  directionStore.item.schedule.push("00 12-14 * * 1,3,5")
-                }}
-                color="primary"
-                size="sm">
-                <Icon type="plus" />
-              </Button>
-            </FormGroup>
-
-            <FormGroup>
               <Label>Выбор списка</Label>
               <Input 
                 onChange={(e) => {
                   directionStore.item.submenu.type = e.target.value as SubmenuType;
                   directionStore.item.submenu.items = [];
+                  directionStore.item.schedule = [];
                 }}
                 value={directionStore.item.submenu.type} 
                 type="select">
@@ -244,6 +170,83 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
                 options={subtypeOptions}
               />
             </FormGroup>
+
+            <FormGroup>
+              <Label>
+                <a 
+                  target="_blank" 
+                  href="https://crontab.guru/#00_12-14_*_*_1,3,5">
+                  Настройка расписания*
+                </a>
+              </Label>
+            </FormGroup>
+
+            <Nav tabs>
+              {
+                directionStore.item.submenu.items.map(i => {
+                  const item = _.find(subtypeOptions, _.matches({ value: i }));
+                  if (!item) return null;
+                  return (
+                    <NavItem 
+                      style={{
+                        cursor: "pointer"
+                      }}
+                      key={item.value}>
+                      <NavLink
+                        className={tabId === item.value ? "active" : ""}
+                        onClick={() => {
+                          setTabId(item.value)
+                        }}>
+                        {item.label}
+                      </NavLink>
+                    </NavItem>
+                  )
+                })
+              } 
+            </Nav>
+            <TabContent activeTab={tabId}>
+              <div className="mb-3" />
+              {
+                directionStore.item.submenu.items.map(i => {
+                  const item = _.find(subtypeOptions, _.matches({ value: i }));
+                  if (!item) return null;
+
+                  const schedules = _.filter(directionStore.item.schedule, _.matches({ _id: item.value }));
+
+                  return (
+                    <TabPane
+                      tabId={item.value} 
+                      key={item.value}>
+                      {
+                        schedules.map((s, idx) => {
+                          return (
+                            <FormGroup key={idx}>
+                              <Input 
+                                onChange={e => {
+                                  s.cron = e.target.value;
+                                }}
+                                value={s.cron}
+                              />
+                            </FormGroup>
+                          )
+                        })
+                      }
+
+                      <Button 
+                        onClick={() => {
+                          directionStore.item.schedule.push({
+                            _id: item.value,
+                            cron: "00 12-14 * * 1,3,5"
+                          })
+                        }}
+                        color="primary">
+                        <Icon type="plus" /> Добавить Расписание
+                      </Button>
+                    </TabPane>
+                  )
+                })
+              }
+            </TabContent>
           </Col>
         </Row>
       </ModalBody>

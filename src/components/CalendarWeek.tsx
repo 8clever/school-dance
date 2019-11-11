@@ -1,5 +1,5 @@
 import React from "react";
-import { CalendarInnerProps, getTimes, LOCALE, getWeekDays, findSchedulesByTime, CALENDAR_DAY, findEventsByTime } from "./CalendarHelpers";
+import { CalendarInnerProps, getTimes, LOCALE, getWeekDays, findSchedulesByTime, CALENDAR_DAY } from "./CalendarHelpers";
 import { BigRow, BigButtonColMin, getShadowBoxStyle } from "./Big";
 import moment from "moment";
 import { Col } from "reactstrap";
@@ -9,7 +9,6 @@ import { Schedules, Wrapper } from "./Schedules";
 import { routerStore } from "../store/RouterStore";
 import { observer } from "mobx-react-lite";
 import { eventStore } from "../store/EventStore";
-import { performanceStore } from "../store/PerformanceStore";
 
 import leftSVG from "../images/icons/arrow-left.png";
 import rightSVG from "../images/icons/arrow-right.png";
@@ -121,10 +120,7 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
                     weekDays.map((week, idx) => {
                       const hour = t.time.toDate().getHours();
                       const time = week.day.clone().startOf("day").add(hour, "hour");
-                      const schedules = [
-                        ...findSchedulesByTime(time, directionStore.itemList),
-                        ...findEventsByTime(time, eventStore.eventList, performanceStore.itemList)
-                      ]
+                      const schedules = findSchedulesByTime(time, directionStore.itemList);
                       return (
                         <WeekDay
                           key={idx}
