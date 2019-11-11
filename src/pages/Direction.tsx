@@ -184,10 +184,13 @@ export const Direction = observer((props: DirectionProps) => {
     return (
       <BigButtonColMin
         key={o._id}
-        onClick={() => {
+        onClick={async () => {
           setElement(o);
           setVisibleSubmenu(false);
           setVisibleDescription(false);
+          await directionStore.loadItem(directionStore.item._id as string);
+          const schedule = _.filter(directionStore.item.schedule, _.matches({ _id: o._id }));
+          directionStore.item.schedule = schedule;
         }}
         style={{
           borderLeft: "none",
