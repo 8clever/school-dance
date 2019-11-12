@@ -21,8 +21,9 @@ import closeSVG from "../images/icons/close.svg";
 import { HeaderMenu } from "./HeaderMenu";
 import { notifStore } from "../store/NotifStore";
 
-
-
+const bigColStyle: React.CSSProperties = {
+  minHeight: 64
+}
 
 export const Header = observer(() => {
 
@@ -44,77 +45,84 @@ export const Header = observer(() => {
   return (
     <div className="sticky-top bg-white">
       <BigRow>
-        <BigCol className="d-none d-md-block">
-          <FlexCol justify="start" align="center">
-            <div 
-              onClick={() => routerStore.push("/")} 
-              style={{ 
-                padding: "0px 10px",
-                cursor: "pointer" 
-              }}>
-              <Logo width={100} />
-            </div>
+        <BigCol 
+          style={bigColStyle}
+          className="d-none d-md-block">
+          <FlexCol align="center">
+            <Logo 
+              style={{
+                marginLeft: 10
+              }}
+              width={125} 
+            />
           </FlexCol>
         </BigCol>
-        <BigCol className="order-1 order-md-0 d-md-block">
-          <InputGroup 
-            tyle={{ marginTop: 1 }}>
-            <Input
-              onKeyPress={e => {
-                if (e.key === "Enter") {
-                  onSearch();
-                }
-              }}
-              className="bg-white"
-              id="input-search"
-              value={searchValue}
-              onChange={e => {
-                setSearchValue(e.target.value);
-              }}
-            />
-            <InputGroupText 
-              onClick={onSearch}
-              style={{
-                cursor: "pointer"
-              }}>
-              <img 
-                height={15}
-                width={15}
-                src={zalupaSVG} 
+        <BigCol 
+          style={bigColStyle}
+          className="order-1 order-md-0 d-md-block">
+          <FlexCol align="center">
+            <InputGroup 
+              tyle={{ marginTop: 1 }}>
+              <Input
+                onKeyPress={e => {
+                  if (e.key === "Enter") {
+                    onSearch();
+                  }
+                }}
+                className="bg-white"
+                id="input-search"
+                value={searchValue}
+                onChange={e => {
+                  setSearchValue(e.target.value);
+                }}
               />
-            </InputGroupText>
-          </InputGroup>
+              <InputGroupText 
+                onClick={onSearch}
+                style={{
+                  cursor: "pointer"
+                }}>
+                <img 
+                  height={15}
+                  width={15}
+                  src={zalupaSVG} 
+                />
+              </InputGroupText>
+            </InputGroup>
+          </FlexCol>
         </BigCol>
-        <BigCol className="text-right">
-          <ButtonGroup>
-            <Button 
-              style={{
-                fontFamily: "Roboto"
-              }}
-              color="link">
-              РУ
-            </Button>
-            <Button 
-              onClick={() => {
-                routerStore.push("/calendar")
-              }}
-              color="link">
-              <img 
-                height={30}
-                width={30}
-                src={schedulePNG} 
-              />
-            </Button>
-            <Button 
-              color="link"
-              onClick={menuStore.toggle}>
-                {
-                  menuStore.isCollapsed ?
-                  <img width={20} height={20} src={menuSVG} /> :
-                  <img width={20} height={20} className="close" src={closeSVG} />
-                }
-            </Button>
-          </ButtonGroup>
+        <BigCol 
+          style={bigColStyle}
+          className="text-right">
+          <FlexCol align="center" justify="end">
+            <ButtonGroup>
+              <Button 
+                style={{
+                  fontFamily: "Roboto"
+                }}
+                color="link">
+                РУ
+              </Button>
+              <Button 
+                onClick={() => {
+                  routerStore.push("/calendar")
+                }}
+                color="link">
+                <img 
+                  width={34}
+                  src={schedulePNG} 
+                />
+              </Button>
+              <Button 
+                color="link"
+                onClick={menuStore.toggle}>
+                  {
+                    menuStore.isCollapsed ?
+                    <img width={20} src={menuSVG} /> :
+                    <img width={20} className="close" src={closeSVG} />
+                  }
+              </Button>
+            </ButtonGroup>
+          </FlexCol>
         </BigCol>
       </BigRow>
       <Notification />

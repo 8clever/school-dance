@@ -193,8 +193,7 @@ export const Direction = observer((props: DirectionProps) => {
           directionStore.item.schedule = schedule;
         }}
         style={{
-          borderLeft: "none",
-          borderTop: "none"
+          border: "none",
         }}
         selected={element._id === o._id}
         xs={12}
@@ -234,7 +233,7 @@ export const Direction = observer((props: DirectionProps) => {
               {
                 visibleSubmenu ?
                 <Col className="col-md-4 bg-white h-100" style={{
-                  borderRight: "1px solid black",
+                  boxShadow: "1px 0px 0px 0px black",
                   overflow: "auto"
                 }}>
                   {submenu}
@@ -244,7 +243,7 @@ export const Direction = observer((props: DirectionProps) => {
               {
                 visibleDescription ?
                 <Col className="col-md-4 ml-auto h-100 bg-white" style={{
-                  borderLeft: "1px solid black",
+                  boxShadow: "0px 0px 0px 1px black",
                   overflow: "auto"
                 }}>
                   <div className="p-5">

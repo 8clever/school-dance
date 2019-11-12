@@ -4,6 +4,7 @@ import logoPNG from "../images/logo.png";
 interface LogoProps {
   width?: number;
   height?: number;
+  style?: React.CSSProperties;
 }
 
 export const Logo = (props: LogoProps) => {
