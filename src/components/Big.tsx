@@ -146,9 +146,10 @@ export const BigCol = (props: BigColProps) => {
 
 export const BigHr = () => {
   return (
-    <BigRow>
-      <BigCol md={12}></BigCol>
-    </BigRow>
+    <hr style={{
+      margin: 0,
+      borderTop: "1px solid black"
+    }} />
   )
 }
 

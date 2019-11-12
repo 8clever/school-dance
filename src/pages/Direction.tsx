@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { Base, BigRow, BigCol, BigButtonCol, Icon, BigButtonColMin } from "../components";
+import { Base, BigRow, BigButtonCol, Icon, BigButtonColMin, BigHr } from "../components";
 import { directionStore } from "../store/DirectionStore";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
@@ -194,7 +194,6 @@ export const Direction = observer((props: DirectionProps) => {
         key={o._id}
         onClick={async () => {
           setElement(o);
-          setVisibleSubmenu(false);
           setVisibleDescription(false);
           await directionStore.loadItem(directionStore.item._id as string);
           const schedule = _.filter(directionStore.item.schedule, _.matches({ _id: o._id }));
@@ -223,7 +222,12 @@ export const Direction = observer((props: DirectionProps) => {
         rightButtonText={element.title}
         rightButtonOnClick={() => setVisibleDescription(!visibleDescription)}
         direction={directionStore.item}
+        onClose={() => {
+          setDate(new Date())
+        }}
       />
+
+      <BigHr />
 
       {
         visibleSubmenu ?
@@ -234,7 +238,7 @@ export const Direction = observer((props: DirectionProps) => {
 
       {/** direction view */}
       <BigRow>
-        <BigCol md={12} xs={12}>
+        <Col md={12} xs={12}>
 
           <div className="absolute-container d-none d-md-block">
             <Row noGutters className="h-100">
@@ -251,7 +255,7 @@ export const Direction = observer((props: DirectionProps) => {
               {
                 visibleDescription ?
                 <Col className="col-md-4 ml-auto h-100 bg-white" style={{
-                  boxShadow: "0px 0px 0px 1px black",
+                  borderLeft: "1px solid black",
                   overflow: "auto"
                 }}>
                   <div className="p-5">
@@ -267,7 +271,7 @@ export const Direction = observer((props: DirectionProps) => {
             items={element.images.map(i => {
             return { src: `${imageStore.endpoint}${i}` };
           })} />
-        </BigCol>
+        </Col>
       </BigRow>
 
       <DirectionMenu />

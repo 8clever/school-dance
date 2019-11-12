@@ -9,6 +9,7 @@ import rightPNG from "../images/icons/arrow-right.png";
 import { getTimes, findSchedulesByTime } from "./CalendarHelpers";
 import { Direction } from "../../server/models/Direction";
 import _ from "lodash";
+import { routerStore } from "../store/RouterStore";
 
 interface HeaderCalendarProps {
   date: Date;
@@ -19,12 +20,20 @@ interface HeaderCalendarProps {
   rightButtonActive?: boolean;
   rightButtonText: string;
   rightButtonOnClick?: () => void;
-  direction: Direction
+  direction: Direction;
+  onClose?: () => void;
 }
 
 export const HeaderCalendar = (props: HeaderCalendarProps) => {
   const [ calendarIsVisible, setCalendarIsVisible ] = React.useState(false);
   const month = getMonth(moment(props.date));
+
+  React.useEffect(() => {
+    setCalendarIsVisible(false);
+    if (props.onClose) {
+      props.onClose();
+    }
+  }, [routerStore.history.location.pathname])
 
   return (
     <>
@@ -39,6 +48,9 @@ export const HeaderCalendar = (props: HeaderCalendarProps) => {
         </BigButtonColMin>
         <BigButtonColMin 
           onClick={() => {
+            if (calendarIsVisible && props.onClose) {
+              props.onClose();
+            }
             setCalendarIsVisible(!calendarIsVisible)
           }}
           selected={calendarIsVisible}
