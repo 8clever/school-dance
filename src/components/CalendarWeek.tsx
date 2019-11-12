@@ -8,6 +8,7 @@ import { directionStore } from "../store/DirectionStore";
 import { Schedules, Wrapper } from "./Schedules";
 import { routerStore } from "../store/RouterStore";
 import { observer } from "mobx-react-lite";
+import _ from "lodash";
 
 import leftSVG from "../images/icons/arrow-left.png";
 import rightSVG from "../images/icons/arrow-right.png";
@@ -43,6 +44,7 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
 
   const weekDays = getWeekDays(startDate.toDate());
   const times = getTimes(startDate.toDate());
+  const selectedDirection = _.find(directionStore.itemList, _.matches({ _id: props.selectedDirectionId }));
   
   return (
     <BigRow>
@@ -110,12 +112,15 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
                     weekDays.map((week, idx) => {
                       const hour = t.time.toDate().getHours();
                       const time = week.day.clone().startOf("day").add(hour, "hour");
-                      const schedules = findSchedulesByTime(time, directionStore.itemList);
+                      const schedules = findSchedulesByTime(
+                        time, 
+                        selectedDirection ? [selectedDirection] : directionStore.itemList
+                      );
                       return (
                         <WeekDay
                           key={idx}
                           onClick={() => {
-                            routerStore.push(`/calendar?type=${CALENDAR_DAY}&date=${moment(date).format("DD-MM-YYYY")}`)
+                            routerStore.push(`/calendar?type=${CALENDAR_DAY}&date=${moment(week.day).format("DD-MM-YYYY")}`)
                           }}
                         >
                           <Schedules items={schedules} />

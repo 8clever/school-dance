@@ -6,6 +6,7 @@ import { FlexCol } from "./Flex";
 import { directionStore } from "../store/DirectionStore";
 import { Schedules } from "./Schedules";
 import { observer } from "mobx-react-lite";
+import _ from "lodash";
 
 import leftSVG from "../images/icons/arrow-left.png";
 import rightSVG from "../images/icons/arrow-right.png";
@@ -13,6 +14,7 @@ import rightSVG from "../images/icons/arrow-right.png";
 export const CalendarDay = observer((props: CalendarInnerProps) => {
   const { date, setDate } = props;
   const times = getTimes(date);
+  const selectedDirection = _.find(directionStore.itemList, _.matches({ _id: props.selectedDirectionId }));
 
   return (
     <BigRow>
@@ -45,7 +47,10 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
         times.map((t, idx) => {
           if (!(idx > 6 && idx < 23)) return null;
 
-          const schedules = findSchedulesByTime(t.time, directionStore.itemList);
+          const directions = findSchedulesByTime(
+            t.time, 
+            selectedDirection ? [selectedDirection] : directionStore.itemList
+          );
           const isCurrentHour = t.time.format("HH") === moment().format("HH");
 
           return (
@@ -61,7 +66,7 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
                 <FlexCol align="center" justify="center">
                   <Schedules 
                     isDay={true}
-                    items={schedules} 
+                    items={directions} 
                   />
                 </FlexCol>
               </BigCol>

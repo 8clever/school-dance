@@ -30,6 +30,7 @@ export const getMonth = (date: Moment) => {
 export const CalendarMonth = observer((props: CalendarInnerProps) => {
   const { date, setDate } = props;
   const month = getMonth(moment(date));
+  const selectedDirection = _.find(directionStore.itemList, _.matches({ _id: props.selectedDirectionId }));
 
   return (
     <BigRow>
@@ -76,15 +77,17 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
                   {
                     m.map((week, idx) => {
                       const times = getTimes(week.day.toDate());
-                      let schedules = [];
+                      let directions = [];
                       times.forEach((t) => {
-                        const _schedules = findSchedulesByTime(t.time, directionStore.itemList);
-                        if (!_schedules.length) return null;
-                        schedules = _.unionBy(schedules, _schedules, "_id");
+                        const _directions = findSchedulesByTime(
+                          t.time, 
+                          selectedDirection ? [selectedDirection] : directionStore.itemList
+                        );
+                        if (!_directions.length) return null;
+                        directions = _.unionBy(directions, _directions, "_id");
                       });
 
-                      const isCurrentMonth = moment().isSame(week.day, "day");
-                      const existSelectedSchedule = _.find(schedules, _.matches({ _id: props.selectedDirectionId }));
+                      const isCurrentDay = moment().isSame(week.day, "day");
 
                       return (
                         <WeekDay 
@@ -93,7 +96,7 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
                           }}
                           key={idx}>
                           <DayWrapper
-                            selected={isCurrentMonth || existSelectedSchedule} 
+                            selected={selectedDirection ? !!directions.length : isCurrentDay} 
                             length={0}
                             idx={0}
                             disabled={!week.day.isSame(props.date, "month")}

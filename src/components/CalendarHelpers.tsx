@@ -1,8 +1,10 @@
+import React from "react";
 import moment from "moment";
 import { parseExpression } from "cron-parser";
 import { Direction } from "../../server/models/Direction";
 import _ from "lodash";
 import { toJS } from "mobx";
+import { typeMap, Element } from "../pages/Direction";
 
 export const LOCALE = "ru";
 
@@ -23,6 +25,8 @@ export const findSchedulesByTime = (
   directions: Direction[],
 ) => {
   const schedules: {[key: string]: Direction} = {};
+  const items: {[key: string]: string[]} = {};
+
   directions.forEach(i => {
 
     _.each(i.schedule, s => {
@@ -34,11 +38,37 @@ export const findSchedulesByTime = (
       });
 
       if (interval.hasPrev()) {
+        items[i._id as string] = items[i._id as string] || [];
+        items[i._id as string].push(s._id as string);
         schedules[i._id as string] = toJS(i);
       }
     });
   });
-  return _.values(schedules);
+
+  return _.values(schedules).map((s) => {
+    const type = typeMap[s.submenu && s.submenu.type];
+    const subitems = items[s._id as string] || [];
+    let tooltip: undefined | React.ReactNode;
+
+    if (type && subitems.length) {
+      const items = type.getItems();
+      tooltip = subitems.map((_id, idx) => {
+        const i: Element | null = _.find(items, _.matches({ _id }));
+        if (!i) return null;
+
+        return (
+          <div key={idx}>
+            {i.title}
+          </div>
+        )
+      })
+    }
+
+    return {
+      ...s,
+      tooltip
+    }
+  });
 }
 
 interface Time {

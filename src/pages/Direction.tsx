@@ -19,14 +19,22 @@ interface DirectionProps {
   id?: string;
 }
 
-interface Element {
+export interface Element {
   _id?: string,
   images: string[],
   title: string;
   description: string;
 }
 
-export const typeMap = {
+interface TypeMap {
+  [key: string]: {
+    name: string;
+    getItems: () => Element[],
+    loadItems: (query?: object, sort?: object) => Promise<void>;
+  }
+}
+
+export const typeMap: TypeMap = {
   teachers: {
     name: "ПЕДАГОГИ",
     getItems: () => teacherStore.itemList.map(t => {
