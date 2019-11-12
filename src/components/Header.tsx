@@ -16,8 +16,8 @@ import { menuStore } from "../store/MenuStore";
 
 import schedulePNG from "../images/icons/schedule.png";
 import zalupaSVG from "../images/icons/zalupa.svg";
-import menuSVG from "../images/icons/menu.svg";
-import closeSVG from "../images/icons/close.svg";
+import menuPNG from "../images/icons/menu.png";
+import closePNG from "../images/icons/close.png";
 import { HeaderMenu } from "./HeaderMenu";
 import { notifStore } from "../store/NotifStore";
 
@@ -117,8 +117,8 @@ export const Header = observer(() => {
                 onClick={menuStore.toggle}>
                   {
                     menuStore.isCollapsed ?
-                    <img width={20} src={menuSVG} /> :
-                    <img width={20} className="close" src={closeSVG} />
+                    <img width={30} height={30} src={menuPNG} /> :
+                    <img width={30} className="close" src={closePNG} />
                   }
               </Button>
             </ButtonGroup>
