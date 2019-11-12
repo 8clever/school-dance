@@ -62,11 +62,12 @@ export const Calendar = observer((props: CalendarProps) => {
     <Base>
       <BigRow>
           <BigButtonColMin 
+            selected={menuVisible}
             onClick={() => {
               setMenuVisible(!menuVisible)
             }}
             md={4}>
-            НАПРАВЛЕНИЯ (ВСЕ)  
+            НАПРАВЛЕНИЯ 
           </BigButtonColMin>      
           <BigButtonColMin 
             style={{
@@ -77,12 +78,8 @@ export const Calendar = observer((props: CalendarProps) => {
             }}
             md={4}>
             {calendarTypes[type].label}
-            {type === CALENDAR_MONTH ? (
-              <>
-                {" "}
-                ({moment(date).locale(LOCALE).format("MMMM")})
-              </>
-            ) : null}
+            {" "}
+            ({moment(date).locale(LOCALE).format("MMMM")})
             
             <OutsideClickHandler onOutsideClick={() => {
               setIsVisible(false);

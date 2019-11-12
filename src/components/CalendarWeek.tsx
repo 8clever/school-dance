@@ -65,6 +65,7 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
               return (
                 <WeekDay key={idx}>
                   <Wrapper 
+                    className="text-uppercase"
                     selected={isSameDay}
                     idx={0} 
                     length={0}>

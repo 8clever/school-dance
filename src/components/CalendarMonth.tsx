@@ -49,7 +49,9 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
             month[0].map((week, idx) => {
               return (
                 <WeekDay key={idx}>
-                  <DayWrapper idx={0} length={0}>
+                  <DayWrapper 
+                    className="text-uppercase"
+                    idx={0} length={0}>
                     {week.day.locale(LOCALE).format("ddd")}
                   </DayWrapper>
                 </WeekDay>
