@@ -100,7 +100,7 @@ export const TeacherEdit = observer((props: TeacherEditProps) => {
             await teacherGlobalStore.loadItem(props._id);
           }
 
-          await teacherGlobalStore.loadItems({});
+          await teacherGlobalStore.loadItems({}, { fullName: 1 });
           props.toggle();
         }}>
           Сохранить

@@ -73,7 +73,7 @@ export const Artists = observer((props: ArtistsProps) => {
           setEditVisible(!editVisible)
         }}
         onSave={() => {
-          artistStore.loadItems();
+          artistStore.loadItems({}, { name: 1 });
         }}
         onCancel={() => {
 
