@@ -13,7 +13,11 @@ module.exports = {
       "ref"  : "origin/master",
       "repo" : "https://github.com/8clever/school-dance.git",
       "path" : "/home/ubuntu/deploy",
-      "post-deploy" : "npm install && npm run build && pm2 startOrRestart ecosystem.json",
+      "post-deploy" : `
+        /home/ubuntu/.nvm/versions/node/v10.17.0/bin/npm install &&
+        /home/ubuntu/.nvm/versions/node/v10.17.0/bin/npm run build &&
+        pm2 startOrRestart ecosystem.json
+      `,
       "pre-setup": "sudo apt-get install git",
       "env": {
         DEVELOPMENT: "",
