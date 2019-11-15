@@ -7,7 +7,6 @@ import { Performance } from "../pages/Performance";
 import { Studio } from "../pages/Studio";
 import { Teacher } from "../pages/Teacher";
 import { Partners } from "../pages/Partners";
-import { AnimatedSwitch } from 'react-router-transition';
 import { FirstVisit } from "../pages/FirstVisit";
 import { Contacts } from "../pages/Contacts";
 import { Leaders } from "../pages/Leaders";
