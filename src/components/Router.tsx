@@ -30,38 +30,31 @@ export const Router = () => {
 
   return (
     <DOMRouter history={routerStore.history}>
-      <AnimatedSwitch
-        atEnter={{ opacity: 0 }}
-        atLeave={{ opacity: 0 }}
-        atActive={{ opacity: 1 }}
-        className="switch-wrapper"
-      >
-        <Route exact path="/" render={() => <Home />} />
-        <Route exact path="/directions/:id" render={(match) => <Direction id={match.match.params.id as string} />}/>
-        <Route exact path="/studio" render={(match) => <Studio />}/>
-        <Route exact path="/teachers" render={(match) => <Teacher />}/>
-        <Route exact path="/teacher/:id" render={(match) => <Teacher id={match.match.params.id} />}/>
-        <Route exact path="/partners" render={(match) => <Partners />}/>
-        <Route exact path="/firstvisit" render={(match) => <FirstVisit />}/>
-        <Route exact path="/contacts" render={(match) => <Contacts />}/>
-        <Route exact path="/leaders" render={(match) => <Leaders />}/>
-        <Route exact path="/leader/:id" render={(match) => <Leaders id={match.match.params.id} />}/>
-        <Route exact path="/subscribe" render={(match) => <Subscribe />}/>
-        <Route exact path="/subscribe/:id" render={(match) => <Prices id={match.match.params.id} />}/>
-        <Route exact path="/calendar" render={(match) => <Calendar {...parse(match.location.search) as { date: string, type: string }} />}/>
-        <Route exact path="/auth" render={match => <Auth />} />
-        <Route exact path="/search" render={match => <Search {...parse(match.location.search) as { text?: string }} />} />
-        <Route exact path="/artists" render={match => <Artists />} />
-        <Route exact path="/performance" render={match => <Performance />} />
-        
-        <Route exact path="/logout" render={() => {
-          userStore.logout().then(() => {
-            routerStore.push("/");
-          });
+      <Route exact path="/" render={() => <Home />} />
+      <Route exact path="/directions/:id" render={(match) => <Direction id={match.match.params.id as string} />}/>
+      <Route exact path="/studio" render={(match) => <Studio />}/>
+      <Route exact path="/teachers" render={(match) => <Teacher />}/>
+      <Route exact path="/teacher/:id" render={(match) => <Teacher id={match.match.params.id} />}/>
+      <Route exact path="/partners" render={(match) => <Partners />}/>
+      <Route exact path="/firstvisit" render={(match) => <FirstVisit />}/>
+      <Route exact path="/contacts" render={(match) => <Contacts />}/>
+      <Route exact path="/leaders" render={(match) => <Leaders />}/>
+      <Route exact path="/leader/:id" render={(match) => <Leaders id={match.match.params.id} />}/>
+      <Route exact path="/subscribe" render={(match) => <Subscribe />}/>
+      <Route exact path="/subscribe/:id" render={(match) => <Prices id={match.match.params.id} />}/>
+      <Route exact path="/calendar" render={(match) => <Calendar {...parse(match.location.search) as { date: string, type: string }} />}/>
+      <Route exact path="/auth" render={match => <Auth />} />
+      <Route exact path="/search" render={match => <Search {...parse(match.location.search) as { text?: string }} />} />
+      <Route exact path="/artists" render={match => <Artists />} />
+      <Route exact path="/performance" render={match => <Performance />} />
+      
+      <Route exact path="/logout" render={() => {
+        userStore.logout().then(() => {
+          routerStore.push("/");
+        });
 
-          return null;
-        }} />
-      </AnimatedSwitch>
+        return null;
+      }} />
     </DOMRouter>
   )
 }
