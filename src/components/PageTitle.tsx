@@ -9,10 +9,6 @@ interface PageTitleProps {
 
 export const PageTitle = (props: PageTitleProps) => {
   
-  React.useEffect(() => {
-    document.title = props.children;
-  }, [props.children]);
-
   const [ play, setPlay ] = React.useState(true);
   
   return (
