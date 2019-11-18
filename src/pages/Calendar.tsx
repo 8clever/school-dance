@@ -152,12 +152,25 @@ export const Calendar = observer((props: CalendarProps) => {
             }
           </BigRow>
         </Col>
-        <Col md={menuVisible ? 8 : 12 }>
-          <CalendarInner
-            selectedDirectionId={selectedDirectionId}
-            date={date} 
-            setDate={setDate}
-          />
+        <Col 
+          style={{
+            overflow: "auto",
+          }}
+          md={menuVisible ? 8 : 12 }>
+          <div style={{
+            minWidth: (
+              type === CALENDAR_DAY || 
+              type === CALENDAR_MONTH ? 
+              undefined : 
+              850
+            )
+          }}>
+            <CalendarInner
+              selectedDirectionId={selectedDirectionId}
+              date={date} 
+              setDate={setDate}
+            />
+          </div>
         </Col>
       </BigRow>
     </Base>

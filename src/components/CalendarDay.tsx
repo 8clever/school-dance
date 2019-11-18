@@ -24,11 +24,13 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
           setDate(prev);
         }}
         bottom={0}
+        xs={2}
         md={1}>
         <img src={leftSVG} width={15} height={15} />
       </BigButtonColMin>
       <BigButtonColMin 
         selected={moment().isSame(date, "day")}
+        xs={8}
         md={10}>
         {moment(date).locale(LOCALE).format("ddd")}
         {" "}
@@ -40,6 +42,7 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
           setDate(next);
         }}
         bottom={0}
+        xs={2}
         md={1}>
         <img src={rightSVG} width={15} height={15} />
       </BigButtonColMin>
@@ -59,10 +62,13 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
                 selected={isCurrentHour}
                 top={0}
                 bottom={0}
+                xs={2}
                 md={1}>
                 {t.time.format("HH:mm")}
               </BigButtonColMin>
-              <BigCol md={10}>
+              <BigCol 
+                xs={8}
+                md={10}>
                 <FlexCol align="center" justify="center">
                   <Schedules 
                     isDay={true}
@@ -73,6 +79,7 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
               <BigButtonColMin 
                 top={0}
                 bottom={0}
+                xs={2}
                 md={1}>
                 &nbsp;
               </BigButtonColMin>

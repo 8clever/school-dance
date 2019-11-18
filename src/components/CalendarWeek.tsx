@@ -37,6 +37,13 @@ export const WeekDay = (props: WeekDayProps) => {
   )
 }
 
+export const stickyLeft: React.CSSProperties = {
+  position: "sticky",
+  zIndex: 1,
+  left: 0,
+  background: "white"
+}
+
 export const CalendarWeek = observer((props: CalendarInnerProps) => {
   const { date, setDate } = props;
   const startDate = moment(date).startOf("isoWeek");
@@ -48,16 +55,20 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
   
   return (
     <BigRow>
-      <BigButtonColMin 
+      <BigButtonColMin
+        style={stickyLeft}
         onClick={() => {
           const prev = startDate.clone().add(-1, "day").toDate();
           setDate(prev);
         }}
         bottom={0}
+        xs={1}
         md={1}>
         <img src={leftSVG} width={15} height={15} />
       </BigButtonColMin>
-      <Col md={10}>
+      <Col 
+        xs={10}
+        md={10}>
         <FlexCol>
           {
             weekDays.map((week, idx) => {
@@ -85,6 +96,7 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
           setDate(next);
         }}
         bottom={0}
+        xs={1}
         md={1}>
         <img src={rightSVG} width={15} height={15} />
       </BigButtonColMin>
@@ -97,13 +109,17 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
           return (
             <React.Fragment key={idx}>
               <BigButtonColMin
+                style={stickyLeft}
                 selected={isSameHour}
                 top={0}
                 bottom={0}
+                xs={1}
                 md={1}>
                 {t.time.format("HH:mm")}
               </BigButtonColMin>
-              <Col md={10}>
+              <Col 
+                xs={10}
+                md={10}>
                 <div style={{
                   display: "flex",
                   height: "100%",
@@ -134,6 +150,7 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
               <BigButtonColMin 
                 top={0}
                 bottom={0}
+                xs={1}
                 md={1}>
                 &nbsp;
               </BigButtonColMin>

@@ -40,10 +40,13 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
           setDate(prev);
         }}
         bottom={0}
+        xs={1}
         md={1}>
         <img src={leftSVG} width={15} height={15} />
       </BigButtonColMin>
-      <Col md={10}>
+      <Col 
+        xs={10}
+        md={10}>
         <FlexCol>
           {
             month[0].map((week, idx) => {
@@ -66,6 +69,7 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
           setDate(next);
         }}
         bottom={0}
+        xs={1}
         md={1}>
         <img src={rightSVG} width={15} height={15} />
       </BigButtonColMin>
@@ -73,8 +77,10 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
         month.map((m, idx) => {
           return (
             <React.Fragment key={idx}>
-              <BigButtonColMin top={0} bottom={0} md={1} />
-              <Col md={10}>
+              <BigButtonColMin top={0} bottom={0} md={1} xs={1} />
+              <Col 
+                xs={10}
+                md={10}>
                 <FlexCol>
                   {
                     m.map((week, idx) => {
@@ -111,7 +117,7 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
                   }
                 </FlexCol>
               </Col>
-              <BigButtonColMin top={0} bottom={0} md={1} />
+              <BigButtonColMin top={0} bottom={0} md={1} xs={1} />
             </React.Fragment>
           )
         })
