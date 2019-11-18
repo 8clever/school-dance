@@ -47,11 +47,11 @@ export const Header = observer(() => {
       <BigRow>
         <BigCol 
           style={bigColStyle}
-          className="d-none d-md-block">
+          xs={6}>
           <FlexCol align="center">
             <Logo 
               style={{
-                marginLeft: 10
+                marginLeft: 20
               }}
               width={125} 
             />
@@ -91,18 +91,23 @@ export const Header = observer(() => {
           </FlexCol>
         </BigCol>
         <BigCol 
+          xs={6}
           style={bigColStyle}
           className="text-right">
           <FlexCol align="center" justify="end">
             <ButtonGroup>
               <Button 
                 style={{
+                  padding: "12px 17px",
                   fontFamily: "Roboto"
                 }}
                 color="link">
                 РУ
               </Button>
-              <Button 
+              <Button
+                style={{
+                  padding: "12px 15px"
+                }}
                 onClick={() => {
                   routerStore.push("/calendar")
                 }}
@@ -113,6 +118,9 @@ export const Header = observer(() => {
                 />
               </Button>
               <Button 
+                style={{
+                  padding: "12px 15px"
+                }}
                 color="link"
                 onClick={menuStore.toggle}>
                   {
