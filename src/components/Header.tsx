@@ -45,12 +45,16 @@ export const Header = observer(() => {
   return (
     <div className="sticky-top bg-white">
       <BigRow>
-        <BigCol 
+        <BigCol
+          onClick={() => {
+            routerStore.push("/");
+          }}
           style={bigColStyle}
           xs={6}>
           <FlexCol align="center">
             <Logo 
               style={{
+                cursor: "pointer",
                 marginLeft: 20
               }}
               width={125} 

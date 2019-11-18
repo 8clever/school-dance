@@ -210,6 +210,12 @@ export const Direction = observer((props: DirectionProps) => {
     )
   });
 
+  const description = (
+    <div className="p-5">
+      <MD source={element.description} />
+    </div>
+  )
+
   return (
     <Base>
       <HeaderCalendar 
@@ -231,9 +237,22 @@ export const Direction = observer((props: DirectionProps) => {
 
       {
         visibleSubmenu ?
-        <BigRow className="d-block d-md-none">
-          {submenu}
-        </BigRow> : null
+        <div className="d-block d-md-none">
+          <BigRow >
+            {submenu}
+          </BigRow>
+          <BigHr />
+        </div> : null
+      }
+
+      {
+        visibleDescription ?
+        <div className="d-block d-md-none">
+          <BigRow >
+            {description}
+          </BigRow>
+          <BigHr />
+        </div> : null
       }
 
       {/** direction view */}
@@ -258,9 +277,7 @@ export const Direction = observer((props: DirectionProps) => {
                   borderLeft: "1px solid black",
                   overflow: "auto"
                 }}>
-                  <div className="p-5">
-                    <MD source={element.description} />
-                  </div>
+                  {description}
                 </Col> : null
               } 
               
