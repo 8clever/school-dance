@@ -43,7 +43,7 @@ export const Carousel = (props: CarouselProps) => {
   const slides = items.map((item, idx) => {
     if (!width) return <React.Fragment key={idx}></React.Fragment>;
 
-    const height = width * 0.5625;
+    const height = width * 0.5;
     
     return (
       <CarouselItem key={idx} >
