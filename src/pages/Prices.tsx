@@ -15,7 +15,8 @@ interface PricesProps {
 }
 
 export const Prices = observer((props: PricesProps) => {
-  const [ addPriceVisible, setAddPriceVisible ] = React.useState(false);
+  const [ visiblePriceModal, setVisiblePriceModal ] = React.useState(false);
+  const [ priceId, setPriceId ] = React.useState("");
 
   React.useEffect(() => {
     subscribeStore.loadItem(props.id);
@@ -27,77 +28,100 @@ export const Prices = observer((props: PricesProps) => {
   const subscribe = subscribeStore.item;
   if (!subscribe) return null;
 
+  const prices = (
+    <>
+      <div className="p-5" style={{ borderLeft: "1px solid black" }}>
+        <h4 className="mb-5">
+          {subscribe.name}
+        </h4>
+        {
+          priceStore.itemList.map(i => {
+            return (
+              <p key={i._id as string}>
+                {i.description} - <b>{i.price}р.</b>
+                {
+                  userStore.isAdmin() ?
+                  <>
+                    <Icon 
+                      onClick={() => {
+                        setPriceId(i._id as string);
+                        setVisiblePriceModal(true);
+                      }}
+                      className="ml-3"
+                      style={{ cursor: "pointer" }}
+                      type="pencil-alt"
+                    />
+
+                    <Icon
+                      onClick={async () => {
+                        await priceStore.removeItemByID(i._id as string)
+                        await priceStore.loadItems({ _idsubscribe: props.id });
+                      }}
+                      className="ml-3"
+                      style={{ cursor: "pointer" }} 
+                      type="trash" 
+                    />
+                  </> : null
+                }
+              </p>
+            )
+          })
+        }
+
+        {
+          userStore.isAdmin() ?
+            <Button
+              size="sm"
+              color="primary"
+              onClick={() => {
+                setPriceId("")
+                setVisiblePriceModal(true)
+              }}
+            >
+              <Icon type="plus" /> Цена
+            </Button> : null
+        }
+
+        <PriceEdit 
+          _id={priceId}
+          _idsubscribe={props.id}
+          visible={visiblePriceModal}
+          toggle={() => setVisiblePriceModal(!visiblePriceModal)}
+        />
+      </div>
+      <div>
+        <BigButtonColMin 
+          onClick={() => {
+            window.open(subscribeStore.item.paymentLink)
+          }}
+          md={12}>
+          ОПЛАТИТЬ
+        </BigButtonColMin>
+      </div>
+    </>
+  )
+
   return (
     <Base>
       <BigRow>
-        <BigCol md={7} lg={8}>
+        <BigCol md={8}>
           <Carousel 
             items={subscribe.images.map(i => {
             return { src: `${imageStore.endpoint}${i}` };
           })} />
         </BigCol>
-        <Col md={5} lg={4}>
-          <FlexCol column justify="between">
-            <div className="p-5">
-              <h4 className="mb-5">
-                {subscribe.name}
-              </h4>
-              {
-                priceStore.itemList.map(i => {
-                  return (
-                    <p key={i._id as string}>
-                      {i.description} - <b>{i.price}р.</b>
-                      {
-                        userStore.isAdmin() ?
-                        <>
-                          {" "} 
-                          <Icon
-                            onClick={async () => {
-                              await priceStore.removeItemByID(i._id as string)
-                              await priceStore.loadItems({ _idsubscribe: props.id });
-                            }}
-                            style={{ cursor: "pointer" }} 
-                            className="text-danger" 
-                            type="trash" 
-                          />
-                        </> : null
-                      }
-                    </p>
-                  )
-                })
-              }
-
-              {
-                userStore.isAdmin() ?
-                  <Button
-                    size="sm"
-                    color="primary"
-                    onClick={() => {
-                      setAddPriceVisible(true)
-                    }}
-                  >
-                    <Icon type="plus" /> Цена
-                  </Button> : null
-              }
-
-              <PriceEdit 
-                _idsubscribe={props.id}
-                visible={addPriceVisible}
-                toggle={() => setAddPriceVisible(!addPriceVisible)}
-              />
-            </div>
-            <div>
-              <BigButtonColMin 
-                onClick={() => {
-                  window.open(subscribeStore.item.paymentLink)
-                }}
-                md={12}>
-                ОПЛАТИТЬ
-              </BigButtonColMin>
-            </div>
-          </FlexCol>
+        <Col md={4} className="d-none d-md-block">
+          <div className="absolute-container" style={{ overflow: "auto" }}>
+            <FlexCol column justify="between">
+              {prices}
+            </FlexCol>
+          </div>
         </Col>
       </BigRow>
+
+      <div className="d-md-none">
+        {prices}
+      </div>
 
       <SubscribeMenu active={props.id} />
     </Base>
