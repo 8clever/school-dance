@@ -58,6 +58,35 @@ export const Calendar = observer((props: CalendarProps) => {
 
   const CalendarInner = calendarTypes[type].$el as CalendarInner;
 
+  const list = directionStore.itemList.map(d => {
+    return (
+      <BigButtonColMin 
+        onClick={() => {
+          if (selectedDirectionId === d._id) {
+            setSelectedDirectionId("");
+            return;
+          }
+
+          setSelectedDirectionId(d._id as string);
+        }}
+        md={12}
+        selected={selectedDirectionId === d._id}
+        key={d._id as string}>
+        {d.name} ({d.shortName})
+      </BigButtonColMin>
+    )
+  });
+
+  const subscribe = (
+    <BigButtonColMin 
+      onClick={() => {
+        routerStore.push("/subscribe");
+      }}
+      md={12}>
+      КУПИТЬ АБОНЕМЕНТ  
+    </BigButtonColMin>  
+  )
+
   return (
     <Base>
       <BigRow>
@@ -68,7 +97,15 @@ export const Calendar = observer((props: CalendarProps) => {
             }}
             md={4}>
             НАПРАВЛЕНИЯ 
-          </BigButtonColMin>      
+          </BigButtonColMin>
+
+          {
+            menuVisible ?
+            <div className="d-md-none w-100">
+              {list}
+            </div> : null
+          }
+          
           <BigButtonColMin 
             style={{
               position: "relative"
@@ -117,39 +154,16 @@ export const Calendar = observer((props: CalendarProps) => {
               </div>
             </OutsideClickHandler>
           </BigButtonColMin>      
-          <BigButtonColMin 
-            onClick={() => {
-              routerStore.push("/subscribe");
-            }}
-            md={4}>
-            КУПИТЬ АБОНЕМЕНТ  
-          </BigButtonColMin>      
+          <div className="col-md-4 d-none d-md-block">
+            {subscribe}
+          </div>      
       </BigRow>
       <BigRow>
         <Col 
           md={4} 
-          className={`d-${menuVisible ? "block" : "none"}`}>
+          className={`d-md-${menuVisible ? "block" : "none"} d-none`}>
           <BigRow>
-            {
-              directionStore.itemList.map(d => {
-                return (
-                  <BigButtonColMin 
-                    onClick={() => {
-                      if (selectedDirectionId === d._id) {
-                        setSelectedDirectionId("");
-                        return;
-                      }
-
-                      setSelectedDirectionId(d._id as string);
-                    }}
-                    md={12}
-                    selected={selectedDirectionId === d._id}
-                    key={d._id as string}>
-                    {d.name} ({d.shortName})
-                  </BigButtonColMin>
-                )
-              })
-            }
+            {list}
           </BigRow>
         </Col>
         <Col 
@@ -173,6 +187,9 @@ export const Calendar = observer((props: CalendarProps) => {
           </div>
         </Col>
       </BigRow>
+      <div className="d-md-none">
+        {subscribe}
+      </div>
     </Base>
   )
 })
