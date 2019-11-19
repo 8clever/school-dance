@@ -5,7 +5,6 @@ import { directionStore } from "../store/DirectionStore";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
 import { routerStore } from "../store/RouterStore";
-import { HeaderCalendar } from "../components/HeaderCalendar";
 import { DirectionEdit } from "../components/DirectionEdit";
 import MD from "react-markdown";
 import { Carousel } from "../components/Carousel";
@@ -14,6 +13,7 @@ import { teacherStore } from "../store/TeacherStore";
 import { performanceStore } from "../store/PerformanceStore";
 import { artistStore } from "../store/ArtistStore";
 import _ from "lodash";
+import { CalendarMini } from "../components/CalendarMini";
 
 interface DirectionProps {
   id?: string;
@@ -153,8 +153,14 @@ export const Direction = observer((props: DirectionProps) => {
   const [ visibleSubmenu, setVisibleSubmenu ] = React.useState(false);
   const [ element, setElement ] = React.useState<Element>({ images: [], title: "", description: "" });
   const [ submenuOptions, setSubmenuOptions ] = React.useState<Element[]>([]);
+  const [ calendarIsVisible, setCalendarIsVisible ] = React.useState(false);
 
   directionStore.defaults();
+
+  React.useEffect(() => {
+    setCalendarIsVisible(false);
+    setDate(new Date());
+  }, [routerStore.history.location.pathname])
 
   React.useEffect(() => {
     setVisibleDescription(false);
@@ -216,44 +222,92 @@ export const Direction = observer((props: DirectionProps) => {
     </div>
   )
 
+  const calendar = (
+    <CalendarMini 
+      date={date}
+      onChange={(date) => {
+        setDate(date)
+      }}
+      direction={directionStore.item}
+    />
+  )
+
   return (
     <Base>
-      <HeaderCalendar 
-        date={date}
-        onChange={setDate}
-        leftButtonActive={visibleSubmenu}
-        leftButtonText={typeMap[directionStore.item.submenu.type].name}
-        leftButtonOnClick={() => setVisibleSubmenu(!visibleSubmenu)}
-        rightButtonActive={visibleDescription}
-        rightButtonText={element.title}
-        rightButtonOnClick={() => setVisibleDescription(!visibleDescription)}
-        direction={directionStore.item}
-        onClose={() => {
-          setDate(new Date())
-        }}
-      />
+      <BigRow>
+        <BigButtonColMin
+          selected={visibleSubmenu}
+          md={4}
+          padding={"15px 0"} 
+          onClick={() => {
+            setVisibleSubmenu(!visibleSubmenu)
+          }}>
+          {typeMap[directionStore.item.submenu.type].name}
+        </BigButtonColMin>
+
+        {
+          visibleSubmenu ?
+          <div 
+            className="d-block d-md-none w-100" 
+            style={{ borderLeft: "1px solid black" }}>
+            {submenu}
+          </div> : null
+        }
+
+        <BigButtonColMin 
+          onClick={() => {
+            setCalendarIsVisible(!calendarIsVisible)
+          }}
+          selected={calendarIsVisible}
+          md={4}>
+          РАСПИСАНИЕ
+        </BigButtonColMin>
+
+        {
+          calendarIsVisible ?
+          <div 
+            className="d-md-none w-100">
+            {calendar}
+          </div> : null
+        }
+
+        <BigButtonColMin 
+          selected={visibleDescription}
+          md={4}
+          onClick={() => {
+            setVisibleDescription(!visibleDescription)
+          }}
+          padding={"15px 0"} 
+        >
+          {element.title}
+        </BigButtonColMin>
+
+        {
+          visibleDescription ?
+          <div 
+            style={{ borderLeft: "1px solid black" }}
+            className="d-block d-md-none w-100">
+            {description}
+          </div> : null
+        }
+
+      </BigRow>
+      
+      {
+        calendarIsVisible ?
+        <Row className="relative d-none d-md-block" noGutters>
+          <Col 
+            style={{
+              zIndex: 1000
+            }}
+            className="absolute-container offset-md-4" 
+            md={4}>
+            {calendar}
+          </Col>  
+        </Row> : null
+      }
 
       <BigHr />
-
-      {
-        visibleSubmenu ?
-        <div className="d-block d-md-none">
-          <BigRow >
-            {submenu}
-          </BigRow>
-          <BigHr />
-        </div> : null
-      }
-
-      {
-        visibleDescription ?
-        <div className="d-block d-md-none">
-          <BigRow >
-            {description}
-          </BigRow>
-          <BigHr />
-        </div> : null
-      }
 
       {/** direction view */}
       <BigRow>
