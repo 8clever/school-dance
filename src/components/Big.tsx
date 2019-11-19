@@ -132,24 +132,34 @@ export const BigCol = (props: BigColProps) => {
       lg={props.lg}
       style={{
         ...getShadowBoxStyle(props),
-        ...props.style,
+        ...{
+          maxWidth: props.maxWidth,
+          flex: props.flex,
+          padding: props.padding,
+          ...props.style,
+        },
         width: props.width,
-        height: props.height,
-        maxWidth: props.maxWidth,
-        flex: props.flex,
-        padding: props.padding
+        height: props.height
       }}>
       {props.children}
     </Col>
   )
 }
 
-export const BigHr = () => {
+interface BigHrProps {
+  style?: React.CSSProperties;
+  className?: string;
+}
+
+export const BigHr = (props: BigHrProps) => {
   return (
-    <hr style={{
-      margin: 0,
-      borderTop: "1px solid black"
-    }} />
+    <hr 
+      className={props.className}
+      style={{
+        margin: 0,
+        borderTop: "1px solid black",
+        ...props.style
+      }} />
   )
 }
 

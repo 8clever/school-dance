@@ -44,6 +44,16 @@ export const stickyLeft: React.CSSProperties = {
   background: "white"
 }
 
+export const colOneOfNine: React.CSSProperties = {
+  flex: `0 0 ${1/9*100}%`,
+  maxWidth: `${1/9*100}%`
+}
+
+export const col7OfNine: React.CSSProperties = {
+  flex: `0 0 ${7/9*100}%`,
+  maxWidth: `${7/9*100}%`
+}
+
 export const CalendarWeek = observer((props: CalendarInnerProps) => {
   const { date, setDate } = props;
   const startDate = moment(date).startOf("isoWeek");
@@ -56,19 +66,18 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
   return (
     <BigRow>
       <BigButtonColMin
-        style={stickyLeft}
+        style={{
+          ...stickyLeft,
+          ...colOneOfNine
+        }}
         onClick={() => {
           const prev = startDate.clone().add(-1, "day").toDate();
           setDate(prev);
         }}
-        bottom={0}
-        xs={1}
-        md={1}>
+        bottom={0}>
         <img src={leftSVG} width={15} height={15} />
       </BigButtonColMin>
-      <Col 
-        xs={10}
-        md={10}>
+      <Col style={col7OfNine}>
         <FlexCol>
           {
             weekDays.map((week, idx) => {
@@ -91,13 +100,12 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
         </FlexCol>
       </Col>
       <BigButtonColMin 
+        style={colOneOfNine}
         onClick={() => {
           const next = endDate.clone().add(1, "day").toDate();
           setDate(next);
         }}
-        bottom={0}
-        xs={1}
-        md={1}>
+        bottom={0}>
         <img src={rightSVG} width={15} height={15} />
       </BigButtonColMin>
       {
@@ -109,17 +117,16 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
           return (
             <React.Fragment key={idx}>
               <BigButtonColMin
-                style={stickyLeft}
+                style={{
+                  ...stickyLeft,
+                  ...colOneOfNine
+                }}
                 selected={isSameHour}
                 top={0}
-                bottom={0}
-                xs={1}
-                md={1}>
+                bottom={0}>
                 {t.time.format("HH:mm")}
               </BigButtonColMin>
-              <Col 
-                xs={10}
-                md={10}>
+              <Col style={col7OfNine}>
                 <div style={{
                   display: "flex",
                   height: "100%",
@@ -150,8 +157,7 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
               <BigButtonColMin 
                 top={0}
                 bottom={0}
-                xs={1}
-                md={1}>
+                style={colOneOfNine}>
                 &nbsp;
               </BigButtonColMin>
             </React.Fragment>
