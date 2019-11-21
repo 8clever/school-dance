@@ -18,7 +18,7 @@ export const Home = observer(() => {
 
   return (
     <Base>
-      <PageTitle marquee>Студия Дианы Вишнёвой Context Pro</PageTitle>
+      <PageTitle marquee>Studio Context Диана Вишнева</PageTitle>
       <BigHr />
       <Carousel items={carousel} />
       <DirectionMenu />
