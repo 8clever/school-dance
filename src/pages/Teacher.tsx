@@ -10,7 +10,6 @@ import { toJS } from "mobx";
 import { imageStore } from "../store/ImageStore";
 import { Col } from "reactstrap";
 import ReactMarkdown from "react-markdown";
-import { useResizeObserver } from "../effects/useResizeObserver";
 import { Image } from "../components/Carousel";
 import { StudioMenu } from "./Studio";
 
@@ -25,7 +24,6 @@ export const Teacher = observer((props: TeacherProps) => {
 
   const [ teacherEditVisible, setTeacherEditVisible ] = React.useState(false);
   const [ id, setId ] = React.useState("");
-  const [ width, height, refCallback ] = useResizeObserver();
 
   React.useEffect(() => {
     teacherStore.loadItems({}, { fullName: 1 }).then(() => {
@@ -37,104 +35,140 @@ export const Teacher = observer((props: TeacherProps) => {
 
   const { item: teacher, itemList } = teacherStore;
 
+  const menuList = itemList.map(t => {
+    return (
+      <BigButtonColMin
+        selected={t._id === (teacher && teacher._id)} 
+        md={12}
+        onClick={() => {
+          routerStore.push(`/teacher/${t._id}`);
+          const $el = document.querySelector(`[data-spy="scroll"] #image`);
+          if ($el) {
+            $el.scrollIntoView({ behavior: "smooth"});
+          }
+        }}
+        key={t._id as string}>
+        {t.fullName}
+
+        {
+          userStore.isAdmin() ?
+          <span className="hovered">
+            <Icon 
+              onClick={(e) => {
+                e.stopPropagation();
+                setId(t._id as string);
+                setTeacherEditVisible(true)
+              }}
+              className="ml-3"
+              type="pencil-alt"
+            />
+            <Icon 
+              onClick={async (e) => {
+                e.stopPropagation();
+                await teacherStore.removeItemByID(t._id as string)
+                await teacherStore.loadItems();
+                routerStore.push("/teachers");
+              }}
+              className="ml-3"
+              type="trash"
+            />
+          </span> : null
+        }
+      </BigButtonColMin>
+    )
+  });
+
+  if (userStore.isAdmin()) {
+    menuList.push(
+      <BigButtonColMin 
+        key="add-teacher"
+        md={12} 
+        onClick={() => {
+          setId("");
+          setTeacherEditVisible(true);
+        }}>
+        <Icon 
+          className="mr-3"
+          type="plus" 
+        /> 
+        Педагог
+      </BigButtonColMin>
+    )
+  }
+
+  const description = (
+    <div style={{ padding: 30 }}>
+      <h2>О Педагоге</h2>
+      {
+        teacher ?
+        <ReactMarkdown source={teacher.description} /> :
+        null
+      }
+    </div>
+  );
+
+  const imageSrc = (
+    teacher ?
+    imageStore.endpoint + teacher.images[0] as string :
+    ""
+  )
+
   return (
     <Base>
       <BigRow>
+
+        <div 
+          className="d-md-none w-100">
+          {menuList}
+        </div>
+
+        <div 
+          data-spy="scroll"
+          className="d-md-none w-100 relative">
+          <div 
+            id="image" 
+            style={{
+              position: "absolute",
+              top: -125
+            }} 
+          />
+          <Image 
+            width="100vw"
+            height="200vw"
+            src={imageSrc}
+          />
+        </div>
+
+        <div className="d-md-none w-100">
+          {description}
+        </div>
+
         <Col 
+          className="d-none d-md-block"
           md={4} 
           style={{ 
             minHeight: maxHeight,
             maxHeight,
             overflowY 
           }}>
-          {
-            itemList.map(t => {
-              return (
-                <BigButtonColMin 
-                  md={12}
-                  onClick={() => {
-                    routerStore.push(`/teacher/${t._id}`)
-                  }}
-                  key={t._id as string}>
-                  {t.fullName}
-
-                  {
-                    userStore.isAdmin() ?
-                    <span className="hovered">
-                      <Icon 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setId(t._id as string);
-                          setTeacherEditVisible(true)
-                        }}
-                        className="ml-3"
-                        type="pencil-alt"
-                      />
-                      <Icon 
-                        onClick={async (e) => {
-                          e.stopPropagation();
-                          await teacherStore.removeItemByID(t._id as string)
-                          await teacherStore.loadItems();
-                          routerStore.push("/teachers");
-                        }}
-                        className="ml-3"
-                        type="trash"
-                      />
-                    </span> : null
-                  }
-                </BigButtonColMin>
-              )
-            })
-          }
-          {
-            userStore.isAdmin() ?
-            <BigButtonColMin 
-              md={12} 
-              onClick={() => {
-                setId("");
-                setTeacherEditVisible(true);
-              }}>
-              <Icon 
-                className="mr-3"
-                type="plus" 
-              /> 
-              Педагог
-            </BigButtonColMin> :
-            null
-          }
+          {menuList}
         </Col>
-        <BigCol>
-          <div 
-            ref={refCallback}
-            className="h-100" 
-            style={{ 
-              maxHeight,
-              overflowY 
-            }}>
-            
-            {
-              teacher ?
-              <Image 
-                width={width}
-                height={height}
-                src={imageStore.endpoint + teacher.images[0] as string}
-              /> : null
-            }
-            
-          </div>
+        <BigCol
+          className="d-none d-md-block">
+          <Image 
+            width={"100%"}
+            height={"100%"}
+            src={imageSrc}
+          />
         </BigCol>
-        <BigCol>
-          {
-            teacher && teacher._id ?
-            <div style={{ 
-              padding: 30,
-              maxHeight,
-              overflowY 
-            }}>
-              <h2>О Педагоге</h2>
-              <ReactMarkdown source={teacher.description} />
-            </div> : null
-          }
+        <BigCol
+          className="d-none d-md-block">
+          <div style={{ 
+            maxHeight,
+            overflowY 
+          }}>
+            {description}
+          </div>
         </BigCol>
       </BigRow>
 
