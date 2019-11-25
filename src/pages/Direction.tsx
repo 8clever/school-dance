@@ -14,6 +14,8 @@ import { performanceStore } from "../store/PerformanceStore";
 import { artistStore } from "../store/ArtistStore";
 import _ from "lodash";
 import { CalendarMini } from "../components/CalendarMini";
+import { Direction as DirectionModel } from "../../server/models/Direction";
+import { toJS } from "mobx";
 
 interface DirectionProps {
   id?: string;
@@ -73,7 +75,128 @@ export const typeMap: TypeMap = {
   }
 }
 
-export const DirectionMenu = observer(() => {
+interface getDirectionMenuProps {
+  direction: DirectionModel;
+  key?: string | number;
+  onClickEdit?: () => void;
+}
+
+export const DirectionMenuItem = (props: getDirectionMenuProps) => {
+  const d = props.direction;
+
+  return (
+    <BigButtonCol
+      style={{ fontFamily: "Styled Font" }}
+      key={props.key}
+      selected={d._id === (directionStore.item && directionStore.item._id)}           
+      onClick={() => {
+        routerStore.push("/directions/" + d._id)
+        setTimeout(() => {
+          const $el = document.querySelector(`[data-spy="scroll"] #item-${d._id}`);
+          if ($el) {
+            $el.scrollIntoView({ behavior: "smooth"});
+          }
+        }, 100);
+      }}>
+      <div 
+        id={`item-${d._id}`} 
+        style={{
+          position: "absolute",
+          top: -120
+        }} />
+
+      {d.name}
+
+      {
+        userStore.isAdmin() ?
+        <span className="hovered">
+          <Icon 
+            onClick={e => {
+              e.stopPropagation();
+              props.onClickEdit && props.onClickEdit();
+            }}
+            type={"pencil-alt"} 
+            className="ml-3" 
+          />
+          <Icon 
+            onClick={async e => {
+              e.stopPropagation();
+              await directionStore.removeItemByID(d._id as string);
+              await directionStore.loadItems();
+            }}
+            type={"trash"} 
+            className="ml-3" 
+          />
+        </span> : null
+      }
+    </BigButtonCol>
+  )
+}
+
+interface DirectionMenu {
+  selectedId?: string;
+}
+
+export const DirectionMenuTop = observer((props: DirectionMenu) => {
+  const [ directionEditVisible, setDirectionEditVisible ] = React.useState(false);
+  const [ id, setId ] = React.useState("");
+
+  if (!props.selectedId) return null;
+
+  const mobile: DirectionModel[] = [];
+  const desktop: DirectionModel[] = [];
+
+  _.each(directionStore.itemList, (direction) => {
+    const d = toJS(direction);
+    const existsSelectedMobile = _.find(mobile, _.matches({ _id: props.selectedId }));
+    const existsSelectedDesktop = _.find(desktop, _.matches({ _id: props.selectedId }));
+
+    if (!existsSelectedMobile) {
+      mobile.push(d);
+    }
+
+    if (
+      !existsSelectedDesktop ||
+      (existsSelectedDesktop && desktop.length % 3)) {
+        desktop.push(d);
+    }
+  });
+
+  const getItems = (directions: DirectionModel[]) => {
+    return directions.map((d, idx) => {
+      return DirectionMenuItem({
+        direction: d,
+        key: idx,
+        onClickEdit: () => {
+          setId(d._id as string);
+          setDirectionEditVisible(true);
+        }
+      })
+    })
+  }
+
+  return (
+    <>
+      <div className="d-md-none" data-spy="scroll">
+        {getItems(mobile)}
+      </div>
+
+      <div className="d-none d-md-block">
+        <BigRow maxRowItems={3}>
+          {getItems(desktop)}
+        </BigRow>
+      </div>
+
+      <DirectionEdit 
+        _id={id}
+        visible={directionEditVisible}
+        toggle={() => setDirectionEditVisible(!directionEditVisible)}
+      />
+    </>
+  )
+})
+
+export const DirectionMenu = observer((props: DirectionMenu) => {
   const [ directionEditVisible, setDirectionEditVisible ] = React.useState(false);
   const [ id, setId ] = React.useState("");
 
@@ -81,61 +204,62 @@ export const DirectionMenu = observer(() => {
     directionStore.loadItems();
   }, []);
 
-  return (
-    <>
-      <BigRow 
+  const selectedIdx = (
+    props.selectedId ? 
+    _.findIndex(directionStore.itemList, _.matches({ _id: props.selectedId })) :
+    0
+  )
+  const slicedIdx = selectedIdx + 1;
+  const notEnough = slicedIdx % 3;
+  const notEnoughCount = 3 - notEnough;
+  const slicedDesktopIdx = notEnough ? slicedIdx + notEnoughCount : slicedIdx;
+  const mobile: DirectionModel[] = directionStore.itemList.slice(slicedIdx);
+  const desktop: DirectionModel[] = directionStore.itemList.slice(slicedDesktopIdx);
+  let addDirection = null;
+
+  if (userStore.isAdmin()) {
+    addDirection = (
+      <BigButtonCol 
         style={{
           fontFamily: "Styled Font"
         }}
-        maxRowItems={3}>
-        {
-          directionStore.itemList.map(d => {
-            return (
-              <BigButtonCol 
-                key={d._id as string}
-                selected={d._id === (directionStore.item && directionStore.item._id)}           
-                onClick={() => routerStore.push("/directions/" + d._id)}>
-                {d.name}
+        onClick={() => {
+          setId("")
+          setDirectionEditVisible(true)
+        }}>
+        <Icon type="plus" className="mr-3" /> 
+        ДОБАВИТЬ НАПРАВЛЕНИЕ
+      </BigButtonCol>
+    )
+  }
 
-                {
-                  userStore.isAdmin() ?
-                  <span className="hovered">
-                    <Icon 
-                      onClick={e => {
-                        e.stopPropagation();
-                        setId(d._id as string);
-                        setDirectionEditVisible(true);
-                      }}
-                      type={"pencil-alt"} 
-                      className="ml-3" 
-                    />
-                    <Icon 
-                      onClick={async e => {
-                        e.stopPropagation();
-                        await directionStore.removeItemByID(d._id as string);
-                        await directionStore.loadItems();
-                      }}
-                      type={"trash"} 
-                      className="ml-3" 
-                    />
-                  </span> : null
-                }
-              </BigButtonCol>
-            )
-          })
+  const getItems = (directions: DirectionModel[]) => {
+    return directions.map((d, idx) => {
+      return DirectionMenuItem({
+        direction: d,
+        key: idx,
+        onClickEdit: () => {
+          setId(d._id as string);
+          setDirectionEditVisible(true);
         }
-        {
-          userStore.isAdmin() ?
-          <BigButtonCol 
-            onClick={() => {
-              setId("")
-              setDirectionEditVisible(true)
-            }}>
-            <Icon type="plus" className="mr-3" /> 
-            ДОБАВИТЬ НАПРАВЛЕНИЕ
-          </BigButtonCol> : null
-        }      
-      </BigRow>
+      })
+    })
+  }
+
+  return (
+    <>
+      <div className="d-md-none">
+        {getItems(mobile)}
+        {addDirection}
+      </div>
+
+      <div className="d-none d-md-block">
+        <BigRow 
+          maxRowItems={3}>
+          {getItems(desktop)}
+          {addDirection}
+        </BigRow>
+      </div>
 
       <DirectionEdit 
         _id={id}
@@ -234,6 +358,11 @@ export const Direction = observer((props: DirectionProps) => {
 
   return (
     <Base>
+
+      <DirectionMenuTop 
+        selectedId={props.id}
+      />
+
       <BigRow>
         <BigButtonColMin
           selected={visibleSubmenu}
@@ -345,7 +474,9 @@ export const Direction = observer((props: DirectionProps) => {
         </Col>
       </BigRow>
 
-      <DirectionMenu />
+      <DirectionMenu 
+        selectedId={props.id}
+      />
     </Base>
   )
 })
