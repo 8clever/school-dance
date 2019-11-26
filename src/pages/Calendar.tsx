@@ -13,6 +13,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import { artistStore } from "../store/ArtistStore";
 import { teacherStore } from "../store/TeacherStore";
 import { performanceStore } from "../store/PerformanceStore";
+import { configStore } from "../store/ConfigStore";
 
 const calendarTypes = {
   [CALENDAR_DAY]: {
@@ -47,6 +48,7 @@ export const Calendar = observer((props: CalendarProps) => {
     artistStore.loadItems({});
     teacherStore.loadItems({});
     performanceStore.loadItems({});
+    configStore.getConfig();
   }, []);
 
   React.useEffect(() => {

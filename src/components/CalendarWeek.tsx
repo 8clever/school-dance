@@ -12,6 +12,9 @@ import _ from "lodash";
 
 import leftSVG from "../images/icons/arrow-left.png";
 import rightSVG from "../images/icons/arrow-right.png";
+import { configStore } from "../store/ConfigStore";
+import { userStore } from "../store/UserStore";
+import { TimePicker } from "./CalendarDay";
 
 interface WeekDayProps {
   onClick?: () => void;
@@ -63,6 +66,8 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
   const times = getTimes(startDate.toDate());
   const selectedDirection = _.find(directionStore.itemList, _.matches({ _id: props.selectedDirectionId }));
   
+  if (!configStore.item) return null;
+
   return (
     <BigRow>
       <BigButtonColMin
@@ -110,7 +115,10 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
       </BigButtonColMin>
       {
         times.map((t, idx) => {
-          if (!(idx > 6 && idx < 23)) return null;
+          if (!(
+            idx >= configStore.item.calendarTimeRange.from && 
+            idx <= configStore.item.calendarTimeRange.to
+          )) return null;
 
           const isSameHour = t.time.format("HH") === moment().format("HH");
 
@@ -158,7 +166,35 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
                 top={0}
                 bottom={0}
                 style={colOneOfNine}>
-                &nbsp;
+                {
+                  userStore.isAdmin() &&
+                  idx === configStore.item.calendarTimeRange.from ?
+                  <TimePicker 
+                    onClickPlus={() => {
+                      configStore.item.calendarTimeRange.from += 1;
+                      configStore.save();
+                    }}
+                    onClickMinus={() => {
+                      configStore.item.calendarTimeRange.from -= 1;
+                      configStore.save();
+                    }}
+                  /> : null
+                }
+
+                {
+                  userStore.isAdmin() &&
+                  idx === configStore.item.calendarTimeRange.to ?
+                  <TimePicker 
+                    onClickPlus={() => {
+                      configStore.item.calendarTimeRange.to += 1;
+                      configStore.save();
+                    }}
+                    onClickMinus={() => {
+                      configStore.item.calendarTimeRange.to -= 1;
+                      configStore.save();
+                    }}
+                  /> : null
+                }
               </BigButtonColMin>
             </React.Fragment>
           )

@@ -15,6 +15,7 @@ import { router as leaderRouter } from "../api/controllers/leader";
 import { router as subscribeRouter } from "../api/controllers/subscribe";
 import { router as priceRouter } from "../api/controllers/price";
 import { router as artistRouter } from "../api/controllers/artist";
+import { router as configRouter } from "../api/controllers/config";
 
 export const openapi = (app: Application) => {
     const apiSpecPath = path.join(__dirname, 'api.yml');
@@ -37,6 +38,7 @@ export const openapi = (app: Application) => {
     router.use("/subscribe", subscribeRouter);
     router.use("/price", priceRouter);
     router.use("/artist", artistRouter);
+    router.use("/config", configRouter);
 
     app.use("/api/v1", router, errorHandler);
 

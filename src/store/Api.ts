@@ -14,7 +14,7 @@ export class Api<T> {
   endpoint = "";
 
   stringifyQuery = (obj: object) => {
-    if (!obj) return;
+    if (!obj) return "";
 
     const nested = Object.keys(obj).reduce((memo, k) => {
       if (_.isArray(obj[k]) || _.isPlainObject(obj[k])) {
