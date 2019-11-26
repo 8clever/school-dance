@@ -22,7 +22,7 @@ import { Artists } from "../pages/Artists";
 const parse = (path: string) => {
   if (!path) return {};
   path = path.replace("?", "");
-  return qs.parse(path);
+  return qs.parse(path) as any;
 }
 
 export const Router = () => {
@@ -41,9 +41,9 @@ export const Router = () => {
       <Route exact path="/leader/:id" render={(match) => <Leaders id={match.match.params.id} />}/>
       <Route exact path="/subscribe" render={(match) => <Subscribe />}/>
       <Route exact path="/subscribe/:id" render={(match) => <Prices id={match.match.params.id} />}/>
-      <Route exact path="/calendar" render={(match) => <Calendar {...parse(match.location.search) as { date: string, type: string }} />}/>
+      <Route exact path="/calendar" render={(match) => <Calendar {...parse(match.location.search)} />}/>
       <Route exact path="/auth" render={match => <Auth />} />
-      <Route exact path="/search" render={match => <Search {...parse(match.location.search) as { text?: string }} />} />
+      <Route exact path="/search" render={match => <Search {...parse(match.location.search)} />} />
       <Route exact path="/artists" render={match => <Artists />} />
       <Route exact path="/performance" render={match => <Performance />} />
       
