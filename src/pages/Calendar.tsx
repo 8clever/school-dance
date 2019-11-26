@@ -32,6 +32,7 @@ const calendarTypes = {
 interface CalendarProps {
   date: string;
   type: string;
+  directionId: string;
 }
 
 export const Calendar = observer((props: CalendarProps) => {
@@ -39,7 +40,7 @@ export const Calendar = observer((props: CalendarProps) => {
   const [ date, setDate ] = React.useState(new Date());
   const [ type, setType ] = React.useState(CALENDAR_WEEK);
   const [ isVisible, setIsVisible ] = React.useState(false);
-  const [ selectedDirectionId, setSelectedDirectionId ] = React.useState("");
+  const [ selectedDirectionId, setSelectedDirectionId ] = React.useState(props.directionId);
 
   React.useEffect(() => {
     directionStore.loadItems({});

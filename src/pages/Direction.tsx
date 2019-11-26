@@ -13,9 +13,9 @@ import { teacherStore } from "../store/TeacherStore";
 import { performanceStore } from "../store/PerformanceStore";
 import { artistStore } from "../store/ArtistStore";
 import _ from "lodash";
-import { CalendarMini } from "../components/CalendarMini";
 import { Direction as DirectionModel } from "../../server/models/Direction";
 import { toJS } from "mobx";
+import { CALENDAR_MONTH } from "../components/CalendarHelpers";
 
 interface DirectionProps {
   id?: string;
@@ -204,11 +204,7 @@ export const DirectionMenu = observer((props: DirectionMenu) => {
     directionStore.loadItems();
   }, []);
 
-  const selectedIdx = (
-    props.selectedId ? 
-    _.findIndex(directionStore.itemList, _.matches({ _id: props.selectedId })) :
-    0
-  )
+  const selectedIdx = _.findIndex(directionStore.itemList, _.matches({ _id: props.selectedId }));
   const slicedIdx = selectedIdx + 1;
   const notEnough = slicedIdx % 3;
   const notEnoughCount = 3 - notEnough;
@@ -272,19 +268,12 @@ export const DirectionMenu = observer((props: DirectionMenu) => {
 
 export const Direction = observer((props: DirectionProps) => {
 
-  const [ date, setDate ] = React.useState(new Date());
   const [ visibleDescription, setVisibleDescription ] = React.useState(false);
   const [ visibleSubmenu, setVisibleSubmenu ] = React.useState(false);
   const [ element, setElement ] = React.useState<Element>({ images: [], title: "", description: "" });
   const [ submenuOptions, setSubmenuOptions ] = React.useState<Element[]>([]);
-  const [ calendarIsVisible, setCalendarIsVisible ] = React.useState(false);
 
   directionStore.defaults();
-
-  React.useEffect(() => {
-    setCalendarIsVisible(false);
-    setDate(new Date());
-  }, [routerStore.history.location.pathname])
 
   React.useEffect(() => {
     setVisibleDescription(false);
@@ -346,16 +335,6 @@ export const Direction = observer((props: DirectionProps) => {
     </div>
   )
 
-  const calendar = (
-    <CalendarMini 
-      date={date}
-      onChange={(date) => {
-        setDate(date)
-      }}
-      direction={directionStore.item}
-    />
-  )
-
   return (
     <Base>
 
@@ -385,20 +364,11 @@ export const Direction = observer((props: DirectionProps) => {
 
         <BigButtonColMin 
           onClick={() => {
-            setCalendarIsVisible(!calendarIsVisible)
+            routerStore.push(`/calendar?type=${CALENDAR_MONTH}&directionId=${props.id}`)
           }}
-          selected={calendarIsVisible}
           md={4}>
           РАСПИСАНИЕ
         </BigButtonColMin>
-
-        {
-          calendarIsVisible ?
-          <div 
-            className="d-md-none w-100">
-            {calendar}
-          </div> : null
-        }
 
         <BigButtonColMin 
           selected={visibleDescription}
@@ -422,20 +392,6 @@ export const Direction = observer((props: DirectionProps) => {
 
       </BigRow>
       
-      {
-        calendarIsVisible ?
-        <Row className="relative d-none d-md-block" noGutters>
-          <Col 
-            style={{
-              zIndex: 1000
-            }}
-            className="absolute-container offset-md-4" 
-            md={4}>
-            {calendar}
-          </Col>  
-        </Row> : null
-      }
-
       <BigHr />
 
       {/** direction view */}
