@@ -33,7 +33,9 @@ export const Footer = () => {
   return (
     <div className="bg-gray">
       <BigRow>
-        <BigButtonColMin onClick={() => routerStore.push("/")} md={4}>
+        <BigButtonColMin 
+          className="d-none d-md-block"
+          onClick={() => routerStore.push("/")} md={4}>
           <Logo width={250} />
         </BigButtonColMin>
         <Col md={4}>

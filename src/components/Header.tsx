@@ -49,7 +49,10 @@ export const Header = observer(() => {
           onClick={() => {
             routerStore.push("/");
           }}
-          style={bigColStyle}
+          style={{
+            ...bigColStyle,
+            boxShadow: "0px 1px 0px 0px black"
+          }}
           xs={6}>
           <FlexCol align="center">
             <Logo 
@@ -96,11 +99,15 @@ export const Header = observer(() => {
         </BigCol>
         <BigCol 
           xs={6}
-          style={bigColStyle}
+          style={{
+            ...bigColStyle,
+            borderLeft: "none"
+          }}
           className="text-right">
           <FlexCol align="center" justify="end">
             <ButtonGroup>
               <Button 
+                className="d-none d-md-block"
                 style={{
                   padding: "12px 17px",
                   fontFamily: "Roboto"
@@ -109,6 +116,7 @@ export const Header = observer(() => {
                 РУ
               </Button>
               <Button
+                className="d-none d-md-block"
                 style={{
                   padding: "12px 15px"
                 }}
