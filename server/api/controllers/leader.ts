@@ -9,8 +9,8 @@ export const router = express.Router()
     }).catch(next);
   })
   .get("/items", (req, res, next) => {
-    const { query } = req.query;
-    leaderService.getLeader(query).then(data => {
+    const { query, sort, limit } = req.query;
+    leaderService.getLeader(query, sort, limit).then(data => {
       res.json(data);
     }).catch(next);
   })

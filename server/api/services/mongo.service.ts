@@ -26,7 +26,7 @@ export class MongoService<T extends MongoLike> {
     return data.ops[0]._id;
   }
 
-  _find = async (query: RootQuerySelector<T>, sort?: object) => {
+  _find = async (query: RootQuerySelector<T>, sort?: object, limit?: number) => {
     if (
       query._id && 
       query._id.$in &&
@@ -44,6 +44,10 @@ export class MongoService<T extends MongoLike> {
 
     if (sort) {
       cursor.sort(sort);
+    }
+
+    if (limit) {
+      cursor.limit(Number(limit));
     }
     
     const [

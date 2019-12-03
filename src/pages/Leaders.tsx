@@ -5,7 +5,6 @@ import { leaderStore } from "../store/LeaderStore";
 import { userStore } from "../store/UserStore";
 import _ from "lodash";
 import { routerStore } from "../store/RouterStore";
-import { toJS } from "mobx";
 import { imageStore } from "../store/ImageStore";
 import { Col } from "reactstrap";
 import ReactMarkdown from "react-markdown";
@@ -28,8 +27,12 @@ export const Leaders = observer((props: LeaderProps) => {
   React.useEffect(() => {
     leaderStore.loadItems({}).then(() => {
       const t = _.find(leaderStore.itemList, _.matches({ _id: props.id }));
-      const list = toJS(leaderStore.itemList);
-      leaderStore.item = t || list[0];
+      leaderStore.item = t;
+
+      const $el = document.querySelector(`[data-spy="scroll"] #image`);
+      if ($el) {
+        $el.scrollIntoView({ behavior: "smooth"});
+      }
     });
   }, [props.id]);
 
@@ -41,45 +44,94 @@ export const Leaders = observer((props: LeaderProps) => {
     ""
   )
 
+  const description = (
+    <div style={{ padding: 30 }}>
+      <h2>О Руководителе</h2>
+      {
+        element ?
+        <ReactMarkdown source={element.description} /> :
+        null
+      }
+    </div>
+  )
+
   const menuList = list.map(el => {
+    const selected = el._id === (element && element._id);
+
     return (
-      <BigButtonColMin
-        selected={el._id === (element && element._id)}
-        md={12}
-        onClick={() => {
-          routerStore.push(`/leader/${el._id}`);
-          const $el = document.querySelector(`[data-spy="scroll"] #image`);
-          if ($el) {
-            $el.scrollIntoView({ behavior: "smooth"});
+      <React.Fragment key={el._id as string}>
+        <BigButtonColMin
+          selected={selected}
+          md={12}
+          onClick={() => {
+            if (selected) {
+              routerStore.push(`/leaders`);
+              return;
+            }
+
+            routerStore.push(`/leader/${el._id}`);
+          }}>
+          {el.fullName}
+          {
+            userStore.isAdmin() ?
+            <span className="hovered">
+              <Icon
+                onClick={e => {
+                  e.stopPropagation();
+                  setId(el._id as string);
+                  setEditVisible(true)
+                }}
+                type="pencil-alt" 
+                className="ml-3"
+              />
+              <Icon
+                onClick={async e => {
+                  e.stopPropagation();
+                  await leaderStore.removeItemByID(el._id as string)
+                  await leaderStore.loadItems();
+                  routerStore.push("/leaders");
+                }}
+                type="trash" 
+                className="ml-3"
+              />
+            </span> : null
           }
-        }}
-        key={el._id as string}>
-        {el.fullName}
+        </BigButtonColMin>
+
         {
-          userStore.isAdmin() ?
-          <span className="hovered">
-            <Icon
-              onClick={e => {
-                e.stopPropagation();
-                setId(el._id as string);
-                setEditVisible(true)
+          selected ?
+          <>
+            <div 
+              style={{
+                border: "1px solid black"
               }}
-              type="pencil-alt" 
-              className="ml-3"
-            />
-            <Icon
-              onClick={async e => {
-                e.stopPropagation();
-                await leaderStore.removeItemByID(el._id as string)
-                await leaderStore.loadItems();
-                routerStore.push("/leaders");
+              className="d-md-none w-100 relative">
+              <div 
+                id="image" 
+                style={{
+                  position: "absolute",
+                  top: -190
+                }} 
+              />
+              <Image 
+                width="100vw"
+                height="200vw"
+                src={imageSrc}
+              />
+            </div>
+
+            <div 
+              style={{
+                borderLeft: "1px solid black"
               }}
-              type="trash" 
-              className="ml-3"
-            />
-          </span> : null
+              className="d-md-none w-100">
+              {description}
+            </div>
+          </>
+          : null
         }
-      </BigButtonColMin>
+
+      </React.Fragment>
     )
   });
 
@@ -100,46 +152,20 @@ export const Leaders = observer((props: LeaderProps) => {
     )
   }
 
-  const description = (
-    <div style={{ padding: 30 }}>
-      <h2>О Руководителе</h2>
-      {
-        element ?
-        <ReactMarkdown source={element.description} /> :
-        null
-      }
-    </div>
-  )
+  
 
   return (
     <Base>
       <BigRow>
+
+        {/** mobile */}
         <div 
+          data-spy="scroll"
           className="d-md-none w-100">
           {menuList}
         </div>
 
-        <div 
-          data-spy="scroll"
-          className="d-md-none w-100 relative">
-          <div 
-            id="image" 
-            style={{
-              position: "absolute",
-              top: -125
-            }} 
-          />
-          <Image 
-            width="100vw"
-            height="200vw"
-            src={imageSrc}
-          />
-        </div>
-
-        <div className="d-md-none w-100">
-          {description}
-        </div>
-
+        {/** desktop */}
         <Col 
           className="d-none d-md-block"
           md={4}
