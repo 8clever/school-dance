@@ -8,7 +8,7 @@ import { observer } from "mobx-react-lite";
 import { PriceEdit } from "../components/PriceEdit";
 import { priceStore } from "../store/PriceStore";
 import { Carousel } from "../components/Carousel";
-import { SubscribeMenu } from "./Subscribe";
+import { SubscribeMenu, SubscribeMenuTop } from "./Subscribe";
 
 interface PricesProps {
   id: string;
@@ -103,6 +103,11 @@ export const Prices = observer((props: PricesProps) => {
 
   return (
     <Base>
+
+      <SubscribeMenuTop 
+        active={props.id}
+      />
+
       <BigRow>
         <BigCol md={8}>
           <Carousel 
@@ -123,7 +128,9 @@ export const Prices = observer((props: PricesProps) => {
         {prices}
       </div>
 
-      <SubscribeMenu active={props.id} />
+      <SubscribeMenu 
+        active={props.id} 
+      />
     </Base>
   )
 })

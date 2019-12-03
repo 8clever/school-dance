@@ -14,7 +14,6 @@ import { performanceStore } from "../store/PerformanceStore";
 import { artistStore } from "../store/ArtistStore";
 import _ from "lodash";
 import { Direction as DirectionModel } from "../../server/models/Direction";
-import { toJS } from "mobx";
 import { CALENDAR_MONTH } from "../components/CalendarHelpers";
 
 interface DirectionProps {
@@ -75,13 +74,13 @@ export const typeMap: TypeMap = {
   }
 }
 
-interface getDirectionMenuProps {
+interface DirectionMenuItemProps {
   direction: DirectionModel;
   key?: string | number;
   onClickEdit?: () => void;
 }
 
-export const DirectionMenuItem = (props: getDirectionMenuProps) => {
+export const DirectionMenuItem = (props: DirectionMenuItemProps) => {
   const d = props.direction;
 
   return (
@@ -133,42 +132,31 @@ export const DirectionMenuItem = (props: getDirectionMenuProps) => {
   )
 }
 
-interface DirectionMenu {
+interface DirectionMenuProps {
   selectedId?: string;
 }
 
-export const DirectionMenuTop = observer((props: DirectionMenu) => {
+export const DirectionMenuTop = observer((props: DirectionMenuProps) => {
   const [ directionEditVisible, setDirectionEditVisible ] = React.useState(false);
   const [ id, setId ] = React.useState("");
 
   if (!props.selectedId) return null;
 
-  const mobile: DirectionModel[] = [];
-  const desktop: DirectionModel[] = [];
-
-  _.each(directionStore.itemList, (direction) => {
-    const d = toJS(direction);
-    const existsSelectedMobile = _.find(mobile, _.matches({ _id: props.selectedId }));
-    const existsSelectedDesktop = _.find(desktop, _.matches({ _id: props.selectedId }));
-
-    if (!existsSelectedMobile) {
-      mobile.push(d);
-    }
-
-    if (
-      !existsSelectedDesktop ||
-      (existsSelectedDesktop && desktop.length % 3)) {
-        desktop.push(d);
-    }
+  const { mobile, desktop } = getMenuTop({
+    ids: directionStore.itemList.map(i => i._id as string),
+    selected: props.selectedId
   });
 
-  const getItems = (directions: DirectionModel[]) => {
-    return directions.map((d, idx) => {
+  const getItems = (ids: string[]) => {
+    return ids.map((id, idx) => {
+      const direction = _.find(directionStore.itemList, _.matches({ _id: id }));
+      if (!direction) return;
+
       return DirectionMenuItem({
-        direction: d,
+        direction,
         key: idx,
         onClickEdit: () => {
-          setId(d._id as string);
+          setId(direction._id as string);
           setDirectionEditVisible(true);
         }
       })
@@ -196,7 +184,54 @@ export const DirectionMenuTop = observer((props: DirectionMenu) => {
   )
 })
 
-export const DirectionMenu = observer((props: DirectionMenu) => {
+export const getMenuTop = (props: {
+  selected?: string;
+  ids: string[];
+}) => {
+  const mobile: string[] = [];
+  const desktop: string[] = [];
+
+  _.each(props.ids, (id => {
+    const existsSelectedMobile = _.find(mobile, i => i === props.selected);
+    const existsSelectedDesktop = _.find(desktop, i => i === props.selected);
+
+    if (!existsSelectedMobile) {
+      mobile.push(id);
+    }
+
+    if (
+      !existsSelectedDesktop ||
+      (existsSelectedDesktop && desktop.length % 3)) {
+        desktop.push(id);
+    }
+  }));
+
+  return {
+    mobile,
+    desktop
+  }
+}
+
+export const getMenu = (props: {
+  selected?: string;
+  ids: string[]
+}) => {
+  const selectedIdx = _.findIndex(props.ids, id => id === props.selected);
+  const slicedIdx = selectedIdx + 1;
+  const notEnough = slicedIdx % 3;
+  const notEnoughCount = 3 - notEnough;
+  const slicedDesktopIdx = notEnough ? slicedIdx + notEnoughCount : slicedIdx;
+  const mobile: string[] = props.ids.slice(slicedIdx);
+  const desktop: string[] = props.ids.slice(slicedDesktopIdx);
+  return {
+    mobile,
+    desktop
+  }
+}
+
+
+
+export const DirectionMenu = observer((props: DirectionMenuProps) => {
   const [ directionEditVisible, setDirectionEditVisible ] = React.useState(false);
   const [ id, setId ] = React.useState("");
 
@@ -204,13 +239,10 @@ export const DirectionMenu = observer((props: DirectionMenu) => {
     directionStore.loadItems();
   }, []);
 
-  const selectedIdx = _.findIndex(directionStore.itemList, _.matches({ _id: props.selectedId }));
-  const slicedIdx = selectedIdx + 1;
-  const notEnough = slicedIdx % 3;
-  const notEnoughCount = 3 - notEnough;
-  const slicedDesktopIdx = notEnough ? slicedIdx + notEnoughCount : slicedIdx;
-  const mobile: DirectionModel[] = directionStore.itemList.slice(slicedIdx);
-  const desktop: DirectionModel[] = directionStore.itemList.slice(slicedDesktopIdx);
+  const { mobile, desktop } = getMenu({
+    ids:  directionStore.itemList.map(i => i._id as string),
+    selected: props.selectedId
+  })
   let addDirection = null;
 
   if (userStore.isAdmin()) {
@@ -229,13 +261,16 @@ export const DirectionMenu = observer((props: DirectionMenu) => {
     )
   }
 
-  const getItems = (directions: DirectionModel[]) => {
-    return directions.map((d, idx) => {
+  const getItems = (ids: string[]) => {
+    return ids.map((id, idx) => {
+      const direction = _.find(directionStore.itemList, _.matches({ _id: id }));
+      if (!direction) return;
+
       return DirectionMenuItem({
-        direction: d,
+        direction,
         key: idx,
         onClickEdit: () => {
-          setId(d._id as string);
+          setId(direction._id as string);
           setDirectionEditVisible(true);
         }
       })
