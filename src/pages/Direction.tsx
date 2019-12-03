@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { Base, BigRow, BigButtonCol, Icon, BigButtonColMin, BigHr } from "../components";
+import { Base, BigRow, BigButtonCol, Icon, BigButtonColMin, BigHr, FlexCol } from "../components";
 import { directionStore } from "../store/DirectionStore";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
@@ -330,9 +330,20 @@ export const Direction = observer((props: DirectionProps) => {
   });
 
   const description = (
-    <div className="p-5">
-      <MD source={element.description} />
-    </div>
+    <FlexCol justify="between" column>
+      <div className="p-5">
+        <MD source={element.description} />
+      </div>
+      <BigRow>
+        <BigButtonColMin 
+          style={{
+            borderLeft: "none"
+          }}
+          md={12}>
+          КУПИТЬ БИЛЕТ
+        </BigButtonColMin>
+      </BigRow>
+    </FlexCol>
   )
 
   return (
@@ -398,7 +409,11 @@ export const Direction = observer((props: DirectionProps) => {
       <BigRow>
         <Col md={12} xs={12}>
 
-          <div className="absolute-container d-none d-md-block">
+          <div 
+            style={{
+              zIndex: 1000
+            }}
+            className="absolute-container d-none d-md-block">
             <Row noGutters className="h-100">
               {
                 visibleSubmenu ?
