@@ -20,8 +20,8 @@ export const StudioMenu = (props: StudioMenuProps) => {
 
   React.useEffect(() => {
     Promise.all([
-      teacherStore.getItems({}, {}, 1),
-      leaderStore.getItems({}, { fullName: 1}, 1)
+      teacherStore.getItems({}, { fullName: 1 }, 1),
+      leaderStore.getItems({}, {}, 1)
     ]).then(([ teacher, leader ]) => {
       if (teacher.count) {
         setTeacher(teacher.list[0]);
