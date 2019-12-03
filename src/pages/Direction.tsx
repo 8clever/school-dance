@@ -369,15 +369,18 @@ export const Direction = observer((props: DirectionProps) => {
       <div className="p-5">
         <MD source={element.description} />
       </div>
-      <BigRow>
-        <BigButtonColMin 
-          style={{
-            borderLeft: "none"
-          }}
-          md={12}>
-          КУПИТЬ БИЛЕТ
-        </BigButtonColMin>
-      </BigRow>
+      {
+        directionStore.item.submenu.type === "performance" ?
+        <BigRow>
+          <BigButtonColMin 
+            style={{
+              borderLeft: "none"
+            }}
+            md={12}>
+            КУПИТЬ БИЛЕТ
+          </BigButtonColMin>
+        </BigRow> : null
+      }
     </FlexCol>
   )
 
