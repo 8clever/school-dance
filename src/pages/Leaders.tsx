@@ -25,7 +25,7 @@ export const Leaders = observer((props: LeaderProps) => {
   const [ id, setId ] = React.useState("");
 
   React.useEffect(() => {
-    leaderStore.loadItems({}).then(() => {
+    leaderStore.loadItems({}, { fullName: 1 }).then(() => {
       const t = _.find(leaderStore.itemList, _.matches({ _id: props.id }));
       leaderStore.item = t;
 
