@@ -93,6 +93,7 @@ export const SubscribeMenuTop = observer((props: SubscribeMenuProps) => {
       if (!subscribe) return;
 
       return SubscribeMenuItem({
+        active: props.active,
         subscribe,
         key: idx,
         onClick: () => {
