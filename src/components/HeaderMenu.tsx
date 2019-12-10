@@ -100,14 +100,17 @@ export const HeaderMenu = () => {
             </p>
 
             <div style={{ 
-              marginTop: 70,
-              display: "flex" 
+              marginTop: 70
             }}>
               <BrandLogo src={vk.img} url={vk.url} />
               <BrandLogo src={facebook.img} url={facebook.url} />
               <BrandLogo src={instagramm.img} url={instagramm.url} />
               <BrandLogo src={youtube.img} url={youtube.url} />
               <BrandLogo src={whatsapp.img} url={whatsapp.url} />
+
+              <div style={{ float: "right" }}>
+                {menuStore.getLocalizedLang(menuStore.lang)}
+              </div>
             </div>
           </div>
         </BigCol>

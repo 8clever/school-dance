@@ -113,7 +113,7 @@ export const Header = observer(() => {
                   fontFamily: "Roboto"
                 }}
                 color="link">
-                РУ
+                {menuStore.getLocalizedLang(menuStore.lang)}
               </Button>
               <Button
                 className="d-none d-md-block"
