@@ -15,6 +15,7 @@ import { artistStore } from "../store/ArtistStore";
 import _ from "lodash";
 import { Direction as DirectionModel } from "../../server/models/Direction";
 import { CALENDAR_MONTH } from "../components/CalendarHelpers";
+import { classStore } from "../store/ClassStore";
 
 interface DirectionProps {
   id?: string;
@@ -71,6 +72,18 @@ export const typeMap: TypeMap = {
       }
     }),
     loadItems: performanceStore.loadItems
+  },
+  classes: {
+    name: "КЛАССЫ",
+    getItems: () => classStore.itemList.map(i => {
+      return {
+        _id: i._id as string,
+        images: i.images as string[],
+        title: i.name,
+        description: i.description
+      }
+    }),
+    loadItems: classStore.loadItems
   }
 }
 

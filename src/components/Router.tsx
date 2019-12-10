@@ -18,6 +18,7 @@ import qs from "querystring";
 import { userStore } from "../store/UserStore";
 import { Search } from "../pages/Search";
 import { Artists } from "../pages/Artists";
+import { Classes } from "../pages/Classes";
 
 const parse = (path: string) => {
   if (!path) return {};
@@ -46,6 +47,7 @@ export const Router = () => {
       <Route exact path="/search" render={match => <Search {...parse(match.location.search)} />} />
       <Route exact path="/artists" render={match => <Artists />} />
       <Route exact path="/performance" render={match => <Performance />} />
+      <Route exact path="/classes" render={match => <Classes />} />
       
       <Route exact path="/logout" render={() => {
         userStore.logout().then(() => {

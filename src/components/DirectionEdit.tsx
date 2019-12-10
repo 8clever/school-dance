@@ -146,9 +146,24 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
                 }}
                 value={directionStore.item.submenu.type} 
                 type="select">
-                <option value="teachers">Педагоги</option>
-                <option value="artists">Артисты</option>
-                <option value="performance">Спектакли</option>
+                {
+                  _.reduce(typeMap, (memo, v, k) => {
+                    memo.push({
+                      label: v.name,
+                      value: k
+                    });
+                    return memo;
+                  }, [] as Array<{ 
+                    value: string; 
+                    label: string 
+                  }>).map(i => {
+                    return (
+                      <option key={i.value} value={i.value}>
+                        {i.label}
+                      </option>
+                    )
+                  })
+                }
               </Input>
             </FormGroup>
 
