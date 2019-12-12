@@ -103,12 +103,6 @@ export const DirectionMenuItem = (props: DirectionMenuItemProps) => {
       selected={d._id === (directionStore.item && directionStore.item._id)}           
       onClick={() => {
         routerStore.push("/directions/" + d._id)
-        setTimeout(() => {
-          const $el = document.querySelector(`[data-spy="scroll"] #item-${d._id}`);
-          if ($el) {
-            $el.scrollIntoView({ behavior: "smooth"});
-          }
-        }, 100);
       }}>
       <div 
         id={`item-${d._id}`} 
@@ -334,6 +328,18 @@ export const Direction = observer((props: DirectionProps) => {
         description: directionStore.item.desc
       });
     });
+
+    setTimeout(() => {
+      const $selectedEl = document.querySelector(`[data-spy="scroll"] #item-${props.id}`);
+      const $headerEl = document.querySelector(`[data-spy="scroll"].header-anchor`);
+      if ($selectedEl) {
+        $selectedEl.scrollIntoView({ behavior: "smooth"});
+      }
+  
+      if ($headerEl) {
+        $headerEl.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100);
   }, [props.id]);
 
   const type = typeMap[directionStore.item && directionStore.item.submenu.type];
@@ -404,6 +410,15 @@ export const Direction = observer((props: DirectionProps) => {
         selectedId={props.id}
       />
 
+      <div 
+        data-spy="scroll"
+        className={"d-none d-md-block header-anchor"}
+        style={{
+          marginTop: -64,
+          position: "absolute"
+        }}
+      />
+      
       <BigRow>
         <BigButtonColMin
           selected={visibleSubmenu}
