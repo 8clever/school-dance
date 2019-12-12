@@ -67,6 +67,7 @@ $fontWeightBold: 600;
 
 .menu-container {
   position: absolute;
+  z-index: 10000;
   width: 100%;
 }
 
