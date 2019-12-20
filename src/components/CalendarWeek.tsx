@@ -78,8 +78,7 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
         onClick={() => {
           const prev = startDate.clone().add(-1, "day").toDate();
           setDate(prev);
-        }}
-        bottom={0}>
+        }}>
         <img src={leftSVG} width={15} height={15} />
       </BigButtonColMin>
       <Col style={col7OfNine}>
@@ -109,8 +108,7 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
         onClick={() => {
           const next = endDate.clone().add(1, "day").toDate();
           setDate(next);
-        }}
-        bottom={0}>
+        }}>
         <img src={rightSVG} width={15} height={15} />
       </BigButtonColMin>
       {
@@ -129,9 +127,7 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
                   ...stickyLeft,
                   ...colOneOfNine
                 }}
-                selected={isSameHour}
-                top={0}
-                bottom={0}>
+                selected={isSameHour}>
                 {t.time.format("HH:mm")}
               </BigButtonColMin>
               <Col style={col7OfNine}>
@@ -163,8 +159,6 @@ export const CalendarWeek = observer((props: CalendarInnerProps) => {
                 </div>
               </Col>
               <BigButtonColMin 
-                top={0}
-                bottom={0}
                 style={colOneOfNine}>
                 {
                   userStore.isAdmin() &&

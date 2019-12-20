@@ -171,7 +171,8 @@ export const Calendar = observer((props: CalendarProps) => {
         </Col>
         <Col 
           style={{
-            overflow: "auto",
+            overflowY: "hidden",
+            overflowX: "auto"
           }}
           md={menuVisible ? 8 : 12 }>
           <div style={{

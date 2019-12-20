@@ -55,7 +55,6 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
           const prev = moment(date).add(-1, "day").toDate();
           setDate(prev);
         }}
-        bottom={0}
         xs={2}
         md={1}>
         <img src={leftSVG} width={15} height={15} />
@@ -73,7 +72,6 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
           const next = moment(date).add(1, "day").toDate();
           setDate(next);
         }}
-        bottom={0}
         xs={2}
         md={1}>
         <img src={rightSVG} width={15} height={15} />
@@ -95,8 +93,6 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
             <React.Fragment key={idx}>
               <BigButtonColMin
                 selected={isCurrentHour}
-                top={0}
-                bottom={0}
                 xs={2}
                 md={1}>
                 {t.time.format("HH:mm")}
@@ -112,8 +108,6 @@ export const CalendarDay = observer((props: CalendarInnerProps) => {
                 </FlexCol>
               </BigCol>
               <BigButtonColMin 
-                top={0}
-                bottom={0}
                 xs={2}
                 md={1}>
                 {

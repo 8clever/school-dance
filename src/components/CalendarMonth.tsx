@@ -40,8 +40,7 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
           onClick={() => {
             const prev = moment(date).startOf("month").add(-1, "day").toDate();
             setDate(prev);
-          }}
-          bottom={0}>
+          }}>
           <img src={leftSVG} width={15} height={15} />
         </BigButtonColMin>
         <Col style={col7OfNine}>
@@ -66,15 +65,14 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
           onClick={() => {
             const next = moment(date).endOf("month").add(1, "day").toDate();
             setDate(next);
-          }}
-          bottom={0}>
+          }}>
           <img src={rightSVG} width={15} height={15} />
         </BigButtonColMin>
         {
           month.map((m, idx) => {
             return (
               <React.Fragment key={idx}>
-                <BigButtonColMin top={0} bottom={0} style={colOneOfNine} />
+                <BigButtonColMin style={colOneOfNine} />
                 <Col style={col7OfNine}>
                   <FlexCol>
                     {
@@ -112,7 +110,7 @@ export const CalendarMonth = observer((props: CalendarInnerProps) => {
                     }
                   </FlexCol>
                 </Col>
-                <BigButtonColMin top={0} bottom={0} style={colOneOfNine} />
+                <BigButtonColMin style={colOneOfNine} />
               </React.Fragment>
             )
           })
