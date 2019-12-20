@@ -1,6 +1,5 @@
 import React from "react";
 import { Carousel as CarouselFactory, CarouselItem, CarouselControl } from "reactstrap";
-import { useResizeObserver } from "../effects/useResizeObserver";
 import emptyPNG from "../images/empty.png";
 
 interface ImageItem {
@@ -19,7 +18,8 @@ interface ImageProps {
 
 export const Image = (props: ImageProps) => {
   return (
-    <div style={{ 
+    <div 
+      style={{ 
       width: props.width, 
       height: props.height,
       background: `
@@ -32,29 +32,12 @@ export const Image = (props: ImageProps) => {
 
 export const Carousel = (props: CarouselProps) => {
   const [ activeIndex, setIndex ] = React.useState(0);
-  const [ width,, refCallback ] = useResizeObserver();
-
+  const [ height, setHeight ] = React.useState(0);
   const items = props.items.length ? props.items : [
     {
       src: emptyPNG
     }
   ]
-
-  const slides = items.map((item, idx) => {
-    if (!width) return <React.Fragment key={idx}></React.Fragment>;
-
-    const height = width * 0.5;
-    
-    return (
-      <CarouselItem key={idx} >
-        <Image 
-          width={width}
-          height={height}
-          src={item.src}
-        />
-      </CarouselItem>
-    );
-  });
 
   const next = () => {
     if (props.items[activeIndex + 1]) {
@@ -73,14 +56,27 @@ export const Carousel = (props: CarouselProps) => {
   }
 
   return (
-    <div 
-      ref={refCallback}>
+    <div ref={node => {
+      if (!node) return;
+      const height = node.getBoundingClientRect().width * 0.5;
+      setHeight(height);
+    }}>
       <CarouselFactory
         activeIndex={activeIndex}
         next={next}
         previous={prev}
       >
-        {slides}
+        {items.map((item, idx) => {
+          return (
+            <CarouselItem key={idx}>
+              <Image 
+                width={"100%"}
+                height={height}
+                src={item.src}
+              />
+            </CarouselItem>
+          )
+        })}
         <CarouselControl 
           direction="prev" 
           directionText="Previous" 
