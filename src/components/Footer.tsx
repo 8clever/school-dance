@@ -1,5 +1,5 @@
 import React from "react";
-import { BigRow, BigButtonColMin, BigHr } from "./Big";
+import { BigRow, BigButtonColMin, BigHr, BigButtonCol, getShadowBoxStyle } from "./Big";
 import { Col } from "reactstrap";
 import { Logo } from "./Logo";
 import { routerStore } from "../store/RouterStore";
@@ -33,11 +33,11 @@ export const Footer = () => {
   return (
     <div className="bg-gray">
       <BigRow>
-        <BigButtonColMin 
+        <BigButtonCol
           className="d-none d-md-block"
           onClick={() => routerStore.push("/")} md={4}>
           <Logo width={250} />
-        </BigButtonColMin>
+        </BigButtonCol>
         <Col md={4}>
           <BigRow>
             <BigButtonColMin 
@@ -59,10 +59,12 @@ export const Footer = () => {
               Направления
             </BigButtonColMin>
             <BigButtonColMin  
+              style={getShadowBoxStyle({ top: 1, left: 1, right: 1, bottom: 0 })}
               onClick={() => routerStore.push("/contacts")}>
               Контакты
             </BigButtonColMin>
             <BigButtonColMin
+              style={getShadowBoxStyle({ top: 1, left: 1, right: 1, bottom: 0 })}
               onClick={() => routerStore.push("/subscribe")}>
               Цены
             </BigButtonColMin>

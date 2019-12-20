@@ -20,7 +20,8 @@ export const BigButtonColMin = (p: BigButtonCellProps) => {
   const props = { ...p };
   props.size = props.size || "";
   props.md = props.md || 6;
-  props.padding = props.padding || "20px 0";
+  props.padding = props.padding || "10px 0";
+  props.height = props.height || 65
 
   return (
     <BigButtonCol {...props} />
@@ -52,7 +53,8 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
           block={props.block}
           onClick={props.onClick}
           style={{
-            padding: props.padding || "100px 20px"
+            height: props.height || 195,
+            padding: props.padding || "60px 20px"
           }}
           href={props.href}
           size={size}
