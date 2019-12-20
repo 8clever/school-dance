@@ -14,7 +14,6 @@ import { observer } from "mobx-react-lite";
 import { routerStore } from "../store/RouterStore";
 import { menuStore } from "../store/MenuStore";
 
-import schedulePNG from "../images/icons/schedule.png";
 import zalupaSVG from "../images/icons/zalupa.svg";
 import menuPNG from "../images/icons/menu.png";
 import closePNG from "../images/icons/close.png";
@@ -106,29 +105,6 @@ export const Header = observer(() => {
           className="text-right">
           <FlexCol align="center" justify="end">
             <ButtonGroup>
-              <Button 
-                className="d-none d-md-block"
-                style={{
-                  padding: "12px 17px",
-                  fontFamily: "Roboto"
-                }}
-                color="link">
-                {menuStore.getLocalizedLang(menuStore.lang)}
-              </Button>
-              <Button
-                className="d-none d-md-block"
-                style={{
-                  padding: "12px 15px"
-                }}
-                onClick={() => {
-                  routerStore.push("/calendar")
-                }}
-                color="link">
-                <img 
-                  width={34}
-                  src={schedulePNG} 
-                />
-              </Button>
               <Button 
                 style={{
                   padding: "12px 15px"
