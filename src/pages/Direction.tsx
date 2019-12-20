@@ -424,7 +424,6 @@ export const Direction = observer((props: DirectionProps) => {
         <BigButtonColMin
           selected={visibleSubmenu}
           md={4}
-          padding={"15px 0"} 
           onClick={() => {
             setVisibleSubmenu(!visibleSubmenu)
           }}>
@@ -454,7 +453,6 @@ export const Direction = observer((props: DirectionProps) => {
           onClick={() => {
             setVisibleDescription(!visibleDescription)
           }}
-          padding={"15px 0"} 
         >
           {element.title}
         </BigButtonColMin>
