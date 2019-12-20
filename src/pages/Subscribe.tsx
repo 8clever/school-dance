@@ -22,6 +22,9 @@ export const SubscribeMenuItem = (props: SubscribeMenuItemProps) => {
 
   return (
     <BigButtonCol 
+      style={{
+        fontFamily: "Styled Font"
+      }}
       onClick={() => {
         routerStore.push(`/subscribe/${i._id}`);
         setTimeout(() => {

@@ -21,6 +21,9 @@ export const Classes = observer(() => {
             classStore.itemList.map(i => {
               return (
                 <BigButtonCol 
+                  style={{
+                    fontFamily: "Styled Font"
+                  }}
                   key={i._id as string}>
                   {i.name}
                   {

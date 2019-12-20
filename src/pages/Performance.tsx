@@ -26,6 +26,9 @@ export const Performance = observer((props: PerformanceProps) => {
           performanceStore.itemList.map(i => {
             return (
               <BigButtonCol 
+                style={{
+                  fontFamily: "Styled Font"
+                }}
                 key={i._id as string}>
                 {i.name}
 

@@ -25,6 +25,9 @@ export const Artists = observer((props: ArtistsProps) => {
             artistStore.itemList.map(i => {
               return (
                 <BigButtonCol 
+                  style={{
+                    fontFamily: "Styled Font"
+                  }}
                   key={i._id as string}>
                   {i.name}
                   {
