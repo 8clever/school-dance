@@ -9,6 +9,7 @@ import imgAstoria from "../images/partners/astoria.png";
 import imgGollandia from "../images/partners/new_gollandiya.png";
 import imgCinema from "../images/partners/new_cinema.png";
 import imgGost from "../images/partners/gost.png";
+import { isMobile } from "../utils/isMobile";
 
 interface PartnerButtonProps {
   img: string;
@@ -16,7 +17,7 @@ interface PartnerButtonProps {
   link: string;
 }
 
-const height = 350;
+const height = 260;
 
 const PartnerButton = (props: PartnerButtonProps) => {
   const [ isHover, setHover ] = React.useState(false);
@@ -30,16 +31,22 @@ const PartnerButton = (props: PartnerButtonProps) => {
             window.location.href = props.link;
           }}
           height={height}
-          onMouseLeave={() => setHover(false)}
-          onMouseEnter={() => setHover(true)}>
-          <div className="absolute-container" style={{
-            fontFamily: "Styled Font",
-            fontSize: 17.5,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            textTransform: "uppercase"
+          onMouseLeave={() => {
+            setHover(false)
+          }}
+          onMouseEnter={() => {
+            if (isMobile()) return;
+            setHover(true)
           }}>
+          <div 
+            className="absolute-container" style={{
+              fontFamily: "Styled Font",
+              fontSize: 17.5,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              textTransform: "uppercase"
+            }}>
             <div style={{
               textAlign: "center"
             }}>
@@ -60,7 +67,9 @@ const PartnerButton = (props: PartnerButtonProps) => {
             onClick={() => {
               window.location.href = props.link;
             }}
-            onMouseLeave={() => setHover(false)}>
+            onMouseLeave={() => {
+              setHover(false)
+            }}>
             <div 
               style={{
                 background: `url("${props.img}") no-repeat center / contain`
