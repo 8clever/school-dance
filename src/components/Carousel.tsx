@@ -8,6 +8,7 @@ interface ImageItem {
 
 interface CarouselProps {
   items: ImageItem[];
+  ratio?: number; // as 16:9 = 0.5625
 }
 
 interface ImageProps {
@@ -33,6 +34,7 @@ export const Image = (props: ImageProps) => {
 export const Carousel = (props: CarouselProps) => {
   const [ activeIndex, setIndex ] = React.useState(0);
   const [ height, setHeight ] = React.useState(0);
+  const ratio = props.ratio || 0.5;
   const items = props.items.length ? props.items : [
     {
       src: emptyPNG
@@ -58,7 +60,7 @@ export const Carousel = (props: CarouselProps) => {
   return (
     <div ref={node => {
       if (!node) return;
-      const height = node.getBoundingClientRect().width * 0.5;
+      const height = node.getBoundingClientRect().width * ratio;
       setHeight(height);
     }}>
       <CarouselFactory

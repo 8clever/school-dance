@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { Base, BigRow, BigButtonCol, Icon, BigButtonColMin, BigHr, FlexCol } from "../components";
+import { Base, BigRow, BigButtonCol, Icon, BigButtonColMin, BigHr, FlexCol, getShadowBoxStyle } from "../components";
 import { directionStore } from "../store/DirectionStore";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
@@ -8,7 +8,7 @@ import { routerStore } from "../store/RouterStore";
 import { DirectionEdit } from "../components/DirectionEdit";
 import MD from "react-markdown";
 import { Carousel } from "../components/Carousel";
-import { Col, Row } from "reactstrap";
+import { Col } from "reactstrap";
 import { teacherStore } from "../store/TeacherStore";
 import { performanceStore } from "../store/PerformanceStore";
 import { artistStore } from "../store/ArtistStore";
@@ -108,7 +108,7 @@ export const DirectionMenuItem = (props: DirectionMenuItemProps) => {
         id={`item-${d._id}`} 
         style={{
           position: "absolute",
-          top: -120
+          top: 67
         }} />
 
       {d.name}
@@ -421,6 +421,25 @@ export const Direction = observer((props: DirectionProps) => {
       />
       
       <BigRow>
+        <BigButtonColMin 
+          selected={visibleDescription}
+          md={4}
+          onClick={() => {
+            setVisibleDescription(!visibleDescription)
+          }}
+        >
+          {element.title}
+        </BigButtonColMin>
+
+        {
+          visibleDescription ?
+          <div 
+            className="d-block d-md-none w-100" 
+            style={{ borderLeft: "1px solid black" }}>
+            {description}
+          </div> : null
+        }
+
         <BigButtonColMin
           selected={visibleSubmenu}
           md={4}
@@ -446,67 +465,35 @@ export const Direction = observer((props: DirectionProps) => {
           md={4}>
           РАСПИСАНИЕ
         </BigButtonColMin>
-
-        <BigButtonColMin 
-          selected={visibleDescription}
-          md={4}
-          onClick={() => {
-            setVisibleDescription(!visibleDescription)
-          }}
-        >
-          {element.title}
-        </BigButtonColMin>
-
-        {
-          visibleDescription ?
-          <div 
-            style={{ borderLeft: "1px solid black" }}
-            className="d-block d-md-none w-100">
-            {description}
-          </div> : null
-        }
-
       </BigRow>
       
       <BigHr />
 
       {/** direction view */}
       <BigRow>
-        <Col md={12} xs={12}>
-
-          <div 
-            style={{
-              zIndex: 1000
-            }}
-            className="absolute-container d-none d-md-block">
-            <Row noGutters className="h-100">
-              {
-                visibleSubmenu ?
-                <Col className="col-md-4 bg-white h-100" style={{
-                  boxShadow: "1px 0px 0px 0px black",
-                  overflow: "auto"
-                }}>
-                  {submenu}
-                </Col> : null
-              }
-
-              {
-                visibleDescription ?
-                <Col className="col-md-4 ml-auto h-100 bg-white" style={{
-                  borderLeft: "1px solid black",
-                  overflow: "auto"
-                }}>
-                  {description}
-                </Col> : null
-              } 
-              
-            </Row>
-          </div>
+        <Col 
+          className="d-none d-md-block"
+          style={getShadowBoxStyle({ top: 0 })}
+          md={4}>
+          {
+            visibleSubmenu ?
+            submenu :
+            description
+          }
+        </Col>
+        <Col 
+          style={getShadowBoxStyle({ top: 0 })}
+          md={8} 
+          xs={12}>
 
           <Carousel 
-            items={element.images.map(i => {
-            return { src: `${imageStore.endpoint}${i}` };
-          })} />
+            ratio={0.5625}
+            items={
+              element.images.map(i => {
+                return { src: `${imageStore.endpoint}${i}` };
+              })
+            } 
+          />
         </Col>
       </BigRow>
 
