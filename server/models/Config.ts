@@ -6,4 +6,6 @@ export interface Config {
     from: number;
     to: number;
   }
+  homePageTitle: string;
+  homeCarousel: Array<string | ObjectID>
 }

@@ -2,6 +2,7 @@ import { toJS, decorate, action } from "mobx";
 import { Api } from "./Api";
 import { Config } from "../../server/models/Config";
 import { notifStore } from "./NotifStore";
+import { imageStore } from "./ImageStore";
 
 export class ConfigStore extends Api<Config> {
   newImages: Blob[] = []
@@ -42,6 +43,13 @@ export class ConfigStore extends Api<Config> {
     }
 
     const item = toJS(this.item);
+
+    for(const image of this.newImages) {
+      const _idimage = await imageStore.upload(image);
+      item.homeCarousel.push(_idimage);
+    }
+    
+    this.newImages = [];
     const _id = await this.editItem(item);
     this.item._id = this.item._id || _id;
     return _id;

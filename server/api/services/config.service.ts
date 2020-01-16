@@ -1,10 +1,14 @@
 import { Config } from "../../models/Config";
 import { MongoService } from "./mongo.service";
 import _ from "lodash";
+import { ObjectID } from "mongodb";
 
 class ConfigService extends MongoService<Config> {
   collection = "config";
-  editConfig = this._edit;
+  editConfig = async (config: Config) => {
+    config.homeCarousel = config.homeCarousel.map(img => new ObjectID(img));
+    return this._edit(config);
+  };
 
   getConfig = async () => {
     const data = await this._find({});
@@ -15,6 +19,10 @@ class ConfigService extends MongoService<Config> {
       from: 6,
       to: 23
     }
+
+    config.homeCarousel = config.homeCarousel || [];
+
+    config.homePageTitle = config.homePageTitle || "Studio Context Диана Вишнева";
 
     return config;
   }
