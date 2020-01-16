@@ -19,6 +19,7 @@ import { userStore } from "../store/UserStore";
 import { Search } from "../pages/Search";
 import { Artists } from "../pages/Artists";
 import { Classes } from "../pages/Classes";
+import { ExternalSchedule } from "../pages/ExternalSchedule";
 
 const parse = (path: string) => {
   if (!path) return {};
@@ -48,6 +49,7 @@ export const Router = () => {
       <Route exact path="/artists" render={match => <Artists />} />
       <Route exact path="/performance" render={match => <Performance />} />
       <Route exact path="/classes" render={match => <Classes />} />
+      <Route exact path="/external-schedule" render={() => <ExternalSchedule />} />
       
       <Route exact path="/logout" render={() => {
         userStore.logout().then(() => {
