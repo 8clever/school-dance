@@ -100,7 +100,7 @@ export const HeaderMenu = () => {
             </p>
 
             <div style={{ 
-              marginTop: 70
+              marginTop: 74
             }}>
               <BrandLogo src={vk.img} url={vk.url} />
               <BrandLogo src={facebook.img} url={facebook.url} />
