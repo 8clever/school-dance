@@ -414,23 +414,45 @@ export const Direction = observer((props: DirectionProps) => {
     )
   });
 
+  const ticketBuy = (
+    directionStore.item.submenu.type === "performance" ?
+    <BigRow>
+      <BigButtonColMin 
+        style={{
+          borderLeft: "none"
+        }}
+        md={12}>
+        КУПИТЬ БИЛЕТ
+      </BigButtonColMin>
+    </BigRow> : 
+    null
+  )
+
   const description = (
+    <div className="p-5">
+      <MD source={element.description} />
+    </div>
+  )
+
+  const descriptionMobile = (
     <FlexCol justify="between" column>
-      <div className="p-5">
-        <MD source={element.description} />
+      {description}
+      {ticketBuy}
+    </FlexCol>
+  )
+
+  const descriptionDesktop = (
+    <FlexCol justify="between" column>
+      <div style={{ 
+        position: "relative",
+        justifySelf: "stretch",
+        height: "100%"
+      }}>
+        <div className="absolute-container" style={{ overflow: "auto" }}>
+          {description}
+        </div>
       </div>
-      {
-        directionStore.item.submenu.type === "performance" ?
-        <BigRow>
-          <BigButtonColMin 
-            style={{
-              borderLeft: "none"
-            }}
-            md={12}>
-            КУПИТЬ БИЛЕТ
-          </BigButtonColMin>
-        </BigRow> : null
-      }
+      {ticketBuy}
     </FlexCol>
   )
 
@@ -451,6 +473,24 @@ export const Direction = observer((props: DirectionProps) => {
       />
       
       <BigRow>
+
+        <BigButtonColMin 
+          onClick={() => {
+            routerStore.push(`/calendar?type=${CALENDAR_MONTH}&directionId=${props.id}`)
+          }}
+          md={4}>
+          РАСПИСАНИЕ
+        </BigButtonColMin>
+
+        <BigButtonColMin
+          selected={visibleSubmenu}
+          md={4}
+          onClick={() => {
+            setVisibleSubmenu(!visibleSubmenu)
+          }}>
+          {typeMap[directionStore.item.submenu.type].name}
+        </BigButtonColMin>
+
         <BigButtonColMin 
           selected={visibleDescription}
           md={4}
@@ -466,18 +506,9 @@ export const Direction = observer((props: DirectionProps) => {
           <div 
             className="d-block d-md-none w-100" 
             style={{ borderLeft: "1px solid black" }}>
-            {description}
+            {descriptionMobile}
           </div> : null
         }
-
-        <BigButtonColMin
-          selected={visibleSubmenu}
-          md={4}
-          onClick={() => {
-            setVisibleSubmenu(!visibleSubmenu)
-          }}>
-          {typeMap[directionStore.item.submenu.type].name}
-        </BigButtonColMin>
 
         {
           visibleSubmenu ?
@@ -488,29 +519,12 @@ export const Direction = observer((props: DirectionProps) => {
           </div> : null
         }
 
-        <BigButtonColMin 
-          onClick={() => {
-            routerStore.push(`/calendar?type=${CALENDAR_MONTH}&directionId=${props.id}`)
-          }}
-          md={4}>
-          РАСПИСАНИЕ
-        </BigButtonColMin>
       </BigRow>
       
       <BigHr />
 
       {/** direction view */}
       <BigRow>
-        <Col 
-          className="d-none d-md-block"
-          style={getShadowBoxStyle({ top: 0 })}
-          md={4}>
-          {
-            visibleSubmenu ?
-            submenu :
-            description
-          }
-        </Col>
         <Col 
           style={getShadowBoxStyle({ top: 0 })}
           md={8} 
@@ -524,6 +538,17 @@ export const Direction = observer((props: DirectionProps) => {
               })
             } 
           />
+        </Col>
+
+        <Col 
+          className="d-none d-md-block"
+          style={getShadowBoxStyle({ top: 0 })}
+          md={4}>
+          {
+            visibleSubmenu ?
+            submenu :
+            descriptionDesktop
+          }
         </Col>
       </BigRow>
 
