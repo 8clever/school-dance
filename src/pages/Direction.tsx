@@ -531,7 +531,6 @@ export const Direction = observer((props: DirectionProps) => {
           xs={12}>
 
           <Carousel 
-            ratio={0.5625}
             items={
               element.images.map(i => {
                 return { src: `${imageStore.endpoint}${i}` };

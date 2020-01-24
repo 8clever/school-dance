@@ -109,6 +109,12 @@ export const Prices = observer((props: PricesProps) => {
       />
 
       <BigRow>
+        <BigCol md={8}>
+          <Carousel 
+            items={subscribe.images.map(i => {
+            return { src: `${imageStore.endpoint}${i}` };
+          })} />
+        </BigCol>
         <Col md={4} className="d-none d-md-block">
           <div className="absolute-container" style={{ overflow: "auto" }}>
             <FlexCol column justify="between">
@@ -116,13 +122,6 @@ export const Prices = observer((props: PricesProps) => {
             </FlexCol>
           </div>
         </Col>
-        <BigCol md={8}>
-          <Carousel 
-            ratio={0.5625}
-            items={subscribe.images.map(i => {
-            return { src: `${imageStore.endpoint}${i}` };
-          })} />
-        </BigCol>
       </BigRow>
 
       <div className="d-md-none">

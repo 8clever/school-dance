@@ -34,7 +34,7 @@ export const Image = (props: ImageProps) => {
 export const Carousel = (props: CarouselProps) => {
   const [ activeIndex, setIndex ] = React.useState(0);
   const [ height, setHeight ] = React.useState(0);
-  const ratio = props.ratio || 0.5;
+  const ratio = props.ratio || 0.5625;
   const items = props.items.length ? props.items : [
     {
       src: emptyPNG
