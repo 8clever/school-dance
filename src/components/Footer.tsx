@@ -4,7 +4,6 @@ import { Col } from "reactstrap";
 import { Logo } from "./Logo";
 import { routerStore } from "../store/RouterStore";
 
-import schedulePNG from "../images/icons/schedule.png";
 import { vk, facebook, instagramm, youtube } from "../static/brands";
 
 interface FooterBrandLogoProps {
@@ -80,11 +79,7 @@ export const Footer = () => {
               xs={7} 
               md={7} 
               h100>
-              <img 
-                height={45}
-                width={45}
-                src={schedulePNG} /
-              >
+              ЗАПИСАТЬСЯ
             </BigButtonColMin>
             <Col xs={5}>
               <BigRow className="h-50" noGutters>
