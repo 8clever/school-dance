@@ -2,12 +2,12 @@ import React from "react";
 import { Base } from "../components";
 import { Widget } from "../components/Widget";
 
-export const ExternalSchedule = () => {
+export const SignUp = () => {
   return (
     <Base>
       <Widget 
-        elementId={"SiteWidgetMoyklass28435"}
-        widgetId={"9wjFHbwc75jXR7mU10vPAY1RoXp4NIFoqg"}
+        elementId="SiteWidgetMoyklass28608"
+        widgetId="2F5CmCKrfHq1caJ0KrWrYYTo9wsSGRf0nI"
       />
     </Base>
   )

@@ -73,7 +73,7 @@ export const Footer = () => {
           <BigRow className="h-100">
             <BigButtonColMin 
               onClick={() => {
-                routerStore.push("/calendar")
+                routerStore.push("/signup")
               }}
               className="h-100" 
               xs={7} 
