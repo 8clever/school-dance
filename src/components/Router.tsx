@@ -33,10 +33,21 @@ export const Router = () => {
 
   return (
     <DOMRouter history={routerStore.history}>
-      <Route exact path="/" render={() => <Widget 
-        elementId={"SiteWidgetMoyklass28435"}
-        widgetId={"9wjFHbwc75jXR7mU10vPAY1RoXp4NIFoqg"}
-      />} />
+      <Route exact path="/" render={() => {
+        return (
+          <>
+            <Widget 
+              elementId={"SiteWidgetMoyklass28435"}
+              widgetId={"9wjFHbwc75jXR7mU10vPAY1RoXp4NIFoqg"}
+            />
+
+            <Widget 
+              elementId={"SiteWidgetMoyklass30104"}
+              widgetId={"SMjP5R51qXy14ECnt9cbw5yvCiShSvlD9o"}
+            />
+          </>
+        )
+      }}/>
       <Route exact path="/home" render={() => <Home />} />
       <Route exact path="/directions/:id" render={(match) => <Direction id={match.match.params.id as string} />}/>
       <Route exact path="/studio" render={(match) => <Studio />}/>
