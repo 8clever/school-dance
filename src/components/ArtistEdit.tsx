@@ -12,8 +12,9 @@ interface ArtistEditProps {
   onCancel: () => void;
 }
 
-const artistStore = new ArtistStore();
 export const ArtistEdit = observer((props: ArtistEditProps) => {
+
+  const [ artistStore ] = React.useState(new ArtistStore());
 
   React.useEffect(() => {
     if (!props.visible) return;

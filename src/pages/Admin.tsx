@@ -47,6 +47,10 @@ export const Admin = observer(() => {
           onClick={() => routerStore.push("/subscribe")}>
           Цены
         </BigButtonCol>
+        <BigButtonCol
+          onClick={() => routerStore.push("/news")}>
+          Новости
+        </BigButtonCol>
         <BigButtonCol onClick={() => setHomePageEditVisible(true)}>
           ДОМАШНЯЯ СТРАНИЦА
         </BigButtonCol>

@@ -25,6 +25,7 @@ import { Directions } from "../pages/Directions";
 import { Admin } from "../pages/Admin";
 import { Category } from "../pages/Category";
 import { DirectionSection } from "../../server/models/Direction";
+import { News } from "../pages/News";
 
 const parse = (path: string) => {
   if (!path) return {};
@@ -63,6 +64,10 @@ export const Router = () => {
       <Route exact path="/classes" render={match => <Classes />} />
       <Route exact path="/external-schedule" render={() => <ExternalSchedule />} />
       <Route exact path="/signup" render={() => <SignUp />} />
+      <Route exact path="/news" render={() => <News />} />
+      <Route exact path="/news/:id" render={match => {
+        return <News pieceOfNewsId={match.match.params.id} />
+      }} />
       
       <Route exact path="/logout" render={() => {
         userStore.logout().then(() => {
