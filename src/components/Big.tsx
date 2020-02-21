@@ -32,6 +32,7 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
   const { size="lg", md = 4, xs, } = props;
   return (
     <BigCol 
+      onClick={props.onClick}
       height={props.height}
       width={props.width}
       onMouseEnter={props.onMouseEnter}
@@ -42,7 +43,7 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
       left={props.left} 
       right={props.right} 
       bottom={props.bottom} 
-      className={props.className}
+      className={`big-col ${props.className}`}
       flex={props.flex}
       maxWidth={props.maxWidth}
       padding={props.colPadding}
@@ -51,7 +52,6 @@ export const BigButtonCol = (props: BigButtonCellProps) => {
       <FlexCol justify="center" align="center">
         <Button
           block={props.block}
-          onClick={props.onClick}
           style={{
             height: props.height || 195,
             padding: props.padding || "60px 20px"

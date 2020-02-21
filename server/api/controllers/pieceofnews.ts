@@ -9,8 +9,8 @@ export const router = express.Router()
     }).catch(next);
   })
   .get("/items", (req, res, next) => {
-    const { query, sort } = req.query;
-    pieceOfNewsService.getNews(query, sort).then(data => {
+    const { query, sort, skip, limit } = req.query;
+    pieceOfNewsService.getNews(query, sort, limit, skip).then(data => {
       res.json(data);
     }).catch(next);
   })

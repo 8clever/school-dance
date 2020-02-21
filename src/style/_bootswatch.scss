@@ -137,21 +137,6 @@ $fontWeightBold: 600;
     text-decoration-line: none;
     font-weight: $fontWeightNormal;
 
-    @media (min-width: 768px) {
-      .hovered {
-        display: none;
-      }
-    }
-
-    &:hover {
-      text-decoration-line: none;
-      font-weight: $fontWeightBold;
-    
-      .hovered {
-        display: inline;
-      }
-    }
-
     &:focus {
       text-decoration: none;
     }
@@ -162,6 +147,34 @@ $fontWeightBold: 600;
       > div:hover {
         font-weight: $fontWeightBold;
       }
+    }
+  }
+}
+
+.big-col {
+  cursor: pointer;
+
+  @media (min-width: 768px) {
+    .hovered {
+      transition: 1s all;
+      opacity: 0;
+    }
+  }
+
+  .hide-onhovered {
+    transition: 1s all;
+  }
+
+  &:hover {
+    text-decoration-line: none;
+    font-weight: $fontWeightBold;
+  
+    .hovered {
+      opacity: 1;
+    }
+
+    .hide-onhovered {
+      opacity: 0;
     }
   }
 }

@@ -35,9 +35,15 @@ export class Api<T> {
   getItems = async (
     query: RootQuerySelector<T>, 
     sort?: object,
-    limit?: number
+    limit?: number,
+    skip?: number
   ): Promise<{ list: T[], count: number }> => {
-    return this.fetch("items", "GET", { query, sort, limit });
+    return this.fetch("items", "GET", { 
+      query, 
+      sort, 
+      limit,
+      skip 
+    });
   }
 
   loadItem = async (_id?: string) => {
@@ -49,8 +55,13 @@ export class Api<T> {
     }
   }
 
-  loadItems = async (query?: FilterQuery<T>, sort?: object) => {
-    const data = await this.getItems(query, sort);
+  loadItems = async (
+    query?: FilterQuery<T>, 
+    sort?: object,
+    limit?: number,
+    skip?: number
+  ) => {
+    const data = await this.getItems(query, sort, limit, skip);
     this.itemList = data.list;
   }
 
@@ -104,7 +115,7 @@ export class Api<T> {
   }
 }
 
-decorate(Api, {
+decorate(Api as any, {
   item: observable,
   itemList: observable,
   loadItem: action,
