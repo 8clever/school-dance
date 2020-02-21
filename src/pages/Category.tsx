@@ -4,19 +4,23 @@ import { Base, BigRow, BigButtonCol } from "../components";
 import { PageTitle } from "../components/PageTitle";
 import { directionStore } from "../store/DirectionStore";
 import { routerStore } from "../store/RouterStore";
+import { DirectionSection } from "../../server/models/Direction";
+import { directionSectionMap } from "./Direction";
 
-export const Projects = observer(() => {
+interface CategoryProps {
+  section: DirectionSection
+}
+
+export const Category = observer((props: CategoryProps) => {
 
   React.useEffect(() => {
-    directionStore.loadItems({
-      section: "projects"
-    })
+    directionStore.loadItems(props)
   }, []);
 
   return (
     <Base>
       <PageTitle>
-        Главная > Проекты
+        Главная > {directionSectionMap[props.section]}
       </PageTitle>
 
       <div className="d-block d-md-none">
@@ -41,7 +45,7 @@ export const Projects = observer(() => {
               <BigButtonCol
                 onClick={() => routerStore.push(`/directions/${i._id}`)}
                 style={{
-                  minHeight: 600,
+                  minHeight: directionStore.itemList.length > 3 ? null : 600,
                   fontFamily: "Styled Font"
                 }}
                 key={i._id as string}>

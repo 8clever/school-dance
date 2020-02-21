@@ -6,7 +6,7 @@ import { ImagePreview } from "./ImagePreview";
 import { SubmenuType, DirectionSection } from "../../server/models/Direction";
 import _ from "lodash";
 import { Select } from "./Select";
-import { typeMap } from "../pages/Direction";
+import { typeMap, directionSectionMap } from "../pages/Direction";
 import { Icon } from "./Icon";
 
 
@@ -207,7 +207,9 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
                 }}
                 placeholder="Выбор...">
                 <option value="">Не выбрано</option>
-                <option value="projects">Проекты</option>
+                {_.map(directionSectionMap, (v, k) => {
+                  return <option key={k} value={k}>{v}</option>
+                })}
               </Input>
             </FormGroup>
 

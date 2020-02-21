@@ -2,7 +2,7 @@ import { ObjectID } from "bson";
 
 export type SubmenuType = "teachers" | "artists" | "performance";
 
-export type DirectionSection = "projects"
+export type DirectionSection = "projects" | "directions" | "master-classes"
 
 export interface ScheduleItem {
   _id: string | ObjectID;

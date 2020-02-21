@@ -24,7 +24,8 @@ import { SignUp } from "../pages/SignUp";
 import { Widget } from "./Widget";
 import { Directions } from "../pages/Directions";
 import { Admin } from "../pages/Admin";
-import { Projects } from "../pages/Projects";
+import { Category } from "../pages/Category";
+import { DirectionSection } from "../../server/models/Direction";
 
 const parse = (path: string) => {
   if (!path) return {};
@@ -53,7 +54,10 @@ export const Router = () => {
       }}/>
       <Route exact path="/home" render={() => <Home />} />
       <Route exact path="/admin" render={() => <Admin />} />
-      <Route exact path="/projects" render={() => <Projects />} />
+      <Route exact path="/category/:category" render={(match) => {
+        return <Category section={match.match.params.category as DirectionSection} />
+      }} 
+      />
       <Route exact path="/directions" render={() => <Directions />}/> 
       <Route exact path="/directions/:id" render={(match) => <Direction id={match.match.params.id as string} />}/>
       <Route exact path="/studio" render={(match) => <Studio />}/>

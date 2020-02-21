@@ -262,8 +262,10 @@ export const DirectionMenu = observer((props: DirectionMenuProps) => {
   )
 })
 
-const directoryMap = {
-  projects: "Проекты"
+export const directionSectionMap = {
+  projects: "Проекты",
+  directions: "Направления",
+  "master-classes": "Мастер классы"
 }
 
 export const Direction = observer((props: DirectionProps) => {
@@ -370,7 +372,7 @@ export const Direction = observer((props: DirectionProps) => {
     <Base>
 
       <PageTitle>
-        Главная > {directoryMap[directionStore.item.section]} > {directionStore.item.name}
+        Главная > {directionSectionMap[directionStore.item.section]} > {directionStore.item.name}
       </PageTitle>
 
       <div 

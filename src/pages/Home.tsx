@@ -6,6 +6,8 @@ import { Carousel } from "../components/Carousel";
 import { configStore } from "../store/ConfigStore";
 import { imageStore } from "../store/ImageStore";
 import { routerStore } from "../store/RouterStore";
+import _ from "lodash";
+import { directionSectionMap } from "./Direction";
 
 export const Home = observer(() => {
 
@@ -36,25 +38,18 @@ export const Home = observer(() => {
       }
 
       <BigRow>
-        <BigButtonCol
-          onClick={() => routerStore.push("/projects")}
-          style={{
-            fontFamily: "Styled Font"
-          }}>
-          ПРОЕКТЫ
-        </BigButtonCol>
-        <BigButtonCol
-          style={{
-            fontFamily: "Styled Font"
-          }}>
-          НАПРАВЛЕНИЯ
-        </BigButtonCol>
-        <BigButtonCol
-          style={{
-            fontFamily: "Styled Font"
-          }}>
-          МАСТЕР-КЛАССЫ
-        </BigButtonCol>
+        {_.map(directionSectionMap, (v, k) => {
+          return (
+            <BigButtonCol
+              key={k}
+              onClick={() => routerStore.push(`/category/${k}`)}
+              style={{
+                fontFamily: "Styled Font"
+              }}>
+              {v}
+            </BigButtonCol>
+          )
+        })}
       </BigRow>
     </Base>
   )
