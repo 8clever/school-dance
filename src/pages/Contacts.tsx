@@ -24,7 +24,7 @@ export const Contacts = () => {
     <Base>
 
       <PageTitle>
-        Контакты
+        Главная > Контакты
       </PageTitle>
 
       <BigRow>

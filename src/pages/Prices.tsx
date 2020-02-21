@@ -106,7 +106,7 @@ export const Prices = observer((props: PricesProps) => {
     <Base>
 
       <PageTitle>
-        Цены > {subscribeStore.item.name}
+        Главная > Цены > {subscribeStore.item.name}
       </PageTitle>
 
       <SubscribeMenuTop 

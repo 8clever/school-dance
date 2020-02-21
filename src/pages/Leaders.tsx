@@ -159,7 +159,7 @@ export const Leaders = observer((props: LeaderProps) => {
     <Base>
 
       <PageTitle>
-        Студия > Руководство {element ? `> ${element.fullName}` : ""}
+        Главная > Студия > Руководство {element ? `> ${element.fullName}` : ""}
       </PageTitle>
 
       <BigRow>

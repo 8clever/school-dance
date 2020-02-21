@@ -90,7 +90,7 @@ export const Partners = () => {
     <Base>
 
       <PageTitle>
-        Партнёры
+        Главная > Партнёры
       </PageTitle>
 
       <BigRow style={{ fontFamily: "Styled Font" }}>

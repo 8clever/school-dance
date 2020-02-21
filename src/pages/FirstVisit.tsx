@@ -75,7 +75,7 @@ export const FirstVisit = () => {
     <Base>
 
       <PageTitle>
-        Первое посещение
+        Главная > Первое посещение
       </PageTitle>
 
       <BigRow>

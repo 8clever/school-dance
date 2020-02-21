@@ -161,7 +161,7 @@ export const Teacher = observer((props: TeacherProps) => {
     <Base>
 
       <PageTitle>
-        Cтудия > Педагоги {teacher ? `> ${teacher.fullName}` : ""}
+        Главная > Cтудия > Педагоги {teacher ? `> ${teacher.fullName}` : ""}
       </PageTitle>
 
       <BigRow>

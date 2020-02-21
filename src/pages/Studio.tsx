@@ -72,7 +72,7 @@ export const Studio = () => {
     <Base>
 
       <PageTitle>
-        Студия
+        Главная > Студия
       </PageTitle>
 
       <BigRow>

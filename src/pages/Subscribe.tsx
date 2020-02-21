@@ -202,7 +202,7 @@ export const Subscribe = () => {
   return (
     <Base>
       <PageTitle>
-        Цены
+        Главная > Цены
       </PageTitle>
       <SubscribeMenu />
     </Base>
