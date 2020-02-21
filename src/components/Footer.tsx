@@ -1,5 +1,5 @@
 import React from "react";
-import { BigRow, BigButtonColMin, BigHr, BigButtonCol, getShadowBoxStyle } from "./Big";
+import { BigRow, BigButtonColMin, BigHr, BigButtonCol } from "./Big";
 import { Col } from "reactstrap";
 import { Logo } from "./Logo";
 import { routerStore } from "../store/RouterStore";
@@ -32,40 +32,38 @@ export const Footer = () => {
   return (
     <div className="bg-gray">
       <BigRow>
-        <BigButtonCol
-          className="d-none d-md-block"
-          onClick={() => routerStore.push("/")} md={4}>
-          <Logo width={250} />
-        </BigButtonCol>
         <Col md={4}>
-          <BigRow>
+          <BigRow className="h-100">
+            <Col 
+              xs={6}
+              md={6}>
+              <BigRow 
+                className="h-100">
+                <BigButtonColMin 
+                  className="h-50"
+                  md={12}
+                  onClick={() => routerStore.push("/partners")}>
+                  Партнеры
+                </BigButtonColMin>
+                <BigButtonColMin 
+                  className="h-50"
+                  md={12}
+                  onClick={() => {
+                    routerStore.push("/contacts")
+                  }}>
+                  Контакты
+                </BigButtonColMin>
+              </BigRow>
+            </Col>
             <BigButtonColMin 
-              onClick={() => routerStore.push("/studio")}>
-              Студия
-            </BigButtonColMin>
-            <BigButtonColMin onClick={() => {
-              routerStore.push("/firstvisit")
-            }}>
-              Первое посещение
-            </BigButtonColMin>
-            <BigButtonColMin 
-              onClick={() => routerStore.push("/partners")}>
-              Партнеры
-            </BigButtonColMin>
-            <BigButtonColMin onClick={() => {
-              routerStore.push("/")
-            }}>
-              Направления
-            </BigButtonColMin>
-            <BigButtonColMin  
-              style={getShadowBoxStyle({ top: 1, left: 1, right: 1, bottom: 0 })}
-              onClick={() => routerStore.push("/contacts")}>
-              Контакты
-            </BigButtonColMin>
-            <BigButtonColMin
-              style={getShadowBoxStyle({ top: 1, left: 1, right: 1, bottom: 0 })}
-              onClick={() => routerStore.push("/subscribe")}>
-              Цены
+              onClick={() => {
+                routerStore.push("/firstvisit")
+              }}
+              className="h-100" 
+              xs={6} 
+              md={6} 
+              h100>
+              ПЕРВОЕ ПОСЕЩЕНИЕ
             </BigButtonColMin>
           </BigRow>
         </Col>
@@ -105,6 +103,11 @@ export const Footer = () => {
             </Col>
           </BigRow>
         </Col>
+        <BigButtonCol
+          className="d-none d-md-block"
+          onClick={() => routerStore.push("/")} md={4}>
+          <Logo width={250} />
+        </BigButtonCol>
         <BigButtonColMin 
           onClick={() => {
             window.open("/rules_policies.pdf", "_blank")

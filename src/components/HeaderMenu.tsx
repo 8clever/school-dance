@@ -41,17 +41,17 @@ export const HeaderMenu = () => {
       menuStore.isCollapsed = true;
     }}>
       <BigRow>
+      <BigButtonColMin 
+          onClick={onClick("/news")}
+          xs={12}
+          md={12}>
+          НОВОСТИ
+        </BigButtonColMin>
         <BigButtonColMin 
           onClick={onClick("/calendar")}
           xs={12}
           md={12}>
           РАСПИСАНИЕ
-        </BigButtonColMin>
-        <BigButtonColMin 
-          onClick={onClick("/")}
-          xs={12}
-          md={12}>
-          НАПРАВЛЕНИЯ
         </BigButtonColMin>
         <BigButtonColMin 
           onClick={onClick("/subscribe")}
@@ -64,18 +64,6 @@ export const HeaderMenu = () => {
           xs={12} 
           md={12}>
           СТУДИЯ
-        </BigButtonColMin>
-        <BigButtonColMin 
-          onClick={onClick("/partners")}
-          xs={12} 
-          md={12}>
-          ПАРТНЕРЫ
-        </BigButtonColMin>
-        <BigButtonColMin 
-          onClick={onClick("/contacts")}
-          xs={12} 
-          md={12}>
-          КОНТАКТЫ
         </BigButtonColMin>
 
         <BigCol md={12}>
