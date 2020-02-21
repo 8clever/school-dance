@@ -120,7 +120,7 @@ export const News = observer((props: NewsProps) => {
               onClick={async (e) => {
                 e.stopPropagation();
                 await pieceOfNewsStore.remove(p._id as string);
-                await pieceOfNewsStore.loadItems();
+                await pieceOfNewsStore.loadItems({}, { _dt: -1 });
               }}
               className="ml-3"
               type="trash"
@@ -215,7 +215,7 @@ export const News = observer((props: NewsProps) => {
         visible={editNews.visible}
         _id={editNews._id}
         toggle={() => setEditNews({ ...editNews, visible: false })}
-        onSave={() => pieceOfNewsStore.loadItems()}
+        onSave={() => pieceOfNewsStore.loadItems({}, { _dt: -1 })}
         onCancel={() => {}}
       />
     </Base>

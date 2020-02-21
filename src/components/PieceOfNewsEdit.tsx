@@ -3,6 +3,8 @@ import { observer } from "mobx-react-lite";
 import { PieceOfNewsStore } from "../store/PieceOfNewsStore";
 import { Modal, ModalHeader, ModalBody, FormGroup, Label, Input, Row, Col, ModalFooter, Button } from "reactstrap";
 import { ImagePreview } from "./ImagePreview";
+import ReactDatePicker from "react-datepicker";
+import moment from "moment";
 
 interface PieceOfNewsEditProps {
   visible: boolean;
@@ -58,6 +60,19 @@ export const PieceOfNewsEdit = observer((props: PieceOfNewsEditProps) => {
             value={store.item.description}
             onChange={e => {
               store.item.description = e.target.value;
+            }}
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label>Дата</Label>
+          <br/>
+          <ReactDatePicker
+            className="form-control" 
+            dateFormat="dd.MM.yyyy"
+            selected={moment(store.item._dt).toDate()}
+            onChange={date => {
+              store.item._dt = date
             }}
           />
         </FormGroup>
