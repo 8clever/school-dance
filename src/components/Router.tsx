@@ -21,7 +21,6 @@ import { Artists } from "../pages/Artists";
 import { Classes } from "../pages/Classes";
 import { ExternalSchedule } from "../pages/ExternalSchedule";
 import { SignUp } from "../pages/SignUp";
-import { Widget } from "./Widget";
 import { Directions } from "../pages/Directions";
 import { Admin } from "../pages/Admin";
 import { Category } from "../pages/Category";
@@ -37,21 +36,7 @@ export const Router = () => {
 
   return (
     <DOMRouter history={routerStore.history}>
-      <Route exact path="/" render={() => {
-        return (
-          <>
-            <Widget 
-              elementId={"SiteWidgetMoyklass28435"}
-              widgetId={"9wjFHbwc75jXR7mU10vPAY1RoXp4NIFoqg"}
-            />
-
-            <Widget 
-              elementId={"SiteWidgetMoyklass30104"}
-              widgetId={"SMjP5R51qXy14ECnt9cbw5yvCiShSvlD9o"}
-            />
-          </>
-        )
-      }}/>
+      <Route exact path="/" render={() => <Calendar />}/>
       <Route exact path="/home" render={() => <Home />} />
       <Route exact path="/admin" render={() => <Admin />} />
       <Route exact path="/category/:category" render={(match) => {
