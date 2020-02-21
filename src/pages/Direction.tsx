@@ -14,8 +14,8 @@ import { performanceStore } from "../store/PerformanceStore";
 import { artistStore } from "../store/ArtistStore";
 import _ from "lodash";
 import { Direction as DirectionModel } from "../../server/models/Direction";
-import { CALENDAR_MONTH } from "../components/CalendarHelpers";
 import { classStore } from "../store/ClassStore";
+import { PageTitle } from "../components/PageTitle";
 
 interface DirectionProps {
   id?: string;
@@ -142,55 +142,6 @@ export const DirectionMenuItem = (props: DirectionMenuItemProps) => {
 interface DirectionMenuProps {
   selectedId?: string;
 }
-
-export const DirectionMenuTop = observer((props: DirectionMenuProps) => {
-  const [ directionEditVisible, setDirectionEditVisible ] = React.useState(false);
-  const [ id, setId ] = React.useState("");
-
-  if (!props.selectedId) return null;
-
-  const { mobile, desktop } = getMenuTop({
-    ids: directionStore.itemList.map(i => i._id as string),
-    selected: props.selectedId
-  });
-
-  const getItems = (ids: string[]) => {
-    return ids.map((id, idx) => {
-      const direction = _.find(directionStore.itemList, _.matches({ _id: id }));
-      if (!direction) return;
-
-      return DirectionMenuItem({
-        direction,
-        key: idx,
-        onClickEdit: () => {
-          setId(direction._id as string);
-          setDirectionEditVisible(true);
-        }
-      })
-    });
-  }
-
-  return (
-    <>
-      <div className="d-md-none" data-spy="scroll">
-        {getItems(mobile)}
-      </div>
-
-      <div className="d-none d-md-block">
-        <BigRow maxRowItems={3}>
-          {getItems(desktop)}
-        </BigRow>
-      </div>
-
-      <DirectionEdit 
-        _id={id}
-        visible={directionEditVisible}
-        toggle={() => setDirectionEditVisible(!directionEditVisible)}
-      />
-    </>
-  )
-})
-
 export const getMenuTop = (props: {
   selected?: string;
   ids: string[];
@@ -311,18 +262,18 @@ export const DirectionMenu = observer((props: DirectionMenuProps) => {
   )
 })
 
+const directoryMap = {
+  projects: "Проекты"
+}
+
 export const Direction = observer((props: DirectionProps) => {
 
-  const [ visibleDescription, setVisibleDescription ] = React.useState(false);
-  const [ visibleSubmenu, setVisibleSubmenu ] = React.useState(false);
   const [ element, setElement ] = React.useState<Element>({ images: [], title: "", description: "" });
   const [ submenuOptions, setSubmenuOptions ] = React.useState<Element[]>([]);
 
   directionStore.defaults();
 
   React.useEffect(() => {
-    setVisibleDescription(false);
-    setVisibleSubmenu(false);
     directionStore.loadItem(props.id).then(() => {
       if (!directionStore.item) return;
       setElement({
@@ -331,18 +282,6 @@ export const Direction = observer((props: DirectionProps) => {
         description: directionStore.item.desc
       });
     });
-
-    setTimeout(() => {
-      const $selectedEl = document.querySelector(`[data-spy="scroll"] #item-${props.id}`);
-      const $headerEl = document.querySelector(`[data-spy="scroll"].header-anchor`);
-      if ($selectedEl) {
-        $selectedEl.scrollIntoView({ behavior: "smooth"});
-      }
-  
-      if ($headerEl) {
-        $headerEl.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 100);
   }, [props.id]);
 
   const type = typeMap[directionStore.item && directionStore.item.submenu.type];
@@ -370,8 +309,6 @@ export const Direction = observer((props: DirectionProps) => {
         key={o._id}
         onClick={async () => {
           setElement(o);
-          setVisibleDescription(false);
-          setVisibleSubmenu(false);
           await directionStore.loadItem(directionStore.item._id as string);
           const schedule = _.filter(directionStore.item.schedule, _.matches({ _id: o._id }));
           directionStore.item.schedule = schedule;
@@ -432,75 +369,36 @@ export const Direction = observer((props: DirectionProps) => {
   return (
     <Base>
 
-      <DirectionMenuTop 
-        selectedId={props.id}
-      />
+      <PageTitle>
+        Главная > {directoryMap[directionStore.item.section]} > {directionStore.item.name}
+      </PageTitle>
 
       <div 
-        data-spy="scroll"
-        className={"d-none d-md-block header-anchor"}
-        style={{
-          marginTop: -64,
-          position: "absolute"
-        }}
-      />
-      
-      <BigRow>
+        className="d-block d-md-none w-100" 
+        style={{ borderLeft: "1px solid black" }}>
+        {descriptionMobile}
+      </div>
 
-        <BigButtonColMin 
-          onClick={() => {
-            routerStore.push(`/calendar?type=${CALENDAR_MONTH}&directionId=${props.id}`)
-          }}
-          md={4}>
-          РАСПИСАНИЕ
-        </BigButtonColMin>
-
-        <BigButtonColMin
-          selected={visibleSubmenu}
-          md={4}
-          onClick={() => {
-            setVisibleSubmenu(!visibleSubmenu)
-          }}>
-          {typeMap[directionStore.item.submenu.type].name}
-        </BigButtonColMin>
-
-        <BigButtonColMin 
-          selected={visibleDescription}
-          md={4}
-          onClick={() => {
-            setVisibleDescription(!visibleDescription)
-          }}
-        >
-          {element.title}
-        </BigButtonColMin>
-
-        {
-          visibleDescription ?
-          <div 
-            className="d-block d-md-none w-100" 
-            style={{ borderLeft: "1px solid black" }}>
-            {descriptionMobile}
-          </div> : null
-        }
-
-        {
-          visibleSubmenu ?
-          <div 
-            className="d-block d-md-none w-100" 
-            style={{ borderLeft: "1px solid black" }}>
-            {submenu}
-          </div> : null
-        }
-
-      </BigRow>
+      <div 
+        className="d-block d-md-none w-100" 
+        style={{ borderLeft: "1px solid black" }}>
+        {submenu}
+      </div> 
       
       <BigHr />
 
       {/** direction view */}
-      <BigRow>
+      <BigRow style={{ position: "relative" }}>
+        <Col
+          md={4}
+          style={getShadowBoxStyle({ top: 0 })}
+          className="absolute-container bg-white d-none d-md-block">
+          {submenu}
+        </Col>
+
         <Col 
           style={getShadowBoxStyle({ top: 0 })}
-          md={8} 
+          md={12} 
           xs={12}>
 
           <Carousel 
@@ -511,22 +409,14 @@ export const Direction = observer((props: DirectionProps) => {
             } 
           />
         </Col>
-
-        <Col 
-          className="d-none d-md-block"
+        
+        <Col
+          md={4}
           style={getShadowBoxStyle({ top: 0 })}
-          md={4}>
-          {
-            visibleSubmenu ?
-            submenu :
-            descriptionDesktop
-          }
+          className="absolute-container bg-white offset-8 d-none d-md-block">
+          {descriptionDesktop}
         </Col>
       </BigRow>
-
-      <DirectionMenu 
-        selectedId={props.id}
-      />
     </Base>
   )
 })

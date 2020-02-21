@@ -22,6 +22,9 @@ import { Classes } from "../pages/Classes";
 import { ExternalSchedule } from "../pages/ExternalSchedule";
 import { SignUp } from "../pages/SignUp";
 import { Widget } from "./Widget";
+import { Directions } from "../pages/Directions";
+import { Admin } from "../pages/Admin";
+import { Projects } from "../pages/Projects";
 
 const parse = (path: string) => {
   if (!path) return {};
@@ -49,6 +52,9 @@ export const Router = () => {
         )
       }}/>
       <Route exact path="/home" render={() => <Home />} />
+      <Route exact path="/admin" render={() => <Admin />} />
+      <Route exact path="/projects" render={() => <Projects />} />
+      <Route exact path="/directions" render={() => <Directions />}/> 
       <Route exact path="/directions/:id" render={(match) => <Direction id={match.match.params.id as string} />}/>
       <Route exact path="/studio" render={(match) => <Studio />}/>
       <Route exact path="/teachers" render={(match) => <Teacher />}/>

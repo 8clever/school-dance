@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, I
 import { observer } from "mobx-react-lite";
 import { directionStore as directionStoreGlobal, DirectionStore } from "../store/DirectionStore";
 import { ImagePreview } from "./ImagePreview";
-import { SubmenuType } from "../../server/models/Direction";
+import { SubmenuType, DirectionSection } from "../../server/models/Direction";
 import _ from "lodash";
 import { Select } from "./Select";
 import { typeMap } from "../pages/Direction";
@@ -20,6 +20,16 @@ interface SubtypeOption {
   label: string;
   value: string;
 }
+
+const sectionOptions: { value?: DirectionSection, label: string }[] = [
+  {
+    label: "Не выбрано"
+  },
+  {
+    value: "projects",
+    label: "Проекты"
+  }
+]
 
 const directionStore = new DirectionStore();
 export const DirectionEdit = observer((props: DirectionEditProps) => {
@@ -184,6 +194,21 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
                 key={directionStore.item.submenu.type}
                 options={subtypeOptions}
               />
+            </FormGroup>
+
+            <FormGroup>
+              <Label>Привязка к разделу</Label>
+              <Input 
+                type="select"
+                options={sectionOptions}
+                value={directionStore.item.section}
+                onChange={e => {
+                  directionStore.item.section = e.target.value as DirectionSection;
+                }}
+                placeholder="Выбор...">
+                <option value="">Не выбрано</option>
+                <option value="projects">Проекты</option>
+              </Input>
             </FormGroup>
 
             <FormGroup>

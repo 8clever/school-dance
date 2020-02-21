@@ -65,7 +65,7 @@ export const Login = (props: LoginProps) => {
 
             await userStore.login(login, password);
             await userStore.isLoggedin();
-            routerStore.push("/")
+            routerStore.push("/admin")
           }}>
             Вход <Icon type="sign-in-alt" />
           </Button>

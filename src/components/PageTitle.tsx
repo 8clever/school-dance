@@ -3,7 +3,7 @@ import { BigRow, BigCol } from "./Big";
 import { FlexCol } from "./Flex";
 
 interface PageTitleProps {
-  children: string;
+  children: React.ReactNode;
   marquee?: boolean;
 }
 

@@ -2,6 +2,8 @@ import { ObjectID } from "bson";
 
 export type SubmenuType = "teachers" | "artists" | "performance";
 
+export type DirectionSection = "projects"
+
 export interface ScheduleItem {
   _id: string | ObjectID;
   cron: string;
@@ -18,4 +20,5 @@ export interface Direction {
     type: SubmenuType,
     items: Array<string | ObjectID>
   }
+  section?: DirectionSection
 }
