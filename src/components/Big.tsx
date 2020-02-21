@@ -203,3 +203,14 @@ export const BigRow = (props: BigRowProps) => {
       {...restProps as any } />
   )
 }
+
+export const BigEmptyRow = () => {
+  return (
+    <BigRow>
+      <BigCol 
+        md={12}>
+        <div style={{ height: 31 }}></div>
+      </BigCol>
+    </BigRow>
+  )
+}

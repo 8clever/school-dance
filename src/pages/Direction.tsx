@@ -16,8 +16,6 @@ import _ from "lodash";
 import { Direction as DirectionModel } from "../../server/models/Direction";
 import { CALENDAR_MONTH } from "../components/CalendarHelpers";
 import { classStore } from "../store/ClassStore";
-import { HomePageEdit } from "../components/HomePageEdit";
-import { configStore } from "../store/ConfigStore";
 
 interface DirectionProps {
   id?: string;
@@ -143,7 +141,6 @@ export const DirectionMenuItem = (props: DirectionMenuItemProps) => {
 
 interface DirectionMenuProps {
   selectedId?: string;
-  editHomePage?: boolean;
 }
 
 export const DirectionMenuTop = observer((props: DirectionMenuProps) => {
@@ -243,7 +240,6 @@ export const getMenu = (props: {
 
 export const DirectionMenu = observer((props: DirectionMenuProps) => {
   const [ directionEditVisible, setDirectionEditVisible ] = React.useState(false);
-  const [ homePageEditVisible, setHomePageEditVisible ] = React.useState(false);
   const [ id, setId ] = React.useState("");
 
   React.useEffect(() => {
@@ -269,21 +265,6 @@ export const DirectionMenu = observer((props: DirectionMenuProps) => {
         }}>
         <Icon type="plus" className="mr-3" /> 
         ДОБАВИТЬ НАПРАВЛЕНИЕ
-      </BigButtonCol>
-    )
-  }
-
-  if (userStore.isAdmin() && props.editHomePage) {
-    editHomePage = (
-      <BigButtonCol 
-        style={{
-          fontFamily: "Styled Font"
-        }}
-        onClick={() => {
-          setHomePageEditVisible(true);
-        }}>
-        <Icon type="pencil-alt" className="mr-3" /> 
-        ДОМАШНЯЯ СТРАНИЦА
       </BigButtonCol>
     )
   }
@@ -325,14 +306,6 @@ export const DirectionMenu = observer((props: DirectionMenuProps) => {
         _id={id}
         visible={directionEditVisible}
         toggle={() => setDirectionEditVisible(!directionEditVisible)}
-      />
-
-      <HomePageEdit 
-        visible={homePageEditVisible}
-        toggle={() => setHomePageEditVisible(!homePageEditVisible)}
-        onSave={() => {
-          configStore.getConfig();
-        }}
       />
     </>
   )

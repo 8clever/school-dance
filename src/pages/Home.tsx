@@ -1,13 +1,15 @@
 import React from "react";
-import { Base, BigHr } from "../components";
+import { Base, BigHr, BigRow, BigButtonCol, BigEmptyRow, Icon } from "../components";
 import { observer } from "mobx-react-lite";
 import { PageTitle } from "../components/PageTitle";
 import { Carousel } from "../components/Carousel";
-import { DirectionMenu } from "./Direction";
 import { configStore } from "../store/ConfigStore";
 import { imageStore } from "../store/ImageStore";
+import { userStore } from "../store/UserStore";
+import { HomePageEdit } from "../components/HomePageEdit";
 
 export const Home = observer(() => {
+  const [ homePageEditVisible, setHomePageEditVisible ] = React.useState(false);
 
   React.useEffect(() => {
     configStore.getConfig();
@@ -34,7 +36,53 @@ export const Home = observer(() => {
         </>: 
         null
       }
-      <DirectionMenu editHomePage />
+
+      <BigRow>
+        <BigButtonCol
+          style={{
+            fontFamily: "Styled Font"
+          }}>
+          ПРОЕКТЫ
+        </BigButtonCol>
+        <BigButtonCol
+          style={{
+            fontFamily: "Styled Font"
+          }}>
+          НАПРАВЛЕНИЯ
+        </BigButtonCol>
+        <BigButtonCol
+          style={{
+            fontFamily: "Styled Font"
+          }}>
+          МАСТЕР-КЛАССЫ
+        </BigButtonCol>
+      </BigRow>
+
+      <BigEmptyRow />
+
+      {
+        userStore.isAdmin() ?
+        <BigRow>
+          <BigButtonCol 
+            style={{
+              fontFamily: "Styled Font"
+            }}
+            onClick={() => {
+              setHomePageEditVisible(true);
+            }}>
+            <Icon type="pencil-alt" className="mr-3" /> 
+            ДОМАШНЯЯ СТРАНИЦА
+          </BigButtonCol>
+        </BigRow> : null
+      }
+
+      <HomePageEdit 
+        visible={homePageEditVisible}
+        toggle={() => setHomePageEditVisible(!homePageEditVisible)}
+        onSave={() => {
+          configStore.getConfig();
+        }}
+      />
     </Base>
   )
 })
