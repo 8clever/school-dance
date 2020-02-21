@@ -12,6 +12,7 @@ import { Col } from "reactstrap";
 import ReactMarkdown from "react-markdown";
 import { Image } from "../components/Carousel";
 import { StudioMenu } from "./Studio";
+import { PageTitle } from "../components/PageTitle";
 
 interface TeacherProps {
   id?: string;
@@ -158,6 +159,11 @@ export const Teacher = observer((props: TeacherProps) => {
 
   return (
     <Base>
+
+      <PageTitle>
+        Cтудия > Педагоги {teacher ? `> ${teacher.fullName}` : ""}
+      </PageTitle>
+
       <BigRow>
 
         {/** mobile */}

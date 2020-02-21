@@ -8,6 +8,7 @@ import { teacherStore } from "../store/TeacherStore";
 import { Teacher } from "../../server/models/Teacher";
 import { Leader } from "../../server/models/Leaders";
 import { leaderStore } from "../store/LeaderStore";
+import { PageTitle } from "../components/PageTitle";
 
 interface StudioMenuProps {
   active?: "leaders" | "teachers" | "history"
@@ -69,6 +70,11 @@ export const StudioMenu = (props: StudioMenuProps) => {
 export const Studio = () => {
   return (
     <Base>
+
+      <PageTitle>
+        Студия
+      </PageTitle>
+
       <BigRow>
         <BigCol md={12}>
           <Carousel 

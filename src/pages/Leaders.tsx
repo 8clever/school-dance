@@ -11,6 +11,7 @@ import ReactMarkdown from "react-markdown";
 import { LeaderEdit } from "../components/LeaderEdit";
 import { Image } from "../components/Carousel";
 import { StudioMenu } from "./Studio";
+import { PageTitle } from "../components/PageTitle";
 
 interface LeaderProps {
   id?: string;
@@ -156,6 +157,11 @@ export const Leaders = observer((props: LeaderProps) => {
 
   return (
     <Base>
+
+      <PageTitle>
+        Студия > Руководство {element ? `> ${element.fullName}` : ""}
+      </PageTitle>
+
       <BigRow>
 
         {/** mobile */}

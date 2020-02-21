@@ -10,6 +10,7 @@ import imgGollandia from "../images/partners/new_gollandiya.png";
 import imgCinema from "../images/partners/new_cinema.png";
 import imgGost from "../images/partners/gost.png";
 import { isMobile } from "../utils/isMobile";
+import { PageTitle } from "../components/PageTitle";
 
 interface PartnerButtonProps {
   img: string;
@@ -87,6 +88,11 @@ const PartnerButton = (props: PartnerButtonProps) => {
 export const Partners = () => {
   return (
     <Base>
+
+      <PageTitle>
+        Партнёры
+      </PageTitle>
+
       <BigRow style={{ fontFamily: "Styled Font" }}>
         <PartnerButton 
           link="http://www.dianavishneva.com/ru/foundation/"
