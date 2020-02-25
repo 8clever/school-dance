@@ -11,7 +11,6 @@ import { imageStore } from "../store/ImageStore";
 import { Col } from "reactstrap";
 import ReactMarkdown from "react-markdown";
 import { Image } from "../components/Carousel";
-import { StudioMenu } from "./Studio";
 import { PageTitle } from "../components/PageTitle";
 
 interface TeacherProps {
@@ -202,8 +201,6 @@ export const Teacher = observer((props: TeacherProps) => {
           </div>
         </BigCol>
       </BigRow>
-
-      <StudioMenu active="teachers" />
       
       <TeacherEdit 
         _id={id}

@@ -1,5 +1,5 @@
 import React from "react";
-import { BigRow, BigButtonColMin, BigHr, BigButtonCol } from "./Big";
+import { BigRow, BigButtonColMin, BigHr, BigButtonCol, getShadowBoxStyle } from "./Big";
 import { Col } from "reactstrap";
 import { Logo } from "./Logo";
 import { routerStore } from "../store/RouterStore";
@@ -108,13 +108,16 @@ export const Footer = () => {
           onClick={() => routerStore.push("/")} md={4}>
           <Logo width={250} />
         </BigButtonCol>
-        <BigButtonColMin 
+        <Col 
           onClick={() => {
             window.open("/rules_policies.pdf", "_blank")
           }}
-          md={12}>
-          Правила студии и политика конфиденциальности
-        </BigButtonColMin>
+          style={getShadowBoxStyle({})}
+          className="big-col text-center p-1">
+          <div>
+            Правила студии и политика конфиденциальности
+          </div>
+        </Col>
       </BigRow>
       <BigHr />
     </div>

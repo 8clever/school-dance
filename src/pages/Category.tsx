@@ -23,10 +23,11 @@ export const Category = observer((props: CategoryProps) => {
         Главная > {directionSectionMap[props.section]}
       </PageTitle>
 
-      <div className="d-block d-md-none">
+      <BigRow>
         {directionStore.itemList.map(i => {
           return (
             <BigButtonCol
+              className={`${directionStore.itemList.length > 3 ? "" : "d-h-600"}`}
               onClick={() => routerStore.push(`/directions/${i._id}`)}
               style={{
                 fontFamily: "Styled Font"
@@ -36,25 +37,7 @@ export const Category = observer((props: CategoryProps) => {
             </BigButtonCol>
           )
         })}
-      </div>
-      
-      <div className="d-md-block d-none">
-        <BigRow>
-          {directionStore.itemList.map(i => {
-            return (
-              <BigButtonCol
-                onClick={() => routerStore.push(`/directions/${i._id}`)}
-                style={{
-                  minHeight: directionStore.itemList.length > 3 ? null : 600,
-                  fontFamily: "Styled Font"
-                }}
-                key={i._id as string}>
-                {i.name}
-              </BigButtonCol>
-            )
-          })}
-        </BigRow>
-      </div>
+      </BigRow>
     </Base>
   )
 })

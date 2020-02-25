@@ -1,9 +1,6 @@
 import React from "react";
-import { Base, BigRow, BigButtonCol, BigCol } from "../components";
+import { Base, BigRow, BigButtonCol } from "../components";
 import { routerStore } from "../store/RouterStore";
-import { Carousel } from "../components/Carousel";
-
-import studio1PNG from "../images/studio/studio.png"
 import { teacherStore } from "../store/TeacherStore";
 import { Teacher } from "../../server/models/Teacher";
 import { Leader } from "../../server/models/Leaders";
@@ -34,9 +31,15 @@ export const StudioMenu = (props: StudioMenuProps) => {
     })
   }, []);
 
+  const styleBtn: React.CSSProperties = {
+    fontFamily: "Styled Font"
+  }
+
   return (
     <BigRow style={{ fontFamily: "Styled Font" }}>
       <BigButtonCol 
+        className="d-h-600"
+        style={styleBtn}
         selected={props.active === "leaders"}
         onClick={() => {
           if (leader) {
@@ -49,6 +52,8 @@ export const StudioMenu = (props: StudioMenuProps) => {
         РУКОВОДСТВО
       </BigButtonCol>
       <BigButtonCol
+        className="d-h-600"
+        style={styleBtn}
         selected={props.active === "teachers"}
         onClick={() => {
           if (teacher) {
@@ -60,7 +65,9 @@ export const StudioMenu = (props: StudioMenuProps) => {
         }}>
         ПЕДАГОГИ
       </BigButtonCol>
-      <BigButtonCol>
+      <BigButtonCol
+        className="d-h-600"
+        style={styleBtn}>
         ИСТОРИЯ
       </BigButtonCol>
     </BigRow>
@@ -74,18 +81,6 @@ export const Studio = () => {
       <PageTitle>
         Главная > Студия
       </PageTitle>
-
-      <BigRow>
-        <BigCol md={12}>
-          <Carousel 
-            items={[
-              {
-                src: studio1PNG
-              }
-            ]}
-          />
-        </BigCol>
-      </BigRow>
       <StudioMenu />
     </Base>
   )

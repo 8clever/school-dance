@@ -10,7 +10,6 @@ import { Col } from "reactstrap";
 import ReactMarkdown from "react-markdown";
 import { LeaderEdit } from "../components/LeaderEdit";
 import { Image } from "../components/Carousel";
-import { StudioMenu } from "./Studio";
 import { PageTitle } from "../components/PageTitle";
 
 interface LeaderProps {
@@ -198,8 +197,6 @@ export const Leaders = observer((props: LeaderProps) => {
           </div>
         </BigCol>
       </BigRow>
-      
-      <StudioMenu active="leaders" />
 
       <LeaderEdit 
         _id={id}
