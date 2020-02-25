@@ -55,21 +55,6 @@ export const messages = [
   }
 ]
 
-const links = [
-  {
-    title: "НАПРАВЛЕНИЯ",
-    link: "/"
-  },
-  {
-    title: "ПОСМОТРЕТЬ НА КАРТЕ",
-    link: "/contacts"
-  },
-  {
-    title: "АБОНЕМЕНТЫ",
-    link: "/subscribe"
-  }
-]
-
 export const FirstVisit = () => {
   return (
     <Base>
@@ -102,20 +87,6 @@ export const FirstVisit = () => {
                   })}                    
                 </div>
               </BigCol>
-            )
-          })
-        }
-        {
-          links.map((l, idx) => {
-            return (
-              <BigButtonColMin
-                md={4}
-                onClick={() => {
-                  routerStore.push(l.link)
-                }}
-                key={idx}>
-                {l.title}
-              </BigButtonColMin>
             )
           })
         }
