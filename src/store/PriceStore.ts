@@ -16,7 +16,7 @@ export class PriceStore extends Api<Price> {
     this.item = {
       _idsubscribe,
       description: "",
-      price: 0
+      name: ""
     }
   }
 }

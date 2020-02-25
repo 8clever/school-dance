@@ -1,106 +1,164 @@
 import React from "react";
-import { Base, BigRow, BigCol, Icon, FlexCol, BigButtonColMin } from "../components";
+import { Base, BigRow, FlexCol, BigButtonColMin, Icon, BigHr, getShadowBoxStyle } from "../components";
 import { subscribeStore } from "../store/SubscribeStore";
-import { Col, Button } from "reactstrap";
+import { Col } from "reactstrap";
 import { imageStore } from "../store/ImageStore";
-import { userStore } from "../store/UserStore";
-import { observer } from "mobx-react-lite";
-import { PriceEdit } from "../components/PriceEdit";
 import { priceStore } from "../store/PriceStore";
 import { Carousel } from "../components/Carousel";
-import { SubscribeMenu, SubscribeMenuTop } from "./Subscribe";
 import { PageBreadcrumbs } from "../components/PageTitle";
+import { Element } from "./Direction";
+import { toJS } from "mobx";
+import { observer } from "mobx-react-lite";
+import { userStore } from "../store/UserStore";
+import MD from "react-markdown";
+import { PriceEdit } from "../components/PriceEdit";
 
 interface PricesProps {
   id: string;
 }
 
 export const Prices = observer((props: PricesProps) => {
-  const [ visiblePriceModal, setVisiblePriceModal ] = React.useState(false);
-  const [ priceId, setPriceId ] = React.useState("");
+  const [ priceModal, setPriceModal ] = React.useState({
+    visible: false,
+    id: ""
+  });
+  const [ element, setElement ] = React.useState<Element>({ images: [], title: "", description: "" });
+  const [ submenuOptions, setSubmenuOptions ] = React.useState<Element[]>([]);
+
+  const loadPrices = async () => {
+    await priceStore.loadItems({ _idsubscribe: props.id }),
+    setSubmenuOptions(priceStore.itemList.map(p => {
+      return {
+        _id: p._id as string,
+        title: p.name,
+        description: p.description,
+        images: subscribeStore.item.images as string[]
+      }
+    }));
+  }
 
   React.useEffect(() => {
-    subscribeStore.loadItem(props.id);
-    priceStore.loadItems({
-      _idsubscribe: props.id
-    });
+    (async () => {
+      await Promise.all([
+        subscribeStore.loadItem(props.id),
+        userStore.isLoggedin()
+      ])
+
+      const subscribe = toJS(subscribeStore.item);
+      setElement({
+        title: subscribe.name,
+        description: subscribe.description,
+        images: subscribe.images as string[]
+      });
+      await loadPrices();
+    })();
   }, [props.id]);
 
-  const subscribe = subscribeStore.item;
-  if (!subscribe) return null;
-
-  const prices = (
-    <>
-      <div className="p-5" style={{ borderLeft: "1px solid black" }}>
-        <h4 className="mb-5">
-          {subscribe.name}
-        </h4>
-        {
-          priceStore.itemList.map(i => {
-            return (
-              <p key={i._id as string}>
-                {i.description} - <b>{i.price}р.</b>
-                {
-                  userStore.isAdmin() ?
-                  <>
-                    <Icon 
-                      onClick={() => {
-                        setPriceId(i._id as string);
-                        setVisiblePriceModal(true);
-                      }}
-                      className="ml-3"
-                      style={{ cursor: "pointer" }}
-                      type="pencil-alt"
-                    />
-
-                    <Icon
-                      onClick={async () => {
-                        await priceStore.removeItemByID(i._id as string)
-                        await priceStore.loadItems({ _idsubscribe: props.id });
-                      }}
-                      className="ml-3"
-                      style={{ cursor: "pointer" }} 
-                      type="trash" 
-                    />
-                  </> : null
-                }
-              </p>
-            )
-          })
-        }
+  const submenu = submenuOptions.map(o => {
+    return (
+      <BigButtonColMin
+        key={o._id}
+        onClick={async () => {
+          setElement(o);
+        }}
+        style={{
+          border: "none",
+        }}
+        selected={element._id === o._id}
+        xs={12}
+        md={12}>
+        {o.title}
 
         {
           userStore.isAdmin() ?
-            <Button
-              size="sm"
-              color="primary"
-              onClick={() => {
-                setPriceId("")
-                setVisiblePriceModal(true)
+          <span className="hovered">
+            <Icon 
+              onClick={e => {
+                e.preventDefault();
+                setPriceModal({
+                  id: o._id,
+                  visible: true
+                })
               }}
-            >
-              <Icon type="plus" /> Цена
-            </Button> : null
+              className="ml-3"
+              type="pencil-alt" />
+            <Icon 
+              onClick={async e => {
+                e.preventDefault();
+                await priceStore.removeItemByID(o._id);
+                await loadPrices();
+              }}
+              className="ml-3"
+              type="trash" 
+            />
+          </span> : null
         }
+      </BigButtonColMin>
+    )
+  });
 
-        <PriceEdit 
-          _id={priceId}
-          _idsubscribe={props.id}
-          visible={visiblePriceModal}
-          toggle={() => setVisiblePriceModal(!visiblePriceModal)}
-        />
-      </div>
-      <div>
-        <BigButtonColMin 
-          onClick={() => {
-            window.open(subscribeStore.item.paymentLink)
-          }}
-          md={12}>
-          ОПЛАТИТЬ
-        </BigButtonColMin>
-      </div>
-    </>
+  if (userStore.isAdmin()) {
+    submenu.push(
+      <BigButtonColMin
+        key={"add-price"}
+        onClick={async () => {
+          setPriceModal({
+            id: "",
+            visible: true
+          })
+        }}
+        style={{
+          border: "none",
+        }}
+        xs={12}
+        md={12}>
+        <Icon type="plus" className="mr-2" />
+        ДОБАВИТЬ ЦЕНУ
+      </BigButtonColMin>
+    )
+  }
+
+  const ticketBuy = (
+    <BigRow>
+      <BigButtonColMin 
+        style={{
+          borderLeft: "none"
+        }}
+        md={12}>
+        ОПЛАТИТЬ
+      </BigButtonColMin>
+    </BigRow>
   )
+
+  const description = (
+    <div className="p-5">
+      <MD source={element.description} />
+    </div>
+  )
+
+  const descriptionMobile = (
+    <FlexCol justify="between" column>
+      {description}
+      {ticketBuy}
+    </FlexCol>
+  )
+
+  const descriptionDesktop = (
+    <FlexCol justify="between" column>
+      <div style={{ 
+        position: "relative",
+        justifySelf: "stretch",
+        height: "100%"
+      }}>
+        <div className="absolute-container" style={{ overflow: "auto" }}>
+          {description}
+        </div>
+      </div>
+      {ticketBuy}
+    </FlexCol>
+  )
+
+  if (!subscribeStore.item) return null;
 
   return (
     <Base>
@@ -117,32 +175,57 @@ export const Prices = observer((props: PricesProps) => {
         ]}
       />
 
-      <SubscribeMenuTop 
-        active={props.id}
-      />
+      <div 
+        className="d-block d-md-none w-100" 
+        style={{ borderLeft: "1px solid black" }}>
+        {descriptionMobile}
+      </div>
 
-      <BigRow>
-        <BigCol md={8}>
+      <div 
+        className="d-block d-md-none w-100" 
+        style={{ borderLeft: "1px solid black" }}>
+        {submenu}
+      </div> 
+      
+      <BigHr />
+
+      {/** direction view */}
+      <BigRow style={{ position: "relative" }}>
+        <Col
+          md={4}
+          style={getShadowBoxStyle({ top: 0 })}
+          className="absolute-container bg-white d-none d-md-block">
+          {submenu}
+        </Col>
+
+        <Col 
+          style={getShadowBoxStyle({ top: 0 })}
+          md={12} 
+          xs={12}>
+
           <Carousel 
-            items={subscribe.images.map(i => {
-            return { src: `${imageStore.endpoint}${i}` };
-          })} />
-        </BigCol>
-        <Col md={4} className="d-none d-md-block">
-          <div className="absolute-container" style={{ overflow: "auto" }}>
-            <FlexCol column justify="between">
-              {prices}
-            </FlexCol>
-          </div>
+            items={
+              element.images.map(i => {
+                return { src: `${imageStore.endpoint}${i}` };
+              })
+            } 
+          />
+        </Col>
+        
+        <Col
+          md={4}
+          style={getShadowBoxStyle({ top: 0 })}
+          className="absolute-container bg-white offset-8 d-none d-md-block">
+          {descriptionDesktop}
         </Col>
       </BigRow>
 
-      <div className="d-md-none">
-        {prices}
-      </div>
-
-      <SubscribeMenu 
-        active={props.id} 
+      <PriceEdit 
+        _id={priceModal.id}
+        visible={priceModal.visible}
+        _idsubscribe={subscribeStore.item._id as string}
+        toggle={() => setPriceModal({ ...priceModal, visible: false })}
+        onSave={() => loadPrices()}
       />
     </Base>
   )

@@ -45,6 +45,18 @@ export const SubscribeEdit = observer((props: SubscribeEditProps) => {
         </FormGroup>
 
         <FormGroup>
+          <Label>Описание</Label>
+          <Input 
+            type="textarea"
+            placeholder={"Текст..."}
+            value={localStore.item.description}
+            onChange={e => {
+              localStore.item.description = e.target.value;
+            }}
+          />
+        </FormGroup>
+
+        <FormGroup>
           <Label>Ссылка на оплату</Label>
           <Input 
             placeholder={"Текст..."}

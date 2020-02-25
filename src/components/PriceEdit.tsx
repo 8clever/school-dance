@@ -8,6 +8,7 @@ interface PriceEditProps {
   _idsubscribe: string;
   visible: boolean;
   toggle: () => void;
+  onSave: () => void;
 }
 
 const localStore = new PriceStore();
@@ -34,6 +35,17 @@ export const PriceEdit = observer((props: PriceEditProps) => {
       </ModalHeader>
       <ModalBody>
         <FormGroup>
+          <Label>Наименование</Label>
+          <Input 
+            placeholder={"Текст..."}
+            value={localStore.item.name}
+            onChange={e => {
+              localStore.item.name = e.target.value;
+            }}
+          />
+        </FormGroup>
+
+        <FormGroup>
           <Label>Описание</Label>
           <Input 
             type="textarea"
@@ -41,18 +53,6 @@ export const PriceEdit = observer((props: PriceEditProps) => {
             value={localStore.item.description}
             onChange={e => {
               localStore.item.description = e.target.value;
-            }}
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <Label>Цена</Label>
-          <Input 
-            type="number"
-            placeholder={"Текст..."}
-            value={localStore.item.price}
-            onChange={e => {
-              localStore.item.price = parseFloat(e.target.value);
             }}
           />
         </FormGroup>
@@ -68,6 +68,7 @@ export const PriceEdit = observer((props: PriceEditProps) => {
             _idsubscribe: props._idsubscribe
           });
           props.toggle();
+          props.onSave();
         }}>
           Сохранить
         </Button>

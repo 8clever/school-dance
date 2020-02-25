@@ -22,6 +22,7 @@ export class SubscribeStore extends Api<Subscribe> {
 
   create = () => {
     this.item = {
+      description: '',
       name: "",
       images: [],
       paymentLink: ""
