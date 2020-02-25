@@ -10,7 +10,7 @@ import imgGollandia from "../images/partners/new_gollandiya.png";
 import imgCinema from "../images/partners/new_cinema.png";
 import imgGost from "../images/partners/gost.png";
 import { isMobile } from "../utils/isMobile";
-import { PageTitle } from "../components/PageTitle";
+import { PageBreadcrumbs } from "../components/PageTitle";
 
 interface PartnerButtonProps {
   img: string;
@@ -89,9 +89,13 @@ export const Partners = () => {
   return (
     <Base>
 
-      <PageTitle>
-        Главная > Партнёры
-      </PageTitle>
+      <PageBreadcrumbs 
+        items={[
+          {
+            title: "Партнёры"
+          }
+        ]}
+      />
 
       <BigRow style={{ fontFamily: "Styled Font" }}>
         <PartnerButton 

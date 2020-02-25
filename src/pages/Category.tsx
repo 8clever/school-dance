@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 import { Base, BigRow, BigButtonCol } from "../components";
-import { PageTitle } from "../components/PageTitle";
+import { PageBreadcrumbs } from "../components/PageTitle";
 import { directionStore } from "../store/DirectionStore";
 import { routerStore } from "../store/RouterStore";
 import { DirectionSection } from "../../server/models/Direction";
@@ -19,9 +19,13 @@ export const Category = observer((props: CategoryProps) => {
 
   return (
     <Base>
-      <PageTitle>
-        Главная > {directionSectionMap[props.section]}
-      </PageTitle>
+      <PageBreadcrumbs 
+        items={[
+          {
+            title: directionSectionMap[props.section]
+          }
+        ]}
+      />
 
       <BigRow>
         {directionStore.itemList.map(i => {

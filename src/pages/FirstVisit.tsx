@@ -6,7 +6,7 @@ import { routerStore } from "../store/RouterStore";
 import shirtPNG from "../images/icons/tsh.png";
 import pointPNG from "../images/icons/point.png";
 import bagPNG from "../images/icons/bag.png";
-import { PageTitle } from "../components/PageTitle";
+import { PageBreadcrumbs } from "../components/PageTitle";
 
 export const messages = [
   {
@@ -73,10 +73,14 @@ const links = [
 export const FirstVisit = () => {
   return (
     <Base>
-
-      <PageTitle>
-        Главная > Первое посещение
-      </PageTitle>
+      
+      <PageBreadcrumbs
+        items={[
+          {
+            title: "Первое посещение"
+          }
+        ]}
+      />
 
       <BigRow>
         {

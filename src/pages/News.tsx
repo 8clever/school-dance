@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 import { Base, BigHr, BigRow, getShadowBoxStyle, FlexCol, BigButtonColMin, Icon } from "../components";
-import { PageTitle } from "../components/PageTitle";
+import { PageBreadcrumbs } from "../components/PageTitle";
 import { PieceOfNewsEdit } from "../components/PieceOfNewsEdit";
 import { Col } from "reactstrap";
 import { Carousel } from "../components/Carousel";
@@ -154,9 +154,18 @@ export const News = observer((props: NewsProps) => {
 
   return (
     <Base>
-      <PageTitle>
-        Главная > Новости {pieceOfNewsStore.item ? `> ${pieceOfNewsStore.item.name}` : ""}
-      </PageTitle>
+
+      <PageBreadcrumbs 
+        items={[
+          {
+            title: "Новости"
+          },
+          pieceOfNewsStore.item ?
+          {
+            title: pieceOfNewsStore.item.name
+          } : null
+        ]}
+      />
 
       <div 
         className="d-block d-md-none w-100" 

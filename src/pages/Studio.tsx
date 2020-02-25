@@ -5,7 +5,7 @@ import { teacherStore } from "../store/TeacherStore";
 import { Teacher } from "../../server/models/Teacher";
 import { Leader } from "../../server/models/Leaders";
 import { leaderStore } from "../store/LeaderStore";
-import { PageTitle } from "../components/PageTitle";
+import { PageBreadcrumbs } from "../components/PageTitle";
 
 interface StudioMenuProps {
   active?: "leaders" | "teachers" | "history"
@@ -78,9 +78,13 @@ export const Studio = () => {
   return (
     <Base>
 
-      <PageTitle>
-        Главная > Студия
-      </PageTitle>
+      <PageBreadcrumbs 
+        items={[
+          {
+            title: "Студия"
+          }
+        ]}
+      />
       <StudioMenu />
     </Base>
   )

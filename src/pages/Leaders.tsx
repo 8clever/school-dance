@@ -10,7 +10,7 @@ import { Col } from "reactstrap";
 import ReactMarkdown from "react-markdown";
 import { LeaderEdit } from "../components/LeaderEdit";
 import { Image } from "../components/Carousel";
-import { PageTitle } from "../components/PageTitle";
+import { PageBreadcrumbs } from "../components/PageTitle";
 
 interface LeaderProps {
   id?: string;
@@ -157,9 +157,21 @@ export const Leaders = observer((props: LeaderProps) => {
   return (
     <Base>
 
-      <PageTitle>
-        Главная > Студия > Руководство {element ? `> ${element.fullName}` : ""}
-      </PageTitle>
+      <PageBreadcrumbs 
+        items={[
+          {
+            title: "Студия",
+            url: "/studio"
+          },
+          {
+            title: "Руководство"
+          },
+          element ?
+          {
+            title: element.fullName
+          } : null
+        ]}
+      />
 
       <BigRow>
 

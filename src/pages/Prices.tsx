@@ -9,7 +9,7 @@ import { PriceEdit } from "../components/PriceEdit";
 import { priceStore } from "../store/PriceStore";
 import { Carousel } from "../components/Carousel";
 import { SubscribeMenu, SubscribeMenuTop } from "./Subscribe";
-import { PageTitle } from "../components/PageTitle";
+import { PageBreadcrumbs } from "../components/PageTitle";
 
 interface PricesProps {
   id: string;
@@ -105,9 +105,17 @@ export const Prices = observer((props: PricesProps) => {
   return (
     <Base>
 
-      <PageTitle>
-        Главная > Цены > {subscribeStore.item.name}
-      </PageTitle>
+      <PageBreadcrumbs 
+        items={[
+          {
+            title: "Цены",
+            url: "/subscribe"
+          },
+          {
+            title: subscribeStore.item.name
+          }
+        ]}
+      />
 
       <SubscribeMenuTop 
         active={props.id}

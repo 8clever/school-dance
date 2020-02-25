@@ -8,7 +8,7 @@ import { observer } from "mobx-react-lite";
 import { getMenu, getMenuTop } from "./Direction";
 import { Subscribe as SubscribeModel } from "../../server/models/Subscribe";
 import _ from "lodash";
-import { PageTitle } from "../components/PageTitle";
+import { PageBreadcrumbs } from "../components/PageTitle";
 
 
 interface SubscribeMenuItemProps {
@@ -201,9 +201,15 @@ export const SubscribeMenu = observer((props: SubscribeMenuProps) => {
 export const Subscribe = () => {
   return (
     <Base>
-      <PageTitle>
-        Главная > Цены
-      </PageTitle>
+
+      <PageBreadcrumbs 
+        items={[
+          {
+            title: "Цены"
+          }
+        ]}
+      />
+
       <SubscribeMenu />
     </Base>
   )

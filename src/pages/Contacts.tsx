@@ -9,7 +9,7 @@ import phonePNG from "../images/icons/phone-call.png";
 import mailPNG from "../images/icons/mail.png";
 import pointPNG from "../images/icons/point.png";
 import pointBlackPNG from "../images/icons/point-black.png";
-import { PageTitle } from "../components/PageTitle";
+import { PageBreadcrumbs } from "../components/PageTitle";
 
 export const Contacts = () => {
   let [ width, height, refCallback ] = useResizeObserver();
@@ -23,9 +23,13 @@ export const Contacts = () => {
   return (
     <Base>
 
-      <PageTitle>
-        Главная > Контакты
-      </PageTitle>
+      <PageBreadcrumbs 
+        items={[
+          {
+            title: "Контакты"
+          }
+        ]}
+      />
 
       <BigRow>
         <BigCol 

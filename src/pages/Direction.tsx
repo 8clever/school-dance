@@ -15,10 +15,10 @@ import { artistStore } from "../store/ArtistStore";
 import _ from "lodash";
 import { Direction as DirectionModel } from "../../server/models/Direction";
 import { classStore } from "../store/ClassStore";
-import { PageTitle } from "../components/PageTitle";
+import { PageBreadcrumbs } from "../components/PageTitle";
 
 interface DirectionProps {
-  id?: string;
+  id: string;
 }
 
 export interface Element {
@@ -371,9 +371,17 @@ export const Direction = observer((props: DirectionProps) => {
   return (
     <Base>
 
-      <PageTitle>
-        Главная > {directionSectionMap[directionStore.item.section]} > {directionStore.item.name}
-      </PageTitle>
+      <PageBreadcrumbs 
+        items={[
+          {
+            title: directionSectionMap[directionStore.item.section],
+            url: `/category/${directionStore.item.section}`
+          },
+          {
+            title: directionStore.item.name
+          }
+        ]}
+      />
 
       <div 
         className="d-block d-md-none w-100" 
