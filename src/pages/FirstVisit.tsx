@@ -1,7 +1,6 @@
 import React from "react";
 import { Base } from "../components/Base"
-import { BigRow, BigCol, BigButtonColMin } from "../components/Big";
-import { routerStore } from "../store/RouterStore";
+import { BigRow, BigCol } from "../components/Big";
 
 import shirtPNG from "../images/icons/tsh.png";
 import pointPNG from "../images/icons/point.png";
