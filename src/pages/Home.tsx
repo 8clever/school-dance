@@ -1,5 +1,5 @@
 import React from "react";
-import { Base, BigHr, BigRow, BigButtonCol, BigEmptyRow, BigButtonColMin, Icon } from "../components";
+import { Base, BigHr, BigRow, BigButtonCol, BigEmptyRow, BigButtonColMin, Icon, getShadowBoxStyle } from "../components";
 import { observer } from "mobx-react-lite";
 import { PageTitle } from "../components/PageTitle";
 import { Carousel } from "../components/Carousel";
@@ -11,6 +11,9 @@ import { directionSectionMap } from "./Direction";
 import { pieceOfNewsStore } from "../store/PieceOfNewsStore";
 import moment from "moment";
 import { PieceOfNews } from "../../server/models/PieceOfNews";
+
+import iconLeft from "../images/icons/arrow-left.png";
+import iconRight from "../images/icons/arrow-right.png";
 
 const chevronButtonStyle: React.CSSProperties = {
   position: "absolute",
@@ -72,6 +75,7 @@ export const Home = observer(() => {
               key={k}
               onClick={() => routerStore.push(`/category/${k}`)}
               style={{
+                minHeight: 300,
                 fontFamily: "Styled Font"
               }}>
               {v}
@@ -118,7 +122,7 @@ export const Home = observer(() => {
                       ...chevronButtonStyle,
                       left: 0
                     }}>
-                    <Icon type="chevron-left" />
+                    <img width={25} src={iconLeft} />
                   </div>
                 }
                 
@@ -135,7 +139,7 @@ export const Home = observer(() => {
                       ...chevronButtonStyle,
                       right: 0
                     }}>
-                    <Icon type="chevron-right" />
+                    <img width={25} src={iconRight} />
                   </div> : null
                 }
               </BigButtonColMin>
@@ -143,9 +147,16 @@ export const Home = observer(() => {
           })
         } 
       </BigRow>
-
-      <BigEmptyRow />
       
+      <div style={{ 
+        ...getShadowBoxStyle({ 
+          top: 1, 
+          bottom: 0, 
+          left: 0, 
+          right: 0 
+        }),
+        marginBottom: 31 
+      }}></div>
     </Base>
   )
 })

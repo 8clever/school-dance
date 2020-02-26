@@ -265,7 +265,7 @@ export const DirectionMenu = observer((props: DirectionMenuProps) => {
 export const directionSectionMap = {
   projects: "Проекты",
   directions: "Направления",
-  "master-classes": "Мастер классы"
+  "master-classes": "Мастер-классы"
 }
 
 export const Direction = observer((props: DirectionProps) => {

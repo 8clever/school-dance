@@ -2,6 +2,7 @@ import React from "react";
 import { BigRow, BigCol } from "./Big";
 import { FlexCol } from "./Flex";
 import { routerStore } from "../store/RouterStore";
+import iconRightPNG from '../images/icons/arrow-right.png';
 
 
 
@@ -43,7 +44,15 @@ export const PageBreadcrumbs = (props: PageBreadcrumbsProps) => {
 
             {
               items[idx + 1] ?
-              " > " : null
+              <img 
+                style={{
+                  marginLeft: 3,
+                  marginRight: 3,
+                  marginBottom: 1
+                }}
+                width={15} 
+                src={iconRightPNG} /> : 
+              null
             }
           </React.Fragment>
         )
