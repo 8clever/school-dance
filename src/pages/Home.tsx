@@ -1,5 +1,5 @@
 import React from "react";
-import { Base, BigHr, BigRow, BigButtonCol, BigEmptyRow, BigButtonColMin, Icon, getShadowBoxStyle } from "../components";
+import { Base, BigHr, BigRow, BigButtonCol, BigEmptyRow, BigButtonColMin, getShadowBoxStyle } from "../components";
 import { observer } from "mobx-react-lite";
 import { PageTitle } from "../components/PageTitle";
 import { Carousel } from "../components/Carousel";
