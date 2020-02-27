@@ -14,7 +14,6 @@ import { PieceOfNews } from "../../server/models/PieceOfNews";
 
 import iconLeft from "../images/icons/arrow-left.png";
 import iconRight from "../images/icons/arrow-right.png";
-import homeImage from "../images/image-home.jpg"
 
 const chevronButtonStyle: React.CSSProperties = {
   position: "absolute",
@@ -54,16 +53,13 @@ export const Home = observer(() => {
     <Base>
       <PageTitle marquee>{configStore.item.homePageTitle}</PageTitle>
 
-      <img 
-        width={"100%"}
-        src={homeImage} 
-      />
-
       {
         configStore.item.homeCarousel.length ?
         <>
           <BigHr />
-          <Carousel items={
+          <Carousel 
+            ratio={0.31365}
+            items={
             configStore.item.homeCarousel.map(_id => {
               return {
                 src: `${imageStore.endpoint}/${_id}`
