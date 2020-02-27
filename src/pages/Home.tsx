@@ -14,13 +14,13 @@ import { PieceOfNews } from "../../server/models/PieceOfNews";
 
 import iconLeft from "../images/icons/arrow-left.png";
 import iconRight from "../images/icons/arrow-right.png";
+import homeImage from "../images/image-home.jpg"
 
 const chevronButtonStyle: React.CSSProperties = {
   position: "absolute",
   top: 0,
   bottom: 0,
   width: 25,
-  background: "rgba(0,0,0,0.05)",
   display: 'flex',
   placeItems: "center",
   justifyContent: "center",
@@ -53,6 +53,12 @@ export const Home = observer(() => {
   return (
     <Base>
       <PageTitle marquee>{configStore.item.homePageTitle}</PageTitle>
+
+      <img 
+        width={"100%"}
+        src={homeImage} 
+      />
+
       {
         configStore.item.homeCarousel.length ?
         <>
