@@ -72,9 +72,6 @@ export const Router = () => {
       <Route exact path="/calendar" render={(match) => <Calendar {...parse(match.location.search)} />}/>
       <Route exact path="/auth" render={match => <Auth />} />
       <Route exact path="/search" render={match => <Search {...parse(match.location.search)} />} />
-      <Route exact path="/artists" render={match => <Artists />} />
-      <Route exact path="/performance" render={match => <Performance />} />
-      <Route exact path="/classes" render={match => <Classes />} />
       <Route exact path="/external-schedule" render={() => <ExternalSchedule />} />
       <Route exact path="/signup" render={() => <SignUp />} />
       <Route exact path="/news" render={() => <News />} />

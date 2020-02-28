@@ -10,11 +10,8 @@ import MD from "react-markdown";
 import { Carousel } from "../components/Carousel";
 import { Col } from "reactstrap";
 import { teacherStore } from "../store/TeacherStore";
-import { performanceStore } from "../store/PerformanceStore";
-import { artistStore } from "../store/ArtistStore";
 import _ from "lodash";
 import { Direction as DirectionModel } from "../../server/models/Direction";
-import { classStore } from "../store/ClassStore";
 import { PageBreadcrumbs } from "../components/PageTitle";
 
 interface DirectionProps {
@@ -49,42 +46,6 @@ export const typeMap: TypeMap = {
     }),
     loadItems: teacherStore.loadItems
   },
-  artists: {
-    name: "АРТИСТЫ",
-    getItems: () => artistStore.itemList.map(a => {
-      return {
-        _id: a._id as string,
-        images: a.images as string[],
-        title: a.name,
-        description: a.description
-      }
-    }),
-    loadItems: artistStore.loadItems
-  },
-  performance: {
-    name: "СПЕКТАКЛИ",
-    getItems: () => performanceStore.itemList.map(i => {
-      return {
-        _id: i._id as string,
-        images: i.images as string[],
-        title: i.name,
-        description: i.description
-      }
-    }),
-    loadItems: performanceStore.loadItems
-  },
-  classes: {
-    name: "КЛАССЫ",
-    getItems: () => classStore.itemList.map(i => {
-      return {
-        _id: i._id as string,
-        images: i.images as string[],
-        title: i.name,
-        description: i.description
-      }
-    }),
-    loadItems: classStore.loadItems
-  }
 }
 
 interface DirectionMenuItemProps {

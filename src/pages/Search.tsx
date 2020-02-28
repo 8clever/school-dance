@@ -1,7 +1,6 @@
 import React from "react";
 import { Base, BigRow, BigButtonCol } from "../components";
 import { directionStore } from "../store/DirectionStore";
-import { performanceStore } from "../store/PerformanceStore";
 import { subscribeStore } from "../store/SubscribeStore";
 import { routerStore } from "../store/RouterStore";
 import { PageTitle } from "../components/PageTitle";
@@ -32,19 +31,13 @@ export const Search = (props: SearchProps) => {
           { desc: { $regex: searchValue, $options: "gmi" }}
         ]
       }),
-      performanceStore.getItems({
-        $or: [
-          { name: { $regex: searchValue, $options: "gmi" }},
-          { description: { $regex: searchValue, $options: "gmi" }}
-        ]
-      }),
       subscribeStore.getItems({
         $or: [
           { name: { $regex: searchValue, $options: "gmi" }}
         ]
       })
     ]).then(data => {
-      const [ direction, performance, subscribe ] = data;
+      const [ direction, subscribe ] = data;
       const searchResult: SearchResult[] = [];
 
       direction.list.forEach(d => {
@@ -52,13 +45,6 @@ export const Search = (props: SearchProps) => {
           name: d.name,
           link: `/directions/${d._id}`
         });
-      });
-
-      performance.list.forEach(p => {
-        searchResult.push({
-          name: p.name,
-          link: `/events/${p._id}`
-        })
       });
 
       subscribe.list.forEach(s => {

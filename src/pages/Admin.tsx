@@ -24,18 +24,6 @@ export const Admin = observer(() => {
           Направления
         </BigButtonCol>
         <BigButtonCol
-          onClick={() => routerStore.push("/artists")}>
-          Артисты
-        </BigButtonCol>
-        <BigButtonCol
-          onClick={() => routerStore.push("/performance")}>
-          Спектакли
-        </BigButtonCol>
-        <BigButtonCol
-          onClick={() => routerStore.push("/classes")}>
-          Классы
-        </BigButtonCol>
-        <BigButtonCol
           onClick={() => routerStore.push("/teachers")}>
           Преподаватели
         </BigButtonCol>
