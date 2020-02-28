@@ -23,10 +23,6 @@ export class DirectionStore extends Api<Direction> {
   defaults = () => {
     this.item = this.item || {} as any;
     this.item.images = this.item.images || [];
-    this.item.submenu  = this.item.submenu || {
-      type: "performance",
-      items: []
-    }
   }
 
   create = () => {
@@ -34,12 +30,7 @@ export class DirectionStore extends Api<Direction> {
       name: "",
       shortName: "",
       images: [],
-      desc: "",
-      schedule: [],
-      submenu: {
-        type: "performance",
-        items: []
-      }
+      desc: ""
     }
     this.newImages = [];
   }

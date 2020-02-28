@@ -9,7 +9,6 @@ class DirectionService extends MongoService<Direction> {
 
   editDirection = async (direction: Direction) => {
     direction.images = direction.images.map(img => new ObjectID(img));
-    direction.submenu.items = direction.submenu.items.map(_id => new ObjectID(_id));
     return this._edit(direction);
   }
 

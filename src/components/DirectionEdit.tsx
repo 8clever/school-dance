@@ -1,24 +1,17 @@
 import React from "react";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, Row, Col, Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, Row, Col } from "reactstrap";
 import { observer } from "mobx-react-lite";
 import { directionStore as directionStoreGlobal, DirectionStore } from "../store/DirectionStore";
 import { ImagePreview } from "./ImagePreview";
-import { SubmenuType, DirectionSection } from "../../server/models/Direction";
+import { DirectionSection } from "../../server/models/Direction";
 import _ from "lodash";
-import { Select } from "./Select";
-import { typeMap, directionSectionMap } from "../pages/Direction";
-import { Icon } from "./Icon";
+import { directionSectionMap } from "../pages/Direction";
 
 
 interface DirectionEditProps {
   _id?: string;
   visible: boolean;
   toggle: () => void;
-}
-
-interface SubtypeOption {
-  label: string;
-  value: string;
 }
 
 const sectionOptions: { value?: DirectionSection, label: string }[] = [
@@ -36,30 +29,12 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
 
   directionStore.defaults();
 
-  const [ subtypeOptions, setSubtypeOptions ] = React.useState<SubtypeOption[]>([]);
-  const [ tabId, setTabId ] = React.useState("");
-  const type = typeMap[directionStore.item.submenu.type];
-
   React.useEffect(() => {
     directionStore.create();
     if (!(props.visible && props._id)) return;
 
     directionStore.loadItem(props._id);
   }, [ props.visible, props._id ]);
-
-  React.useEffect(() => {
-    if (!props.visible) return;
-    
-    type.loadItems({}, { name: 1, fullName: 1, title: 1 }).then(() => {
-      const options = type.getItems().map(i => {
-        return {
-          value: i._id,
-          label: i.title
-        }
-      });
-      setSubtypeOptions(options);
-    });
-  }, [type, props.visible]);
 
   return (
     <Modal 
@@ -83,19 +58,6 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
                 value={directionStore.item.name}
                 onChange={e => {
                   directionStore.item.name = e.target.value;
-                }}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <Label>Краткое наименование</Label>
-              <Input 
-                placeholder={"Текст..."}
-                value={directionStore.item.shortName}
-                onChange={e => {
-                  const v = e.target.value;
-                  if (v.length > 5) return;
-                  directionStore.item.shortName = v;
                 }}
               />
             </FormGroup>
@@ -146,55 +108,6 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
             </Row>
           </Col>
           <Col md={6}>
-            <FormGroup>
-              <Label>Выбор списка</Label>
-              <Input 
-                onChange={(e) => {
-                  directionStore.item.submenu.type = e.target.value as SubmenuType;
-                  directionStore.item.submenu.items = [];
-                  directionStore.item.schedule = [];
-                }}
-                value={directionStore.item.submenu.type} 
-                type="select">
-                {
-                  _.reduce(typeMap, (memo, v, k) => {
-                    memo.push({
-                      label: v.name,
-                      value: k
-                    });
-                    return memo;
-                  }, [] as Array<{ 
-                    value: string; 
-                    label: string 
-                  }>).map(i => {
-                    return (
-                      <option key={i.value} value={i.value}>
-                        {i.label}
-                      </option>
-                    )
-                  })
-                }
-              </Input>
-            </FormGroup>
-
-            <FormGroup>
-              <Label>Отображать в списке</Label>
-              
-              <Select
-                placeholder="Выбор..."
-                isMulti
-                onChange={(options: SubtypeOption[]) => {
-                  options = options || [];
-                  directionStore.item.submenu.items = options.map(o => o.value);
-                }}
-                value={directionStore.item.submenu.items.map((_id) => {
-                  const item = _.find(subtypeOptions, _.matches({ value: _id }));
-                  return item;
-                })}
-                key={directionStore.item.submenu.type}
-                options={subtypeOptions}
-              />
-            </FormGroup>
 
             <FormGroup>
               <Label>Привязка к разделу</Label>
@@ -212,83 +125,6 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
                 })}
               </Input>
             </FormGroup>
-
-            <FormGroup>
-              <Label>
-                <a 
-                  target="_blank" 
-                  href="https://crontab.guru/#00_12-14_*_*_1,3,5">
-                  Настройка расписания*
-                </a>
-              </Label>
-            </FormGroup>
-
-            <Nav tabs>
-              {
-                directionStore.item.submenu.items.map(i => {
-                  const item = _.find(subtypeOptions, _.matches({ value: i }));
-                  if (!item) return null;
-                  return (
-                    <NavItem 
-                      style={{
-                        cursor: "pointer"
-                      }}
-                      key={item.value}>
-                      <NavLink
-                        className={tabId === item.value ? "active" : ""}
-                        onClick={() => {
-                          setTabId(item.value)
-                        }}>
-                        {item.label}
-                      </NavLink>
-                    </NavItem>
-                  )
-                })
-              } 
-            </Nav>
-            <TabContent activeTab={tabId}>
-              <div className="mb-3" />
-              {
-                directionStore.item.submenu.items.map(i => {
-                  const item = _.find(subtypeOptions, _.matches({ value: i }));
-                  if (!item) return null;
-
-                  const schedules = _.filter(directionStore.item.schedule, _.matches({ _id: item.value }));
-
-                  return (
-                    <TabPane
-                      tabId={item.value} 
-                      key={item.value}>
-                      {
-                        schedules.map((s, idx) => {
-                          return (
-                            <FormGroup key={idx}>
-                              <Input 
-                                onChange={e => {
-                                  s.cron = e.target.value;
-                                }}
-                                value={s.cron}
-                              />
-                            </FormGroup>
-                          )
-                        })
-                      }
-
-                      <Button 
-                        onClick={() => {
-                          directionStore.item.schedule.push({
-                            _id: item.value,
-                            cron: "00 12-14 * * 1,3,5"
-                          })
-                        }}
-                        color="primary">
-                        <Icon type="plus" /> Добавить Расписание
-                      </Button>
-                    </TabPane>
-                  )
-                })
-              }
-            </TabContent>
           </Col>
         </Row>
       </ModalBody>
