@@ -154,11 +154,14 @@ export const Home = observer(() => {
         ...getShadowBoxStyle({ 
           top: 1, 
           bottom: 0, 
-          left: 0, 
+          left: 1, 
           right: 0 
         }),
-        marginBottom: 31 
-      }}></div>
+        width: "100%",
+        height: 31
+      }}>
+        &nbsp;
+      </div>
     </Base>
   )
 })
