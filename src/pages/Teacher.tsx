@@ -42,7 +42,6 @@ export const Teacher = observer((props: TeacherProps) => {
 
   const description = (
     <div style={{ padding: 30 }}>
-      <h2>О Педагоге</h2>
       {
         teacher ?
         <ReactMarkdown source={teacher.description} /> :

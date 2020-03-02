@@ -46,7 +46,6 @@ export const Leaders = observer((props: LeaderProps) => {
 
   const description = (
     <div style={{ padding: 30 }}>
-      <h2>О Руководителе</h2>
       {
         element ?
         <ReactMarkdown source={element.description} /> :
