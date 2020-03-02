@@ -131,7 +131,7 @@ export const Partners = () => {
         <BigCol height={height} className="d-none d-md-block" />
         <PartnerButton 
           link="https://gost-group.ru"
-          title="группа копаний GOST"
+          title="группа компаний GOST"
           img={imgGost}
         />
         <BigCol height={height} className="d-none d-md-block" />

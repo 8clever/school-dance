@@ -29,18 +29,21 @@ export const PageBreadcrumbs = (props: PageBreadcrumbsProps) => {
 
         return (
           <React.Fragment key={i.title}>
-            <a
-              style={{
-                textDecoration: i.url ? null : "none"
-              }}
-              onClick={e => {
-                e.preventDefault();
-                if (!i.url) return;
-                routerStore.push(i.url);
-              }}
-              href={i.url}>
-              {i.title}
-            </a>
+            <span className={i.url ? "big-col" : ""}>
+              <a
+                style={{
+                  textDecoration: i.url ? null : "none"
+                }}
+                onClick={e => {
+                  e.preventDefault();
+                  if (!i.url) return;
+                  routerStore.push(i.url);
+                }}
+                href={i.url}>
+                {i.title}
+              </a>
+            </span>
+
 
             {
               items[idx + 1] ?
@@ -73,9 +76,11 @@ export const PageTitle = (props: PageTitleProps) => {
   return (
     <>
       <BigRow>
-        <BigCol md={12} onClick={() => {
-          setPlay(!play)
-        }}>
+        <BigCol 
+          md={12}
+          onClick={() => {
+            setPlay(!play)
+          }}>
           <FlexCol justify="between" align="center">
             <div 
               className={props.marquee ? "marquee" : ""}

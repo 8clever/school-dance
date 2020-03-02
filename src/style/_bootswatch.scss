@@ -134,7 +134,7 @@ $fontWeightBold: 600;
   }
 
   &.btn-link {
-    text-decoration-line: none;
+    text-decoration-line: none !important;
     font-weight: $fontWeightNormal;
 
     &:focus {
@@ -172,8 +172,11 @@ $fontWeightBold: 600;
   }
 
   &:hover {
-    text-decoration-line: none;
-    font-weight: $fontWeightBold;
+
+    * {
+      text-decoration-line: none;
+      font-weight: $fontWeightBold;
+    }
   
     .hovered {
       opacity: 1;
