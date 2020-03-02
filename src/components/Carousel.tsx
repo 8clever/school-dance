@@ -60,8 +60,10 @@ export const Carousel = (props: CarouselProps) => {
   return (
     <div ref={node => {
       if (!node) return;
-      const height = node.getBoundingClientRect().width * ratio;
-      setHeight(height);
+      if (height) return;
+      
+      const h = node.getBoundingClientRect().width * ratio;
+      setHeight(h);
     }}>
       <CarouselFactory
         activeIndex={activeIndex}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Base, BigRow, BigButtonCol } from "../components";
+import { Base, BigRow, BigButtonCol, FlexCol } from "../components";
 import { routerStore } from "../store/RouterStore";
 import { teacherStore } from "../store/TeacherStore";
 import { Teacher } from "../../server/models/Teacher";
@@ -31,15 +31,9 @@ export const StudioMenu = (props: StudioMenuProps) => {
     })
   }, []);
 
-  const styleBtn: React.CSSProperties = {
-    fontFamily: "Styled Font"
-  }
-
   return (
-    <BigRow style={{ fontFamily: "Styled Font" }}>
+    <BigRow className="h-100">
       <BigButtonCol 
-        className="d-h-600"
-        style={styleBtn}
         selected={props.active === "leaders"}
         onClick={() => {
           if (leader) {
@@ -52,8 +46,6 @@ export const StudioMenu = (props: StudioMenuProps) => {
         РУКОВОДСТВО
       </BigButtonCol>
       <BigButtonCol
-        className="d-h-600"
-        style={styleBtn}
         selected={props.active === "teachers"}
         onClick={() => {
           if (teacher) {
@@ -65,9 +57,7 @@ export const StudioMenu = (props: StudioMenuProps) => {
         }}>
         ПЕДАГОГИ
       </BigButtonCol>
-      <BigButtonCol
-        className="d-h-600"
-        style={styleBtn}>
+      <BigButtonCol>
         ИСТОРИЯ
       </BigButtonCol>
     </BigRow>
@@ -75,17 +65,31 @@ export const StudioMenu = (props: StudioMenuProps) => {
 }
 
 export const Studio = () => {
+
+  const Breadcrumbs = () => (
+    <PageBreadcrumbs 
+      items={[
+        {
+          title: "Студия"
+        }
+      ]}
+    />
+  )
+
   return (
     <Base>
 
-      <PageBreadcrumbs 
-        items={[
-          {
-            title: "Студия"
-          }
-        ]}
-      />
-      <StudioMenu />
+      <div className="d-md-none">
+        <Breadcrumbs />
+        <StudioMenu />
+      </div>
+      
+      <div className="d-none d-md-block absolute-container">
+        <FlexCol column >
+          <Breadcrumbs />
+          <StudioMenu />
+        </FlexCol>
+      </div>
     </Base>
   )
 }

@@ -19,9 +19,19 @@ export const Base = observer((props: Props) => {
     <div 
       style={{ height: "100vh" }}>
       <FlexCol column justify="between">
-        <div>
+        <div 
+          className="d-md-h-100"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}>
           <Header />
-          {props.children}
+          <div style={{
+            position: "relative",
+            height: "100%"
+          }}>
+            {props.children}
+          </div>
         </div>
         <div>
           <Footer />

@@ -151,9 +151,9 @@ $fontWeightBold: 600;
   }
 }
 
-.d-h-600 {
+.d-md-h-100 {
   @media (min-width: 768px) {
-    min-height: 600px;
+    height: 100%;
   }
 }
 
