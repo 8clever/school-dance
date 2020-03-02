@@ -9,43 +9,12 @@ import { DirectionEdit } from "../components/DirectionEdit";
 import MD from "react-markdown";
 import { Carousel } from "../components/Carousel";
 import { Col } from "reactstrap";
-import { teacherStore } from "../store/TeacherStore";
 import _ from "lodash";
 import { Direction as DirectionModel } from "../../server/models/Direction";
 import { PageBreadcrumbs } from "../components/PageTitle";
 
 interface DirectionProps {
   id: string;
-}
-
-export interface Element {
-  _id?: string,
-  images: string[],
-  title: string;
-  description: string;
-}
-
-interface TypeMap {
-  [key: string]: {
-    name: string;
-    getItems: () => Element[],
-    loadItems: (query?: object, sort?: object) => Promise<void>;
-  }
-}
-
-export const typeMap: TypeMap = {
-  teachers: {
-    name: "ПЕДАГОГИ",
-    getItems: () => teacherStore.itemList.map(t => {
-      return {
-        _id: t._id as string,
-        images: t.images as string[],
-        title: t.fullName,
-        description: t.description
-      }
-    }),
-    loadItems: teacherStore.loadItems
-  },
 }
 
 interface DirectionMenuItemProps {
@@ -231,64 +200,33 @@ export const directionSectionMap = {
 
 export const Direction = observer((props: DirectionProps) => {
 
-  const [ element, setElement ] = React.useState<Element>({ images: [], title: "", description: "" });
-  const [ submenuOptions, setSubmenuOptions ] = React.useState<Element[]>([]);
-
   directionStore.defaults();
 
+  const [ selectedSubmenuitem, setSelectedSubmenuItem ] = React.useState(-1);
+
   React.useEffect(() => {
-    directionStore.loadItem(props.id).then(() => {
-      if (!directionStore.item) return;
-      setElement({
-        images: directionStore.item.images as string[],
-        title: directionStore.item.name,
-        description: directionStore.item.desc
-      });
-    });
+    directionStore.loadItem(props.id);
   }, [props.id]);
 
-  const type = typeMap[directionStore.item && directionStore.item.submenu.type];
-  React.useEffect(() => {
-    if (!(
-      directionStore.item.submenu.items.length &&
-      type  
-    )) {
-      setSubmenuOptions([]);
-      return;
-    }
-
-    type.loadItems({
-      _id: {
-        $in: directionStore.item.submenu.items
-      }
-    }).then(() => {
-      setSubmenuOptions(type.getItems());
-    });
-  }, [type, directionStore.item.submenu.items])
-
-  const submenu = submenuOptions.map(o => {
+  const submenu = directionStore.item.submenu.map((sub, idx) => {
     return (
       <BigButtonColMin
-        key={o._id}
+        key={idx}
         onClick={async () => {
-          setElement(o);
-          await directionStore.loadItem(directionStore.item._id as string);
-          const schedule = _.filter(directionStore.item.schedule, _.matches({ _id: o._id }));
-          directionStore.item.schedule = schedule;
+          setSelectedSubmenuItem(idx);
         }}
         style={{
           border: "none",
         }}
-        selected={element._id === o._id}
+        selected={selectedSubmenuitem === idx}
         xs={12}
         md={12}>
-        {o.title}
+        {sub.name}
       </BigButtonColMin>
     )
   });
 
   const ticketBuy = (
-    directionStore.item.submenu.type === "performance" ?
     <BigRow>
       <BigButtonColMin 
         style={{
@@ -297,13 +235,18 @@ export const Direction = observer((props: DirectionProps) => {
         md={12}>
         КУПИТЬ БИЛЕТ
       </BigButtonColMin>
-    </BigRow> : 
-    null
+    </BigRow>
   )
 
   const description = (
     <div className="p-5">
-      <MD source={element.description} />
+      <MD 
+        source={
+          selectedSubmenuitem === -1 ?
+          directionStore.item.desc :
+          directionStore.item.submenu[selectedSubmenuitem].description
+        } 
+      />
     </div>
   )
 
@@ -374,7 +317,11 @@ export const Direction = observer((props: DirectionProps) => {
 
           <Carousel 
             items={
-              element.images.map(i => {
+              (
+                selectedSubmenuitem === -1 ?
+                directionStore.item.images :
+                directionStore.item.submenu[selectedSubmenuitem].images
+              ).map(i => {
                 return { src: `${imageStore.endpoint}${i}` };
               })
             } 

@@ -6,7 +6,6 @@ import { imageStore } from "../store/ImageStore";
 import { priceStore } from "../store/PriceStore";
 import { Carousel } from "../components/Carousel";
 import { PageBreadcrumbs } from "../components/PageTitle";
-import { Element } from "./Direction";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { userStore } from "../store/UserStore";
@@ -15,6 +14,13 @@ import { PriceEdit } from "../components/PriceEdit";
 
 interface PricesProps {
   id: string;
+}
+
+interface Element {
+  _id?: string;
+  images: string[],
+  title: string;
+  description: string;
 }
 
 export const Prices = observer((props: PricesProps) => {

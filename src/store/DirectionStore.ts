@@ -23,12 +23,13 @@ export class DirectionStore extends Api<Direction> {
   defaults = () => {
     this.item = this.item || {} as any;
     this.item.images = this.item.images || [];
+    this.item.submenu = Array.isArray(this.item.submenu) ? this.item.submenu : [];
   }
 
   create = () => {
     this.item = {
       name: "",
-      shortName: "",
+      submenu: [],
       images: [],
       desc: ""
     }
