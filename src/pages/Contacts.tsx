@@ -19,9 +19,9 @@ export const Contacts = () => {
     59.929318,
     30.287890
   ]
-  
+
   return (
-    <Base>
+    <Base flex>
 
       <PageBreadcrumbs 
         items={[

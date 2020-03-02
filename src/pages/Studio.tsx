@@ -77,7 +77,7 @@ export const Studio = () => {
   )
 
   return (
-    <Base>
+    <Base flex>
 
       <div className="d-md-none">
         <Breadcrumbs />

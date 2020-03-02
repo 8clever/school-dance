@@ -17,7 +17,7 @@ export const Admin = observer(() => {
   }, []);
 
   return (
-    <Base>
+    <Base flex>
       <BigRow>
         <BigButtonCol
           onClick={() => routerStore.push("/directions")}>

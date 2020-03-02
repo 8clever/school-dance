@@ -16,7 +16,8 @@ export const useResizeObserver = () => {
     if (!$el) return ro.disconnect();
 
     ro.observe($el);
-    setRect($el.getBoundingClientRect())
+    const r = $el.getBoundingClientRect();
+    setRect(r);
   }, []);
 
   return [ 

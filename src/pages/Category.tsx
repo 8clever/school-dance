@@ -52,7 +52,7 @@ export const Category = observer((props: CategoryProps) => {
   toJS(directionStore.itemList);
 
   return (
-    <Base>
+    <Base flex>
       <div className="d-md-none">
         <Breadcrumbs />
         <ItemList />

@@ -1,5 +1,5 @@
 import React from "react";
-import { Base, BigHr, BigRow, BigButtonCol, BigEmptyRow, BigButtonColMin, getShadowBoxStyle } from "../components";
+import { Base, BigHr, BigRow, BigButtonCol, BigEmptyRow, BigButtonColMin, BigCol } from "../components";
 import { observer } from "mobx-react-lite";
 import { PageTitle } from "../components/PageTitle";
 import { Carousel } from "../components/Carousel";
@@ -150,18 +150,9 @@ export const Home = observer(() => {
         } 
       </BigRow>
       
-      <div style={{ 
-        ...getShadowBoxStyle({ 
-          top: 1, 
-          bottom: 0, 
-          left: 1, 
-          right: 0 
-        }),
-        width: "100%",
-        height: 31
-      }}>
-        &nbsp;
-      </div>
+      <BigRow>
+        <BigCol md={12} height={31}>&nbsp;</BigCol>
+      </BigRow>
     </Base>
   )
 })
