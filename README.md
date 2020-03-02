@@ -1,6 +1,8 @@
 ## Quick Start
 
+Before you should install mongodb
 Get started developing...
+
 
 ```shell
 # install deps
@@ -12,7 +14,6 @@ npm start
 ---
 
 #### Run in *production* mode:
-
 Compiles the application and starts it in production mode.
 
 ```shell
