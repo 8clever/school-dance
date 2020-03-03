@@ -227,15 +227,8 @@ export const Direction = observer((props: DirectionProps) => {
   });
 
   const ticketBuy = (
-    <BigRow>
-      <BigButtonColMin 
-        style={{
-          borderLeft: "none"
-        }}
-        md={12}>
-        КУПИТЬ БИЛЕТ
-      </BigButtonColMin>
-    </BigRow>
+    <>
+    </>
   )
 
   const description = (

@@ -104,6 +104,8 @@ export const Footer = () => {
           </BigRow>
         </Col>
         <BigButtonCol
+          height={132}
+          padding={"0px"}
           className="d-none d-md-block"
           onClick={() => routerStore.push("/")} md={4}>
           <Logo width={250} />
