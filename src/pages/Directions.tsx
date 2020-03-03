@@ -5,7 +5,7 @@ import { Base } from "../components";
 
 export const Directions = observer(() => {
   return (
-    <Base flex>
+    <Base>
       <DirectionMenu />
     </Base>
   )

@@ -200,7 +200,7 @@ export const SubscribeMenu = observer((props: SubscribeMenuProps) => {
 
 export const Subscribe = () => {
   return (
-    <Base flex>
+    <Base>
 
       <PageBreadcrumbs 
         items={[

@@ -153,7 +153,7 @@ export const News = observer((props: NewsProps) => {
   }
 
   return (
-    <Base flex>
+    <Base>
 
       <PageBreadcrumbs 
         items={[

@@ -7,14 +7,13 @@ import { FlexCol } from "./Flex";
 
 interface Props {
   children?: React.ReactNode;
-  flex?: boolean;
 }
 
 const Main = (props: Props) => (
   <>
     <Header />
     <div 
-      className="d-md-h-100"
+      className="flex-fill"
       style={{
         position: "relative",
       }}>
@@ -32,16 +31,12 @@ export const Base = observer((props: Props) => {
     userStore.isLoggedin();
   }, [])
 
-  if (props.flex) {
-    return (
-      <div 
-        style={{ height: "100vh" }}>
-        <FlexCol justify="between" column>
-          <Main children={props.children} />
-        </FlexCol>
-      </div>
-    )
-  }
-
-  return <Main children={props.children} />
+  return (
+    <div 
+      style={{ height: "100vh" }}>
+      <FlexCol justify="between" column>
+        <Main children={props.children} />
+      </FlexCol>
+    </div>
+  )
 })

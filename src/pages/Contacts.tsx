@@ -1,5 +1,5 @@
 import React from "react";
-import { Base, BigCol, BigRow } from "../components";
+import { Base, BigCol, BigRow, FlexCol } from "../components";
 import { YMaps, Map, Placemark } from 'react-yandex-maps';
 import { Col } from "reactstrap";
 import { messages } from "./FirstVisit";
@@ -22,76 +22,78 @@ export const Contacts = () => {
 
   return (
     <Base>
+      <FlexCol column justify="between">
+        <PageBreadcrumbs 
+          items={[
+            {
+              title: "Контакты"
+            }
+          ]}
+        />
 
-      <PageBreadcrumbs 
-        items={[
-          {
-            title: "Контакты"
-          }
-        ]}
-      />
-
-      <BigRow>
-        <BigCol 
-          md={7} 
-          lg={8}>
-          <div 
-            className="h-100 w-100" 
-            ref={refCallback}>
-            <YMaps>
-              <Map 
-                width={width as number}
-                height={height as number}
-                defaultState={{ 
-                  center, 
-                  zoom: 16
-                }} 
-              >
-                <Placemark 
-                  options={{
-                    iconLayout: 'default#image',
-                    iconImageHref:  pointBlackPNG,
-                    iconImageSize: [60, 60],
-                    iconImageOffset: [-30, -50]
-                  }}
-                  geometry={center} 
-                />
-              </Map>
-            </YMaps>
-          </div>
-        </BigCol>
-        <Col
-          md={5} 
-          lg={4}>
-          <BigRow>
-            <BigCol md={12}>
-              <div style={{ padding: "100px 50px" }}>
-                <img height={15} src={phonePNG} /> +7 (812) 601-07-25
-                <br/>
-                <br/>
-                <img height={15} src={mailPNG} /> contextprostudio@gmail.com
-                <br/>
-                <br/>
-                <img height={15} src={pointPNG} /> Наб. Адмиралтейского канала д.2, здание Бутылка, 3 этаж
-                <br/>
-                <br/>
-                <small>
-                  Санкт-Петербург, Россия, 190000
-                </small>
-              </div>
-            </BigCol>
-            <BigCol md={12}>
-              <div style={{ padding: "100px 50px" }}>
-                {messages[1].desc.map((d, idx) => {
-                  return (
-                    <p key={idx}>{d}</p>
-                  )
-                })}
-              </div>
-            </BigCol>
-          </BigRow>
-        </Col>
-      </BigRow>
+        <BigRow className="h-100">
+          <BigCol 
+            md={7} 
+            lg={8}>
+            <div 
+              className="h-100 w-100" 
+              ref={refCallback}>
+              <YMaps>
+                <Map 
+                  width={width as number}
+                  height={height as number}
+                  defaultState={{ 
+                    center, 
+                    zoom: 16
+                  }} 
+                >
+                  <Placemark 
+                    options={{
+                      iconLayout: 'default#image',
+                      iconImageHref:  pointBlackPNG,
+                      iconImageSize: [60, 60],
+                      iconImageOffset: [-30, -50]
+                    }}
+                    geometry={center} 
+                  />
+                </Map>
+              </YMaps>
+            </div>
+          </BigCol>
+          <Col
+            className="d-md-h-100"
+            md={5} 
+            lg={4}>
+            <BigRow className="d-md-h-100">
+              <BigCol md={12}>
+                <div style={{ padding: "100px 50px" }}>
+                  <img height={15} src={phonePNG} /> +7 (812) 601-07-25
+                  <br/>
+                  <br/>
+                  <img height={15} src={mailPNG} /> contextprostudio@gmail.com
+                  <br/>
+                  <br/>
+                  <img height={15} src={pointPNG} /> Наб. Адмиралтейского канала д.2, здание Бутылка, 3 этаж
+                  <br/>
+                  <br/>
+                  <small>
+                    Санкт-Петербург, Россия, 190000
+                  </small>
+                </div>
+              </BigCol>
+              <BigCol md={12}>
+                <div style={{ padding: "100px 50px" }}>
+                  {messages[1].desc.map((d, idx) => {
+                    return (
+                      <p key={idx}>{d}</p>
+                    )
+                  })}
+                </div>
+              </BigCol>
+            </BigRow>
+          </Col>
+        </BigRow>
+      </FlexCol>
     </Base>
   )
 }

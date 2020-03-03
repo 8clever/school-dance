@@ -6,6 +6,7 @@ import shirtPNG from "../images/icons/tsh.png";
 import pointPNG from "../images/icons/point.png";
 import bagPNG from "../images/icons/bag.png";
 import { PageBreadcrumbs } from "../components/PageTitle";
+import { FlexCol } from "../components";
 
 export const messages = [
   {
@@ -58,38 +59,40 @@ export const FirstVisit = () => {
   return (
     <Base>
       
-      <PageBreadcrumbs
-        items={[
+      <FlexCol column>
+        <PageBreadcrumbs
+          items={[
+            {
+              title: "Первое посещение"
+            }
+          ]}
+        />
+
+        <BigRow className="h-100">
           {
-            title: "Первое посещение"
+            messages.map((m,idx) => {
+              return (
+                <BigCol 
+                  key={idx}
+                  className="text-center d-md-h-100">
+                  <div style={{ padding: "200px 40px" }}>
+                    <img height={60} src={m.icon} />
+                    <div className="mt-4"></div>
+                    <h4>{m.title}</h4>
+                    <div className="mt-4"></div>
+
+                    {m.desc.map((d, idx) => {
+                      return (
+                        <p key={idx}>{d}</p>
+                      )
+                    })}                    
+                  </div>
+                </BigCol>
+              )
+            })
           }
-        ]}
-      />
-
-      <BigRow>
-        {
-          messages.map((m,idx) => {
-            return (
-              <BigCol 
-                key={idx}
-                className="text-center">
-                <div style={{ padding: "200px 40px" }}>
-                  <img height={60} src={m.icon} />
-                  <div className="mt-4"></div>
-                  <h4>{m.title}</h4>
-                  <div className="mt-4"></div>
-
-                  {m.desc.map((d, idx) => {
-                    return (
-                      <p key={idx}>{d}</p>
-                    )
-                  })}                    
-                </div>
-              </BigCol>
-            )
-          })
-        }
-      </BigRow>
+        </BigRow>
+      </FlexCol>
     </Base>
   )
 }
