@@ -21,7 +21,7 @@ export const Contacts = () => {
   ]
 
   return (
-    <Base flex>
+    <Base>
 
       <PageBreadcrumbs 
         items={[
