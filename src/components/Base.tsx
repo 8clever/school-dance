@@ -13,10 +13,11 @@ interface Props {
 const Main = (props: Props) => (
   <>
     <Header />
-    <div style={{
-      position: "relative",
-      height: "100%",
-    }}>
+    <div 
+      className="d-md-h-100"
+      style={{
+        position: "relative",
+      }}>
       {props.children}
     </div>
     <div>
@@ -30,8 +31,6 @@ export const Base = observer((props: Props) => {
   React.useEffect(() => {
     userStore.isLoggedin();
   }, [])
-
-  
 
   if (props.flex) {
     return (
