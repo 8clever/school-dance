@@ -1,7 +1,6 @@
 import React from "react";
 import { Base, BigRow, BigButtonCol } from "../components";
 import { directionStore } from "../store/DirectionStore";
-import { subscribeStore } from "../store/SubscribeStore";
 import { routerStore } from "../store/RouterStore";
 import { PageTitle } from "../components/PageTitle";
 
@@ -30,14 +29,9 @@ export const Search = (props: SearchProps) => {
           { name: { $regex: searchValue, $options: "gmi" }},
           { desc: { $regex: searchValue, $options: "gmi" }}
         ]
-      }),
-      subscribeStore.getItems({
-        $or: [
-          { name: { $regex: searchValue, $options: "gmi" }}
-        ]
       })
     ]).then(data => {
-      const [ direction, subscribe ] = data;
+      const [ direction ] = data;
       const searchResult: SearchResult[] = [];
 
       direction.list.forEach(d => {
@@ -45,13 +39,6 @@ export const Search = (props: SearchProps) => {
           name: d.name,
           link: `/directions/${d._id}`
         });
-      });
-
-      subscribe.list.forEach(s => {
-        searchResult.push({
-          name: s.name,
-          link: `/subscribe/${s._id}`
-        })
       });
 
       setResult(searchResult);

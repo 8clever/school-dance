@@ -1,6 +1,10 @@
 import { ObjectID } from "bson";
 
-export type DirectionSection = "projects" | "directions" | "master-classes"
+export type DirectionSection = 
+"projects" | 
+"directions" | 
+"master-classes" |
+"menu"
 
 export interface SubmenuItem {
   name: string;

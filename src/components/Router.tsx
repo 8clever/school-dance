@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Router as DOMRouter } from "react-router-dom";
+import { Route, Router as DOMRouter, Redirect, Switch } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { routerStore } from "../store/RouterStore";
 import { Direction } from "../pages/Direction";
@@ -9,8 +9,6 @@ import { Partners } from "../pages/Partners";
 import { FirstVisit } from "../pages/FirstVisit";
 import { Contacts } from "../pages/Contacts";
 import { Leaders } from "../pages/Leaders";
-import { Subscribe } from "../pages/Subscribe";
-import { Prices } from "../pages/Prices";
 import { Calendar } from "../pages/Calendar";
 import { Auth } from "../pages/Auth";
 import qs from "querystring";
@@ -35,54 +33,55 @@ export const Router = () => {
 
   return (
     <DOMRouter history={routerStore.history}>
-      <Route exact path="/" render={() => (
-        <>
-          <Widget
-            elementId={"SiteWidgetMoyklass28435"}
-            widgetId={"9wjFHbwc75jXR7mU10vPAY1RoXp4NIFoqg"}
-          />
+      <Switch>
+        <Route exact path="/" render={() => (
+          <>
+            <Widget
+              elementId={"SiteWidgetMoyklass28435"}
+              widgetId={"9wjFHbwc75jXR7mU10vPAY1RoXp4NIFoqg"}
+            />
 
-          <Widget 
-            elementId={"SiteWidgetMoyklass30104"}
-            widgetId={"SMjP5R51qXy14ECnt9cbw5yvCiShSvlD9o"} 
-          />
-        </>
-      )}/>
-      <Route exact path="/home" render={() => <Home />} />
-      <Route exact path="/admin" render={() => <Admin />} />
-      <Route exact path="/category/:category" render={(match) => {
-        return <Category section={match.match.params.category as DirectionSection} />
-      }} 
-      />
-      <Route exact path="/directions" render={() => <Directions />}/> 
-      <Route exact path="/directions/:id" render={(match) => <Direction id={match.match.params.id as string} />}/>
-      <Route exact path="/studio" render={(match) => <Studio />}/>
-      <Route exact path="/teachers" render={(match) => <Teacher />}/>
-      <Route exact path="/teacher/:id" render={(match) => <Teacher id={match.match.params.id} />}/>
-      <Route exact path="/partners" render={(match) => <Partners />}/>
-      <Route exact path="/firstvisit" render={(match) => <FirstVisit />}/>
-      <Route exact path="/contacts" render={(match) => <Contacts />}/>
-      <Route exact path="/leaders" render={(match) => <Leaders />}/>
-      <Route exact path="/leader/:id" render={(match) => <Leaders id={match.match.params.id} />}/>
-      <Route exact path="/subscribe" render={(match) => <Subscribe />}/>
-      <Route exact path="/subscribe/:id" render={(match) => <Prices id={match.match.params.id} />}/>
-      <Route exact path="/calendar" render={(match) => <Calendar {...parse(match.location.search)} />}/>
-      <Route exact path="/auth" render={match => <Auth />} />
-      <Route exact path="/search" render={match => <Search {...parse(match.location.search)} />} />
-      <Route exact path="/external-schedule" render={() => <ExternalSchedule />} />
-      <Route exact path="/signup" render={() => <SignUp />} />
-      <Route exact path="/news" render={() => <News />} />
-      <Route exact path="/news/:id" render={match => {
-        return <News pieceOfNewsId={match.match.params.id} />
-      }} />
-      
-      <Route exact path="/logout" render={() => {
-        userStore.logout().then(() => {
-          routerStore.push("/");
-        });
+            <Widget 
+              elementId={"SiteWidgetMoyklass30104"}
+              widgetId={"SMjP5R51qXy14ECnt9cbw5yvCiShSvlD9o"} 
+            />
+          </>
+        )}/>
+        <Route exact path="/home" render={() => <Home />} />
+        <Route exact path="/admin" render={() => <Admin />} />
+        <Route exact path="/category/:category" render={(match) => {
+          return <Category section={match.match.params.category as DirectionSection} />
+        }} 
+        />
+        <Route exact path="/directions" render={() => <Directions />}/> 
+        <Route exact path="/directions/:id" render={(match) => <Direction id={match.match.params.id as string} />}/>
+        <Route exact path="/studio" render={(match) => <Studio />}/>
+        <Route exact path="/teachers" render={(match) => <Teacher />}/>
+        <Route exact path="/teacher/:id" render={(match) => <Teacher id={match.match.params.id} />}/>
+        <Route exact path="/partners" render={(match) => <Partners />}/>
+        <Route exact path="/firstvisit" render={(match) => <FirstVisit />}/>
+        <Route exact path="/contacts" render={(match) => <Contacts />}/>
+        <Route exact path="/leaders" render={(match) => <Leaders />}/>
+        <Route exact path="/leader/:id" render={(match) => <Leaders id={match.match.params.id} />}/>
+        <Route exact path="/calendar" render={(match) => <Calendar {...parse(match.location.search)} />}/>
+        <Route exact path="/auth" render={match => <Auth />} />
+        <Route exact path="/search" render={match => <Search {...parse(match.location.search)} />} />
+        <Route exact path="/external-schedule" render={() => <ExternalSchedule />} />
+        <Route exact path="/signup" render={() => <SignUp />} />
+        <Route exact path="/news" render={() => <News />} />
+        <Route exact path="/news/:id" render={match => {
+          return <News pieceOfNewsId={match.match.params.id} />
+        }} />
+        
+        <Route exact path="/logout" render={() => {
+          userStore.logout().then(() => {
+            routerStore.push("/");
+          });
 
-        return null;
-      }} />
+          return null;
+        }} />
+        <Redirect to="/" />
+      </Switch>
     </DOMRouter>
   )
 }

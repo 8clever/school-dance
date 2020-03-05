@@ -4,6 +4,8 @@ import { routerStore } from "../store/RouterStore";
 import { menuStore } from "../store/MenuStore";
 import { vk, facebook, instagramm, youtube, whatsapp } from "../static/brands";
 import OutsideClickHandler from "react-outside-click-handler";
+import { observer } from "mobx-react-lite";
+import { DirectionStore } from "../store/DirectionStore";
 
 interface BrandLogoProps {
   src: string;
@@ -29,7 +31,13 @@ const BrandLogo = (props: BrandLogoProps) => {
   )
 }
 
-export const HeaderMenu = () => {
+const directionStore = new DirectionStore();
+
+directionStore.loadItems({
+  section: "menu"
+});
+
+export const HeaderMenu = observer(() => {
   const onClick = (path: string) => () => {
     routerStore.push(path);
     menuStore.toggle();
@@ -41,7 +49,7 @@ export const HeaderMenu = () => {
       menuStore.isCollapsed = true;
     }}>
       <BigRow>
-      <BigButtonColMin 
+        <BigButtonColMin 
           onClick={onClick("/news")}
           xs={12}
           md={12}>
@@ -54,17 +62,25 @@ export const HeaderMenu = () => {
           РАСПИСАНИЕ
         </BigButtonColMin>
         <BigButtonColMin 
-          onClick={onClick("/subscribe")}
-          xs={12}
-          md={12}>
-          ЦЕНЫ
-        </BigButtonColMin>
-        <BigButtonColMin 
           onClick={onClick("/studio")}
           xs={12} 
           md={12}>
           СТУДИЯ
         </BigButtonColMin>
+
+        {
+          directionStore.itemList.map(i => {
+            return (
+              <BigButtonColMin 
+                key={i._id as string}
+                onClick={onClick(`/directions/${i._id}`)}
+                xs={12} 
+                md={12}>
+                {i.name}
+              </BigButtonColMin>
+            )
+          })
+        }
 
         <BigCol md={12}>
           <div style={{ 
@@ -105,4 +121,4 @@ export const HeaderMenu = () => {
       </BigRow>
     </OutsideClickHandler>
   )
-}
+})

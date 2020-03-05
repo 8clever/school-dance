@@ -57,8 +57,8 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
         <ModalHeader>
           {
             directionStore.item._id ? 
-            "Редактирование направления" : 
-            "Создание направления"
+            "Редактирование раздела" : 
+            "Создание раздела"
           }
         </ModalHeader>
         <ModalBody>

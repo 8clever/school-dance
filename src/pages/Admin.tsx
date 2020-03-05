@@ -21,7 +21,7 @@ export const Admin = observer(() => {
       <BigRow>
         <BigButtonCol
           onClick={() => routerStore.push("/directions")}>
-          Направления
+          Разделы
         </BigButtonCol>
         <BigButtonCol
           onClick={() => routerStore.push("/teachers")}>
@@ -30,10 +30,6 @@ export const Admin = observer(() => {
         <BigButtonCol
           onClick={() => routerStore.push("/leaders")}>
           Руководители
-        </BigButtonCol>
-        <BigButtonCol
-          onClick={() => routerStore.push("/subscribe")}>
-          Цены
         </BigButtonCol>
         <BigButtonCol
           onClick={() => routerStore.push("/news")}>

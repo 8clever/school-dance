@@ -11,8 +11,6 @@ import { router as directionRouter } from "../api/controllers/direction";
 import { router as imageRouter } from "../api/controllers/image";
 import { router as teacherRouter } from "../api/controllers/teacher";
 import { router as leaderRouter } from "../api/controllers/leader";
-import { router as subscribeRouter } from "../api/controllers/subscribe";
-import { router as priceRouter } from "../api/controllers/price";
 import { router as configRouter } from "../api/controllers/config";
 import { router as pieceOfNewsRouter } from "../api/controllers/pieceofnews";
 
@@ -33,8 +31,6 @@ export const openapi = (app: Application) => {
     router.use("/image", imageRouter);
     router.use("/teacher", teacherRouter);
     router.use("/leader", leaderRouter);
-    router.use("/subscribe", subscribeRouter);
-    router.use("/price", priceRouter);
     router.use("/config", configRouter);
     router.use("/pieceofnews", pieceOfNewsRouter)
 
