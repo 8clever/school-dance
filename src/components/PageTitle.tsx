@@ -35,7 +35,7 @@ export const PageBreadcrumbs = (props: PageBreadcrumbsProps) => {
         )
 
         return (
-          <React.Fragment key={i.title}>
+          <React.Fragment key={i.title || ""}>
             <span className={disabled ? "" : "big-col"}>
               <a
                 style={{
