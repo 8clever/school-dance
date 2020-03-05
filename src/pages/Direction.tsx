@@ -206,7 +206,12 @@ export const Direction = observer((props: DirectionProps) => {
   const [ selectedSubmenuitem, setSelectedSubmenuItem ] = React.useState(-1);
 
   React.useEffect(() => {
-    directionStore.loadItem(props.id);
+    (async () => {
+      await directionStore.loadItem(props.id);
+      await directionStore.loadItems({
+        section: directionStore.item.section
+      });
+    })()
   }, [props.id]);
 
   const submenu = directionStore.item.submenu.map((sub, idx) => {
@@ -271,12 +276,16 @@ export const Direction = observer((props: DirectionProps) => {
 
       <PageBreadcrumbs 
         items={[
+          directionStore.itemList.length > 1 ?
           {
             title: directionSectionMap[directionStore.item.section],
             url: `/category/${directionStore.item.section}`
-          },
+          } : null,
           {
-            title: directionStore.item.name
+            title: directionStore.item.name,
+            onClick: () => {
+              setSelectedSubmenuItem(-1);
+            }
           }
         ]}
       />

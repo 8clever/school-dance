@@ -3,41 +3,49 @@ import { BigRow, BigCol } from "./Big";
 import { FlexCol } from "./Flex";
 import { routerStore } from "../store/RouterStore";
 import iconRightPNG from '../images/icons/arrow-right.png';
-
+import _ from "lodash";
 
 
 interface PageBreadcrumbsProps {
   items: {
     title: string;
+    onClick?: () => void;
     url?: string;
   }[]
 }
 
 export const PageBreadcrumbs = (props: PageBreadcrumbsProps) => {
 
-  const items = props.items.concat();
-
-  items.unshift({
-    title: "Главная",
-    url: "/"
-  });
+  const items = React.useMemo(() => {
+    const items = _.compact(props.items.concat());
+    items.unshift({
+      title: "Главная",
+      url: "/"
+    });
+    return items;
+  }, [props]);
 
   return (
     <PageTitle>
       {items.map((i, idx) => {
-        if (!i) return null;
+
+        const disabled = !(
+          i.url ||
+          i.onClick
+        )
 
         return (
           <React.Fragment key={i.title}>
-            <span className={i.url ? "big-col" : ""}>
+            <span className={disabled ? "" : "big-col"}>
               <a
                 style={{
-                  textDecoration: i.url ? null : "none"
+                  textDecoration: disabled ? "none" : null
                 }}
                 onClick={e => {
+                  console.log("click")
                   e.preventDefault();
-                  if (!i.url) return;
-                  routerStore.push(i.url);
+                  if (i.onClick) i.onClick();
+                  if (i.url) routerStore.push(i.url);
                 }}
                 href={i.url}>
                 {i.title}
