@@ -14,6 +14,7 @@ import { PieceOfNews } from "../../server/models/PieceOfNews";
 
 import iconLeft from "../images/icons/arrow-left.png";
 import iconRight from "../images/icons/arrow-right.png";
+import { DirectionSection } from "../../server/models/Direction";
 
 const chevronButtonStyle: React.CSSProperties = {
   position: "absolute",
@@ -71,11 +72,12 @@ export const Home = observer(() => {
       }
 
       <BigRow>
-        {_.map(directionSectionMap, (v, k) => {
+        {(["projects", "directions", "master-classes"] as DirectionSection[]).map((section, k) => {
+          const v = directionSectionMap[section];
           return (
             <BigButtonCol
               key={k}
-              onClick={() => routerStore.push(`/category/${k}`)}
+              onClick={() => routerStore.push(`/category/${section}`)}
               style={{
                 minHeight: 300,
                 fontFamily: "Styled Font"
