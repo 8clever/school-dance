@@ -42,7 +42,6 @@ export const PageBreadcrumbs = (props: PageBreadcrumbsProps) => {
                   textDecoration: disabled ? "none" : null
                 }}
                 onClick={e => {
-                  console.log("click")
                   e.preventDefault();
                   if (i.onClick) i.onClick();
                   if (i.url) routerStore.push(i.url);
