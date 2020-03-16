@@ -311,7 +311,9 @@ export const Direction = observer((props: DirectionProps) => {
           md={4}
           style={getShadowBoxStyle({ top: 0 })}
           className="bg-white d-none d-md-block">
-          <div className="absolute-container">
+          <div 
+            style={{ overflow: "auto" }}
+            className="absolute-container">
             {submenu}
           </div>
         </Col>
@@ -339,9 +341,7 @@ export const Direction = observer((props: DirectionProps) => {
           md={4}
           style={getShadowBoxStyle({ top: 0 })}
           className="bg-white d-none d-md-block">
-          <div className="abolute-container">
-            {descriptionDesktop}
-          </div>
+          {descriptionDesktop}
         </Col>
       </BigRow>
     </Base>
