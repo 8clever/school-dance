@@ -12,18 +12,6 @@ import { routerStore } from "../store/RouterStore";
 import { userStore } from "../store/UserStore";
 import moment from "moment";
 
-const PayBlock = (
-  <BigRow>
-    <BigButtonColMin 
-      style={{
-        borderLeft: "none"
-      }}
-      md={12}>
-      ОПЛАТИТЬ
-    </BigButtonColMin>
-  </BigRow> 
-)
-
 interface NewsProps {
   pieceOfNewsId?: string;
 }
@@ -36,7 +24,11 @@ export const News = observer((props: NewsProps) => {
   });
 
   React.useEffect(() => {
-    pieceOfNewsStore.loadItems({}, { _dt: -1 });
+    (async () => {
+      await pieceOfNewsStore.loadItems({}, { _dt: -1 });
+      if (!pieceOfNewsStore.itemList.length) return;
+      routerStore.push(`/news/${pieceOfNewsStore.itemList[0]._id}`);
+    })()
   }, [])
 
   React.useEffect(() => {
@@ -58,7 +50,6 @@ export const News = observer((props: NewsProps) => {
   const descriptionMobile = (
     <FlexCol justify="between" column>
       {description}
-      {PayBlock}
     </FlexCol>
   )
   
@@ -73,7 +64,6 @@ export const News = observer((props: NewsProps) => {
           {description}
         </div>
       </div>
-      {PayBlock}
     </FlexCol>
   )
 
@@ -96,11 +86,7 @@ export const News = observer((props: NewsProps) => {
         }}>
           {moment(p._dt).format("D.MM")}
         </span>
-        <span style={{
-          fontWeight: 700
-        }}>
-          {p.name}
-        </span>
+        {p.name}
 
         {
           userStore.isAdmin() ?
