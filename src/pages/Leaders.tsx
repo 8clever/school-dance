@@ -9,14 +9,13 @@ import { imageStore } from "../store/ImageStore";
 import { Col } from "reactstrap";
 import ReactMarkdown from "react-markdown";
 import { LeaderEdit } from "../components/LeaderEdit";
-import { Image } from "../components/Carousel";
+import { Image, Carousel } from "../components/Carousel";
 import { PageBreadcrumbs } from "../components/PageTitle";
 
 interface LeaderProps {
   id?: string;
 }
 
-const maxHeight = 900;
 const overflowY = "auto";
 
 export const Leaders = observer((props: LeaderProps) => {
@@ -186,22 +185,22 @@ export const Leaders = observer((props: LeaderProps) => {
           className="d-none d-md-block"
           md={4}
           style={{ 
-            minHeight: maxHeight,
-            maxHeight,
             overflowY 
           }}>
           {menuList}
         </Col>
         <BigCol className="d-none d-md-block">
-          <Image 
-            width={"100%"}
-            height={"100%"}
-            src={imageSrc}
+          <Carousel
+            ratio={1.33}
+            items={[
+              {
+                src: imageSrc
+              }
+            ]} 
           />
         </BigCol>
         <BigCol className="d-none d-md-block">
           <div style={{ 
-            maxHeight,
             overflowY
           }}>
             {description}

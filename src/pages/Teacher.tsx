@@ -10,14 +10,13 @@ import { toJS } from "mobx";
 import { imageStore } from "../store/ImageStore";
 import { Col } from "reactstrap";
 import ReactMarkdown from "react-markdown";
-import { Image } from "../components/Carousel";
+import { Image, Carousel } from "../components/Carousel";
 import { PageBreadcrumbs } from "../components/PageTitle";
 
 interface TeacherProps {
   id?: string;
 }
 
-const maxHeight = 900;
 const overflowY = "auto";
 
 export const Teacher = observer((props: TeacherProps) => {
@@ -188,24 +187,25 @@ export const Teacher = observer((props: TeacherProps) => {
           className="d-none d-md-block"
           md={4} 
           style={{ 
-            minHeight: maxHeight,
-            maxHeight,
             overflowY 
           }}>
           {menuList}
         </Col>
         <BigCol
           className="d-none d-md-block">
-          <Image 
-            width={"100%"}
-            height={"100%"}
-            src={imageSrc}
+
+          <Carousel
+            ratio={1.33}
+            items={[
+              {
+                src: imageSrc
+              }
+            ]} 
           />
         </BigCol>
         <BigCol
           className="d-none d-md-block">
           <div style={{ 
-            maxHeight,
             overflowY 
           }}>
             {description}
