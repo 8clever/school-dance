@@ -188,7 +188,7 @@ export const News = observer((props: NewsProps) => {
         <Col
           md={4}
           style={getShadowBoxStyle({ top: 0 })}
-          className="absolute-container bg-white d-none d-md-block">
+          className="bg-white d-none d-md-block">
           {submenu}
         </Col>
 
@@ -197,10 +197,11 @@ export const News = observer((props: NewsProps) => {
           <>
             <Col 
               style={getShadowBoxStyle({ top: 0 })}
-              md={12} 
+              md={4} 
               xs={12}>
 
               <Carousel 
+                ratio={1.33}
                 items={
                   pieceOfNewsStore.item.images.map(i => {
                     return { src: `${imageStore.endpoint}${i}` };
@@ -212,7 +213,7 @@ export const News = observer((props: NewsProps) => {
             <Col
               md={4}
               style={getShadowBoxStyle({ top: 0 })}
-              className="absolute-container bg-white offset-8 d-none d-md-block">
+              className="bg-white d-none d-md-block">
               {descriptionDesktop}
             </Col>
           </> : null
