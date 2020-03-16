@@ -74,12 +74,12 @@ export const Footer = () => {
                 routerStore.push("/signup")
               }}
               className="h-100" 
-              xs={7} 
-              md={7} 
+              xs={6} 
+              md={6} 
               h100>
               ЗАПИСАТЬСЯ
             </BigButtonColMin>
-            <Col xs={5}>
+            <Col xs={6}>
               <BigRow className="h-50" noGutters>
                 <FooterBrandLogo 
                   src={vk.img}
