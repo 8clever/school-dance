@@ -240,6 +240,7 @@ export const Direction = observer((props: DirectionProps) => {
   const description = (
     <div className="p-5">
       <MD 
+        escapeHtml={false}
         source={
           selectedSubmenuitem === -1 ?
           directionStore.item.desc :
