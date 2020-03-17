@@ -16,8 +16,6 @@ interface LeaderProps {
   id?: string;
 }
 
-const overflowY = "auto";
-
 export const Leaders = observer((props: LeaderProps) => {
 
   const [ editVisible, setEditVisible ] = React.useState(false);
@@ -182,12 +180,13 @@ export const Leaders = observer((props: LeaderProps) => {
 
         {/** desktop */}
         <Col 
-          className="d-none d-md-block"
-          md={4}
-          style={{ 
-            overflowY 
-          }}>
-          {menuList}
+          className="d-none d-md-block bg-white"
+          md={4}>
+          <div 
+            style={{ overflow: "auto" }}
+            className="absolute-container">
+            {menuList}
+          </div>
         </Col>
         <BigCol className="d-none d-md-block">
           <Carousel
@@ -200,9 +199,9 @@ export const Leaders = observer((props: LeaderProps) => {
           />
         </BigCol>
         <BigCol className="d-none d-md-block">
-          <div style={{ 
-            overflowY
-          }}>
+          <div 
+            style={{ overflow: "auto" }}
+            className="absolute-container">
             {description}
           </div>
         </BigCol>

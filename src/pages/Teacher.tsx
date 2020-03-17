@@ -17,8 +17,6 @@ interface TeacherProps {
   id?: string;
 }
 
-const overflowY = "auto";
-
 export const Teacher = observer((props: TeacherProps) => {
 
   const [ teacherEditVisible, setTeacherEditVisible ] = React.useState(false);
@@ -185,11 +183,12 @@ export const Teacher = observer((props: TeacherProps) => {
         {/** desktop */}
         <Col 
           className="d-none d-md-block"
-          md={4} 
-          style={{ 
-            overflowY 
-          }}>
-          {menuList}
+          md={4}>
+          <div 
+            style={{ overflow: "auto" }}
+            className="absolute-container">
+            {menuList}
+          </div>
         </Col>
         <BigCol
           className="d-none d-md-block">
@@ -205,9 +204,9 @@ export const Teacher = observer((props: TeacherProps) => {
         </BigCol>
         <BigCol
           className="d-none d-md-block">
-          <div style={{ 
-            overflowY 
-          }}>
+          <div 
+            style={{ overflow: "auto" }}
+            className="absolute-container">
             {description}
           </div>
         </BigCol>
