@@ -67,7 +67,7 @@ export const Contacts = () => {
             <BigRow className="d-md-h-100">
               <BigCol md={12}>
                 <div style={{ padding: "100px 50px" }}>
-                  <img height={15} src={phonePNG} /> +7 (812) 601-07-25
+                  <img height={15} src={phonePNG} /> +7 (812) 602-07-25
                   <br/>
                   <br/>
                   <img height={15} src={mailPNG} /> contextprostudio@gmail.com

@@ -91,16 +91,12 @@ export const HeaderMenu = observer(() => {
               Позвоните нам: +7 (812) 602-07-25
               <br />
               <small>
-                пн-пт 10:00 - 20:00
+                пн-пт 11:00 - 21:00, сб-вск 14.00-19.00
               </small>
             </p>
             
             <p>
               Напишите нам: contextprostudio@gmail.com
-              <br/>
-              <small>
-                ответим в течение рабочего дня
-              </small>
             </p>
 
             <div style={{ 

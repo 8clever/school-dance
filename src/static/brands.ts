@@ -5,7 +5,7 @@ import whatsappPNG from "../images/icons/whatsapp-logo.png";
 import youtubePNG from "../images/icons/youtube.png";
 
 export const vk = {
-  url: "https://vk.com/contextpro.studio",
+  url: "https://vk.com/studiocontextspb",
   img: vkPNG
 }
 
@@ -15,7 +15,7 @@ export const facebook = {
 }
 
 export const instagramm = {
-  url: "https://www.instagram.com/contextpro.studio/",
+  url: "https://www.instagram.com/studiocontext.spb/",
   img: instagrammPNG
 }
 
@@ -25,6 +25,6 @@ export const whatsapp = {
 }
 
 export const youtube = {
-  url: "",
+  url: "https://www.youtube.com/channel/UCTKfJA-QNrcBS1cuuUKdkgw",
   img: youtubePNG
 }
