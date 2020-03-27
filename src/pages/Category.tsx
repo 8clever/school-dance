@@ -17,7 +17,9 @@ export const Category = observer((props: CategoryProps) => {
   React.useEffect(() => {
     directionStore.loadItems(props).then(() => {
       if (directionStore.itemList.length === 1) {
-        routerStore.push(`/directions/${directionStore.itemList[0].url}`)
+        routerStore.history.replace(
+          `/directions/${directionStore.itemList[0].url}`
+        )
       }
     })
   }, []);
