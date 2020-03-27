@@ -4,6 +4,7 @@ import { Footer } from "./Footer";
 import { userStore } from "../store/UserStore";
 import { observer } from "mobx-react-lite";
 import { FlexCol } from "./Flex";
+import { Notification } from "./Notification";
 
 interface Props {
   children?: React.ReactNode;
@@ -34,6 +35,7 @@ export const Base = observer((props: Props) => {
   return (
     <div 
       style={{ height: "100vh" }}>
+      <Notification />
       <FlexCol justify="between" column>
         <Main children={props.children} />
       </FlexCol>

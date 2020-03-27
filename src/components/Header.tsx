@@ -9,7 +9,6 @@ import {
   InputGroupText
 } from "reactstrap";
 import { FlexCol } from "./Flex";
-import { Notification } from "./Notification";
 import { observer } from "mobx-react-lite";
 import { routerStore } from "../store/RouterStore";
 import { menuStore } from "../store/MenuStore";
@@ -121,7 +120,6 @@ export const Header = observer(() => {
           </FlexCol>
         </BigCol>
       </BigRow>
-      <Notification />
       {
         menuStore.isCollapsed ? null :
         <div className="menu-container">
