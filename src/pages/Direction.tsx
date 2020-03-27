@@ -15,6 +15,7 @@ import { PageBreadcrumbs } from "../components/PageTitle";
 
 interface DirectionProps {
   id: string;
+  sub?: string;
 }
 
 interface DirectionMenuItemProps {
@@ -32,7 +33,7 @@ export const DirectionMenuItem = (props: DirectionMenuItemProps) => {
       key={props.key}
       selected={d._id === (directionStore.item && directionStore.item._id)}           
       onClick={() => {
-        routerStore.push("/directions/" + d._id)
+        routerStore.push(`/directions/${d.url}/`);
       }}>
       <div 
         id={`item-${d._id}`} 
@@ -207,19 +208,31 @@ export const Direction = observer((props: DirectionProps) => {
 
   React.useEffect(() => {
     (async () => {
-      await directionStore.loadItem(props.id);
+      const items = await directionStore.getItems({
+        url: props.id
+      });
+      directionStore.item = items.list[0];
       await directionStore.loadItems({
         section: directionStore.item.section
       });
     })()
-  }, [props.id]);
+  }, [ props.id ]);
+
+  React.useEffect(() => {
+    if (!directionStore.item) return;
+    const idx = directionStore.item.submenu.findIndex(s => s.url === props.sub);
+    setSelectedSubmenuItem(idx);
+  }, [
+    directionStore.item,
+    props.sub 
+  ]);
 
   const submenu = directionStore.item.submenu.map((sub, idx) => {
     return (
       <BigButtonColMin
         key={idx}
         onClick={async () => {
-          setSelectedSubmenuItem(idx);
+          routerStore.push(`/directions/${directionStore.item.url}/${sub.url}`);
         }}
         style={{
           border: "none",
@@ -284,9 +297,7 @@ export const Direction = observer((props: DirectionProps) => {
           } : null,
           {
             title: directionStore.item.name,
-            onClick: () => {
-              setSelectedSubmenuItem(-1);
-            }
+            url: `/directions/${directionStore.item.url}`
           }
         ]}
       />

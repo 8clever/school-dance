@@ -37,7 +37,7 @@ export const Search = (props: SearchProps) => {
       direction.list.forEach(d => {
         searchResult.push({
           name: d.name,
-          link: `/directions/${d._id}`
+          link: `/directions/${d.url}`
         });
       });
 

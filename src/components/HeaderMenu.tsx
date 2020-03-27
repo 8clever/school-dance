@@ -73,7 +73,7 @@ export const HeaderMenu = observer(() => {
             return (
               <BigButtonColMin 
                 key={i._id as string}
-                onClick={onClick(`/directions/${i._id}`)}
+                onClick={onClick(`/directions/${i.url}`)}
                 xs={12} 
                 md={12}>
                 {i.name}

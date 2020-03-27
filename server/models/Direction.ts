@@ -8,6 +8,7 @@ export type DirectionSection =
 
 export interface SubmenuItem {
   name: string;
+  url: string;
   description: string;
   images: Array<string | ObjectID>;
 }
@@ -15,6 +16,7 @@ export interface SubmenuItem {
 export interface Direction {
   _id?: string | ObjectID;
   name: string;
+  url: string;
   images: Array<string | ObjectID>;
   desc: string;
   submenu: SubmenuItem[];

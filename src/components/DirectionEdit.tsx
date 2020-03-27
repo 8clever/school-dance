@@ -76,6 +76,18 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
               </FormGroup>
 
               <FormGroup>
+                <Label>Адрес [a-z_]</Label>
+                <Input 
+                  placeholder={"Текст..."}
+                  value={directionStore.item.url || ""}
+                  onChange={e => {
+                    if (/[^a-z_]/.test(e.target.value)) return;
+                    directionStore.item.url = e.target.value;
+                  }}
+                />
+              </FormGroup>
+
+              <FormGroup>
                 <Label>Описание</Label>
                 <Input 
                   type="textarea"
@@ -189,6 +201,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
                         newImages: [],
                         idx: -1,
                         item: {
+                          url: "",
                           name: "",
                           description: "",
                           images: []
@@ -240,6 +253,24 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
                   item: {
                     ...submenuEdit.item,
                     name: e.target.value
+                  }
+                })
+              }}
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label>Адрес [a-z_]</Label>
+            <Input 
+              placeholder={"Текст..."}
+              value={submenuEdit.item.url || ""}
+              onChange={e => {
+                if (/[^a-z_]/.test(e.target.value)) return;
+                setSubmenuEdit({
+                  ...submenuEdit,
+                  item: {
+                    ...submenuEdit.item,
+                    url: e.target.value
                   }
                 })
               }}

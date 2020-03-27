@@ -17,7 +17,7 @@ export const Category = observer((props: CategoryProps) => {
   React.useEffect(() => {
     directionStore.loadItems(props).then(() => {
       if (directionStore.itemList.length === 1) {
-        routerStore.push(`/directions/${directionStore.itemList[0]._id}`)
+        routerStore.push(`/directions/${directionStore.itemList[0].url}`)
       }
     })
   }, []);
@@ -40,7 +40,7 @@ export const Category = observer((props: CategoryProps) => {
         return (
           <BigButtonCol
             className={`${directionStore.itemList.length > 3 ? "" : "h-100"}`}
-            onClick={() => routerStore.push(`/directions/${i._id}`)}
+            onClick={() => routerStore.push(`/directions/${i.url}`)}
             key={i._id as string}>
             {i.name}
           </BigButtonCol>

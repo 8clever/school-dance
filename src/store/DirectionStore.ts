@@ -28,6 +28,7 @@ export class DirectionStore extends Api<Direction> {
 
   create = () => {
     this.item = {
+      url: "",
       name: "",
       submenu: [],
       images: [],

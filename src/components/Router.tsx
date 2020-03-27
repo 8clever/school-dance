@@ -55,6 +55,12 @@ export const Router = () => {
         />
         <Route exact path="/directions" render={() => <Directions />}/> 
         <Route exact path="/directions/:id" render={(match) => <Direction id={match.match.params.id as string} />}/>
+        <Route exact path="/directions/:id/:sub" render={(match) => 
+          <Direction
+            sub={match.match.params.sub as string}
+            id={match.match.params.id as string} 
+          />
+        }/>
         <Route exact path="/studio" render={(match) => <Studio />}/>
         <Route exact path="/teachers" render={(match) => <Teacher />}/>
         <Route exact path="/teacher/:id" render={(match) => <Teacher id={match.match.params.id} />}/>
