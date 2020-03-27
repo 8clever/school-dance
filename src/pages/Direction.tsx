@@ -288,15 +288,25 @@ export const Direction = observer((props: DirectionProps) => {
 
       <PageBreadcrumbs 
         items={[
-          directionStore.itemList.length > 1 ?
-          {
-            title: directionSectionMap[directionStore.item.section],
-            url: `/category/${directionStore.item.section}`
-          } : null,
+          (
+            directionStore.itemList.length > 1 ?
+            {
+              title: directionSectionMap[directionStore.item.section],
+              url: `/category/${directionStore.item.section}`
+            } : null
+          ),
           {
             title: directionStore.item.name,
             url: `/directions/${directionStore.item.url}`
-          }
+          },
+          (
+            selectedSubmenuitem === -1 ? null :
+            directionStore.item.submenu[selectedSubmenuitem] &&
+            {
+              title: directionStore.item.submenu[selectedSubmenuitem].name,
+              url: `/directions/${directionStore.item.url}/${directionStore.item.submenu[selectedSubmenuitem].url}`
+            }
+          )
         ]}
       />
 
