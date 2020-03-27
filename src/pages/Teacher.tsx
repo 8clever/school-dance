@@ -25,7 +25,7 @@ export const Teacher = observer((props: TeacherProps) => {
   React.useEffect(() => {
     teacherStore.loadItems({}, { fullName: 1 }).then(() => {
       const list = toJS(teacherStore.itemList);
-      const t = _.find(list, _.matches({ _id: props.id }));
+      const t = _.find(list, _.matches({ url: props.id }));
       teacherStore.item = t;
 
       const $el = document.querySelector(`[data-spy="scroll"] #image`);
@@ -54,7 +54,7 @@ export const Teacher = observer((props: TeacherProps) => {
   )
 
   const menuList = itemList.map(t => {
-    const selected = t._id === (teacher && teacher._id);
+    const selected = t.url === (teacher && teacher.url);
 
     return (
       <React.Fragment key={t._id as string}>
@@ -67,7 +67,7 @@ export const Teacher = observer((props: TeacherProps) => {
               return;
             }
 
-            routerStore.push(`/teacher/${t._id}`);
+            routerStore.push(`/teacher/${t.url}`);
           }}
           key={t._id as string}>
           {t.fullName}

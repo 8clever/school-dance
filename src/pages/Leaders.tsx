@@ -23,7 +23,7 @@ export const Leaders = observer((props: LeaderProps) => {
 
   React.useEffect(() => {
     leaderStore.loadItems({}).then(() => {
-      const t = _.find(leaderStore.itemList, _.matches({ _id: props.id }));
+      const t = _.find(leaderStore.itemList, _.matches({ url: props.id }));
       leaderStore.item = t;
 
       const $el = document.querySelector(`[data-spy="scroll"] #image`);
@@ -52,7 +52,7 @@ export const Leaders = observer((props: LeaderProps) => {
   )
 
   const menuList = list.map(el => {
-    const selected = el._id === (element && element._id);
+    const selected = el.url === (element && element.url);
 
     return (
       <React.Fragment key={el._id as string}>
@@ -65,7 +65,7 @@ export const Leaders = observer((props: LeaderProps) => {
               return;
             }
 
-            routerStore.push(`/leader/${el._id}`);
+            routerStore.push(`/leader/${el.url}`);
           }}>
           {el.fullName}
           {

@@ -11,6 +11,7 @@ export class TeacherStore extends Api<Teacher> {
 
   create = async () => {
     this.item = {
+      url: "",
       fullName: "",
       description: "",
       images: []

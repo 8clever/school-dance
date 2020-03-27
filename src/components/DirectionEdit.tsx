@@ -75,12 +75,12 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
               </FormGroup>
 
               <FormGroup>
-                <Label>Адрес [a-z_]</Label>
+                <Label>Адрес [a-z_0-9]</Label>
                 <Input 
                   placeholder={"Текст..."}
                   value={directionStore.item.url || ""}
                   onChange={e => {
-                    if (/[^a-z_]/.test(e.target.value)) return;
+                    if (/[^a-z_0-9]/.test(e.target.value)) return;
                     directionStore.item.url = e.target.value;
                   }}
                 />
@@ -259,12 +259,12 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
           </FormGroup>
 
           <FormGroup>
-            <Label>Адрес [a-z_]</Label>
+            <Label>Адрес [a-z_0-9]</Label>
             <Input 
               placeholder={"Текст..."}
               value={submenuEdit.item.url || ""}
               onChange={e => {
-                if (/[^a-z_]/.test(e.target.value)) return;
+                if (/[^a-z_0-9]/.test(e.target.value)) return;
                 setSubmenuEdit({
                   ...submenuEdit,
                   item: {

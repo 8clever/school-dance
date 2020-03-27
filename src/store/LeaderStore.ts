@@ -11,6 +11,7 @@ export class LeaderStore extends Api<Leader> {
 
   create = async () => {
     this.item = {
+      url: "",
       fullName: "",
       description: "",
       images: []

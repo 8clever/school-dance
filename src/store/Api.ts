@@ -98,7 +98,6 @@ export class Api<T> {
     }
 
     const response = await fetch(url, fetchProps);
-    console.log(response)
     if (!(response.status === 200)) {
       notifStore.addNotif({
         title: `Ошибка: ${response.status}`,

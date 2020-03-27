@@ -46,6 +46,18 @@ export const TeacherEdit = observer((props: TeacherEditProps) => {
         </FormGroup>
 
         <FormGroup>
+          <Label>Адрес [a-z_0-9]</Label>
+          <Input 
+            placeholder={"Текст..."}
+            value={teacher.url || ""}
+            onChange={e => {
+              if (/[^a-z_0-9]/.test(e.target.value)) return;
+              teacher.url = e.target.value;
+            }}
+          />
+        </FormGroup>
+
+        <FormGroup>
           <Label>Описание</Label>
           <Input 
             rows={4}
