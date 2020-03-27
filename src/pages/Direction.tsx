@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 import { Base, BigRow, BigButtonCol, Icon, BigButtonColMin, BigHr, FlexCol, getShadowBoxStyle } from "../components";
-import { directionStore } from "../store/DirectionStore";
+import { directionStore, DirectionStore } from "../store/DirectionStore";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
 import { routerStore } from "../store/RouterStore";
@@ -10,7 +10,7 @@ import MD from "react-markdown";
 import { Carousel } from "../components/Carousel";
 import { Col } from "reactstrap";
 import _ from "lodash";
-import { Direction as DirectionModel } from "../../server/models/Direction";
+import { Direction as DirectionModel, directionSectionMap } from "../../server/models/Direction";
 import { PageBreadcrumbs } from "../components/PageTitle";
 
 interface DirectionProps {
@@ -193,17 +193,9 @@ export const DirectionMenu = observer((props: DirectionMenuProps) => {
   )
 })
 
-export const directionSectionMap = {
-  projects: "Проекты",
-  directions: "Направления",
-  "master-classes": "Мастер-классы",
-  "menu": "Меню"
-}
-
 export const Direction = observer((props: DirectionProps) => {
 
-  directionStore.defaults();
-
+  const directionStore = React.useMemo(() => new DirectionStore(), [ props.id ]);
   const [ selectedSubmenuitem, setSelectedSubmenuItem ] = React.useState(-1);
 
   React.useEffect(() => {
@@ -211,6 +203,8 @@ export const Direction = observer((props: DirectionProps) => {
       const items = await directionStore.getItems({
         url: props.id
       });
+      if (!items.count) return;
+
       directionStore.item = items.list[0];
       await directionStore.loadItems({
         section: directionStore.item.section
@@ -220,12 +214,15 @@ export const Direction = observer((props: DirectionProps) => {
 
   React.useEffect(() => {
     if (!directionStore.item) return;
+
     const idx = directionStore.item.submenu.findIndex(s => s.url === props.sub);
     setSelectedSubmenuItem(idx);
   }, [
     directionStore.item,
     props.sub 
   ]);
+
+  if (!directionStore.item) return null;
 
   const submenu = directionStore.item.submenu.map((sub, idx) => {
     return (
@@ -257,6 +254,7 @@ export const Direction = observer((props: DirectionProps) => {
         source={
           selectedSubmenuitem === -1 ?
           directionStore.item.desc :
+          directionStore.item.submenu[selectedSubmenuitem] &&
           directionStore.item.submenu[selectedSubmenuitem].description
         } 
       />
@@ -318,29 +316,34 @@ export const Direction = observer((props: DirectionProps) => {
 
       {/** direction view */}
       <BigRow style={{ position: "relative" }}>
-        <Col
-          md={4}
-          style={getShadowBoxStyle({ top: 0 })}
-          className="bg-white d-none d-md-block">
-          <div 
-            style={{ overflow: "auto" }}
-            className="absolute-container">
-            {submenu}
-          </div>
-        </Col>
+        {
+          submenu.length ?
+          <Col
+            md={4}
+            style={getShadowBoxStyle({ top: 0 })}
+            className="bg-white d-none d-md-block">
+            <div 
+              style={{ overflow: "auto" }}
+              className="absolute-container">
+              {submenu}
+            </div>
+          </Col> : null
+        }
 
         <Col 
           style={getShadowBoxStyle({ top: 0 })}
-          md={4} 
+          md={submenu.length ? 4 : 8} 
           xs={12}>
 
           <Carousel 
-            ratio={1.33}
+            ratio={submenu.length ? 1.33 : 2/3 }
             items={
               (
                 selectedSubmenuitem === -1 ?
                 directionStore.item.images :
-                directionStore.item.submenu[selectedSubmenuitem].images
+                directionStore.item.submenu[selectedSubmenuitem] &&
+                directionStore.item.submenu[selectedSubmenuitem].images ||
+                []
               ).map(i => {
                 return { src: `${imageStore.endpoint}${i}` };
               })

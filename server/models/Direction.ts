@@ -4,7 +4,16 @@ export type DirectionSection =
 "projects" | 
 "directions" | 
 "master-classes" |
-"menu"
+"menu" |
+"studio"
+
+export const directionSectionMap = {
+  projects: "Проекты",
+  directions: "Направления",
+  "master-classes": "Мастер-классы",
+  "menu": "Меню",
+  "studio": "Студия"
+}
 
 export interface SubmenuItem {
   name: string;

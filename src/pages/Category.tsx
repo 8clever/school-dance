@@ -4,8 +4,7 @@ import { Base, BigRow, BigButtonCol, FlexCol } from "../components";
 import { PageBreadcrumbs } from "../components/PageTitle";
 import { directionStore } from "../store/DirectionStore";
 import { routerStore } from "../store/RouterStore";
-import { DirectionSection } from "../../server/models/Direction";
-import { directionSectionMap } from "./Direction";
+import { DirectionSection, directionSectionMap } from "../../server/models/Direction";
 import { toJS } from "mobx";
 
 interface CategoryProps {

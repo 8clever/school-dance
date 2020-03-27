@@ -6,6 +6,7 @@ import { Teacher } from "../../server/models/Teacher";
 import { Leader } from "../../server/models/Leaders";
 import { leaderStore } from "../store/LeaderStore";
 import { PageBreadcrumbs } from "../components/PageTitle";
+import { DirectionStore } from "../store/DirectionStore";
 
 interface StudioMenuProps {
   active?: "leaders" | "teachers" | "history"
@@ -15,11 +16,13 @@ export const StudioMenu = (props: StudioMenuProps) => {
 
   const [ teacher, setTeacher ] = React.useState<Teacher | null>(null);
   const [ leader, setLeader ] = React.useState<Leader | null>(null);
+  const directionStore = React.useMemo(() => new DirectionStore(), []);
 
   React.useEffect(() => {
     Promise.all([
       teacherStore.getItems({}, { fullName: 1 }, 1),
-      leaderStore.getItems({}, {}, 1)
+      leaderStore.getItems({}, {}, 1),
+      directionStore.loadItems({ section: "studio" })
     ]).then(([ teacher, leader ]) => {
       if (teacher.count) {
         setTeacher(teacher.list[0]);
@@ -57,9 +60,20 @@ export const StudioMenu = (props: StudioMenuProps) => {
         }}>
         ПЕДАГОГИ
       </BigButtonCol>
-      <BigButtonCol>
-        ИСТОРИЯ
-      </BigButtonCol>
+      {
+        directionStore.itemList.map(i => {
+          return (
+            <BigButtonCol 
+              key={i._id as string}
+              onClick={() => {
+              routerStore.push(`/directions/${i.url}`);
+            }}>
+              {i.name}
+            </BigButtonCol>
+          )
+        })
+      }
+      
     </BigRow>
   )
 }

@@ -3,9 +3,8 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, I
 import { observer } from "mobx-react-lite";
 import { directionStore as directionStoreGlobal, DirectionStore } from "../store/DirectionStore";
 import { ImagePreview } from "./ImagePreview";
-import { DirectionSection, SubmenuItem } from "../../server/models/Direction";
+import { DirectionSection, SubmenuItem, directionSectionMap } from "../../server/models/Direction";
 import _ from "lodash";
-import { directionSectionMap } from "../pages/Direction";
 import { Icon } from "./Icon";
 import { imageStore } from "../store/ImageStore";
 

@@ -7,14 +7,13 @@ import { configStore } from "../store/ConfigStore";
 import { imageStore } from "../store/ImageStore";
 import { routerStore } from "../store/RouterStore";
 import _ from "lodash";
-import { directionSectionMap } from "./Direction";
 import { pieceOfNewsStore } from "../store/PieceOfNewsStore";
 import moment from "moment";
 import { PieceOfNews } from "../../server/models/PieceOfNews";
 
 import iconLeft from "../images/icons/arrow-left.png";
 import iconRight from "../images/icons/arrow-right.png";
-import { DirectionSection } from "../../server/models/Direction";
+import { DirectionSection, directionSectionMap } from "../../server/models/Direction";
 
 const chevronButtonStyle: React.CSSProperties = {
   position: "absolute",
