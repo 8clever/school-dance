@@ -342,3 +342,31 @@ th {
     cursor: pointer;
   }
 }
+
+// Partners ==============
+
+.partner {
+  cursor: pointer;
+
+  .image {
+    transform: scale(0.5);
+    width: 80%;
+    opacity: 0;
+    transition: 0.6s all;
+  }
+
+  .text {
+    opacity: 1;
+    transition: 0.6s all;
+  }
+
+  &:hover {
+    .image {
+      transform: scale(1);
+      opacity: 1;
+    }
+    .text {
+      opacity: 0;
+    }
+  }
+}
