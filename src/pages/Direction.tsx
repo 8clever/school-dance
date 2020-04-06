@@ -12,6 +12,8 @@ import { Col } from "reactstrap";
 import _ from "lodash";
 import { Direction as DirectionModel, directionSectionMap } from "../../server/models/Direction";
 import { PageBreadcrumbs } from "../components/PageTitle";
+import { executeScript } from "../components/Widget";
+import { isMobile } from "../utils/isMobile";
 
 interface DirectionProps {
   id: string;
@@ -222,6 +224,28 @@ export const Direction = observer((props: DirectionProps) => {
     props.sub 
   ]);
 
+  const descriptionText = (
+    directionStore.item ?
+    selectedSubmenuitem === -1 ?
+    directionStore.item.desc :
+    directionStore.item.submenu[selectedSubmenuitem] &&
+    directionStore.item.submenu[selectedSubmenuitem].description :
+    ""
+  )
+
+  React.useEffect(() => {
+    const scripts = descriptionText.match(/<script[^<]+<\/script>/gm);
+    if (!scripts) return;
+    scripts.forEach(script => {
+      const src = script.match(/src="[^"]+"/);
+      if (!src) return;
+      const url = src[0].replace(/src=/, "").replace(/"/gm, "");
+      executeScript(url);
+    })
+  }, [descriptionText])
+
+  const mobile = isMobile();
+
   if (!directionStore.item) return null;
 
   const submenu = directionStore.item.submenu.map((sub, idx) => {
@@ -251,21 +275,18 @@ export const Direction = observer((props: DirectionProps) => {
     <div className="p-5">
       <MD 
         escapeHtml={false}
-        source={
-          selectedSubmenuitem === -1 ?
-          directionStore.item.desc :
-          directionStore.item.submenu[selectedSubmenuitem] &&
-          directionStore.item.submenu[selectedSubmenuitem].description
-        } 
+        source={descriptionText} 
       />
     </div>
   )
 
   const descriptionMobile = (
+    mobile ?
     <FlexCol justify="between" column>
       {description}
       {ticketBuy}
-    </FlexCol>
+    </FlexCol> :
+    null
   )
 
   const descriptionDesktop = (

@@ -5,15 +5,21 @@ interface WidgetProps {
   widgetId: string;
 }
 
+export const executeScript = (src: string, onload?: () => void) => {
+  const $script = document.createElement("script");
+    $script.src = src;
+    $script.onload = () => {
+      const evt = new Event("DOMContentLoaded");
+      document.dispatchEvent(evt);
+      onload && onload();
+    };
+    document.body.append($script);
+}
+
 export const Widget = (props: WidgetProps) => {
 
   React.useEffect(() => {
-    const $script = document.createElement("script");
-    $script.src = `https://app.moyklass.com/api/site/widget/?id=${props.widgetId}`;
-    $script.onload = () => {
-      (window as any).WdgMoyklass[props.widgetId].init();
-    }
-    document.body.append($script);
+    executeScript(`https://app.moyklass.com/api/site/widget/?id=${props.widgetId}`)
   }, []);
 
   return (
