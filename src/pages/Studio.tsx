@@ -46,7 +46,7 @@ export const StudioMenu = (props: StudioMenuProps) => {
           
           routerStore.push("/leaders")
         }}>
-        РУКОВОДСТВО
+        КОМАНДА
       </BigButtonCol>
       <BigButtonCol
         selected={props.active === "teachers"}

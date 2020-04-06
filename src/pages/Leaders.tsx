@@ -160,7 +160,7 @@ export const Leaders = observer((props: LeaderProps) => {
             url: "/studio"
           },
           {
-            title: "Руководство"
+            title: "Команда"
           },
           element ?
           {
