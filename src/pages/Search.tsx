@@ -23,26 +23,43 @@ export const Search = (props: SearchProps) => {
       return;
     }
 
-    Promise.all([
-      directionStore.getItems({
+    (async () => {
+      const searchCriteria = { $regex: searchValue, $options: "gmi" };
+      const direction = await directionStore.getItems({
         $or: [
-          { name: { $regex: searchValue, $options: "gmi" }},
-          { desc: { $regex: searchValue, $options: "gmi" }}
+          { name: searchCriteria},
+          { desc: searchCriteria},
+          { "submenu.name": searchCriteria },
+          { "submenu.description": searchCriteria }
         ]
       })
-    ]).then(data => {
-      const [ direction ] = data;
       const searchResult: SearchResult[] = [];
 
+      const findText = (text: string) => {
+        return text.toLowerCase().includes(searchValue.toLowerCase());
+      }
+
       direction.list.forEach(d => {
-        searchResult.push({
-          name: d.name,
-          link: `/directions/${d.url}`
-        });
+        const founded = findText(d.name) || findText(d.desc);
+        if (founded) {
+          searchResult.push({
+            name: d.name,
+            link: `/directions/${d.url}`
+          });
+        }
+        
+        d.submenu.forEach(sub => {
+          const founded = findText(sub.name) || findText(sub.description);
+          if (!founded) return;
+          searchResult.push({
+            name: sub.name,
+            link: `/directions/${d.url}/${sub.url}`
+          });
+        })
       });
 
       setResult(searchResult);
-    });
+    })()
   }, [searchValue])
   
   return (
