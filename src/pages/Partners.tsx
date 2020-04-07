@@ -8,7 +8,7 @@ import imgAstoria from "../images/partners/astoria.png";
 import imgGollandia from "../images/partners/new_gollandiya.png";
 import imgCinema from "../images/partners/new_cinema.png";
 import imgBalletMesse from "../images/partners/ballet_messe.png";
-import imgVoss from "../images/partners/voss.jpg";
+import imgVoss from "../images/partners/voss.png";
 
 import { PageBreadcrumbs } from "../components/PageTitle";
 
