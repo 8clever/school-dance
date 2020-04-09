@@ -112,7 +112,7 @@ export const Partners = () => {
         />
         <PartnerButton 
           link="https://alexandrinsky.ru"
-          title="Новая Сцена Александрийского театра"
+          title="Новая Сцена Александринского театра"
           img={imgCinema}
         />
       </BigRow>
