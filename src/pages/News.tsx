@@ -24,11 +24,10 @@ export const News = observer((props: NewsProps) => {
   });
 
   React.useEffect(() => {
-    if (props.pieceOfNewsId) return;
-
     (async () => {
       await pieceOfNewsStore.loadItems({}, { _dt: -1 });
       if (!pieceOfNewsStore.itemList.length) return;
+      if (props.pieceOfNewsId) return;
       routerStore.push(`/news/${pieceOfNewsStore.itemList[0]._id}`);
     })()
   }, [])
