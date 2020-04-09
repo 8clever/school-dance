@@ -21,7 +21,6 @@ import { Admin } from "../pages/Admin";
 import { Category } from "../pages/Category";
 import { DirectionSection } from "../../server/models/Direction";
 import { News } from "../pages/News";
-import { Widget } from "./Widget";
 
 const parse = (path: string) => {
   if (!path) return {};
@@ -34,20 +33,7 @@ export const Router = () => {
   return (
     <DOMRouter history={routerStore.history}>
       <Switch>
-        <Route exact path="/" render={() => (
-          <>
-            <Widget 
-              elementId={"SiteWidgetMoyklass30104"}
-              widgetId={"SMjP5R51qXy14ECnt9cbw5yvCiShSvlD9o"} 
-            />
-
-            <Widget
-              elementId={"SiteWidgetMoyklass28435"}
-              widgetId={"9wjFHbwc75jXR7mU10vPAY1RoXp4NIFoqg"}
-            />
-          </>
-        )}/>
-        <Route exact path="/home" render={() => <Home />} />
+        <Route exact path="/" render={() => <Home />} />
         <Route exact path="/admin" render={() => <Admin />} />
         <Route exact path="/category/:category" render={(match) => {
           return <Category section={match.match.params.category as DirectionSection} />
