@@ -1,5 +1,5 @@
 import React from "react";
-import { Base, BigRow, BigCol, Icon, BigButtonColMin } from "../components";
+import { Base, BigRow, BigCol, Icon, BigButtonColMin, getShadowBoxStyle } from "../components";
 import { observer } from "mobx-react-lite";
 import { teacherStore } from "../store/TeacherStore";
 import { userStore } from "../store/UserStore";
@@ -10,7 +10,7 @@ import { toJS } from "mobx";
 import { imageStore } from "../store/ImageStore";
 import { Col } from "reactstrap";
 import ReactMarkdown from "react-markdown";
-import { Image, Carousel } from "../components/Carousel";
+import { Carousel } from "../components/Carousel";
 import { PageBreadcrumbs } from "../components/PageTitle";
 
 interface TeacherProps {
@@ -38,7 +38,7 @@ export const Teacher = observer((props: TeacherProps) => {
   const { item: teacher, itemList } = teacherStore;
 
   const description = (
-    <div style={{ padding: 30 }}>
+    <div className="p-5">
       {
         teacher ?
         <ReactMarkdown source={teacher.description} /> :
@@ -51,6 +51,17 @@ export const Teacher = observer((props: TeacherProps) => {
     teacher ?
     imageStore.endpoint + teacher.images[0] as string :
     ""
+  )
+
+  const carousel = (
+    <Carousel
+      ratio={1.33}
+      items={[
+        {
+          src: imageSrc
+        }
+      ]} 
+    />
   )
 
   const menuList = itemList.map(t => {
@@ -97,14 +108,17 @@ export const Teacher = observer((props: TeacherProps) => {
             </span> : null
           }
         </BigButtonColMin>
-        
+        {/** MOBILE */}
         {
           selected ?
           <>
             <div 
-              style={{
-                border: "1px solid black"
-              }}
+              style={getShadowBoxStyle({
+                left: 1,
+                top: 1,
+                bottom: 1,
+                right: 0
+              })}
               className="d-md-none w-100 relative">
               <div 
                 id="image" 
@@ -113,23 +127,16 @@ export const Teacher = observer((props: TeacherProps) => {
                   top: -190
                 }} 
               />
-              <Image 
-                width="100vw"
-                height="200vw"
-                src={imageSrc}
-              />
+              {carousel}
             </div>
-
             <div 
-              style={{
-                borderLeft: "1px solid black"
-              }}
+              style={{ borderLeft: "1px solid black" }}
               className="d-md-none w-100">
               {description}
             </div>
-          </> : null
+          </>
+          : null
         }
-        
       </React.Fragment>
     )
   });
@@ -192,15 +199,7 @@ export const Teacher = observer((props: TeacherProps) => {
         </Col>
         <BigCol
           className="d-none d-md-block">
-
-          <Carousel
-            ratio={1.33}
-            items={[
-              {
-                src: imageSrc
-              }
-            ]} 
-          />
+          {carousel}
         </BigCol>
         <BigCol
           className="d-none d-md-block">

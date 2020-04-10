@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { Base, BigRow, BigButtonCol, Icon, BigButtonColMin, BigHr, FlexCol, getShadowBoxStyle } from "../components";
+import { Base, BigRow, BigButtonCol, Icon, BigButtonColMin, BigCol, getShadowBoxStyle } from "../components";
 import { directionStore, DirectionStore } from "../store/DirectionStore";
 import { imageStore } from "../store/ImageStore";
 import { userStore } from "../store/UserStore";
@@ -13,7 +13,6 @@ import _ from "lodash";
 import { Direction as DirectionModel, directionSectionMap } from "../../server/models/Direction";
 import { PageBreadcrumbs } from "../components/PageTitle";
 import { executeScript } from "../components/Widget";
-import { isMobile } from "../utils/isMobile";
 
 interface DirectionProps {
   id: string;
@@ -219,6 +218,12 @@ export const Direction = observer((props: DirectionProps) => {
 
     const idx = directionStore.item.submenu.findIndex(s => s.url === props.sub);
     setSelectedSubmenuItem(idx);
+
+    setTimeout(() => {
+      const $el = document.querySelector(`[data-spy="scroll"] #image`);
+      if (!$el) return;
+      $el.scrollIntoView({ behavior: "smooth"});
+    }, 100);
   }, [
     directionStore.item,
     props.sub 
@@ -244,31 +249,27 @@ export const Direction = observer((props: DirectionProps) => {
     })
   }, [descriptionText])
 
-  const mobile = isMobile();
-
   if (!directionStore.item) return null;
 
-  const submenu = directionStore.item.submenu.map((sub, idx) => {
-    return (
-      <BigButtonColMin
-        key={idx}
-        onClick={async () => {
-          routerStore.push(`/directions/${directionStore.item.url}/${sub.url}`);
-        }}
-        style={{
-          border: "none",
-        }}
-        selected={selectedSubmenuitem === idx}
-        xs={12}
-        md={12}>
-        {sub.name}
-      </BigButtonColMin>
-    )
-  });
-
-  const ticketBuy = (
-    <>
-    </>
+  const carousel = (
+    <Carousel 
+      ratio={
+        directionStore.item.submenu &&
+        directionStore.item.submenu.length ? 
+        1.33 : 2/3 
+      }
+      items={
+        (
+          selectedSubmenuitem === -1 ?
+          directionStore.item.images :
+          directionStore.item.submenu[selectedSubmenuitem] &&
+          directionStore.item.submenu[selectedSubmenuitem].images ||
+          []
+        ).map(i => {
+          return { src: `${imageStore.endpoint}${i}` };
+        })
+      } 
+    />
   )
 
   const description = (
@@ -280,29 +281,50 @@ export const Direction = observer((props: DirectionProps) => {
     </div>
   )
 
-  const descriptionMobile = (
-    mobile ?
-    <FlexCol justify="between" column>
-      {description}
-      {ticketBuy}
-    </FlexCol> :
-    null
+  const mobileView = (
+    <>
+      <div 
+        style={getShadowBoxStyle({
+          left: 1,
+          top: 1,
+          bottom: 1,
+          right: 0
+        })}
+        className="d-md-none w-100 relative">
+        <div 
+          id="image" 
+          style={{
+            position: "absolute",
+            top: -190
+          }} 
+        />
+        {carousel}
+      </div>
+      <div 
+        style={{ borderLeft: "1px solid black" }}
+        className="d-md-none w-100">
+        {description}
+      </div>
+    </>
   )
 
-  const descriptionDesktop = (
-    <FlexCol justify="between" column>
-      <div style={{ 
-        position: "relative",
-        justifySelf: "stretch",
-        height: "100%"
-      }}>
-        <div className="absolute-container" style={{ overflow: "auto" }}>
-          {description}
-        </div>
-      </div>
-      {ticketBuy}
-    </FlexCol>
-  )
+  const submenu = directionStore.item.submenu.map((sub, idx) => {
+    const selected = selectedSubmenuitem === idx;
+    return (
+      <React.Fragment key={idx}>
+        <BigButtonColMin
+          key={idx}
+          onClick={async () => {
+            routerStore.push(`/directions/${directionStore.item.url}/${sub.url}`);
+          }}
+          selected={selected}
+          md={12}>
+          {sub.name}
+        </BigButtonColMin>
+        {selected ? mobileView : null}
+      </React.Fragment>
+    )
+  });
 
   return (
     <Base>
@@ -331,63 +353,36 @@ export const Direction = observer((props: DirectionProps) => {
         ]}
       />
 
-      <div 
-        className="d-block d-md-none w-100" 
-        style={{ borderLeft: "1px solid black" }}>
-        {descriptionMobile}
-      </div>
+      <BigRow>
 
-      <div 
-        className="d-block d-md-none w-100" 
-        style={{ borderLeft: "1px solid black" }}>
-        {submenu}
-      </div> 
-      
-      <BigHr />
+        {/** mobile */}
+        {selectedSubmenuitem === - 1 ? mobileView : null}
+        <div 
+          data-spy="scroll"
+          className="d-md-none w-100">
+          {submenu}
+        </div>
 
-      {/** direction view */}
-      <BigRow style={{ position: "relative" }}>
-        {
-          submenu.length ?
-          <Col
-            md={4}
-            style={getShadowBoxStyle({ top: 0 })}
-            className="bg-white d-none d-md-block">
-            <div 
-              style={{ overflow: "auto" }}
-              className="absolute-container">
-              {submenu}
-            </div>
-          </Col> : null
-        }
-
+        {/** desktop */}
         <Col 
-          style={getShadowBoxStyle({ top: 0 })}
-          md={submenu.length ? 4 : 8} 
-          xs={12}>
-
-          <Carousel 
-            ratio={submenu.length ? 1.33 : 2/3 }
-            items={
-              (
-                selectedSubmenuitem === -1 ?
-                directionStore.item.images :
-                directionStore.item.submenu[selectedSubmenuitem] &&
-                directionStore.item.submenu[selectedSubmenuitem].images ||
-                []
-              ).map(i => {
-                return { src: `${imageStore.endpoint}${i}` };
-              })
-            } 
-          />
+          className="d-none d-md-block bg-white"
+          md={4}>
+          <div 
+            style={{ overflow: "auto" }}
+            className="absolute-container">
+            {submenu}
+          </div>
         </Col>
-        
-        <Col
-          md={4}
-          style={getShadowBoxStyle({ top: 0 })}
-          className="bg-white d-none d-md-block">
-          {descriptionDesktop}
-        </Col>
+        <BigCol className="d-none d-md-block">
+          {carousel}
+        </BigCol>
+        <BigCol className="d-none d-md-block">
+          <div 
+            style={{ overflow: "auto" }}
+            className="absolute-container">
+            {description}
+          </div>
+        </BigCol>
       </BigRow>
     </Base>
   )

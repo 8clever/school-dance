@@ -1,5 +1,5 @@
 import React from "react";
-import { Base, BigRow, BigCol, Icon, BigButtonColMin } from "../components";
+import { Base, BigRow, BigCol, Icon, BigButtonColMin, getShadowBoxStyle } from "../components";
 import { observer } from "mobx-react-lite";
 import { leaderStore } from "../store/LeaderStore";
 import { userStore } from "../store/UserStore";
@@ -9,7 +9,7 @@ import { imageStore } from "../store/ImageStore";
 import { Col } from "reactstrap";
 import ReactMarkdown from "react-markdown";
 import { LeaderEdit } from "../components/LeaderEdit";
-import { Image, Carousel } from "../components/Carousel";
+import { Carousel } from "../components/Carousel";
 import { PageBreadcrumbs } from "../components/PageTitle";
 
 interface LeaderProps {
@@ -42,13 +42,24 @@ export const Leaders = observer((props: LeaderProps) => {
   )
 
   const description = (
-    <div style={{ padding: 30 }}>
+    <div className="p-5">
       {
         element ?
         <ReactMarkdown source={element.description} /> :
         null
       }
     </div>
+  )
+
+  const carousel = (
+    <Carousel
+      ratio={1.33}
+      items={[
+        {
+          src: imageSrc
+        }
+      ]} 
+    />
   )
 
   const menuList = list.map(el => {
@@ -93,14 +104,18 @@ export const Leaders = observer((props: LeaderProps) => {
             </span> : null
           }
         </BigButtonColMin>
-
+        
+        {/** MOBILE */}
         {
           selected ?
           <>
             <div 
-              style={{
-                border: "1px solid black"
-              }}
+              style={getShadowBoxStyle({
+                left: 1,
+                top: 1,
+                bottom: 1,
+                right: 0
+              })}
               className="d-md-none w-100 relative">
               <div 
                 id="image" 
@@ -109,17 +124,10 @@ export const Leaders = observer((props: LeaderProps) => {
                   top: -190
                 }} 
               />
-              <Image 
-                width="100vw"
-                height="200vw"
-                src={imageSrc}
-              />
+              {carousel}
             </div>
-
             <div 
-              style={{
-                borderLeft: "1px solid black"
-              }}
+              style={{ borderLeft: "1px solid black" }}
               className="d-md-none w-100">
               {description}
             </div>
@@ -189,14 +197,7 @@ export const Leaders = observer((props: LeaderProps) => {
           </div>
         </Col>
         <BigCol className="d-none d-md-block">
-          <Carousel
-            ratio={1.33}
-            items={[
-              {
-                src: imageSrc
-              }
-            ]} 
-          />
+          {carousel}
         </BigCol>
         <BigCol className="d-none d-md-block">
           <div 
