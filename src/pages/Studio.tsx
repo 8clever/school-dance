@@ -40,7 +40,7 @@ export const StudioMenu = (props: StudioMenuProps) => {
         selected={props.active === "leaders"}
         onClick={() => {
           if (leader) {
-            routerStore.push(`/leader/${leader._id}`);
+            routerStore.push(`/leader/${leader.url}`);
             return;
           }
           
@@ -52,7 +52,7 @@ export const StudioMenu = (props: StudioMenuProps) => {
         selected={props.active === "teachers"}
         onClick={() => {
           if (teacher) {
-            routerStore.push(`/teacher/${teacher._id}`);
+            routerStore.push(`/teacher/${teacher.url}`);
             return;
           }
 
