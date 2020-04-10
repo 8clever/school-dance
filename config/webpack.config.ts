@@ -15,7 +15,7 @@ export const config: Configuration = {
         viewport: "width=device-width, initial-scale=1, shrink-to-fit=no"
       },
       favicon: "public/favicon.png",
-      title: "Studio Context Диана Вишнева"
+      title: "Studio Context Диана Вишнёва"
     })
   ],
   resolve: {
