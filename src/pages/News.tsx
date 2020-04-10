@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { Base, BigHr, BigRow, getShadowBoxStyle, FlexCol, BigButtonColMin, Icon } from "../components";
+import { Base, BigRow, getShadowBoxStyle, BigButtonColMin, Icon, BigCol } from "../components";
 import { PageBreadcrumbs } from "../components/PageTitle";
 import { PieceOfNewsEdit } from "../components/PieceOfNewsEdit";
 import { Col } from "reactstrap";
@@ -34,87 +34,112 @@ export const News = observer((props: NewsProps) => {
 
   React.useEffect(() => {
     if (props.pieceOfNewsId) {
-      pieceOfNewsStore.loadItem(props.pieceOfNewsId);
+      (async () => {
+        await pieceOfNewsStore.loadItem(props.pieceOfNewsId);
+        setTimeout(() => {
+          const $el = document.querySelector(`[data-spy="scroll"] #image`);
+          if (!$el) return;
+          $el.scrollIntoView({ behavior: "smooth"});
+        }, 100);
+      })();
       return;
     }
 
     pieceOfNewsStore.item = null;
   }, [props.pieceOfNewsId])
 
+  if (!pieceOfNewsStore.item) return null;
+
   const description = (
-    pieceOfNewsStore.item ?
+    pieceOfNewsStore.item &&
     <div className="p-5">
       <MD source={pieceOfNewsStore.item.description} />
-    </div> : null
-  )
-  
-  const descriptionMobile = (
-    <FlexCol justify="between" column>
-      {description}
-    </FlexCol>
-  )
-  
-  const descriptionDesktop = (
-    <FlexCol justify="between" column>
-      <div style={{ 
-        position: "relative",
-        justifySelf: "stretch",
-        height: "100%"
-      }}>
-        <div className="absolute-container" style={{ overflow: "auto" }}>
-          {description}
-        </div>
-      </div>
-    </FlexCol>
+    </div>
   )
 
+  const carousel = (
+    <Carousel 
+      ratio={1.33}
+      items={
+        pieceOfNewsStore.item.images.map(i => {
+          return { src: `${imageStore.endpoint}${i}` };
+        })
+      } 
+    />
+  )
+  
   const submenu = pieceOfNewsStore.itemList.map(p => {
+    const selected = props.pieceOfNewsId === p._id;
     return (
-      <BigButtonColMin
-        key={p._id as string}
-        onClick={async () => {
-          routerStore.push(`/news/${p._id}`)
-        }}
-        style={{
-          border: "none",
-        }}
-        selected={props.pieceOfNewsId === p._id}
-        xs={12}
-        md={12}>
+      <React.Fragment key={p._id as string}>
+        <BigButtonColMin
+          onClick={async () => {
+            routerStore.push(`/news/${p._id}`)
+          }}
+          selected={selected}
+          md={12}>
 
-        <span style={{
-          marginRight: 10,
-        }}>
-          {moment(p._dt).format("D.MM")}
-        </span>
-        {p.name}
+          <span style={{
+            marginRight: 10,
+          }}>
+            {moment(p._dt).format("D.MM")}
+          </span>
+          {p.name}
 
+          {
+            userStore.isAdmin() ?
+            <span className="hovered">
+              <Icon 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setEditNews({
+                    visible: true,
+                    _id: p._id as string
+                  })
+                }}
+                className="ml-3"
+                type="pencil-alt"
+              />
+              <Icon 
+                onClick={async (e) => {
+                  e.stopPropagation();
+                  await pieceOfNewsStore.remove(p._id as string);
+                  await pieceOfNewsStore.loadItems({}, { _dt: -1 });
+                }}
+                className="ml-3"
+                type="trash"
+              />
+            </span> : null
+          }
+        </BigButtonColMin>
         {
-          userStore.isAdmin() ?
-          <span className="hovered">
-            <Icon 
-              onClick={(e) => {
-                e.stopPropagation();
-                setEditNews({
-                  visible: true,
-                  _id: p._id as string
-                })
-              }}
-              className="ml-3"
-              type="pencil-alt"
-            />
-            <Icon 
-              onClick={async (e) => {
-                e.stopPropagation();
-                await pieceOfNewsStore.remove(p._id as string);
-                await pieceOfNewsStore.loadItems({}, { _dt: -1 });
-              }}
-              className="ml-3"
-              type="trash"
-            />
-          </span> : null
+          selected ?
+          <>
+            <div 
+              style={getShadowBoxStyle({
+                left: 1,
+                top: 1,
+                bottom: 1,
+                right: 0
+              })}
+              className="d-md-none w-100 relative">
+              <div 
+                id="image" 
+                style={{
+                  position: "absolute",
+                  top: -190
+                }} 
+              />
+              {carousel}
+            </div>
+            <div 
+              style={{ borderLeft: "1px solid black" }}
+              className="d-md-none w-100">
+              {description}
+            </div>
+          </> : null
         }
-      </BigButtonColMin>
+      </React.Fragment>
     )
   });
 
@@ -154,58 +179,37 @@ export const News = observer((props: NewsProps) => {
         ]}
       />
 
-      <div 
-        className="d-block d-md-none w-100" 
-        style={{ borderLeft: "1px solid black" }}>
-        {descriptionMobile}
-      </div>
+      <BigRow>
 
-      <div 
-        className="d-block d-md-none w-100" 
-        style={{ borderLeft: "1px solid black" }}>
-        {submenu}
-      </div> 
-      
-      <BigHr />
-
-      {/** direction view */}
-      <BigRow style={{ 
-        position: "relative" 
-      }}>
-        <Col
-          md={4}
-          style={getShadowBoxStyle({ top: 0 })}
-          className="bg-white d-none d-md-block">
+        {/** mobile */}
+        <div 
+          data-spy="scroll"
+          className="d-md-none w-100">
           {submenu}
+        </div>
+
+        {/** desktop */}
+        <Col 
+          className="d-none d-md-block bg-white"
+          md={4}>
+          <div 
+            style={{ overflow: "auto" }}
+            className="absolute-container">
+            {submenu}
+          </div>
         </Col>
-
-        {
-          pieceOfNewsStore.item ?
-          <>
-            <Col 
-              style={getShadowBoxStyle({ top: 0 })}
-              md={4} 
-              xs={12}>
-
-              <Carousel 
-                ratio={1.33}
-                items={
-                  pieceOfNewsStore.item.images.map(i => {
-                    return { src: `${imageStore.endpoint}${i}` };
-                  })
-                } 
-              />
-            </Col>
-            
-            <Col
-              md={4}
-              style={getShadowBoxStyle({ top: 0 })}
-              className="bg-white d-none d-md-block">
-              {descriptionDesktop}
-            </Col>
-          </> : null
-        }
-        
+        <BigCol 
+          md={submenu.length ? 4 : 8}
+          className="d-none d-md-block">
+          {carousel}
+        </BigCol>
+        <BigCol className="d-none d-md-block">
+          <div 
+            style={{ overflow: "auto" }}
+            className="absolute-container">
+            {description}
+          </div>
+        </BigCol>
       </BigRow>
 
       <PieceOfNewsEdit 

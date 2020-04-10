@@ -1,6 +1,7 @@
 import React from "react";
 import { Carousel as CarouselFactory, CarouselItem, CarouselControl } from "reactstrap";
 import emptyPNG from "../images/empty.png";
+import _ from "lodash";
 
 interface ImageItem {
   src: string;
@@ -19,22 +20,31 @@ interface ImageProps {
 
 export const Image = (props: ImageProps) => {
   return (
-    <div 
-      style={{ 
-      width: props.width, 
-      height: props.height,
-      background: `
-        url("${props.src}") no-repeat content-box center / cover,
-        url("${emptyPNG}") no-repeat content-box center / cover
-      `
-    }} />
+    <div style={{
+      position: "relative",
+      width: props.width,
+      paddingTop: props.height
+    }}>
+      <div 
+        className="absolute-container"
+        style={{ 
+          background: `
+            url("${props.src}") no-repeat content-box center / cover,
+            url("${emptyPNG}") no-repeat content-box center / cover
+          `
+        }} 
+      />
+    </div>
+    
   )
 }
 
 export const Carousel = (props: CarouselProps) => {
+
   const [ activeIndex, setIndex ] = React.useState(0);
-  const [ height, setHeight ] = React.useState(0);
+  
   const ratio = props.ratio || 0.5625;
+
   const items = props.items.length ? props.items : [
     {
       src: emptyPNG
@@ -58,13 +68,7 @@ export const Carousel = (props: CarouselProps) => {
   }
 
   return (
-    <div ref={node => {
-      if (!node) return;
-      if (height) return;
-      
-      const h = node.getBoundingClientRect().width * ratio;
-      setHeight(h);
-    }}>
+    <div>
       <CarouselFactory
         activeIndex={activeIndex}
         next={next}
@@ -72,10 +76,11 @@ export const Carousel = (props: CarouselProps) => {
       >
         {items.map((item, idx) => {
           return (
-            <CarouselItem key={idx}>
+            <CarouselItem
+              key={idx}>
               <Image 
                 width={"100%"}
-                height={height}
+                height={ratio * 100 + "%"}
                 src={item.src}
               />
             </CarouselItem>
