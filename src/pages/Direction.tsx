@@ -364,16 +364,21 @@ export const Direction = observer((props: DirectionProps) => {
         </div>
 
         {/** desktop */}
-        <Col 
-          className="d-none d-md-block bg-white"
-          md={4}>
-          <div 
-            style={{ overflow: "auto" }}
-            className="absolute-container">
-            {submenu}
-          </div>
-        </Col>
-        <BigCol className="d-none d-md-block">
+        {
+          submenu.length ?
+          <Col 
+            className="d-none d-md-block bg-white"
+            md={4}>
+            <div 
+              style={{ overflow: "auto" }}
+              className="absolute-container">
+              {submenu}
+            </div>
+          </Col> : null
+        }
+        <BigCol 
+          md={submenu.length ? 4 : 8}
+          className="d-none d-md-block">
           {carousel}
         </BigCol>
         <BigCol className="d-none d-md-block">
