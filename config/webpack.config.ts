@@ -12,6 +12,7 @@ export const config: Configuration = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       meta: {
+        "yandex-verification": "365ae7796c8ff6cc",
         viewport: "width=device-width, initial-scale=1, shrink-to-fit=no"
       },
       favicon: "public/favicon.png",
