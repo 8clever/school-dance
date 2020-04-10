@@ -9,6 +9,7 @@ import imgGollandia from "../images/partners/new_gollandiya.png";
 import imgCinema from "../images/partners/new_cinema.png";
 import imgBalletMesse from "../images/partners/ballet_messe.png";
 import imgVoss from "../images/partners/voss.png";
+import dialogArts from "../images/partners/dialog-arts.png";
 
 import { PageBreadcrumbs } from "../components/PageTitle";
 
@@ -77,7 +78,7 @@ export const Partners = () => {
       <BigRow style={{ fontFamily: "Styled Font" }}>
         <PartnerButton 
           link="https://www.ilimgroup.ru"
-          title="ГРУППА КОМПАНИЙ ИЛИМ"
+          title={`ГРУППА "ИЛИМ"`}
           img={imgIlimg}
         />
         <PartnerButton 
@@ -114,6 +115,11 @@ export const Partners = () => {
           link="https://alexandrinsky.ru"
           title="Новая Сцена Александринского театра"
           img={imgCinema}
+        />
+        <PartnerButton 
+          link="https://google.ru"
+          title="Диалог Искусств"
+          img={dialogArts}
         />
       </BigRow>
     </Base>
