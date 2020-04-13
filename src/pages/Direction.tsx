@@ -13,6 +13,8 @@ import _ from "lodash";
 import { Direction as DirectionModel, directionSectionMap } from "../../server/models/Direction";
 import { PageBreadcrumbs } from "../components/PageTitle";
 import { executeScript } from "../components/Widget";
+import { isMobile } from "../utils/isMobile";
+import { useWindowResize } from "../effects/useWindowResize";
 
 interface DirectionProps {
   id: string;
@@ -198,6 +200,7 @@ export const Direction = observer((props: DirectionProps) => {
 
   const directionStore = React.useMemo(() => new DirectionStore(), [ props.id ]);
   const [ selectedSubmenuitem, setSelectedSubmenuItem ] = React.useState(-1);
+  useWindowResize();
 
   React.useEffect(() => {
     (async () => {
@@ -247,7 +250,7 @@ export const Direction = observer((props: DirectionProps) => {
       const url = src[0].replace(/src=/, "").replace(/"/gm, "");
       executeScript(url);
     })
-  }, [descriptionText])
+  }, [descriptionText, isMobile()])
 
   if (!directionStore.item) return null;
 
@@ -300,10 +303,10 @@ export const Direction = observer((props: DirectionProps) => {
         />
         {carousel}
       </div>
-      <div 
+      <div
         style={{ borderLeft: "1px solid black" }}
         className="d-md-none w-100">
-        {description}
+        {isMobile() && description}
       </div>
     </>
   )
