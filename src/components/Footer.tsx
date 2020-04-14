@@ -40,13 +40,7 @@ export const Footer = () => {
               <BigRow 
                 className="h-100">
                 <BigButtonColMin 
-                  className="h-50"
-                  md={12}
-                  onClick={() => routerStore.push("/partners")}>
-                  Партнеры
-                </BigButtonColMin>
-                <BigButtonColMin 
-                  className="h-50"
+                  className="h-100"
                   md={12}
                   onClick={() => {
                     routerStore.push("/contacts")

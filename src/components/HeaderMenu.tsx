@@ -67,6 +67,12 @@ export const HeaderMenu = observer(() => {
           md={12}>
           СТУДИЯ
         </BigButtonColMin>
+        <BigButtonColMin 
+          onClick={onClick("/partners")}
+          xs={12} 
+          md={12}>
+          ПАРТНЁРЫ
+        </BigButtonColMin>
 
         {
           directionStore.itemList.map(i => {
