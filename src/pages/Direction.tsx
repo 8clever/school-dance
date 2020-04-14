@@ -32,7 +32,6 @@ export const DirectionMenuItem = (props: DirectionMenuItemProps) => {
 
   return (
     <BigButtonCol
-      style={{ fontFamily: "Styled Font" }}
       key={props.key}
       selected={d._id === (directionStore.item && directionStore.item._id)}           
       onClick={() => {
@@ -141,9 +140,6 @@ export const DirectionMenu = observer((props: DirectionMenuProps) => {
   if (userStore.isAdmin()) {
     addDirection = (
       <BigButtonCol 
-        style={{
-          fontFamily: "Styled Font"
-        }}
         onClick={() => {
           setId("")
           setDirectionEditVisible(true)

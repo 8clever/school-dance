@@ -98,7 +98,6 @@ export const PageTitle = (props: PageTitleProps) => {
                   {props.children}
                 </span>
             </div>
-            <div style={{ padding: 5 }}></div>
           </FlexCol>
         </BigCol>
       </BigRow>

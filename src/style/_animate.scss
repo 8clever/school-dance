@@ -29,15 +29,15 @@
 }
 
 .marquee {
-  text-align: left;
+  text-align: center;
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
 }
 
 .marquee span { 
+  width: 65%;
   display: inline-block;
-  width: 100%;
   text-indent: 0;
   animation: marquee 30s linear infinite
 }

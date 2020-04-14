@@ -78,8 +78,7 @@ export const Home = observer(() => {
               key={k}
               onClick={() => routerStore.push(`/category/${section}`)}
               style={{
-                minHeight: 300,
-                fontFamily: "Styled Font"
+                minHeight: 300
               }}>
               {v}
             </BigButtonCol>
@@ -96,9 +95,6 @@ export const Home = observer(() => {
           news.list.map((i, idx) => {
             return (
               <BigButtonColMin 
-                style={{
-                  fontFamily: "Styled Font"
-                }}
                 onClick={() => routerStore.push(`/news/${i._id}`)}
                 md={4}
                 key={i._id as string}>

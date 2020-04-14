@@ -35,7 +35,6 @@ const PartnerButton = (props: PartnerButtonProps) => {
   const text = (
     <div 
       className="absolute-container text" style={{
-        fontFamily: "Styled Font",
         fontSize: 17.5,
         display: "flex",
         justifyContent: "center",
@@ -75,7 +74,7 @@ export const Partners = () => {
         ]}
       />
 
-      <BigRow style={{ fontFamily: "Styled Font" }}>
+      <BigRow>
         <PartnerButton 
           link="https://www.ilimgroup.ru"
           title={`ГРУППА "ИЛИМ"`}
