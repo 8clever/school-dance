@@ -30,7 +30,7 @@ const FooterBrandLogo = (props: FooterBrandLogoProps) => {
 
 export const Footer = () => {
   return (
-    <div className="bg-gray">
+    <div>
       <BigRow>
         <Col md={4}>
           <BigRow className="h-100">
@@ -51,13 +51,13 @@ export const Footer = () => {
             </Col>
             <BigButtonColMin 
               onClick={() => {
-                routerStore.push("/firstvisit")
+                routerStore.push("/calendar")
               }}
               className="h-100" 
               xs={6} 
               md={6} 
               h100>
-              ПЕРВОЕ ПОСЕЩЕНИЕ
+              РАСПИСАНИЕ
             </BigButtonColMin>
           </BigRow>
         </Col>

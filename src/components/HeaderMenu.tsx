@@ -56,10 +56,10 @@ export const HeaderMenu = observer(() => {
           НОВОСТИ
         </BigButtonColMin>
         <BigButtonColMin 
-          onClick={onClick("/calendar")}
+          onClick={onClick("/firstvisit")}
           xs={12}
           md={12}>
-          РАСПИСАНИЕ
+          ПЕРВОЕ ПОСЕЩЕНИЕ
         </BigButtonColMin>
         <BigButtonColMin 
           onClick={onClick("/studio")}
