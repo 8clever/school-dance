@@ -1,6 +1,7 @@
 import React from "react";
 
 interface Props {
+  draggable?: boolean;
   type: string;
   size?: "xs" | "sm" | "lg" | "2x" | "3x" | "5x" | "7x" | "10x";
   sub?: string;
@@ -31,6 +32,7 @@ export const Icon = (props: Props) => {
 
   return (
     <i 
+      draggable={props.draggable}
       onClick={props.onClick}
       style={props.style}
       className={clasName.join(" ")} 

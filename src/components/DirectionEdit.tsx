@@ -7,6 +7,7 @@ import { DirectionSection, SubmenuItem, directionSectionMap } from "../../server
 import _ from "lodash";
 import { Icon } from "./Icon";
 import { imageStore } from "../store/ImageStore";
+import { toJS } from "mobx";
 
 interface DirectionEditProps {
   _id?: string;
@@ -46,6 +47,8 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
 
     directionStore.loadItem(props._id);
   }, [ props.visible, props._id ]);
+
+  let dragIdx = -1;
 
   return (
     <>
@@ -156,11 +159,43 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
                 <ListGroup flush>
                   {
                     directionStore.item.submenu.map((sub,idx) => {
+
+                      let counter = 0;
+
                       return (
-                        <ListGroupItem key={idx}>
+                        <ListGroupItem 
+                          className="dropzone"
+                          onDragOver={e => {
+                            e.preventDefault();
+                          }}
+                          onDragStart={(e) => {
+                            dragIdx = idx;
+                          }}
+                          onDragEnter={e => {
+                            counter++;
+                            e.currentTarget.classList.toggle("dragged", true);
+                          }}
+                          onDragLeave={e => {
+                            counter--
+                            if (counter === 0) {
+                              e.currentTarget.classList.toggle("dragged", false);
+                            }
+                          }}
+                          onDrop={e => {
+                            counter = 0;
+                            e.currentTarget.classList.toggle("dragged", false);
+                            const submenu = toJS(directionStore.item.submenu, { recurseEverything: true });
+                            const i = submenu[dragIdx];
+                            submenu.splice(dragIdx, 1)
+                            submenu.splice(idx, 0, i);
+                            directionStore.item.submenu = submenu;
+                          }}
+                          style={{ cursor: "move" }}
+                          draggable={true}
+                          key={idx}>
                           <Row>
                             <Col>
-                              {sub.name}
+                              {idx + 1}. {sub.name}
                             </Col>
                             <Col className="text-right">
                               <Icon 

@@ -377,3 +377,13 @@ th {
     transform: scale(1.5);
   }
 }
+
+// drag n drop
+
+.dropzone {
+  transition: 0.6s all;
+}
+
+.dragged {
+  background: $gray-200 !important;
+}
