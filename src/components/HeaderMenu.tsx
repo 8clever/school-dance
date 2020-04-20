@@ -15,18 +15,13 @@ interface BrandLogoProps {
 const BrandLogo = (props: BrandLogoProps) => {
   return (
     <img 
+      className="brand-logo"
+      src={props.src} 
       onClick={() => {
         if (props.url) {
           window.location.href = props.url
         }
       }}
-      style={{
-        cursor: "pointer",
-        marginRight: 10
-      }}
-      width={25} 
-      height={25} 
-      src={props.src} 
     />
   )
 }
