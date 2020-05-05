@@ -24,6 +24,7 @@ import { News } from "../pages/News";
 import { Widget } from "./Widget";
 import { Payment } from "../pages/Payment";
 import { PayPal } from "../pages/PayPal";
+import { CreditCard } from "../pages/CreditCard";
 
 const parse = (path: string) => {
   if (!path) return {};
@@ -92,6 +93,7 @@ export const Router = () => {
         }} />
         <Route exact  path="/payment" render={() => <Payment /> }/>
         <Route exact  path="/payment/paypal" render={() => <PayPal /> }/>
+        <Route exact  path="/payment/card" render={() => <CreditCard /> }/>
         <Redirect to="/" />
       </Switch>
     </DOMRouter>

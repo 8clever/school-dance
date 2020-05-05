@@ -49,7 +49,11 @@ export const Payment = () => {
                 оплата PayPal
               </Button>
             </Col>
-            <Col  md={6}>
+            <Col 
+              onClick={() => {
+                routerStore.push("/payment/card")
+              }}
+              md={6}>
               <Button color="primary" block>
                 оплата банковской картой РФ
               </Button>

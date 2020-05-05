@@ -5,28 +5,43 @@ interface WidgetProps {
   widgetId: string;
 }
 
-export const executeScript = (
-  src: string, 
-  onload?: () => void,
-  dataset?: DOMStringMap
-) => {
+interface ExecuteScriptProps {
+  src: string;
+  id?: string;
+  onload?: () => void;
+  dataset?: DOMStringMap;
+  once?: boolean;
+}
+
+const map = {};
+
+export const executeScript = (props: ExecuteScriptProps) => {
+  const onload = () => {
+    map[props.src] = 1;
+    const evt = new Event("DOMContentLoaded");
+    document.dispatchEvent(evt);
+    props.onload && props.onload();
+  }
+
+  if (props.once && map[props.src]) {
+    onload();
+    return;
+  }
+
   const $script = document.createElement("script");
-    $script.src = src;
-    Object.keys(dataset || {}).forEach(key => {
-      $script.setAttribute(key, dataset[key]);
+    $script.src = props.src;
+    $script.id = props.id;
+    Object.keys(props.dataset || {}).forEach(key => {
+      $script.setAttribute(key, props.dataset[key]);
     });
-    $script.onload = () => {
-      const evt = new Event("DOMContentLoaded");
-      document.dispatchEvent(evt);
-      onload && onload();
-    };
+    $script.onload = onload;
     document.body.append($script);
 }
 
 export const Widget = (props: WidgetProps) => {
 
   React.useEffect(() => {
-    executeScript(`https://app.moyklass.com/api/site/widget/?id=${props.widgetId}`)
+    executeScript({ src: `https://app.moyklass.com/api/site/widget/?id=${props.widgetId}` })
   }, []);
 
   return (

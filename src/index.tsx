@@ -57,7 +57,7 @@ if (module["hot"]) {
   window.dataLayer = window.dataLayer || [];
   gtag('js', new Date());
   gtag('config', 'UA-163129857-1');
-  executeScript("https://www.googletagmanager.com/gtag/js?id=UA-163129857-1");
+  executeScript({ src: "https://www.googletagmanager.com/gtag/js?id=UA-163129857-1" });
 
   /** yandex metrica */
   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*(new Date() as any);k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");

@@ -244,7 +244,7 @@ export const Direction = observer((props: DirectionProps) => {
       const src = script.match(/src="[^"]+"/);
       if (!src) return;
       const url = src[0].replace(/src=/, "").replace(/"/gm, "");
-      executeScript(url);
+      executeScript({ src: url });
     })
   }, [descriptionText, isMobile()])
 
