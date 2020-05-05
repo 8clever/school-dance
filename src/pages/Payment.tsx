@@ -1,8 +1,9 @@
 import React from "react";
 import { Base, BigRow, getShadowBoxStyle } from "../components";
 import { PageBreadcrumbs } from "../components/PageTitle";
-import { Col, Button } from "reactstrap";
+import { Col, Button, Row } from "reactstrap";
 import paymentInfoPng from "../images/payment-info.png";
+import { routerStore } from "../store/RouterStore";
 
 export const PaymentInfo = () => {
   return (
@@ -37,12 +38,23 @@ export const Payment = () => {
 
       <BigRow>
         <Col style={getShadowBoxStyle({})} className="p-5">
-          <Button color="primary" className="mr-3">
-            оплата PayPal
-          </Button>
-          <Button color="primary">
-            оплата банковской картой РФ
-          </Button>
+          <Row>
+            <Col md={6} className="mb-3 mb-md-0">
+              <Button 
+                onClick={() => {
+                  routerStore.push("/payment/paypal")
+                }}
+                color="primary" 
+                block>
+                оплата PayPal
+              </Button>
+            </Col>
+            <Col  md={6}>
+              <Button color="primary" block>
+                оплата банковской картой РФ
+              </Button>
+            </Col>
+          </Row>
         </Col>
         <PaymentInfo />
       </BigRow>

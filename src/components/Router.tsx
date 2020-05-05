@@ -23,6 +23,7 @@ import { DirectionSection } from "../../server/models/Direction";
 import { News } from "../pages/News";
 import { Widget } from "./Widget";
 import { Payment } from "../pages/Payment";
+import { PayPal } from "../pages/PayPal";
 
 const parse = (path: string) => {
   if (!path) return {};
@@ -89,9 +90,8 @@ export const Router = () => {
 
           return null;
         }} />
-        <Route exact  path="/payment" render={() => {
-          return <Payment />
-        }} />
+        <Route exact  path="/payment" render={() => <Payment /> }/>
+        <Route exact  path="/payment/paypal" render={() => <PayPal /> }/>
         <Redirect to="/" />
       </Switch>
     </DOMRouter>

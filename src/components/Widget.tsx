@@ -5,9 +5,16 @@ interface WidgetProps {
   widgetId: string;
 }
 
-export const executeScript = (src: string, onload?: () => void) => {
+export const executeScript = (
+  src: string, 
+  onload?: () => void,
+  dataset?: DOMStringMap
+) => {
   const $script = document.createElement("script");
     $script.src = src;
+    Object.keys(dataset || {}).forEach(key => {
+      $script.setAttribute(key, dataset[key]);
+    });
     $script.onload = () => {
       const evt = new Event("DOMContentLoaded");
       document.dispatchEvent(evt);
