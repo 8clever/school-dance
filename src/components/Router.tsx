@@ -22,6 +22,7 @@ import { Category } from "../pages/Category";
 import { DirectionSection } from "../../server/models/Direction";
 import { News } from "../pages/News";
 import { Widget } from "./Widget";
+import { Payment } from "../pages/Payment";
 
 const parse = (path: string) => {
   if (!path) return {};
@@ -87,6 +88,9 @@ export const Router = () => {
           });
 
           return null;
+        }} />
+        <Route exact  path="/payment" render={() => {
+          return <Payment />
         }} />
         <Redirect to="/" />
       </Switch>

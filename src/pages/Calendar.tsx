@@ -18,14 +18,14 @@ export const Calendar = observer((props: CalendarProps) => {
         ]}
       />
 
-      <Widget
-        elementId={"SiteWidgetMoyklass28435"}
-        widgetId={"9wjFHbwc75jXR7mU10vPAY1RoXp4NIFoqg"}
-      />
-
       <Widget 
         elementId={"SiteWidgetMoyklass30104"}
         widgetId={"SMjP5R51qXy14ECnt9cbw5yvCiShSvlD9o"}
+      />
+
+      <Widget
+        elementId={"SiteWidgetMoyklass28435"}
+        widgetId={"9wjFHbwc75jXR7mU10vPAY1RoXp4NIFoqg"}
       />
     </Base>
   )
