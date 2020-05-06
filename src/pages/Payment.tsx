@@ -2,14 +2,43 @@ import React from "react";
 import { Base, BigRow, getShadowBoxStyle } from "../components";
 import { PageBreadcrumbs } from "../components/PageTitle";
 import { Col, Button, Row } from "reactstrap";
-import paymentInfoPng from "../images/payment-info.png";
+import allPaymentsPng from "../images/all-payments.jpg";
 import { routerStore } from "../store/RouterStore";
 
 export const PaymentInfo = () => {
   return (
     <>
-      <Col style={getShadowBoxStyle({})} md={12}>
-        <img src={paymentInfoPng} width="100%" />
+      <Col style={getShadowBoxStyle({})} className="p-5" md={12}>
+        <h5>Правила оплаты и безопасность платежей, конфиденциальность информации</h5>
+        <p>
+          Оплата банковскими картами осуществляется через АО «АЛЬФА-БАНК».
+        </p>
+        <p>
+          К оплате принимаются карты VISA, MasterCard, МИР.
+        </p>
+        <p>
+          Услуга оплаты через интернет осуществляется в соответствии с Правилами международных платежных систем Visa, MasterCard и Платежной системы МИР на принципах соблюдения конфиденциальности и безопасности совершения платежа, для чего используются самые современные методы проверки, шифрования и передачи данных по закрытым каналам связи. Ввод данных банковской карты осуществляется на защищенной платежной странице АО «АЛЬФА-БАНК».
+        </p>
+        <p>
+          На странице для ввода данных банковской карты потребуется ввести данные банковской карты: номер карты, имя владельца карты, срок действия карты, трёхзначный код безопасности (CVV2 для VISA, CVC2 для MasterCard, Код Дополнительной Идентификации для МИР). Все необходимые данные пропечатаны на самой карте. Трёхзначный код безопасности — это три цифры, находящиеся на обратной стороне карты.
+        </p>
+        <p>
+          Далее вы будете перенаправлены на страницу Вашего банка для ввода кода безопасности, который придет к Вам в СМС. Если код безопасности к Вам не пришел, то следует обратиться в банк выдавший Вам карту.
+        </p>
+
+        <Row>
+          <Col 
+            sm={{
+              size: 8,
+              offset: 2
+            }}
+            md={{
+              size: 6,
+              offset: 3
+            }}>
+            <img src={allPaymentsPng} width="100%" />
+          </Col>
+        </Row>
       </Col>
       <Col style={getShadowBoxStyle({})} className="p-5" md={12}>
         <h5>Контактная информация</h5>
@@ -42,20 +71,21 @@ export const Payment = () => {
             <Col md={6} className="mb-3 mb-md-0">
               <Button 
                 onClick={() => {
+                  routerStore.push("/payment/card")
+                }}
+                color="primary" 
+                block>
+                оплата банковской картой РФ
+              </Button>
+            </Col>
+            <Col md={6}>
+              <Button 
+                onClick={() => {
                   routerStore.push("/payment/paypal")
                 }}
                 color="primary" 
                 block>
                 оплата PayPal
-              </Button>
-            </Col>
-            <Col 
-              onClick={() => {
-                routerStore.push("/payment/card")
-              }}
-              md={6}>
-              <Button color="primary" block>
-                оплата банковской картой РФ
               </Button>
             </Col>
           </Row>
