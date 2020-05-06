@@ -13,6 +13,7 @@ import { router as teacherRouter } from "../api/controllers/teacher";
 import { router as leaderRouter } from "../api/controllers/leader";
 import { router as configRouter } from "../api/controllers/config";
 import { router as pieceOfNewsRouter } from "../api/controllers/pieceofnews";
+import { router as serviceRouter } from "../api/controllers/service";
 
 export const openapi = (app: Application) => {
     const apiSpecPath = path.join(__dirname, 'api.yml');
@@ -32,7 +33,8 @@ export const openapi = (app: Application) => {
     router.use("/teacher", teacherRouter);
     router.use("/leader", leaderRouter);
     router.use("/config", configRouter);
-    router.use("/pieceofnews", pieceOfNewsRouter)
+    router.use("/pieceofnews", pieceOfNewsRouter);
+    router.use("/service", serviceRouter);
 
     app.use("/api/v1", router, errorHandler);
 

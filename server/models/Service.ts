@@ -1,8 +1,8 @@
 import { ObjectID } from "mongodb";
 
-export interface Order {
+export interface Service {
   _id?: string | ObjectID
-  number: string;
+  id: string;
   name: string;
   description: string;
   amount: string;
