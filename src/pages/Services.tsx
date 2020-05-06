@@ -7,6 +7,8 @@ import { Table, Button } from "reactstrap";
 import { toJS } from "mobx";
 import { ServiceView } from "../components/ServiceView";
 import { Service } from "../../server/models/Service";
+import { userStore } from "../store/UserStore";
+import { routerStore } from "../store/RouterStore";
 
 export const Services = observer(() => {
   
@@ -21,7 +23,14 @@ export const Services = observer(() => {
   const forceRefresh = () => setToken(token === "" ? null : "");
   
   React.useEffect(() => {
-    serviceStore.loadItems({}, { name: 1 });
+    (async () => {
+      await userStore.isLoggedin();
+      if (!userStore.user) {
+        routerStore.push("/auth");
+        return;
+      }
+      await serviceStore.loadItems({}, { name: 1 });
+    })()
   }, [ token ]);
 
   const services = React.useMemo(() => {
