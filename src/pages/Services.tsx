@@ -29,7 +29,7 @@ export const Services = observer(() => {
         routerStore.push("/auth");
         return;
       }
-      await serviceStore.loadItems({}, { name: 1 });
+      await serviceStore.loadItems({}, { id: 1 });
     })()
   }, [ token ]);
 

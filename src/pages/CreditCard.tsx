@@ -22,7 +22,7 @@ export const CreditCard = observer(() => {
       once: true
     });
 
-    serviceStore.loadItems({}, { name: 1 });
+    serviceStore.loadItems({}, { id: 1 });
   }, []);
 
   const services = React.useMemo(() => {
@@ -74,7 +74,7 @@ export const CreditCard = observer(() => {
                   {services.map((s) => {
                     return (
                       <option key={s._id as string} value={s._id as string}>
-                        #{s.id} {s.name} {s.amount} (руб)
+                        {s.name} {s.amount} (руб)
                       </option>
                     )
                   })}
