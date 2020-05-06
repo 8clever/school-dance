@@ -25,7 +25,7 @@ import { Widget } from "./Widget";
 import { Payment } from "../pages/Payment";
 import { PayPal } from "../pages/PayPal";
 import { CreditCard } from "../pages/CreditCard";
-import { Orders } from "../pages/Orders";
+import { Services } from "../pages/Services";
 
 const parse = (path: string) => {
   if (!path) return {};
@@ -82,7 +82,7 @@ export const Router = () => {
         <Route exact path="/signup" render={() => <SignUp />} />
         <Route exact path="/news" render={() => <News />} />
         <Route exact path="/news/:id" render={match => <News pieceOfNewsId={match.match.params.id} />} />
-        <Route exact path="/orders" render={() => <Orders />} />
+        <Route exact path="/services" render={() => <Services />} />
         <Route exact  path="/payment" render={() => <Payment /> }/>
         <Route exact  path="/payment/paypal" render={() => <PayPal /> }/>
         <Route exact  path="/payment/card" render={() => <CreditCard /> }/>

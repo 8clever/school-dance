@@ -38,7 +38,7 @@ export const Admin = observer(() => {
         <BigButtonCol onClick={() => setHomePageEditVisible(true)}>
           Домашняя страница
         </BigButtonCol>
-        <BigButtonCol onClick={() => routerStore.push("/orders")}>
+        <BigButtonCol onClick={() => routerStore.push("/services")}>
           Услуги
         </BigButtonCol>
       </BigRow>

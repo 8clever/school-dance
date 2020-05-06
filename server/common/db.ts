@@ -1,6 +1,4 @@
 import { MongoClient, Db as MongoDb } from "mongodb";
-import { userService } from "../api/services/user.service"
-import { sessionService } from "../api/services/session.service";
 
 class Db {
   url: string;
@@ -15,14 +13,26 @@ class Db {
   insertIndexes = async () => {
     if (!this.db) return;
 
-    const users = await this.db.collection(userService.collection);
-    const session = await this.db.collection(sessionService.collection);
+    const { userService } = require("../api/services/user.service")
+    const { sessionService } = require("../api/services/session.service");
+    const { serviceService } = require("../api/services/service.service");
 
-    // uniqu login for each user
-    await users.createIndex("login", { unique: true, min: 3 });
-    
-    // expire session after 5 days
-    await session.createIndex("_dt", { expireAfterSeconds: 1000 * 60 * 60 * 24 * 5 });
+    const [ users, session, services ] = await Promise.all([
+      this.db.collection(userService.collection),
+      this.db.collection(sessionService.collection),
+      this.db.collection(serviceService.collection)
+    ]);
+
+    await Promise.all([
+      // uniqu login for each user
+      users.createIndex("login", { unique: true, min: 3 }),
+
+      // unique ID for each service
+      services.createIndex("id", { unique: true, min: 1 }),
+
+      // expire session after 5 days
+      session.createIndex("_dt", { expireAfterSeconds: 1000 * 60 * 60 * 24 * 5 })
+    ]);
   }
 
   connect = async () => {
