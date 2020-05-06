@@ -94,8 +94,8 @@ export const CreditCard = observer(() => {
                 data-order-number-selector='.orderNumber'
                 data-language='ru'
                 data-stages='1'
-                data-return-url='http://store.ru/success_url.html'
-                data-fail-url='http://store.ru/fail_url.html'
+                data-return-url='https://studiocontext.ru/payment/success'
+                data-fail-url='https://studiocontext.ru/payment/fail'
                 data-amount-format='rubli'
                 data-description-selector='.orderDescription' 
               />
