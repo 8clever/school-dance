@@ -54,7 +54,7 @@ export const CreditCard = observer(() => {
               offset: 3
             }}>
               <FormGroup>
-                <Label>Укажите Ваше Имя</Label>
+                <Label>Укажите фамилию и имя</Label>
                 <Input className="clientInfo" />
               </FormGroup>
 
@@ -64,7 +64,7 @@ export const CreditCard = observer(() => {
               </FormGroup>
 
               <FormGroup>
-                <Label>Услуга</Label>
+                <Label>Выберите услугу</Label>
                 <Input 
                   value={selectedService && selectedService._id as string}
                   onChange={e => {
