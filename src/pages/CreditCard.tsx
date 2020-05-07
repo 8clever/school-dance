@@ -15,6 +15,8 @@ export const CreditCard = observer(() => {
 
   const [ selectedService, setSelectedService ] = React.useState<null | Service>();
 
+  const [ orderId, setOrderId ] = React.useState(new Date().valueOf());
+
   React.useEffect(() => {
     executeScript({ 
       src: "https://testpay.alfabank.ru/assets/alfa-payment.js",
@@ -81,11 +83,15 @@ export const CreditCard = observer(() => {
                 </Input>
               </FormGroup>
 
-              <input type="hidden" className="orderNumber" value={new Date().valueOf()} />
+              <input type="hidden" className="orderNumber" value={orderId} />
               <input type="hidden" className="orderDescription" value={selectedService && selectedService.description} />
               <input type="hidden" className="orderAmount" value={selectedService && selectedService.amount} />
 
-              <div id="alfa-payment-button"
+              <div 
+                onClick={() => {
+                  setOrderId(new Date().valueOf());
+                }}
+                id="alfa-payment-button"
                 data-token='20fgn1shtn3ckob0os3po3ph94'
                 data-client-info-selector='.clientInfo'
                 data-email-selector='.clientEmail'
