@@ -15,6 +15,8 @@ interface BrandLogoProps {
 const BrandLogo = (props: BrandLogoProps) => {
   return (
     <img 
+      width={25}
+      height={25}
       className="brand-logo"
       src={props.src} 
       onClick={() => {

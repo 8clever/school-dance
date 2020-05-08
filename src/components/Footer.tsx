@@ -20,6 +20,7 @@ const FooterBrandLogo = (props: FooterBrandLogoProps) => {
       className="h-100" 
       xs={6}>
       <img 
+        className="brand-logo"
         width={35} 
         height={35} 
         src={props.src} 
