@@ -101,17 +101,17 @@ export const Payment = () => {
                 }}
                 color="primary" 
                 block>
-                оплата банковской картой РФ
+                Оплата банковской картой РФ
               </Button>
             </Col>
             <Col md={6}>
               <Button 
                 onClick={() => {
-                  routerStore.push("/payment/paypal")
+                  routerStore.push("/payment/radario")
                 }}
                 color="primary" 
                 block>
-                оплата PayPal
+                Оплата через Радарио
               </Button>
             </Col>
           </Row>
