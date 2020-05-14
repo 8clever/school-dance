@@ -111,7 +111,7 @@ export const Payment = () => {
                 }}
                 color="primary" 
                 block>
-                Оплата через Радарио
+                PAY
               </Button>
             </Col>
           </Row>
