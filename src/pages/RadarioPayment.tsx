@@ -17,8 +17,8 @@ export const RadarioPayment = () => {
       container: $container,
       dataset: {
         "data-class": "radarioButtonScript",
-        "data-radario-event-id": "581612",
-        "data-custom-name": "Buy online"
+        "data-radario-event-id": "581815",
+        "data-custom-name": "BUY ONLINE"
       }
     })
   }, []);
