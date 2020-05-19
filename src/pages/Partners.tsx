@@ -82,7 +82,7 @@ export const Partners = () => {
         />
         <PartnerButton 
           link="https://simplewine.ru/catalog/voda_i_soki/filter/manufacturer-voss/"
-          title="VOSS"
+          title="Voss x SimpleWaters"
           img={imgVoss}
         />
         <PartnerButton 
