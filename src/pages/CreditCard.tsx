@@ -19,7 +19,7 @@ export const CreditCard = observer(() => {
 
   React.useEffect(() => {
     executeScript({ 
-      src: "https://testpay.alfabank.ru/assets/alfa-payment.js",
+      src: "https://pay2.alfabank.ru/assets/alfa-payment.js",
       id: "alfa-payment-script",
       once: true
     });
@@ -92,7 +92,7 @@ export const CreditCard = observer(() => {
                   setOrderId(new Date().valueOf());
                 }}
                 id="alfa-payment-button"
-                data-token='20fgn1shtn3ckob0os3po3ph94'
+                data-token='ia8sk8h3dh7v4neqbdb3lifs53'
                 data-client-info-selector='.clientInfo'
                 data-email-selector='.clientEmail'
                 data-amount-selector='.orderAmount'
