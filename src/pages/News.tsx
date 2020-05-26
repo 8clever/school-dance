@@ -11,6 +11,8 @@ import { pieceOfNewsStore } from "../store/PieceOfNewsStore";
 import { routerStore } from "../store/RouterStore";
 import { userStore } from "../store/UserStore";
 import moment from "moment";
+import { useInlineScript } from "../components/Widget";
+import { isMobile } from "../utils/isMobile";
 
 interface NewsProps {
   pieceOfNewsId?: string;
@@ -48,12 +50,22 @@ export const News = observer((props: NewsProps) => {
     pieceOfNewsStore.item = null;
   }, [props.pieceOfNewsId])
 
+  const descriptionText = (
+    pieceOfNewsStore.item &&
+    pieceOfNewsStore.item.description || ""
+  )
+
+  useInlineScript(descriptionText);
+
   if (!pieceOfNewsStore.item) return null;
 
   const description = (
     pieceOfNewsStore.item &&
     <div className="p-5">
-      <MD source={pieceOfNewsStore.item.description} />
+      <MD 
+        escapeHtml={false}
+        source={descriptionText} 
+      />
     </div>
   )
 
@@ -135,7 +147,7 @@ export const News = observer((props: NewsProps) => {
             <div 
               style={{ borderLeft: "1px solid black" }}
               className="d-md-none w-100">
-              {description}
+              {isMobile() && description || ""}
             </div>
           </> : null
         }
@@ -207,7 +219,7 @@ export const News = observer((props: NewsProps) => {
           <div 
             style={{ overflow: "auto" }}
             className="absolute-container">
-            {description}
+            {!isMobile() && description || ""}
           </div>
         </BigCol>
       </BigRow>

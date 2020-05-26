@@ -1,4 +1,5 @@
 import React from "react";
+import { isMobile } from "../utils/isMobile";
 
 interface WidgetProps {
   elementId: string;
@@ -38,6 +39,21 @@ export const executeScript = (props: ExecuteScriptProps) => {
   });
   $script.onload = onload;
   $container.append($script);
+}
+
+export const useInlineScript = (str: string = "") => {
+  React.useEffect(() => {
+    const scripts = str.match(/<script[^<]+<\/script>/gm);
+    if (!scripts) return;
+    scripts.forEach(script => {
+      const src = script.match(/src="[^"]+"/);
+      if (!src) return;
+      const url = src[0].replace(/src=/, "").replace(/"/gm, "");
+      executeScript({ src: url });
+    })
+  }, [str, isMobile()])
+
+  return []
 }
 
 export const Widget = (props: WidgetProps) => {

@@ -12,7 +12,7 @@ import { Col } from "reactstrap";
 import _ from "lodash";
 import { Direction as DirectionModel, directionSectionMap } from "../../server/models/Direction";
 import { PageBreadcrumbs } from "../components/PageTitle";
-import { executeScript } from "../components/Widget";
+import { useInlineScript } from "../components/Widget";
 import { isMobile } from "../utils/isMobile";
 import { useWindowResize } from "../effects/useWindowResize";
 
@@ -237,16 +237,7 @@ export const Direction = observer((props: DirectionProps) => {
     ""
   )
 
-  React.useEffect(() => {
-    const scripts = descriptionText.match(/<script[^<]+<\/script>/gm);
-    if (!scripts) return;
-    scripts.forEach(script => {
-      const src = script.match(/src="[^"]+"/);
-      if (!src) return;
-      const url = src[0].replace(/src=/, "").replace(/"/gm, "");
-      executeScript({ src: url });
-    })
-  }, [descriptionText, isMobile()])
+  useInlineScript(descriptionText);
 
   if (!directionStore.item) return null;
 
