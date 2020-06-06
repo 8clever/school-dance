@@ -14,6 +14,7 @@ import { router as leaderRouter } from "../api/controllers/leader";
 import { router as configRouter } from "../api/controllers/config";
 import { router as pieceOfNewsRouter } from "../api/controllers/pieceofnews";
 import { router as serviceRouter } from "../api/controllers/service";
+import { router as i18nRouter } from "../api/controllers/i18n.controller";
 
 export const openapi = (app: Application) => {
     const apiSpecPath = path.join(__dirname, 'api.yml');
@@ -35,6 +36,7 @@ export const openapi = (app: Application) => {
     router.use("/config", configRouter);
     router.use("/pieceofnews", pieceOfNewsRouter);
     router.use("/service", serviceRouter);
+    router.use("/localization", i18nRouter);
 
     app.use("/api/v1", router, errorHandler);
 
