@@ -5,6 +5,7 @@ import { Logo } from "./Logo";
 import { routerStore } from "../store/RouterStore";
 
 import { vk, facebook, instagramm, youtube } from "../static/brands";
+import { I18nText } from "./Localization";
 
 interface FooterBrandLogoProps {
   src: string;
@@ -46,7 +47,9 @@ export const Footer = () => {
                   onClick={() => {
                     routerStore.push("/contacts")
                   }}>
-                  Контакты
+                  <I18nText 
+                    text="Контакты"
+                  />
                 </BigButtonColMin>
               </BigRow>
             </Col>
@@ -58,7 +61,9 @@ export const Footer = () => {
               xs={6} 
               md={6} 
               h100>
-              РАСПИСАНИЕ
+              <I18nText 
+                text="РАСПИСАНИЕ"
+              />
             </BigButtonColMin>
           </BigRow>
         </Col>
@@ -72,7 +77,9 @@ export const Footer = () => {
               xs={6} 
               md={6} 
               h100>
-              ЗАПИСАТЬСЯ
+              <I18nText 
+                text="ЗАПИСАТЬСЯ"
+              />
             </BigButtonColMin>
             <Col xs={6}>
               <BigRow className="h-50" noGutters>
@@ -112,7 +119,9 @@ export const Footer = () => {
           style={getShadowBoxStyle({})}
           className="big-col text-center p-1">
           <div>
-            Правила студии и политика конфиденциальности
+            <I18nText 
+              text="Правила студии и политика конфиденциальности"
+            />
           </div>
         </Col>
       </BigRow>

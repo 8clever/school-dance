@@ -10,6 +10,12 @@ class I18nStore extends Api<i18n.Localization> {
 
   translates: {[key: string]: i18n.Localization["tr"]} = {}
 
+  mode: "READ" | "EDIT" = "READ";
+
+  toggleMode = () => {
+    this.mode = this.mode === "READ" ? "EDIT" : "READ";
+  }
+
   loadLocalization = async () => {
     const items = await this.getItems({});
     this.translates = items.list.reduce((memo, locale) => {
@@ -21,10 +27,11 @@ class I18nStore extends Api<i18n.Localization> {
 
 decorate(I18nStore, {
   lang: observable,
-
+  mode: observable,
   translates: observable,
 
-  loadLocalization: action
+  loadLocalization: action,
+  toggleMode: action
 })
 
 export const i18nStore = new I18nStore();

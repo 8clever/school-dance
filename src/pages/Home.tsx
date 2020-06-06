@@ -14,6 +14,7 @@ import { PieceOfNews } from "../../server/models/PieceOfNews";
 import iconLeft from "../images/icons/arrow-left.png";
 import iconRight from "../images/icons/arrow-right.png";
 import { DirectionSection, directionSectionMap } from "../../server/models/Direction";
+import { I18nText } from "../components/Localization";
 
 const chevronButtonStyle: React.CSSProperties = {
   position: "absolute",
@@ -51,7 +52,11 @@ export const Home = observer(() => {
 
   return (
     <Base>
-      <PageTitle marquee>{configStore.item.homePageTitle}</PageTitle>
+      <PageTitle marquee>
+        <I18nText 
+          text={configStore.item.homePageTitle}
+        />
+      </PageTitle>
 
       {
         configStore.item.homeCarousel.length ?
@@ -80,14 +85,18 @@ export const Home = observer(() => {
               style={{
                 minHeight: 300
               }}>
-              {v}
+              <I18nText 
+                text={v}
+              />
             </BigButtonCol>
           )
         })}
       </BigRow>
 
       <PageTitle marquee>
-        CONTEXT NEWS
+        <I18nText 
+          text="CONTEXT NEWS"
+        />
       </PageTitle>
       
       <BigRow>
@@ -108,8 +117,10 @@ export const Home = observer(() => {
                   }}>
                   {moment(i._dt).format("D.MM")}
                 </div>
-
-                {i.name}
+                
+                <I18nText 
+                  text={i.name}
+                />
                 
                 {
                   idx || !skipNews ? null :
