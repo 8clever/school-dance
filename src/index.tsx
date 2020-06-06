@@ -5,6 +5,7 @@ import "./style/index.scss";
 
 import { Router } from "./components/Router";
 import { executeScript } from "./components/Widget";
+import { i18nStore } from "./store/i18nStore";
 
 const $el = document.querySelector(".react-app") || document.createElement("div");
 const $body = document.querySelector("body");
@@ -40,7 +41,13 @@ const App = (
   </>
 )
 
-ReactDOM.render(App, $el);
+const initApp = () => {
+  ReactDOM.render(App, $el);
+}
+
+i18nStore.loadLocalization()
+  .then(initApp)
+  .catch(initApp)
 
 if (module["hot"]) {
   module["hot"].accept();

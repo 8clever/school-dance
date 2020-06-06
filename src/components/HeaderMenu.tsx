@@ -6,6 +6,8 @@ import { vk, facebook, instagramm, youtube, whatsapp } from "../static/brands";
 import OutsideClickHandler from "react-outside-click-handler";
 import { observer } from "mobx-react-lite";
 import { DirectionStore } from "../store/DirectionStore";
+import { i18nStore } from "../store/i18nStore";
+import { i18n } from "../../server/models/I18n";
 
 interface BrandLogoProps {
   src: string;
@@ -111,9 +113,18 @@ export const HeaderMenu = observer(() => {
               <BrandLogo src={youtube.img} url={youtube.url} />
               <BrandLogo src={whatsapp.img} url={whatsapp.url} />
 
-              <div style={{ float: "right" }}>
-                {menuStore.getLocalizedLang(menuStore.lang)}
-              </div>
+              <a 
+                href=""
+                onClick={e => {
+                  e.preventDefault();
+                  const idx = i18n.langs.findIndex(i => i === i18nStore.lang);
+                  const nextIdx = idx + 1;
+                  const lang = i18n.langs[nextIdx] || i18n.langs[0];
+                  i18nStore.lang = lang;
+                }}
+                style={{ float: "right" }}>
+                {i18n.Languages[i18nStore.lang]}
+              </a>
             </div>
           </div>
         </BigCol>
