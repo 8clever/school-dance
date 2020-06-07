@@ -6,6 +6,7 @@ import { directionStore } from "../store/DirectionStore";
 import { routerStore } from "../store/RouterStore";
 import { DirectionSection, directionSectionMap } from "../../server/models/Direction";
 import { toJS } from "mobx";
+import { I18nText } from "../components/Localization";
 
 interface CategoryProps {
   section: DirectionSection
@@ -28,7 +29,10 @@ export const Category = observer((props: CategoryProps) => {
       <PageBreadcrumbs 
         items={[
           {
-            title: directionSectionMap[props.section]
+            title: 
+              <I18nText 
+                text={directionSectionMap[props.section]}
+              />
           }
         ]}
       />
@@ -43,7 +47,9 @@ export const Category = observer((props: CategoryProps) => {
             className={`${directionStore.itemList.length > 3 ? "" : "h-100"}`}
             onClick={() => routerStore.push(`/directions/${i.url}`)}
             key={i._id as string}>
-            {i.name}
+            <I18nText 
+              text={i.name}
+            />
           </BigButtonCol>
         )
       })}

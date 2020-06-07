@@ -6,6 +6,14 @@ import { i18n } from '../../server/models/I18n';
 import { Icon } from "../components/Icon";
 import { toJS } from 'mobx';
 
+export const getI18nText = (key: string) => {
+  const locale = i18nStore.translates[key];
+  if (locale && locale[i18nStore.lang]) {
+    return locale[i18nStore.lang]
+  }
+  return key;
+}
+
 interface I18nTextProps {
   text: string;
 }
@@ -19,10 +27,7 @@ export const I18nText = observer((props: I18nTextProps): JSX.Element => {
   const locale = i18nStore.translates[props.text]
 
   const localText = React.useMemo(() => {
-    if (locale && locale[i18nStore.lang]) {
-      return locale[i18nStore.lang]
-    }
-    return props.text;
+    return getI18nText(props.text);
   }, [ 
     props.text,
     i18nStore.lang,

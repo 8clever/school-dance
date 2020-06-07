@@ -15,6 +15,7 @@ import { PageBreadcrumbs } from "../components/PageTitle";
 import { useInlineScript } from "../components/Widget";
 import { isMobile } from "../utils/isMobile";
 import { useWindowResize } from "../effects/useWindowResize";
+import { I18nText, getI18nText } from "../components/Localization";
 
 interface DirectionProps {
   id: string;
@@ -42,9 +43,11 @@ export const DirectionMenuItem = (props: DirectionMenuItemProps) => {
         style={{
           position: "absolute",
           top: 67
-        }} />
+      }} />
 
-      {d.name}
+      <I18nText 
+        text={d.name}
+      />
 
       {
         userStore.isAdmin() ?
@@ -145,7 +148,9 @@ export const DirectionMenu = observer((props: DirectionMenuProps) => {
           setDirectionEditVisible(true)
         }}>
         <Icon type="plus" className="mr-3" /> 
-        ДОБАВИТЬ НАПРАВЛЕНИЕ
+        <I18nText 
+          text={"ДОБАВИТЬ НАПРАВЛЕНИЕ"}
+        />
       </BigButtonCol>
     )
   }
@@ -228,7 +233,7 @@ export const Direction = observer((props: DirectionProps) => {
     props.sub 
   ]);
 
-  const descriptionText = (
+  const descriptionText = getI18nText(
     directionStore.item ?
     selectedSubmenuitem === -1 ?
     directionStore.item.desc :
@@ -309,7 +314,9 @@ export const Direction = observer((props: DirectionProps) => {
           }}
           selected={selected}
           md={12}>
-          {sub.name}
+          <I18nText 
+            text={sub.name}
+          />
         </BigButtonColMin>
         {selected ? mobileView : null}
       </React.Fragment>
@@ -324,19 +331,29 @@ export const Direction = observer((props: DirectionProps) => {
           (
             directionStore.itemList.length > 1 ?
             {
-              title: directionSectionMap[directionStore.item.section],
+              title: 
+                <I18nText 
+                  text={directionSectionMap[directionStore.item.section]}
+                />,
               url: `/category/${directionStore.item.section}`
             } : null
           ),
           {
-            title: directionStore.item.name,
+            title: 
+              <I18nText 
+                text={directionStore.item.name}
+              />,
             url: `/directions/${directionStore.item.url}`
           },
           (
             selectedSubmenuitem === -1 ? null :
             directionStore.item.submenu[selectedSubmenuitem] &&
             {
-              title: directionStore.item.submenu[selectedSubmenuitem].name,
+              title: 
+                <I18nText 
+                  text={directionStore.item.submenu[selectedSubmenuitem].name}
+                />
+              ,
               url: `/directions/${directionStore.item.url}/${directionStore.item.submenu[selectedSubmenuitem].url}`
             }
           )

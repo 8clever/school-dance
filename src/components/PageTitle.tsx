@@ -4,11 +4,12 @@ import { FlexCol } from "./Flex";
 import { routerStore } from "../store/RouterStore";
 import iconRightPNG from '../images/icons/arrow-right.png';
 import _ from "lodash";
+import { I18nText } from "./Localization";
 
 
 interface PageBreadcrumbsProps {
   items: {
-    title: string;
+    title: string | React.ReactNode;
     onClick?: () => void;
     url?: string;
   }[]
@@ -19,7 +20,10 @@ export const PageBreadcrumbs = (props: PageBreadcrumbsProps) => {
   const items = React.useMemo(() => {
     const items = _.compact(props.items.concat());
     items.unshift({
-      title: "Главная",
+      title: 
+        <I18nText 
+          text="Главная"
+        />,
       url: "/"
     });
     return items;
