@@ -140,7 +140,7 @@ export const HeaderMenu = observer(() => {
                     const idx = i18n.langs.findIndex(i => i === i18nStore.lang);
                     const nextIdx = idx + 1;
                     const lang = i18n.langs[nextIdx] || i18n.langs[0];
-                    i18nStore.lang = lang;
+                    i18nStore.setLang(lang);
                   }}>
                   {i18n.Languages[i18nStore.lang]}
                 </a>

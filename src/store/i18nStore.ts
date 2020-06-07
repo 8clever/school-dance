@@ -6,7 +6,9 @@ export class I18nStore extends Api<i18n.Localization> {
 
   endpoint = "/api/v1/localization/"
 
-  lang: i18n.Lang = i18n.Lang.ru
+  id = "lang$$"
+
+  lang: i18n.Lang = localStorage.getItem(this.id) as i18n.Lang || i18n.Lang.ru
 
   translates: {[key: string]: i18n.Localization["tr"]} = {}
 
@@ -27,6 +29,11 @@ export class I18nStore extends Api<i18n.Localization> {
       memo[locale.key] = locale.tr;
       return memo;
     }, {});
+  }
+
+  setLang = (lang: i18n.Lang) => {
+    this.lang = lang;
+    localStorage.setItem(this.id, lang);
   }
 }
 
