@@ -1,8 +1,9 @@
 import React from 'react';
 import { i18nStore, I18nStore } from '../store/i18nStore';
 import { observer } from 'mobx-react-lite';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, FormGroup, Label } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, FormGroup, Label, InputGroup, InputGroupAddon, InputProps } from 'reactstrap';
 import { i18n } from '../../server/models/I18n';
+import { Icon } from "../components/Icon";
 import { toJS } from 'mobx';
 
 interface I18nTextProps {
@@ -128,4 +129,44 @@ export const I18nEdit = observer((props: I18nEditProps) => {
       </ModalFooter>
     </Modal>
   )
-})
+});
+
+interface I18nInputProps extends InputProps {}
+
+export const I18nInput = (props: I18nInputProps) => {
+  const { ...inputProps } = props;
+
+  const [ visibleEdit, setVisibleEdit ] = React.useState(false);
+
+  return (
+    <>
+      <InputGroup>
+        <Input 
+          {...inputProps} 
+        />
+        <InputGroupAddon addonType="append">
+          <Button
+            onClick={() => {
+              setVisibleEdit(true);
+            }}
+            style={{
+              height: inputProps.type === "textarea" ? null : "85%"
+            }}>
+            <Icon 
+              style={{
+                marginTop: inputProps.type === "textarea" ? null : -2
+              }}
+              size={"2x"}
+              type="language" 
+            />
+          </Button>
+        </InputGroupAddon>
+      </InputGroup>
+      <I18nEdit
+        text={inputProps.value as string}
+        visible={visibleEdit}
+        toggle={() => setVisibleEdit(false)}
+      />
+    </>
+  )
+}

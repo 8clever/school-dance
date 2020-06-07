@@ -8,6 +8,7 @@ import _ from "lodash";
 import { Icon } from "./Icon";
 import { imageStore } from "../store/ImageStore";
 import { toJS } from "mobx";
+import { I18nInput } from "./Localization";
 
 interface DirectionEditProps {
   _id?: string;
@@ -68,7 +69,8 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
             <Col md={6}>
               <FormGroup>
                 <Label>Наименование</Label>
-                <Input 
+                <I18nInput
+                  text={directionStore.item.name} 
                   placeholder={"Текст..."}
                   value={directionStore.item.name}
                   onChange={e => {
@@ -91,7 +93,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
 
               <FormGroup>
                 <Label>Описание</Label>
-                <Input 
+                <I18nInput 
                   type="textarea"
                   rows={4}
                   placeholder={"Текст..."}
@@ -278,7 +280,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
         <ModalBody>
           <FormGroup>
             <Label>Наименование</Label>
-            <Input 
+            <I18nInput 
               placeholder={"Текст..."}
               value={submenuEdit.item.name}
               onChange={e => {
@@ -313,7 +315,7 @@ export const DirectionEdit = observer((props: DirectionEditProps) => {
 
           <FormGroup>
             <Label>Описание</Label>
-            <Input 
+            <I18nInput 
               type="textarea"
               rows={4}
               placeholder={"Текст..."}
