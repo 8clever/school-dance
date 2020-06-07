@@ -45,7 +45,7 @@ const initApp = () => {
   ReactDOM.render(App, $el);
 }
 
-i18nStore.loadLocalization()
+i18nStore.loadLocalizations()
   .then(initApp)
   .catch(initApp)
 

@@ -2,7 +2,7 @@ import { i18n } from "../../server/models/I18n";
 import { Api } from "./Api";
 import { decorate, observable, action } from "mobx";
 
-class I18nStore extends Api<i18n.Localization> {
+export class I18nStore extends Api<i18n.Localization> {
 
   endpoint = "/api/v1/localization/"
 
@@ -12,11 +12,16 @@ class I18nStore extends Api<i18n.Localization> {
 
   mode: "READ" | "EDIT" = "READ";
 
+  item: i18n.Localization = {
+    key: "",
+    tr: {}
+  }
+
   toggleMode = () => {
     this.mode = this.mode === "READ" ? "EDIT" : "READ";
   }
 
-  loadLocalization = async () => {
+  loadLocalizations = async () => {
     const items = await this.getItems({});
     this.translates = items.list.reduce((memo, locale) => {
       memo[locale.key] = locale.tr;
@@ -29,8 +34,9 @@ decorate(I18nStore, {
   lang: observable,
   mode: observable,
   translates: observable,
+  item: observable,
 
-  loadLocalization: action,
+  loadLocalizations: action,
   toggleMode: action
 })
 

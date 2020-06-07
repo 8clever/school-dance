@@ -20,7 +20,7 @@ export namespace i18n {
     _id?: string | ObjectID;
     key: string;
     tr: {
-      [key in Lang]: string
+      [key in Lang]?: string
     }
   }
 }

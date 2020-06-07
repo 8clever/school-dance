@@ -16,11 +16,13 @@ class Db {
     const { userService } = require("../api/services/user.service")
     const { sessionService } = require("../api/services/session.service");
     const { serviceService } = require("../api/services/service.service");
+    const { i18nService } = require("../api/services/i18n.service");
 
-    const [ users, session, services ] = await Promise.all([
+    const [ users, session, services, i18n ] = await Promise.all([
       this.db.collection(userService.collection),
       this.db.collection(sessionService.collection),
-      this.db.collection(serviceService.collection)
+      this.db.collection(serviceService.collection),
+      this.db.collection(i18nService.collection)
     ]);
 
     await Promise.all([
@@ -31,7 +33,10 @@ class Db {
       services.createIndex("id", { unique: true, min: 1 }),
 
       // expire session after 5 days
-      session.createIndex("_dt", { expireAfterSeconds: 1000 * 60 * 60 * 24 * 5 })
+      session.createIndex("_dt", { expireAfterSeconds: 1000 * 60 * 60 * 24 * 5 }),
+
+      // uniquee KEY for each translate
+      i18n.createIndex("key", { unique: true, min: 1 }),
     ]);
   }
 

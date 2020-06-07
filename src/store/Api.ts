@@ -3,7 +3,7 @@ import qs from "querystring";
 import { notifStore } from "./NotifStore";
 import _ from "lodash";
 import { RootQuerySelector, FilterQuery } from "mongodb";
-import { decorate, observable, action } from "mobx";
+import { decorate, observable, action, toJS } from "mobx";
 
 type Method = "POST" | "GET" | "PUT";
 
@@ -63,6 +63,12 @@ export class Api<T> {
   ) => {
     const data = await this.getItems(query, sort, limit, skip);
     this.itemList = data.list;
+  }
+
+  saveItem = async () => {
+    const item = toJS(this.item);
+    if (!item) return;
+    return this.editItem(item);;
   }
 
   removeItem = async (query: RootQuerySelector<T>) => {
