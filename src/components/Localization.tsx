@@ -5,13 +5,20 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Input, FormGroup, L
 import { i18n } from '../../server/models/I18n';
 import { Icon } from "../components/Icon";
 import { toJS } from 'mobx';
+import md5 from "md5";
 
-export const getI18nText = (key: string) => {
+export const getI18nKey = (text: string) => {
+  const key = md5(text);
+  return key;
+}
+
+export const getI18nText = (text: string) => {
+  const key = getI18nKey(text);
   const locale = i18nStore.translates[key];
   if (locale && locale[i18nStore.lang]) {
     return locale[i18nStore.lang]
   }
-  return key;
+  return text;
 }
 
 interface I18nTextProps {
@@ -24,14 +31,12 @@ export const I18nText = observer((props: I18nTextProps): JSX.Element => {
 
   const [ visibleEdit, setVisibleEdit ] = React.useState(false);
 
-  const locale = i18nStore.translates[props.text]
-
   const localText = React.useMemo(() => {
     return getI18nText(props.text);
   }, [ 
     props.text,
     i18nStore.lang,
-    locale 
+    i18nStore.translates[props.text]
   ]);
 
   return (
@@ -77,16 +82,20 @@ export const I18nEdit = observer((props: I18nEditProps) => {
 
   const store = React.useMemo(() => new I18nStore(), [ props.visible ]);
 
+  const key = React.useMemo(() => {
+    return getI18nKey(props.text);
+  }, [ props.text ])
+
   React.useEffect(() => {
     if (!props.text) return;
     (async () => {
       const items = await store.getItems({
-        key: props.text,
+        key,
       }, { key: 1 }, 1);
       if (items.count) {
         store.item = items.list[0]
       }
-      store.item.key = props.text;
+      store.item.key = key;
     })();
   }, [ props.visible ]);
 
@@ -126,7 +135,7 @@ export const I18nEdit = observer((props: I18nEditProps) => {
           color="primary"
           onClick={async () => {
             await store.saveItem();
-            i18nStore.translates[props.text] = toJS(store.item.tr, { recurseEverything: true });
+            i18nStore.translates[key] = toJS(store.item.tr, { recurseEverything: true });
             props.toggle();
           }}>
           Сохранить
