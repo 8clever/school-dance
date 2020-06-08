@@ -7,6 +7,7 @@ import { Leader } from "../../server/models/Leaders";
 import { leaderStore } from "../store/LeaderStore";
 import { PageBreadcrumbs } from "../components/PageTitle";
 import { DirectionStore } from "../store/DirectionStore";
+import { I18nText } from "../components/Localization";
 
 interface StudioMenuProps {
   active?: "leaders" | "teachers" | "history"
@@ -46,7 +47,7 @@ export const StudioMenu = (props: StudioMenuProps) => {
           
           routerStore.push("/leaders")
         }}>
-        КОМАНДА
+        <I18nText text="КОМАНДА" />
       </BigButtonCol>
       <BigButtonCol
         selected={props.active === "teachers"}
@@ -58,7 +59,7 @@ export const StudioMenu = (props: StudioMenuProps) => {
 
           routerStore.push("/teachers")
         }}>
-        ПЕДАГОГИ
+        <I18nText text="ПЕДАГОГИ" />
       </BigButtonCol>
       {
         directionStore.itemList.map(i => {
@@ -68,7 +69,7 @@ export const StudioMenu = (props: StudioMenuProps) => {
               onClick={() => {
               routerStore.push(`/directions/${i.url}`);
             }}>
-              {i.name}
+              <I18nText text={i.name} />
             </BigButtonCol>
           )
         })
@@ -84,7 +85,8 @@ export const Studio = () => {
     <PageBreadcrumbs 
       items={[
         {
-          title: "Студия"
+          title: 
+            <I18nText text="Студия" />
         }
       ]}
     />
