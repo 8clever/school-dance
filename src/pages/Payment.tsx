@@ -4,7 +4,7 @@ import { PageBreadcrumbs } from "../components/PageTitle";
 import { Col, Button, Row } from "reactstrap";
 import allPaymentsPng from "../images/all-payments.jpg";
 import { routerStore } from "../store/RouterStore";
-import { I18nText, I18nEdit } from "../components/Localization";
+import { I18nText } from "../components/Localization";
 
 export const PaymentInfo = () => {
 
