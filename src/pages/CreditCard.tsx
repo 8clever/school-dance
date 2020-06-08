@@ -8,6 +8,7 @@ import { ServiceStore } from "../store/ServiceStore";
 import { Service } from "../../server/models/Service";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
+import { I18nText, getI18nText } from "../components/Localization";
 
 export const CreditCard = observer(() => {
 
@@ -36,11 +37,11 @@ export const CreditCard = observer(() => {
       <PageBreadcrumbs 
         items={[
           {
-            title: "Оплата",
+            title: <I18nText text="Оплата" />,
             url: "/payment"
           },
           {
-            title: "Банковская карта РФ"
+            title: <I18nText text="Банковская карта РФ" />
           }
         ]}
       />
@@ -54,17 +55,23 @@ export const CreditCard = observer(() => {
               offset: 3
             }}>
               <FormGroup>
-                <Label>Укажите фамилию и имя</Label>
+                <Label>
+                  <I18nText text="Укажите фамилию и имя" />
+                </Label>
                 <Input className="clientInfo" />
               </FormGroup>
 
               <FormGroup>
-                <Label>Укажите Ваш email</Label>
+                <Label>
+                  <I18nText text="Укажите Ваш email" />
+                </Label>
                 <Input className="clientEmail" />
               </FormGroup>
 
               <FormGroup>
-                <Label>Выберите услугу</Label>
+                <Label>
+                  <I18nText text="Выберите услугу" />
+                </Label>
                 <Input 
                   value={selectedService && selectedService._id as string}
                   onChange={e => {
@@ -72,11 +79,11 @@ export const CreditCard = observer(() => {
                     setSelectedService(service);
                   }}
                   type="select">
-                  <option>Не выбрано</option>
+                  <option></option>
                   {services.map((s) => {
                     return (
                       <option key={s._id as string} value={s._id as string}>
-                        {s.name} {s.amount} (руб)
+                        {getI18nText(s.name)} {s.amount} (руб)
                       </option>
                     )
                   })}

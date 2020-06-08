@@ -4,6 +4,7 @@ import { PageBreadcrumbs } from "../components/PageTitle";
 import { executeScript } from "../components/Widget";
 import { Row, Col } from "reactstrap";
 import { PaymentInfo } from "./Payment";
+import { I18nText } from "../components/Localization";
 
 const $container = document.createElement("div");
 
@@ -28,11 +29,11 @@ export const RadarioPayment = () => {
       <PageBreadcrumbs 
         items={[
           {
-            title: "Оплата",
+            title: <I18nText text="Оплата" />,
             url: "/payment"
           },
           {
-            title: "Radario"
+            title: <I18nText text="Radario" />
           }
         ]}
       />
