@@ -10,6 +10,7 @@ import mailPNG from "../images/icons/mail.png";
 import pointPNG from "../images/icons/point.png";
 import pointBlackPNG from "../images/icons/point-black.png";
 import { PageBreadcrumbs } from "../components/PageTitle";
+import { I18nText } from "../components/Localization";
 
 export const Contacts = () => {
   let [ width, height, refCallback ] = useResizeObserver();
@@ -26,7 +27,10 @@ export const Contacts = () => {
         <PageBreadcrumbs 
           items={[
             {
-              title: "Контакты"
+              title: 
+                <I18nText 
+                  text="Контакты"
+                />
             }
           ]}
         />
@@ -73,11 +77,11 @@ export const Contacts = () => {
                   <img height={15} src={mailPNG} /> contextprostudio@gmail.com
                   <br/>
                   <br/>
-                  <img height={15} src={pointPNG} /> Наб. Адмиралтейского канала д.2, здание Бутылка, 3 этаж
+                  <img height={15} src={pointPNG} /> <I18nText text="Наб. Адмиралтейского канала д.2, здание Бутылка, 3 этаж" />
                   <br/>
                   <br/>
                   <small>
-                    Санкт-Петербург, Россия, 190000
+                    <I18nText text="Санкт-Петербург, Россия, 190000" />
                   </small>
                 </div>
               </BigCol>
@@ -85,7 +89,9 @@ export const Contacts = () => {
                 <div style={{ padding: "100px 50px" }}>
                   {messages[1].desc.map((d, idx) => {
                     return (
-                      <p key={idx}>{d}</p>
+                      <p key={idx}>
+                        <I18nText text={d} />
+                      </p>
                     )
                   })}
                 </div>
