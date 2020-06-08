@@ -72,7 +72,7 @@ export const Partners = () => {
       <PageBreadcrumbs 
         items={[
           {
-            title: "Партнёры"
+            title: <I18nText text="Партнёры" />
           }
         ]}
       />
