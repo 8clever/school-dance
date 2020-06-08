@@ -12,6 +12,9 @@ import imgVoss from "../images/partners/voss.png";
 import dialogArts from "../images/partners/dialog-arts.png";
 
 import { PageBreadcrumbs } from "../components/PageTitle";
+import { I18nText } from "../components/Localization";
+import { observer } from "mobx-react-lite";
+import { i18nStore } from "../store/i18nStore";
 
 interface PartnerButtonProps {
   img: string;
@@ -21,7 +24,7 @@ interface PartnerButtonProps {
 
 const height = 260;
 
-const PartnerButton = (props: PartnerButtonProps) => {
+const PartnerButton = observer((props: PartnerButtonProps) => {
 
   const image = (
     <div 
@@ -44,14 +47,14 @@ const PartnerButton = (props: PartnerButtonProps) => {
       <div style={{
         textAlign: "center"
       }}>
-        {props.title}
+        <I18nText text={props.title} />
       </div>
     </div>
   )
 
   return (
     <BigCol
-      className="partner" 
+      className={i18nStore.mode === "EDIT" ? "" : "partner"} 
       height={height}
       onClick={() => {
         window.location.href = props.link;
@@ -60,7 +63,7 @@ const PartnerButton = (props: PartnerButtonProps) => {
       {text}
     </BigCol>
   )
-}
+})
 
 export const Partners = () => {
   return (
