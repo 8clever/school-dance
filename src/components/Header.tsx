@@ -120,16 +120,17 @@ export const Header = observer(() => {
           </FlexCol>
         </BigCol>
       </BigRow>
-      {
-        menuStore.isCollapsed ? null :
-        <div className="menu-container">
-          <div className="row no-gutters">
-            <div className="col-12 col-md-4 bg-white ml-auto">
-              <HeaderMenu />
-            </div>
+      <div 
+        style={{
+          display: menuStore.isCollapsed ? "none" : "block"
+        }}
+        className="menu-container">
+        <div className="row no-gutters">
+          <div className="col-12 col-md-4 bg-white ml-auto">
+            <HeaderMenu />
           </div>
         </div>
-      }
+      </div>
     </div>
   )
 })

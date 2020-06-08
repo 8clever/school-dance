@@ -7,6 +7,7 @@ import pointPNG from "../images/icons/point.png";
 import bagPNG from "../images/icons/bag.png";
 import { PageBreadcrumbs } from "../components/PageTitle";
 import { FlexCol } from "../components";
+import { I18nText } from "../components/Localization";
 
 export const messages = [
   {
@@ -63,7 +64,10 @@ export const FirstVisit = () => {
         <PageBreadcrumbs
           items={[
             {
-              title: "Первое посещение"
+              title: 
+                <I18nText 
+                  text="Первое посещение"
+                />
             }
           ]}
         />
@@ -78,12 +82,20 @@ export const FirstVisit = () => {
                   <div style={{ padding: "200px 40px" }}>
                     <img height={60} src={m.icon} />
                     <div className="mt-4"></div>
-                    <h4>{m.title}</h4>
+                    <h4>
+                      <I18nText 
+                        text={m.title}
+                      />
+                    </h4>
                     <div className="mt-4"></div>
 
                     {m.desc.map((d, idx) => {
                       return (
-                        <p key={idx}>{d}</p>
+                        <p key={idx}>
+                          <I18nText
+                            text={d}
+                          />
+                        </p>
                       )
                     })}                    
                   </div>
