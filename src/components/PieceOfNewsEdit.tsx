@@ -5,6 +5,7 @@ import { Modal, ModalHeader, ModalBody, FormGroup, Label, Input, Row, Col, Modal
 import { ImagePreview } from "./ImagePreview";
 import ReactDatePicker from "react-datepicker";
 import moment from "moment";
+import { I18nInput } from "./Localization";
 
 interface PieceOfNewsEditProps {
   visible: boolean;
@@ -43,7 +44,7 @@ export const PieceOfNewsEdit = observer((props: PieceOfNewsEditProps) => {
       <ModalBody>
         <FormGroup>
           <Label>Наименование</Label>
-          <Input 
+          <I18nInput 
             placeholder={"Текст..."}
             value={store.item.name}
             onChange={e => {
@@ -54,7 +55,7 @@ export const PieceOfNewsEdit = observer((props: PieceOfNewsEditProps) => {
 
         <FormGroup>
           <Label>Описание</Label>
-          <Input 
+          <I18nInput 
             rows={4}
             type="textarea" 
             value={store.item.description}

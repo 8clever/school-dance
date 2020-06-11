@@ -13,6 +13,7 @@ import { userStore } from "../store/UserStore";
 import moment from "moment";
 import { useInlineScript } from "../components/Widget";
 import { isMobile } from "../utils/isMobile";
+import { I18nText, getI18nText } from "../components/Localization";
 
 interface NewsProps {
   pieceOfNewsId?: string;
@@ -50,7 +51,7 @@ export const News = observer((props: NewsProps) => {
     pieceOfNewsStore.item = null;
   }, [props.pieceOfNewsId])
 
-  const descriptionText = (
+  const descriptionText = getI18nText(
     pieceOfNewsStore.item &&
     pieceOfNewsStore.item.description || ""
   )
@@ -90,14 +91,12 @@ export const News = observer((props: NewsProps) => {
           }}
           selected={selected}
           md={12}>
-
           <span style={{
             marginRight: 10,
           }}>
             {moment(p._dt).format("D.MM")}
           </span>
-          {p.name}
-
+          <I18nText text={p.name} />
           {
             userStore.isAdmin() ?
             <span className="hovered">
@@ -170,8 +169,8 @@ export const News = observer((props: NewsProps) => {
         <Icon 
           className="mr-3"
           type="plus" 
-        /> 
-        Новость
+        />
+        <I18nText text="Новость" />
       </BigButtonColMin>
     )
   }
@@ -182,11 +181,11 @@ export const News = observer((props: NewsProps) => {
       <PageBreadcrumbs 
         items={[
           {
-            title: "Новости"
+            title: <I18nText text="Новости" />
           },
           pieceOfNewsStore.item ?
           {
-            title: pieceOfNewsStore.item.name
+            title: <I18nText text={pieceOfNewsStore.item.name} />
           } : null
         ]}
       />

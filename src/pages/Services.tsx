@@ -9,6 +9,7 @@ import { ServiceView } from "../components/ServiceView";
 import { Service } from "../../server/models/Service";
 import { userStore } from "../store/UserStore";
 import { routerStore } from "../store/RouterStore";
+import { I18nText } from "../components/Localization";
 
 export const Services = observer(() => {
   
@@ -42,7 +43,7 @@ export const Services = observer(() => {
       <PageBreadcrumbs 
         items={[
           {
-            title: "Услуги"
+            title: <I18nText text="Услуги" />
           }
         ]}
       />
@@ -56,17 +57,25 @@ export const Services = observer(() => {
           color="primary"
           size="sm">
           <Icon type="plus" className="mr-2" />
-          Добавить услугу
+          <I18nText text="Добавить услугу" />
         </Button>
       </div>
 
       <Table>
         <thead>
           <tr>
-            <td>ID</td>
-            <td>Наименование</td>
-            <td>Описание</td>
-            <td>Стоимость (руб)</td>
+            <td>
+              ID
+            </td>
+            <td>
+              <I18nText text="Наименование" />
+            </td>
+            <td>
+              <I18nText text="Описание" />
+            </td>
+            <td>
+              <I18nText text="Стоимость (руб)" />
+            </td>
             <td></td>
           </tr>
         </thead>
@@ -75,8 +84,12 @@ export const Services = observer(() => {
             return (
               <tr key={s._id as string}>
                 <td>{s.id}</td>
-                <td>{s.name}</td>
-                <td>{s.description}</td>
+                <td>
+                  <I18nText text={s.name} />
+                </td>
+                <td>
+                  <I18nText text={s.description} />
+                </td>
                 <td>{s.amount}</td>
                 <td className="text-right">
                   <Icon 

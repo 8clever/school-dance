@@ -3,6 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, I
 import { observer } from "mobx-react-lite";
 import { leaderStore as leaderGlobalStore, LeaderStore } from "../store/LeaderStore";
 import { ImagePreview } from "./ImagePreview";
+import { I18nInput } from "./Localization";
 
 interface TeacherEditProps {
   _id?: string;
@@ -36,7 +37,7 @@ export const LeaderEdit = observer((props: TeacherEditProps) => {
       <ModalBody>
         <FormGroup>
           <Label>Ф.И.О</Label>
-          <Input 
+          <I18nInput 
             placeholder={"Текст..."}
             value={element.fullName}
             onChange={e => {
@@ -59,7 +60,7 @@ export const LeaderEdit = observer((props: TeacherEditProps) => {
 
         <FormGroup>
           <Label>Описание</Label>
-          <Input 
+          <I18nInput 
             rows={4}
             type="textarea" 
             value={element.description}

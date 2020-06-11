@@ -11,6 +11,7 @@ import ReactMarkdown from "react-markdown";
 import { LeaderEdit } from "../components/LeaderEdit";
 import { Carousel } from "../components/Carousel";
 import { PageBreadcrumbs } from "../components/PageTitle";
+import { I18nText, getI18nText } from "../components/Localization";
 
 interface LeaderProps {
   id?: string;
@@ -45,7 +46,7 @@ export const Leaders = observer((props: LeaderProps) => {
     <div className="p-5">
       {
         element ?
-        <ReactMarkdown source={element.description} /> :
+        <ReactMarkdown source={getI18nText(element.description)} /> :
         null
       }
     </div>
@@ -78,7 +79,7 @@ export const Leaders = observer((props: LeaderProps) => {
 
             routerStore.push(`/leader/${el.url}`);
           }}>
-          {el.fullName}
+          <I18nText text={el.fullName} />
           {
             userStore.isAdmin() ?
             <span className="hovered">
@@ -150,13 +151,11 @@ export const Leaders = observer((props: LeaderProps) => {
         <Icon 
           className="mr-3"
           type="plus" 
-        /> 
-        Руководитель
+        />
+        <I18nText text={"Руководитель"} />
       </BigButtonColMin>
     )
   }
-
-  
 
   return (
     <Base>
@@ -164,15 +163,15 @@ export const Leaders = observer((props: LeaderProps) => {
       <PageBreadcrumbs 
         items={[
           {
-            title: "Студия",
+            title: <I18nText text="Студия" />,
             url: "/studio"
           },
           {
-            title: "Команда"
+            title: <I18nText text="Команда" />
           },
           element ?
           {
-            title: element.fullName
+            title: <I18nText text={element.fullName} />
           } : null
         ]}
       />

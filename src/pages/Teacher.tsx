@@ -12,6 +12,7 @@ import { Col } from "reactstrap";
 import ReactMarkdown from "react-markdown";
 import { Carousel } from "../components/Carousel";
 import { PageBreadcrumbs } from "../components/PageTitle";
+import { I18nText, getI18nText } from "../components/Localization";
 
 interface TeacherProps {
   id?: string;
@@ -41,7 +42,7 @@ export const Teacher = observer((props: TeacherProps) => {
     <div className="p-5">
       {
         teacher ?
-        <ReactMarkdown source={teacher.description} /> :
+        <ReactMarkdown source={getI18nText(teacher.description)} /> :
         null
       }
     </div>
@@ -81,8 +82,7 @@ export const Teacher = observer((props: TeacherProps) => {
             routerStore.push(`/teacher/${t.url}`);
           }}
           key={t._id as string}>
-          {t.fullName}
-
+          <I18nText text={t.fullName} />
           {
             userStore.isAdmin() ?
             <span className="hovered">
@@ -154,7 +154,7 @@ export const Teacher = observer((props: TeacherProps) => {
           className="mr-3"
           type="plus" 
         /> 
-        Педагог
+        <I18nText text="Педагог" />
       </BigButtonColMin>
     )
   }
@@ -165,15 +165,15 @@ export const Teacher = observer((props: TeacherProps) => {
       <PageBreadcrumbs
         items={[
           {
-            title: "Cтудия",
+            title: <I18nText text="Cтудия" />,
             url: "/studio"
           },
           {
-            title: "Педагоги"
+            title: <I18nText text="Педагоги" />
           },
           teacher ?
           {
-            title: teacher.fullName
+            title: <I18nText text={teacher.fullName} />
           } : null
         ]}
       />

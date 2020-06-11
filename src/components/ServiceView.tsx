@@ -2,6 +2,7 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 import { Modal, ModalHeader, ModalBody, FormGroup, Label, Input, ModalFooter, Button } from "reactstrap";
 import { ServiceStore } from "../store/ServiceStore";
+import { I18nInput } from "./Localization";
 
 interface ServiceViewProps {
   visible: boolean;
@@ -43,7 +44,7 @@ export const ServiceView = observer((props: ServiceViewProps) => {
 
         <FormGroup>
           <Label>Наименование</Label>
-          <Input 
+          <I18nInput 
             placeholder={"Текст..."}
             value={serviceStore.item.name}
             onChange={e => {
@@ -54,7 +55,7 @@ export const ServiceView = observer((props: ServiceViewProps) => {
 
         <FormGroup>
           <Label>Описание</Label>
-          <Input 
+          <I18nInput 
             rows={4}
             type="textarea" 
             value={serviceStore.item.description}
