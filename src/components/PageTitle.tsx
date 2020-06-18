@@ -8,7 +8,7 @@ import _ from "lodash";
 import { I18nText } from "./Localization";
 
 const renderTitle = (title: string) => {
-  document.title = `Studio Context ${title} ${document.location.pathname}`;
+  document.title = `Studio Context ${title}`;
 }
 
 export const useTabTitle = (title: string | React.ReactNode) => {
