@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import { BigRow, BigCol } from "./Big";
 import { FlexCol } from "./Flex";
 import { routerStore } from "../store/RouterStore";
@@ -6,6 +7,24 @@ import iconRightPNG from '../images/icons/arrow-right.png';
 import _ from "lodash";
 import { I18nText } from "./Localization";
 
+const renderTitle = (title: string) => {
+  document.title = `Studio Context ${title} ${document.location.pathname}`;
+}
+
+export const useTabTitle = (title: string | React.ReactNode) => {
+  React.useEffect(() => {
+    if (React.isValidElement(title)) {
+      const $el = document.createElement("span");
+      ReactDOM.render(title, $el, () => {
+        renderTitle($el.innerText);
+      });
+      return;
+    }
+
+    renderTitle(title as string);
+  }, [ title ]);
+  return [];
+}
 
 interface PageBreadcrumbsProps {
   items: {
@@ -20,14 +39,14 @@ export const PageBreadcrumbs = (props: PageBreadcrumbsProps) => {
   const items = React.useMemo(() => {
     const items = _.compact(props.items.concat());
     items.unshift({
-      title: 
-        <I18nText 
-          text="Главная"
-        />,
+      title: <I18nText text="Главная" />,
       url: "/"
     });
     return items;
   }, [ props.items ]);
+
+  const currentPage = items[items.length - 1];
+  useTabTitle(currentPage.title);
 
   return (
     <PageTitle>

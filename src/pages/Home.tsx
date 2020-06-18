@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import { Base, BigHr, BigRow, BigButtonCol, BigButtonColMin, BigCol } from "../components";
 import { observer } from "mobx-react-lite";
 import { PageTitle } from "../components/PageTitle";
@@ -44,7 +45,19 @@ export const Home = observer(() => {
       const data = await pieceOfNewsStore.getItems({}, { _dt: -1 }, limit, skipNews);
       setNews(data);
     })()
-  }, [ skipNews ])
+  }, [ skipNews ]);
+
+  React.useEffect(() => {
+    if (!configStore.item) return;
+    const $el = document.createElement("span");
+    ReactDOM.render(
+      <I18nText text={configStore.item.homePageTitle} />,
+      $el,
+      () => {
+        document.title = $el.innerText;
+      }
+    )
+  }, [ configStore.item ]);
 
   if (!configStore.item) {
     return null;
@@ -53,9 +66,7 @@ export const Home = observer(() => {
   return (
     <Base>
       <PageTitle marquee>
-        <I18nText 
-          text={configStore.item.homePageTitle}
-        />
+        <I18nText text={configStore.item.homePageTitle} />
       </PageTitle>
 
       {
