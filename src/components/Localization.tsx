@@ -7,8 +7,8 @@ import { Icon } from "../components/Icon";
 import { toJS } from 'mobx';
 import md5 from "md5";
 
-export const getI18nKey = (text: string) => {
-  const key = md5(text);
+export const getI18nKey = (text?: string) => {
+  const key = md5(text || "");
   return key;
 }
 
