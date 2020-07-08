@@ -74,6 +74,18 @@ export const ServiceView = observer((props: ServiceViewProps) => {
             }}
           />
         </FormGroup>
+
+        <FormGroup check>
+          <Label check>
+            <Input
+              checked={serviceStore.item.specialOffer} 
+              onChange={e => {
+                serviceStore.item.specialOffer = e.target.checked;
+              }}
+              type="checkbox" />{' '}
+            Специальное предложение
+          </Label>
+        </FormGroup>
       </ModalBody>
       <ModalFooter>
         <Button color={"secondary"} onClick={props.toggle}>

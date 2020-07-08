@@ -90,6 +90,7 @@ export const Router = () => {
         <Route exact  path="/payment/paypal" render={() => <PayPal /> }/>
         <Route exact  path="/payment/radario" render={() => <RadarioPayment /> }/>
         <Route exact  path="/payment/card" render={() => <CreditCard /> }/>
+        <Route exact  path="/payment/specialoffer" render={() => <CreditCard isSpecialOffer /> }/>
         <Route exact  path="/payment/success" render={() => <PaymentSuccess /> }/>
         <Route exact  path="/payment/fail" render={() => <PaymentFail /> }/>
         <Route exact path="/logout" render={() => {

@@ -10,7 +10,11 @@ import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { I18nText, getI18nText } from "../components/Localization";
 
-export const CreditCard = observer(() => {
+interface CreditCardProps {
+  isSpecialOffer?: boolean;
+}
+
+export const CreditCard = observer((props: CreditCardProps) => {
 
   const serviceStore = React.useMemo(() => new ServiceStore(), []);
 
@@ -81,6 +85,9 @@ export const CreditCard = observer(() => {
                   type="select">
                   <option></option>
                   {services.map((s) => {
+                    if (!(
+                      !!s.specialOffer === !!props.isSpecialOffer
+                    )) return null;
                     return (
                       <option key={s._id as string} value={s._id as string}>
                         {getI18nText(s.name)} {s.amount} (руб)

@@ -6,4 +6,5 @@ export interface Service {
   name: string;
   description: string;
   amount: string;
+  specialOffer: boolean;
 }

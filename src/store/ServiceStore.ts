@@ -10,7 +10,8 @@ export class ServiceStore extends Api<Service> {
     amount: "0",
     description: "",
     name: "",
-    id: ""
+    id: "",
+    specialOffer: false
   }
 
   save = async () => {

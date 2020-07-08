@@ -76,6 +76,9 @@ export const Services = observer(() => {
             <td>
               <I18nText text="Стоимость (руб)" />
             </td>
+            <td>
+              <I18nText text="Специальное предложение" />
+            </td>
             <td></td>
           </tr>
         </thead>
@@ -91,6 +94,13 @@ export const Services = observer(() => {
                   <I18nText text={s.description} />
                 </td>
                 <td>{s.amount}</td>
+                <td>
+                  {
+                    s.specialOffer ?
+                    <Icon type='check' /> :
+                    <Icon type='times' />
+                  }
+                </td>
                 <td className="text-right">
                   <Icon 
                     onClick={() => {
