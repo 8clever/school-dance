@@ -9,10 +9,19 @@ import { Service } from "../../server/models/Service";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 import { I18nText, getI18nText } from "../components/Localization";
+import { Select } from "../components/Select";
 
 interface CreditCardProps {
   isSpecialOffer?: boolean;
 }
+
+const makeOption = (s: Service) => {
+  return {
+    label: `${getI18nText(s.name)} ${s.amount} (руб)`,
+    value: s._id as string
+  }
+}
+
 
 export const CreditCard = observer((props: CreditCardProps) => {
 
@@ -33,8 +42,13 @@ export const CreditCard = observer((props: CreditCardProps) => {
   }, []);
 
   const services = React.useMemo(() => {
-    return toJS(serviceStore.itemList, { recurseEverything: true });
+    const services = toJS(serviceStore.itemList, { recurseEverything: true });
+    return services.filter(s => !!s.specialOffer === !!props.isSpecialOffer);
   }, [ serviceStore.itemList ]);
+
+  const serviceOptions = React.useMemo(() => {
+    return services.map(makeOption);
+  }, [ services ]);
 
   return (
     <Base>
@@ -76,25 +90,15 @@ export const CreditCard = observer((props: CreditCardProps) => {
                 <Label>
                   <I18nText text="Выберите услугу" />
                 </Label>
-                <Input 
-                  value={selectedService && selectedService._id as string}
-                  onChange={e => {
-                    const service = services.find(s => s._id === e.target.value);
+                <Select
+                  placeholder=""
+                  value={selectedService && makeOption(selectedService) || null}
+                  onChange={(v: any) => {
+                    const service = services.find(s => s._id === v.value);
                     setSelectedService(service);
                   }}
-                  type="select">
-                  <option></option>
-                  {services.map((s) => {
-                    if (!(
-                      !!s.specialOffer === !!props.isSpecialOffer
-                    )) return null;
-                    return (
-                      <option key={s._id as string} value={s._id as string}>
-                        {getI18nText(s.name)} {s.amount} (руб)
-                      </option>
-                    )
-                  })}
-                </Input>
+                  options={serviceOptions}
+                />
               </FormGroup>
 
               <input type="hidden" className="orderNumber" value={orderId} />

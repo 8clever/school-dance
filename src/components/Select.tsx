@@ -40,10 +40,13 @@ export const Select = (props: Props) => {
         option: (styles, state) => {
           return {
             ...styles,
-            backgroundColor: state.isFocused ? $gray300 : undefined,
+            backgroundColor: 
+              state.isSelected ? $gray400 :
+              state.isFocused ? $gray300 : undefined,
             ":active": {
               backgroundColor: $gray400
-            }
+            },
+            color: "black"
           };
         }
       }}
