@@ -329,6 +329,8 @@ export const Direction = observer((props: DirectionProps) => {
       <PageBreadcrumbs 
         items={[
           (
+            directionStore.item.section === "home" ? 
+            null :
             directionStore.itemList.length > 1 ?
             {
               title: 
@@ -336,7 +338,8 @@ export const Direction = observer((props: DirectionProps) => {
                   text={directionSectionMap[directionStore.item.section]}
                 />,
               url: `/category/${directionStore.item.section}`
-            } : null
+            } : 
+            null
           ),
           {
             title: 
