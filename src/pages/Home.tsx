@@ -87,14 +87,14 @@ export const Home = observer(() => {
       }
 
       <BigRow>
-        {(["projects", "directions", "master-classes"] as DirectionSection[]).map((section, k) => {
+        {(["projects", "home"] as DirectionSection[]).map((section, k) => {
           const v = directionSectionMap[section];
           return (
             <BigButtonCol
               key={k}
               onClick={() => routerStore.push(`/category/${section}`)}
               style={{
-                minHeight: 300
+                minHeight: 196
               }}>
               <I18nText 
                 text={v}
