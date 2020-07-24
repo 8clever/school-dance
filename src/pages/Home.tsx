@@ -16,6 +16,7 @@ import iconLeft from "../images/icons/arrow-left.png";
 import iconRight from "../images/icons/arrow-right.png";
 import { DirectionSection, directionSectionMap } from "../../server/models/Direction";
 import { I18nText } from "../components/Localization";
+import { DirectionStore } from "../store/DirectionStore";
 
 const chevronButtonStyle: React.CSSProperties = {
   position: "absolute",
@@ -34,10 +35,15 @@ export const Home = observer(() => {
   const [ news, setNews ] = React.useState({
     list: [] as PieceOfNews[],
     count: 0 as number
-  })
+  });
+
+  const homeDirections = React.useMemo(() => new DirectionStore(), []);
 
   React.useEffect(() => {
     configStore.getConfig();
+    homeDirections.loadItems({
+      section: "home"
+    });
   }, []);
 
   React.useEffect(() => {
@@ -87,7 +93,7 @@ export const Home = observer(() => {
       }
 
       <BigRow>
-        {(["projects", "home"] as DirectionSection[]).map((section, k) => {
+        {(["projects"] as DirectionSection[]).map((section, k) => {
           const v = directionSectionMap[section];
           return (
             <BigButtonCol
@@ -98,6 +104,20 @@ export const Home = observer(() => {
               }}>
               <I18nText 
                 text={v}
+              />
+            </BigButtonCol>
+          )
+        })}
+        {homeDirections.itemList.map(i => {
+          return (
+            <BigButtonCol
+              key={i._id as string}
+              onClick={() => routerStore.push(`/directions/${i.url}`)}
+              style={{
+                minHeight: 196
+              }}>
+              <I18nText
+                text={i.name}
               />
             </BigButtonCol>
           )
