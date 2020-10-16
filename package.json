@@ -100,5 +100,5 @@
     "webpack-dev-middleware": "^3.7.1",
     "webpack-hot-middleware": "^2.25.0"
   },
-  "author": "Carmine DiMascio <cdimascio@gmail.com> (https://github.com/cdimascio)"
+  "author": "Ivan Vityaev <godofluck89@gmail.com> (https://github.com/8clever)"
 }
