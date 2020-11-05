@@ -6,10 +6,10 @@ import imgСontextWhite from "../images/partners/context_white.png";
 import imgIlimg from "../images/partners/ilim.png";
 import imgAstoria from "../images/partners/astoria.png";
 import imgGollandia from "../images/partners/new_gollandiya.png";
-import imgCinema from "../images/partners/new_cinema.png";
 import imgBalletMesse from "../images/partners/ballet_messe.png";
 import imgVoss from "../images/partners/voss.png";
 import dialogArts from "../images/partners/dialog-arts.png";
+import hotelKempinski from "../images/partners/hotel_kempinski.png";
 
 import { PageBreadcrumbs } from "../components/PageTitle";
 import { I18nText } from "../components/Localization";
@@ -114,9 +114,9 @@ export const Partners = () => {
           img={imgСontextWhite}
         />
         <PartnerButton 
-          link="https://alexandrinsky.ru"
-          title="Новая Сцена Александринского театра"
-          img={imgCinema}
+          link="https://www.kempinski.com/ru/st-petersburg/hotel-moika-22/"
+          title="Отель Kempinski"
+          img={hotelKempinski}
         />
         <PartnerButton 
           link="https://google.ru"
