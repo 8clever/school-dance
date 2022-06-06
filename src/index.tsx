@@ -13,6 +13,12 @@ const $body = document.querySelector("body");
 $el.className = "react-app";
 $body.appendChild($el);
 
+/** DEPRECATED
+ * 
+ * all scripts should be placed in
+ * config/assets/index.html
+ * 
+*/
 const App = (
   <>
     <Router />

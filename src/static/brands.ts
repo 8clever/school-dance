@@ -31,6 +31,6 @@ export const youtube = {
 }
 
 export const telegram = {
-  url: "",
+  url: "https://t.me/studiocontext",
   img: telegramPNG
 }
