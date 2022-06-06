@@ -11,13 +11,7 @@ export const config: Configuration = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      meta: {
-        "google-site-verification": "7I157oqzlVrwKudmMfgeY6HEiVNj40BH0GbrM3LS7Ys",
-        "yandex-verification": "365ae7796c8ff6cc",
-        viewport: "width=device-width, initial-scale=1, shrink-to-fit=no"
-      },
-      favicon: "public/favicon.png",
-      title: "Studio Context Диана Вишнёва"
+      template: 'config/assets/index.html'
     })
   ],
   resolve: {
