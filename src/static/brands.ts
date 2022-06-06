@@ -3,6 +3,7 @@ import facebookPNG from "../images/icons/facebook.png";
 import instagrammPNG from "../images/icons/instagramm.png";
 import whatsappPNG from "../images/icons/whatsapp-logo.png";
 import youtubePNG from "../images/icons/youtube.png";
+import telegramPNG from "../images/icons/telegram.png";
 
 export const vk = {
   url: "https://vk.com/studiocontextspb",
@@ -27,4 +28,9 @@ export const whatsapp = {
 export const youtube = {
   url: "https://www.youtube.com/channel/UCTKfJA-QNrcBS1cuuUKdkgw",
   img: youtubePNG
+}
+
+export const telegram = {
+  url: "",
+  img: telegramPNG
 }

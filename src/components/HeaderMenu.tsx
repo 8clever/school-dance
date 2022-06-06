@@ -2,7 +2,7 @@ import React from "react";
 import { BigRow, BigButtonColMin, BigCol } from "./Big";
 import { routerStore } from "../store/RouterStore";
 import { menuStore } from "../store/MenuStore";
-import { vk, facebook, instagramm, youtube, whatsapp } from "../static/brands";
+import { vk, telegram, youtube, whatsapp } from "../static/brands";
 import OutsideClickHandler from "react-outside-click-handler";
 import { observer } from "mobx-react-lite";
 import { DirectionStore } from "../store/DirectionStore";
@@ -126,8 +126,7 @@ export const HeaderMenu = observer(() => {
               marginTop: 74
             }}>
               <BrandLogo src={vk.img} url={vk.url} />
-              <BrandLogo src={facebook.img} url={facebook.url} />
-              <BrandLogo src={instagramm.img} url={instagramm.url} />
+              <BrandLogo src={telegram.img} url={telegram.url} />
               <BrandLogo src={youtube.img} url={youtube.url} />
               <BrandLogo src={whatsapp.img} url={whatsapp.url} />
 
