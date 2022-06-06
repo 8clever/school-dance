@@ -4,7 +4,7 @@ import { Col } from "reactstrap";
 import { Logo } from "./Logo";
 import { routerStore } from "../store/RouterStore";
 
-import { vk, facebook, instagramm, youtube } from "../static/brands";
+import { vk, facebook, whatsapp, youtube } from "../static/brands";
 import { I18nText } from "./Localization";
 
 interface FooterBrandLogoProps {
@@ -94,8 +94,8 @@ export const Footer = () => {
               </BigRow>
               <BigRow className="h-50">
                 <FooterBrandLogo 
-                  src={instagramm.img}
-                  url={instagramm.url}
+                  src={whatsapp.img}
+                  url={whatsapp.url}
                 />
                 <FooterBrandLogo 
                   src={youtube.img}
