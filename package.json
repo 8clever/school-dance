@@ -13,11 +13,11 @@
   },
   "dependencies": {
     "bluebird": "^3.5.5",
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "cookie-parser": "^1.4.4",
     "cron-parser": "^2.13.0",
     "dotenv": "^8.1.0",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "express-openapi-validator": "^2.0.2",
     "express-session": "^1.16.2",
     "jimp": "^0.8.5",
@@ -41,7 +41,7 @@
     "react-yandex-maps": "^4.0.1",
     "reactstrap": "^8.0.1",
     "resize-observer": "^1.0.0",
-    "swagger-express-middleware": "^2.0.3"
+    "swagger-express-middleware": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
