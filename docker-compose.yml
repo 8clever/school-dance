@@ -1,6 +1,28 @@
 version: "3.9"
 services:
+
   mongo:
     image: mongo:4.4
     ports:
       - 27017:27017
+
+  web:
+    depends_on:
+      - mongo
+    volumes:
+      - ./:/app
+    build:
+      dockerfile: ./Dockerfile.system
+    environment:
+      - APP_ID=school-dance
+      - PORT=3000
+      - LOG_LEVEL=debug
+      - REQUEST_LIMIT=100kb
+      - SESSION_SECRET=mySecret
+      - OPENAPI_SPEC=/api/v1/spec
+      - DEVELOPMENT=true
+      - MONGO_URL=mongodb://mongo:27017
+      - MONGO_DBNAME=school_dance
+      - SALT=saltysalt
+    ports:
+      - 3000:3000
